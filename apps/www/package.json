@@ -1,0 +1,16 @@
+{
+  "name": "@rdcl-dev/www",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "gulp"
+  },
+  "dependencies": {
+    "@rdcl-dev/tools": "0.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-rename": "^1.4.0"
+  }
+}

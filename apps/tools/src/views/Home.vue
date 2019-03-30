@@ -1,18 +1,6 @@
 <template>
   <div>
-    <h1>rdcl.dev</h1>
-
-    <p>
-      Welcome to this page.
-      I use this website to dump random stuff.
-      <a href="https://www.ruud.online">You can find my homepage here</a>.
-    </p>
-
-    <h2>Tools</h2>
-
-    <p>
-      Some random tools I wrote over the years.
-    </p>
+    <h1>Tools</h1>
 
     <ToolList>
       <ToolListItem tool="password" no-route>

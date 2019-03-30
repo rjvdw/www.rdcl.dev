@@ -14,24 +14,24 @@ export default new Router({
       component: Home,
     },
     {
-      path: '/tools/countdown',
+      path: '/countdown',
       name: 'countdown',
-      component: () => import('./views/tools/Countdown.vue'),
+      component: () => import('./views/Countdown.vue'),
     },
     {
-      path: '/tools/droprates',
+      path: '/droprates',
       name: 'droprates',
-      component: () => import('./views/tools/Droprates.vue'),
+      component: () => import('./views/Droprates.vue'),
     },
     {
-      path: '/tools/lingo',
+      path: '/lingo',
       name: 'lingo',
-      component: () => import('./views/tools/Lingo.vue'),
+      component: () => import('./views/Lingo.vue'),
     },
     {
-      path: '/tools/conway',
+      path: '/conway',
       name: 'conway',
-      component: () => import('./views/tools/Conway.vue'),
+      component: () => import('./views/Conway.vue'),
     },
   ],
 })

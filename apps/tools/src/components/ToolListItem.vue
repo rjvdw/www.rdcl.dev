@@ -3,7 +3,7 @@
     <a v-if="noRoute" :href="`/tools/${ tool }.html`">
       <slot name="link-text"></slot>
     </a>
-    <router-link v-else :to="`/tools/${ tool }`">
+    <router-link v-else :to="`/${ tool }`">
       <slot name="link-text"></slot>
     </router-link>
     <slot></slot>
