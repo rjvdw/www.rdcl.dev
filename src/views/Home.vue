@@ -1,17 +1,55 @@
-<template lang="pug">
-  .home
-    img(alt="Vue logo" src="../assets/logo.png")
-    HelloWorld(msg="Welcome to Your Vue.js + TypeScript App")
+<template>
+  <div>
+    <h1>rdcl.dev</h1>
+
+    <p>
+      Welcome to this page.
+      I use this website to dump random stuff.
+      <a href="https://www.ruud.online">You can find my homepage here</a>.
+    </p>
+
+    <h2>Tools</h2>
+
+    <p>
+      Some random tools I wrote over the years.
+    </p>
+
+    <ToolList>
+      <ToolListItem tool="password" no-route>
+        <template v-slot:link-text>Generate Password</template>
+        Securely generates a password using <code>window.crypto</code>
+      </ToolListItem>
+      <ToolListItem tool="countdown">
+        <template v-slot:link-text>Countdown</template>
+        Solves the numbers game in Countdown
+      </ToolListItem>
+      <ToolListItem tool="droprates">
+        <template v-slot:link-text>Drop Rate Calculator</template>
+        Given a droprate, computes how many attempts you actually need to get your item
+      </ToolListItem>
+      <ToolListItem tool="lingo">
+        <template v-slot:link-text>Lingo</template>
+        An implementation of the dutch word game, Lingo
+      </ToolListItem>
+      <ToolListItem tool="conway">
+        <template v-slot:link-text>Conway's Game of Life</template>
+        An implementation of Conway’s Game of Life
+      </ToolListItem>
+    </ToolList>
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+  import { Component, Vue } from 'vue-property-decorator'
+  import ToolList from '@/components/ToolList.vue'
+  import ToolListItem from '@/components/ToolListItem.vue'
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
-export default class Home extends Vue {}
+  @Component({
+    components: {
+      ToolList,
+      ToolListItem,
+    },
+  })
+  export default class Home extends Vue {
+  }
 </script>
