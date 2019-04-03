@@ -70,6 +70,10 @@
 
     start() {
       this.generations = 0
+      this.run()
+    }
+
+    run() {
       this.running = setTimeout(() => this.iter(), this.playSpeed)
     }
 
@@ -88,7 +92,7 @@
     iter() {
       this.cells = this.cells.map(Conway.nextGeneration)
       this.generations += 1
-      this.running = setTimeout(() => this.iter(), this.playSpeed)
+      this.run()
     }
 
     focus(cell: Cell, event: KeyboardEvent) {

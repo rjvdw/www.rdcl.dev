@@ -33,5 +33,10 @@ export default new Router({
       name: 'conway',
       component: () => import('./views/Conway.vue'),
     },
+    {
+      path: '/galton',
+      name: 'galton',
+      component: () => import('./views/Galton.vue'),
+    },
   ],
 })

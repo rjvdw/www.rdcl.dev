@@ -23,6 +23,10 @@
         <template v-slot:link-text>Conway's Game of Life</template>
         An implementation of Conway’s Game of Life
       </ToolListItem>
+      <ToolListItem tool="galton">
+        <template v-slot:link-text>Galton Board</template>
+        An implementation of a Galton Board
+      </ToolListItem>
     </ToolList>
   </div>
 </template>
