@@ -1,27 +1,16 @@
 <template>
   <div id="galton">
-    <p><em>Word of caution!</em> This tool has not been optimized. It will consume quite some CPU.</p>
+    <canvas ref="galton-board"></canvas>
 
-    <p>Number of marbles: {{ marblesInTrays.length }}</p>
+    <button :disabled="generateNewMarbles" @click="start">Start</button>
+    <button :disabled="!generateNewMarbles" @click="stop">Stop</button>
+    <button @click="reset">Reset</button>
 
-    <div class="trays">
-      <div class="tray-container" v-for="tray in trays">
-        <div class="tray">
-          <div
-            class="marble"
-            v-for="marble in tray"
-            :style="{ background: marble.color }"
-          ></div>
-        </div>
-        <div class="tray-summary"
-             :style="{ background: `rgba(255, 255, 0, ${(+percentageOfMarblesInTray(tray))/25})` }">
-          {{ percentageOfMarblesInTray(tray) }}%
-        </div>
-      </div>
-    </div>
-
-    <button :disabled="running" @click="start">Start</button>
-    <button :disabled="!running" @click="stop">Stop</button>
+    <p class="play-speed">
+      <label for="play-speed">Speed:</label>
+      <input id="play-speed" type="range" min="0" :max="playSpeeds.length - 1" step="1" v-model.number="playSpeedIdx">
+      <span>({{ playSpeed }})</span>
+    </p>
   </div>
 </template>
 
@@ -29,132 +18,230 @@
   import { Component, Vue } from 'vue-property-decorator'
 
   type Color = '#f00' | '#0f0' | '#00f' | '#ff0' | '#f0f' | '#0ff'
-  type Mapper<T, V> = (v: T, idx: number, arr: T[]) => V
 
   class Marble {
-    lvl: number = 0
-    position: number = 0
+    row: number
+    idx: number
     color: Color
 
-    constructor() {
-      this.color = randomColor()
+    constructor(row = 0, idx = 0, color?: Color) {
+      this.row = row
+      this.idx = idx
+
+      if (color === undefined) {
+        const colors: Color[] = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff']
+        this.color = colors[Math.floor(Math.random() * colors.length)]
+      } else {
+        this.color = color
+      }
     }
 
     drop() {
-      this.lvl += 1
-      if (Math.random() < .5) {
-        this.position += 1
-      }
+      return new Marble(
+        this.row + 1,
+        this.idx + (Math.random() < .5 ? 0 : 1),
+        this.color
+      )
     }
   }
+
+  type Tray = number
 
   @Component
   export default class Galton extends Vue {
-    private nrTrays: number = 25
+    private readonly width: number = 800
+    private readonly height: number = 900
+    private readonly trayHeight: number = 500
+    private readonly pegRowHeight: number = 15
+    private readonly topPadding: number = 5
+    private readonly pegSize: number = 2
+    private readonly marbleRadius: number = 4
+    private readonly nrTrays: number = 25
+    private generateNewMarbles: boolean = false
+    playSpeedIdx: number = 4
+
+    private readonly playSpeeds = [5, 50, 100, 250, 500, 750]
+    private trays: Tray[] = []
     private marbles: Marble[] = []
-    private running: boolean = false
-    private marblesPerFrame: number = 10
 
-    get fallingMarbles(): Marble[] {
-      return this.marbles.filter(marble => marble.lvl < this.nrTrays)
+    get playSpeed() {
+      return this.playSpeeds[this.playSpeedIdx]
     }
 
-    get marblesInTrays(): Marble[] {
-      return this.marbles.filter(marble => marble.lvl >= this.nrTrays)
+    get running(): boolean {
+      return this.marbles.length > 0 && !this.trayIsFull
     }
 
-    get trays(): Marble[][] {
-      return makeArray(
-        this.nrTrays,
-        (_, idx) => this.marblesInTrays
-          .filter(marble => marble.position === idx)
-      )
+    get canvas(): HTMLCanvasElement {
+      return this.$refs['galton-board'] as HTMLCanvasElement
     }
 
-    get maxNrOfMarblesInTrays(): number {
-      // 800 = max nr of marbles in one tray
-      return 800 * this.nrTrays / 4
+    get context(): CanvasRenderingContext2D {
+      const ctx = this.canvas.getContext('2d')
+      if (ctx === null) throw new Error('unable to initialize context')
+      return ctx
     }
 
-    percentageOfMarblesInTray(tray: Marble[]): string {
-      const p = this.marblesInTrays.length === 0
-        ? 0
-        : (tray.length / this.marblesInTrays.length * 100)
+    get trayWidth(): number {
+      return this.width / this.nrTrays
+    }
 
-      return p.toFixed(2)
+    get nrMarblesInTray(): number {
+      return Math.floor(this.trayWidth / this.marbleWidth)
+    }
+
+    get maxMarblesInTray(): number {
+      const traySize = this.trayWidth * this.trayHeight
+      const marbleSize = this.marbleWidth * this.marbleHeight
+
+      return Math.floor(traySize / marbleSize) + 1 - this.nrMarblesInTray
+    }
+
+    get marbleWidth(): number {
+      return 2 * this.marbleRadius
+    }
+
+    get marbleHeight(): number {
+      return 2 * this.marbleRadius
+    }
+
+    get nrPegRows(): number {
+      return this.nrTrays - 1
+    }
+
+    get trayIsFull(): boolean {
+      return this.trays.some(tray => tray > this.maxMarblesInTray)
+    }
+
+    mounted() {
+      const canvas = this.canvas
+      canvas.width = this.width + 1
+      canvas.height = this.height + 1
+
+      this.reset()
+    }
+
+    private drawBackground() {
+      this.drawTrays()
+      this.drawPegs()
+    }
+
+    private drawTrays() {
+      const bottom = this.height + .5
+
+      this.context.beginPath()
+      for (let trayIdx = 0; trayIdx <= this.nrTrays; trayIdx += 1) {
+        const x = trayIdx * this.trayWidth + .5
+
+        this.context.moveTo(x, bottom - this.trayHeight)
+        this.context.lineTo(x, bottom)
+        this.context.lineTo(x + this.trayWidth, bottom)
+      }
+      this.context.stroke()
+    }
+
+    private drawPegs() {
+      for (let pegRow = 0; pegRow < this.nrPegRows; pegRow += 1) {
+        for (let pegNr = 0; pegNr <= pegRow; pegNr += 1) {
+          const [x, y] = this.getPegPosition(pegRow, pegNr)
+          this.context.beginPath()
+          this.context.arc(x, y, this.pegSize, 0, 2 * Math.PI)
+          this.context.fillStyle = '#000'
+          this.context.fill()
+        }
+      }
+    }
+
+    private redrawPegs() {
+      this.context.clearRect(0, 0, this.width + 1, this.height - this.trayHeight + 1)
+      this.drawPegs()
+    }
+
+    private getPegPosition(row: number, idx: number): [number, number] {
+      const padding = (this.width - row * this.trayWidth) / 2
+      const x = padding + idx * this.trayWidth
+      const y = row * this.pegRowHeight + this.topPadding
+
+      return [x, y]
+    }
+
+    private drawMarble(marble: Marble) {
+      const [x, y] = this.getPegPosition(marble.row, marble.idx)
+      this.context.beginPath()
+      this.context.arc(x, y, this.marbleRadius, 0, 2 * Math.PI)
+      this.context.fillStyle = marble.color
+      this.context.fill()
+      this.context.stroke()
+    }
+
+    private addToTray(marble: Marble) {
+      const marbleNr = this.trays[marble.idx]
+      this.trays = this.trays.map((tray, idx) => idx === marble.idx ? (tray + 1) : tray)
+
+      const marbleX = marbleNr % this.nrMarblesInTray
+      const marbleY = Math.floor(marbleNr / this.nrMarblesInTray)
+
+      const x = marble.idx * this.trayWidth + (marbleX + .5) * this.marbleWidth
+      const y = this.height - (marbleY + .5) * this.marbleHeight
+
+      this.context.beginPath()
+      this.context.arc(x, y, this.marbleRadius, 0, 2 * Math.PI)
+      this.context.fillStyle = marble.color
+      this.context.fill()
+      this.context.stroke()
+    }
+
+    reset() {
+      this.generateNewMarbles = false
+      this.marbles = []
+      this.trays = []
+      for (let i = 0; i < this.nrTrays; i += 1) {
+        this.trays.push(0)
+      }
+      this.context.clearRect(0, 0, this.width + 1, this.height + 1)
+      this.drawBackground()
     }
 
     start() {
-      this.marbles.length = 0
-      this.running = true
-      this.iter()
+      this.generateNewMarbles = true
+
+      if (!this.running) {
+        this.iter()
+      }
     }
 
     stop() {
-      this.running = false
+      this.generateNewMarbles = false
     }
 
     iter() {
-      this.fallingMarbles.forEach(marble => marble.drop())
-      for (let i = 0; i < this.marblesPerFrame; i += 1)
-        this.marbles.push(new Marble())
-      if (this.marblesInTrays.length >= this.maxNrOfMarblesInTrays)
-        this.running = false
-      if (this.running)
-        requestAnimationFrame(() => this.iter())
+      this.redrawPegs()
+
+      const next = this.marbles.map(marble => marble.drop())
+
+      if (this.generateNewMarbles) {
+        next.push(new Marble())
+      }
+
+      this.marbles = next.filter(marble => marble.row < this.nrPegRows)
+      this.marbles.forEach(marble => this.drawMarble(marble))
+
+      next.filter(marble => marble.row === this.nrPegRows)
+        .forEach(marble => this.addToTray(marble))
+
+      if (this.running) {
+        setTimeout(() => this.iter(), this.playSpeed)
+      }
     }
-  }
-
-  function randomColor(): Color {
-    // FIXME: not so much hardcoded stuff?
-    const rnd = Math.floor(Math.random() * 6)
-    const colors: Color[] = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff']
-    return colors[rnd]
-  }
-
-  function makeArray<T>(length: number, fillMethod: Mapper<null, T>): T[] {
-    return Array(length)
-      .fill(null)
-      .map(fillMethod)
   }
 </script>
 
 <style scoped lang="sass">
-  #galton
-    .trays
-      display: flex
-      width: calc(25 * 33px + 1px)
+  canvas
+    display: block
 
-    .tray-container
-      display: flex
-      flex-direction: column
-      border:
-        bottom: 1px solid black
-        left: 1px solid black
-
-      &:last-child
-        border-right: 1px solid black
-
-    .tray
-      box-sizing: content-box
-      display: flex
-      flex-wrap: wrap-reverse
-      width: 32px
-      justify-content: center
-      align-content: flex-start
-      height: 450px
-      overflow: hidden
-      border-bottom: 1px solid black
-
-    .tray-summary
-      text-align: center
-      font-size: .5rem
-      overflow: hidden
-
-    .marble
-      box-sizing: border-box
-      width: 4px
-      height: 4px
-      border-radius: 50%
-      border: 1px solid black
+  .play-speed
+    display: flex
+    align-items: center
+    margin-top: .5rem
 </style>

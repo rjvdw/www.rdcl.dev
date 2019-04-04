@@ -21,7 +21,7 @@
 
     <p class="conway-play-speed">
       <label for="play-speed">Speed:</label>
-      <input id="play-speed" type="range" min="0" max="9" step="1" v-model.number="playSpeedIdx">
+      <input id="play-speed" type="range" min="0" :max="playSpeeds.length - 1" step="1" v-model.number="playSpeedIdx">
       <span>({{ playSpeed }})</span>
     </p>
   </div>
