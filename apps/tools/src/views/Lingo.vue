@@ -68,7 +68,7 @@
     }
 
     private static async fillWordList() {
-      const response = await fetch('/data/woordenlijst.txt')
+      const response = await fetch('/tools/data/woordenlijst.txt')
       const body = await response.text()
 
       Lingo.wordList = body.replace(/^[\r\n]+|[\r\n]+$/g, '').split(/[\r\n]+/)
