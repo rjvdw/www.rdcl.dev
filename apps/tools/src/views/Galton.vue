@@ -49,13 +49,13 @@
 
   @Component
   export default class Galton extends Vue {
-    private readonly width: number = 800
-    private readonly height: number = 900
-    private readonly trayHeight: number = 500
-    private readonly pegRowHeight: number = 15
+    private readonly width: number = 400
+    private readonly height: number = 450
+    private readonly trayHeight: number = 250
+    private readonly pegRowHeight: number = 8
     private readonly topPadding: number = 5
-    private readonly pegSize: number = 2
-    private readonly marbleRadius: number = 4
+    private readonly pegSize: number = 1
+    private readonly marbleRadius: number = 2
     private readonly nrTrays: number = 25
     private generateNewMarbles: boolean = false
     playSpeedIdx: number = 4
