@@ -38,5 +38,10 @@ export default new Router({
       name: 'galton',
       component: () => import('./views/Galton.vue'),
     },
+    {
+      path: '/fourier',
+      name: 'fourier',
+      component: () => import('./views/Fourier.vue'),
+    },
   ],
 })

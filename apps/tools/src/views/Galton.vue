@@ -114,9 +114,8 @@
     }
 
     mounted() {
-      const canvas = this.canvas
-      canvas.width = this.width + 1
-      canvas.height = this.height + 1
+      this.canvas.width = this.width + 1
+      this.canvas.height = this.height + 1
 
       this.reset()
     }

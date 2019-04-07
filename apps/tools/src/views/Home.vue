@@ -27,6 +27,10 @@
         <template v-slot:link-text>Galton Board</template>
         An implementation of a Galton Board
       </ToolListItem>
+      <ToolListItem tool="fourier">
+        <template v-slot:link-text>Fourier Analysis</template>
+        Playing around with fourier transformations [WIP]
+      </ToolListItem>
     </ToolList>
   </div>
 </template>
