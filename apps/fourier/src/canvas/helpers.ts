@@ -8,7 +8,7 @@ import {
   SCALING_FACTOR,
   ZERO
 } from './constants'
-import { CursorType, DrawData, GraphType } from '../types'
+import { CursorType, DrawData, GraphType } from '@/types'
 
 export function getCanvas(id: string): [HTMLCanvasElement, CanvasRenderingContext2D] {
   const canvas = document.getElementById(id) as HTMLCanvasElement

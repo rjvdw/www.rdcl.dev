@@ -23,6 +23,9 @@ module.exports = {
 
   resolve: {
     extensions: ['.ts', '.js', '.json'],
+    alias: {
+      '@': paths.SRC,
+    },
   },
 
   devtool: 'inline-source-map',

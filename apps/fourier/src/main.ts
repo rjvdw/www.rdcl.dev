@@ -1,11 +1,11 @@
 import { animationFrameScheduler, combineLatest, interval } from 'rxjs'
 import { map, scan, tap } from 'rxjs/operators'
-import { CursorType, DataPoint, DrawData, FormulaType, GraphType } from './types'
-import { CANVAS_WIDTH, CANVAS_X_BOUND, SCALING_FACTOR, ZERO } from './canvas/constants'
-import { ctx as ctxIn } from './canvas/input'
-import './canvas/output'
-import './styles/main.sass'
-import { draw, now } from './canvas/helpers'
+import { CursorType, DataPoint, DrawData, FormulaType, GraphType } from '@/types'
+import { CANVAS_WIDTH, CANVAS_X_BOUND, SCALING_FACTOR, ZERO } from '@/canvas/constants'
+import { ctx as ctxIn } from '@/canvas/input'
+import { draw, now } from '@/canvas/helpers'
+import '@/canvas/output'
+import '@/styles/main.sass'
 
 class DataPointCollector {
   private readonly points: DataPoint[]
