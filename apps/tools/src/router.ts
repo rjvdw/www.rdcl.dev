@@ -4,7 +4,9 @@ import Home from './views/Home.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const defaultTitle = document.title
+
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -12,31 +14,37 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      meta: { title: 'tools' },
     },
     {
       path: '/countdown',
       name: 'countdown',
       component: () => import('./views/Countdown.vue'),
+      meta: { title: 'countdown' },
     },
     {
       path: '/droprates',
       name: 'droprates',
       component: () => import('./views/Droprates.vue'),
+      meta: { title: 'drop rate calculator' },
     },
     {
       path: '/lingo',
       name: 'lingo',
       component: () => import('./views/Lingo.vue'),
+      meta: { title: 'lingo' },
     },
     {
       path: '/conway',
       name: 'conway',
       component: () => import('./views/Conway.vue'),
+      meta: { title: "conway's game of life" },
     },
     {
       path: '/galton',
       name: 'galton',
       component: () => import('./views/Galton.vue'),
+      meta: { title: 'galton board' },
     },
     {
       path: '/fourier',
@@ -45,3 +53,12 @@ export default new Router({
     },
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+    ? `${ to.meta.title } | ${ defaultTitle }`
+    : defaultTitle
+  next()
+})
+
+export default router
