@@ -26,7 +26,7 @@ export function draw(ctx: CanvasRenderingContext2D) {
   return (data: DrawData) => {
     resetGraph(ctx)
     drawCursor(ctx, data.cursor)
-    drawGraph(ctx, data.graph, now())
+    drawGraph(ctx, data.graph, data.now)
   }
 }
 
@@ -70,8 +70,4 @@ function drawGraph(ctx: CanvasRenderingContext2D, graph: GraphType, now: number)
     ctx.lineTo(x, y)
   })
   ctx.stroke()
-}
-
-export function now() {
-  return animationFrameScheduler.now() / 1000
 }
