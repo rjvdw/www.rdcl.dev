@@ -10,6 +10,7 @@ const APPS_DIR = `${ PROJECT_ROOT }/apps`
 const PUBLIC_DIR = `${ APPS_DIR }/www/public`
 const DIST_DIR = `${ PROJECT_ROOT }/dist`
 const APPS = [
+  'fourier',
   'tools',
 ]
 const APP_DIST_DIRS = APPS.map(into`${ APPS_DIR }/{}/dist`)
