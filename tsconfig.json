@@ -11,15 +11,9 @@
     "allowSyntheticDefaultImports": true,
     "newLine": "LF",
     "sourceMap": true,
-    "baseUrl": ".",
     "types": [
       "webpack-env"
     ],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
     "lib": [
       "esnext",
       "dom",
