@@ -1,0 +1,15 @@
+{
+  "name": "@rdcl-dev/canvas-util",
+  "version": "0.1.0",
+  "private": true,
+  "files": ["dist/**/*.js"],
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
+}

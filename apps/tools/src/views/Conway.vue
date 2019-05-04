@@ -51,7 +51,7 @@
     }
 
     static getCells(): Cell[] {
-      return new Array(NR_COLUMNS * NR_ROWS).fill(null).map(x => new Cell())
+      return new Array(NR_COLUMNS * NR_ROWS).fill(null).map(_ => new Cell())
     }
   }
 

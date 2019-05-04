@@ -1,26 +1,5 @@
-import { animationFrameScheduler } from 'rxjs'
-import {
-  CANVAS_HEIGHT,
-  CANVAS_WIDTH,
-  CANVAS_X_BOUND,
-  CANVAS_Y_BOUND,
-  CURSOR_SIZE,
-  SCALING_FACTOR,
-  ZERO
-} from './constants'
+import { CANVAS_X_BOUND, CANVAS_Y_BOUND, CURSOR_SIZE, SCALING_FACTOR, ZERO } from './constants'
 import { CursorType, DrawData, GraphType } from '@/types'
-
-export function getCanvas(id: string): [HTMLCanvasElement, CanvasRenderingContext2D] {
-  const canvas = document.getElementById(id) as HTMLCanvasElement
-
-  canvas.width = CANVAS_WIDTH
-  canvas.height = CANVAS_HEIGHT
-
-  const ctx = canvas.getContext('2d')
-  if (ctx === null) throw new Error(`Unable to initialize canvas #${ id }`)
-
-  return [canvas, ctx]
-}
 
 export function draw(ctx: CanvasRenderingContext2D) {
   return (data: DrawData) => {

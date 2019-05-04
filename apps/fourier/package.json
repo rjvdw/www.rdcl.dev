@@ -7,6 +7,7 @@
     "build": "webpack --mode=production"
   },
   "dependencies": {
+    "@rdcl-dev/canvas-util": "^0.1.0",
     "rxjs": "^6.4.0"
   },
   "devDependencies": {

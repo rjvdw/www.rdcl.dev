@@ -6,10 +6,10 @@ const ani$ = interval(0, animationFrameScheduler)
     map(() => animationFrameScheduler.now() / 1000),
   )
 
-const interval$ = combineLatest(
+const interval$ = combineLatest([
   ani$,
   ani$.pipe(first()),
-)
+])
   .pipe(
     map(([currentTime, startTime]) => currentTime - startTime),
   )
