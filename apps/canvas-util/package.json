@@ -2,7 +2,7 @@
   "name": "@rdcl-dev/canvas-util",
   "version": "0.1.0",
   "private": true,
-  "files": ["dist/**/*.js"],
+  "files": ["dist/**/*.*"],
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc"

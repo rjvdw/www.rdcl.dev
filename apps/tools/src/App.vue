@@ -11,7 +11,7 @@
 </template>
 
 <style lang="sass">
-  @import "@/styles/main.sass"
+  @import '@rdcl-dev/shared-styles/src/main.sass'
 
   nav, main
     max-width: $page-max-width

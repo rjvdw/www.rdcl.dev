@@ -5,8 +5,8 @@ import { CANVAS_WIDTH } from '@/canvas/constants'
 import canvasIn from '@/canvas/input'
 import { draw } from '@/canvas/helpers'
 import '@/canvas/output'
-import '@/styles/main.sass'
 import { data$, interval$ } from '@/streams'
+import '@rdcl-dev/shared-styles'
 
 const draw$ = combineLatest([
   data$

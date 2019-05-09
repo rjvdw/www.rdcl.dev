@@ -68,6 +68,15 @@ function factory(dirname, publicPath, config = {}) {
         { loader: 'sass-loader' },
       ],
     })
+
+    webpackConfig.module.rules.push({
+      test: /\.css$/,
+      exclude: /node_modules/,
+      use: [
+        { loader: 'style-loader' },
+        { loader: 'css-loader' },
+      ],
+    })
   }
 
   webpackConfig.plugins = []

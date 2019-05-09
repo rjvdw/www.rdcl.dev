@@ -7,6 +7,7 @@
     "build": "vue-cli-service build --modern"
   },
   "dependencies": {
+    "@rdcl-dev/shared-styles": "^0.1.0",
     "vue": "^2.6.6",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.0.0",
