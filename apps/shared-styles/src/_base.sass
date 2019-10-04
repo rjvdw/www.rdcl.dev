@@ -11,10 +11,17 @@ html
   width: 100%
 
 body
+  background-color: $base-background-color
   color: $base-foreground-color
   margin: 0
   padding: 0
   width: 100%
+  @media (prefers-color-scheme: dark)
+    background-color: $base-background-color-dark
+    color: $base-foreground-color-dark
+
+canvas
+  background-color: #fff
 
 *
   box-sizing: inherit
