@@ -17,6 +17,12 @@ const router = new Router({
       meta: { title: 'tools' },
     },
     {
+      path: '/qr',
+      name: 'qr',
+      component: () => import('./views/QR.vue'),
+      meta: { title: 'qr' },
+    },
+    {
       path: '/countdown',
       name: 'countdown',
       component: () => import('./views/Countdown.vue'),

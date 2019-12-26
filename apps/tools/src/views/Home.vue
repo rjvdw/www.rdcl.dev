@@ -7,6 +7,10 @@
         <template v-slot:link-text>Generate Password</template>
         Securely generates a password using <code>window.crypto</code>
       </ToolListItem>
+      <ToolListItem tool="qr">
+        <template v-slot:link-text>QR Codes</template>
+        Create QR codes
+      </ToolListItem>
       <ToolListItem tool="countdown">
         <template v-slot:link-text>Countdown</template>
         Solves the numbers game in Countdown
