@@ -35,6 +35,12 @@ const router = new Router({
       meta: { title: 'drop rate calculator' },
     },
     {
+      path: '/bmi',
+      name: 'bmi',
+      component: () => import('./views/BMI.vue'),
+      meta: { title: 'bmi calculator' },
+    },
+    {
       path: '/lingo',
       name: 'lingo',
       component: () => import('./views/Lingo.vue'),

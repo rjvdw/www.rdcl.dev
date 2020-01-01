@@ -19,6 +19,10 @@
         <template v-slot:link-text>Drop Rate Calculator</template>
         Given a droprate, computes how many attempts you actually need to get your item
       </ToolListItem>
+      <ToolListItem tool="bmi">
+        <template v-slot:link-text>BMI Calculator</template>
+        Body Mass Index calculator
+      </ToolListItem>
       <ToolListItem tool="lingo">
         <template v-slot:link-text>Lingo</template>
         An implementation of the dutch word game, Lingo
