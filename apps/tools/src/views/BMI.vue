@@ -5,6 +5,7 @@
       <input
           id="weight"
           type="number"
+          inputmode="decimal"
           :value="formatted(weight)"
           @input="$event.target.value && weightUpdated(+$event.target.value)"
           @change="weightUpdated(+$event.target.value)"
@@ -17,6 +18,7 @@
       <input
           id="height"
           type="number"
+          inputmode="decimal"
           v-model.number="height"
           step="any"
       >
@@ -27,6 +29,7 @@
       <input
           id="bmi"
           type="number"
+          inputmode="decimal"
           :value="formatted(bmi)"
           @input="$event.target.value && bmiUpdated(+$event.target.value)"
           @change="bmiUpdated(+$event.target.value)"

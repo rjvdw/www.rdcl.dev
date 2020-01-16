@@ -8,7 +8,7 @@
             id="droprate"
             v-model.number="droprate"
             autofocus
-            inputmode="numeric"
+            inputmode="decimal"
           >%
         </td>
         <td></td>
@@ -20,7 +20,7 @@
           <input
             id="nrattempts"
             v-model.number="nrattempts"
-            inputmode="numeric"
+            inputmode="decimal"
           >
         </td>
         <td></td>
