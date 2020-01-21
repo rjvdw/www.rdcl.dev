@@ -10,10 +10,12 @@ const APPS_DIR = `${ PROJECT_ROOT }/apps`
 const PUBLIC_DIR = `${ APPS_DIR }/www/public`
 const DIST_DIR = `${ PROJECT_ROOT }/dist`
 const APPS = [
-  'fourier',
-  'tools',
+  ['fourier', 'dist'],
+  ['reading', '_site'],
+  ['shared-styles', 'dist'],
+  ['tools', 'dist'],
 ]
-const APP_DIST_DIRS = APPS.map(into`${ APPS_DIR }/{}/dist`)
+const APP_DIST_DIRS = APPS.map(into`${ APPS_DIR }/{}/{}`)
 
 gulp.task('clean', () => gulp
   .src([DIST_DIR], { read: false, allowEmpty: true })
@@ -42,9 +44,11 @@ function into(strings, ...vars) {
     template += vars[i] + strings[i + 1]
   }
 
-  return val => template.replace('{}', val)
+  return values => Array.isArray(values)
+    ? values.reduce((tpl, val) => tpl.replace('{}', val), template)
+    : template.replace('{}', values)
 }
 
 function stripDistFromDirName(source) {
-  source.dirname = source.dirname.replace(/^([^\/]+)\/dist/, '$1')
+  source.dirname = source.dirname.replace(/^([^\/]+)\/(?:dist|_site)/, '$1')
 }

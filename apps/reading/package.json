@@ -1,0 +1,16 @@
+{
+  "name": "@rdcl-dev/reading",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "rimraf _site && eleventy",
+    "clean": "rimraf _site",
+    "serve": "rimraf _site && eleventy --serve"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@11ty/eleventy": "^0.10.0",
+    "@rdcl-dev/shared-styles": "^0.1.0",
+    "rimraf": "^3.0.0"
+  }
+}
