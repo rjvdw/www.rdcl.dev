@@ -1,3 +1,6 @@
+---
+layout: main.hbs
+---
 # Frameworks
 
 ## Static Site Generators
