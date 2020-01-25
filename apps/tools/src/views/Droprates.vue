@@ -1,73 +1,48 @@
 <template>
-  <form>
-    <table>
-      <tr>
-        <td><label for="droprate">Drop rate</label></td>
-        <td>
-          <input
-            id="droprate"
-            v-model.number="droprate"
-            autofocus
-            inputmode="decimal"
-          >%
-        </td>
-        <td></td>
-      </tr>
+  <div class="form-layout droprate-calculator">
+    <label class="first-label" for="droprate">Drop rate</label>
+    <input
+        id="droprate"
+        v-model.number="droprate"
+        autofocus
+        inputmode="decimal"
+    >
+    <label for="droprate">%</label>
 
-      <tr>
-        <td><label for="nrattempts">Nr. of attempts</label></td>
-        <td>
-          <input
-            id="nrattempts"
-            v-model.number="nrattempts"
-            inputmode="decimal"
-          >
-        </td>
-        <td></td>
-      </tr>
+    <label class="first-label" for="nrattempts">Nr. of attempts</label>
+    <input
+        id="nrattempts"
+        v-model.number="nrattempts"
+        inputmode="decimal"
+    >
+    <div></div>
 
-      <tr>
-        <td class="separator" colspan="2">&nbsp;</td>
-      </tr>
+    <div class="separator"></div>
 
-      <tr>
-        <td colspan="2">&nbsp;</td>
-      </tr>
+    <label class="first-label" for="chance">Chance</label>
+    <input
+        id="chance"
+        readonly
+        :value="chance(droprate, nrattempts)"
+    >
+    <label for="droprate">%</label>
 
-      <tr>
-        <td><label for="chance">Chance</label></td>
-        <td>
-          <input
-            id="chance"
-            readonly
-            :value="chance(droprate, nrattempts)"
-          >%
-        </td>
-      </tr>
+    <label class="first-label" for="perc95">95%</label>
+    <input
+        id="perc95"
+        readonly
+        :value="percentile(droprate, 95)"
+    >
+    <div></div>
 
-      <tr>
-        <td><label for="perc95">95%</label></td>
-        <td>
-          <input
-            id="perc95"
-            readonly
-            :value="percentile(droprate, 95)"
-          >
-        </td>
-      </tr>
-
-      <tr>
-        <td><label for="perc99">99%</label></td>
-        <td>
-          <input
-            id="perc99"
-            readonly
-            :value="percentile(droprate, 99)"
-          >
-        </td>
-      </tr>
-    </table>
-  </form>
+    <label class="first-label" for="perc99">99%</label>
+    <input
+        id="perc99"
+        readonly
+        :value="percentile(droprate, 99)"
+    >
+    <div></div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -115,6 +90,16 @@
 </script>
 
 <style scoped lang="sass">
-  td.separator
+  .form-layout.droprate-calculator
+    grid:
+      template-columns: max-content 1fr max-content
+      column-gap: 0
+
+  .separator
+    grid-column: span 3
     border-bottom: thin solid #333
+    margin: .5rem 0
+
+  .first-label
+    margin-right: 1rem
 </style>

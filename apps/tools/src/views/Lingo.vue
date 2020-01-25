@@ -248,5 +248,7 @@
 
     input
       font-size: 1rem
+      width: initial
+      padding: initial
 
 </style>

@@ -1,42 +1,36 @@
 <template>
-  <form>
-    <p>
-      <label for="weight">Weight (in kgs)</label><br>
-      <input
-          id="weight"
-          type="number"
-          inputmode="decimal"
-          :value="formatted(weight)"
-          @input="$event.target.value && weightUpdated(+$event.target.value)"
-          @change="weightUpdated(+$event.target.value)"
-          step="any"
-      >
-    </p>
+  <div class="form-layout">
+    <label for="weight">Weight (in kgs)</label>
+    <input
+        id="weight"
+        type="number"
+        inputmode="decimal"
+        :value="formatted(weight)"
+        @input="$event.target.value && weightUpdated(+$event.target.value)"
+        @change="weightUpdated(+$event.target.value)"
+        step="any"
+    >
 
-    <p>
-      <label for="height">Height (in cms)</label><br>
-      <input
-          id="height"
-          type="number"
-          inputmode="decimal"
-          v-model.number="height"
-          step="any"
-      >
-    </p>
+    <label for="height">Height (in cms)</label>
+    <input
+        id="height"
+        type="number"
+        inputmode="decimal"
+        v-model.number="height"
+        step="any"
+    >
 
-    <p>
-      <label for="bmi">BMI</label><br>
-      <input
-          id="bmi"
-          type="number"
-          inputmode="decimal"
-          :value="formatted(bmi)"
-          @input="$event.target.value && bmiUpdated(+$event.target.value)"
-          @change="bmiUpdated(+$event.target.value)"
-          step="any"
-      >
-    </p>
-  </form>
+    <label for="bmi">BMI</label>
+    <input
+        id="bmi"
+        type="number"
+        inputmode="decimal"
+        :value="formatted(bmi)"
+        @input="$event.target.value && bmiUpdated(+$event.target.value)"
+        @change="bmiUpdated(+$event.target.value)"
+        step="any"
+    >
+  </div>
 </template>
 
 <script lang="ts">
@@ -52,7 +46,7 @@
     }
 
     constructor() {
-      super();
+      super()
 
       this.weight = readValue('bmi:weight', 75)
       this.height = readValue('bmi:height', 185)

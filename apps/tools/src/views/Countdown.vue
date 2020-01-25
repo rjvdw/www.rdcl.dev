@@ -1,20 +1,20 @@
 <template>
   <div>
     <form @submit.prevent="compute">
-      <section class="form-section">
-        <label for="nr1">Numbers:</label><br>
-        <input v-model.number="numbers[0]" type="number" inputmode="numeric" min="1" max="100" id="nr1" style="width: 4rem" required
+      <section class="form-section form-section--inputs">
+        <label for="nr1">Numbers:</label>
+        <input v-model.number="numbers[0]" type="number" inputmode="numeric" min="1" max="100" id="nr1" required
                autofocus>
-        <input v-model.number="numbers[1]" type="number" inputmode="numeric" min="1" max="100" id="nr2" style="width: 4rem" required>
-        <input v-model.number="numbers[2]" type="number" inputmode="numeric" min="1" max="100" id="nr3" style="width: 4rem" required>
-        <input v-model.number="numbers[3]" type="number" inputmode="numeric" min="1" max="100" id="nr4" style="width: 4rem" required>
-        <input v-model.number="numbers[4]" type="number" inputmode="numeric" min="1" max="100" id="nr5" style="width: 4rem" required>
-        <input v-model.number="numbers[5]" type="number" inputmode="numeric" min="1" max="100" id="nr6" style="width: 4rem" required>
+        <input v-model.number="numbers[1]" type="number" inputmode="numeric" min="1" max="100" id="nr2" required>
+        <input v-model.number="numbers[2]" type="number" inputmode="numeric" min="1" max="100" id="nr3" required>
+        <input v-model.number="numbers[3]" type="number" inputmode="numeric" min="1" max="100" id="nr4" required>
+        <input v-model.number="numbers[4]" type="number" inputmode="numeric" min="1" max="100" id="nr5" required>
+        <input v-model.number="numbers[5]" type="number" inputmode="numeric" min="1" max="100" id="nr6" required>
       </section>
 
-      <section class="form-section">
-        <label for="target">Target:</label><br>
-        <input v-model.number="target" type="number" inputmode="numeric" min="100" max="999" id="target" style="width: 6rem" required>
+      <section class="form-section form-section--target">
+        <label for="target">Target:</label>
+        <input v-model.number="target" type="number" inputmode="numeric" min="100" max="999" id="target" required>
       </section>
 
       <button :disabled="computing">Go!</button>
@@ -126,6 +126,19 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="sass">
+  .form-section--inputs
+    display: grid
+    grid:
+      column-gap: .5rem
+      template-columns: repeat(6, 1fr)
+    margin-bottom: 1rem
+    label
+      grid-column: span 6
 
+  .form-section--target
+    display: flex
+    flex-direction: column
+    input
+      max-width: 12rem
 </style>

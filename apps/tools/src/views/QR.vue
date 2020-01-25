@@ -76,5 +76,4 @@
   #qr-data
     font-size: 1rem
     padding: .25rem .5rem
-    width: 100%
 </style>
