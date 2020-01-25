@@ -5,7 +5,9 @@
         id="droprate"
         v-model.number="droprate"
         autofocus
+        type="number"
         inputmode="decimal"
+        step="any"
     >
     <label for="droprate">%</label>
 
@@ -13,7 +15,9 @@
     <input
         id="nrattempts"
         v-model.number="nrattempts"
+        type="number"
         inputmode="decimal"
+        step="any"
     >
     <div></div>
 
@@ -23,6 +27,8 @@
     <input
         id="chance"
         readonly
+        type="number"
+        step="any"
         :value="chance(droprate, nrattempts)"
     >
     <label for="droprate">%</label>
@@ -31,6 +37,8 @@
     <input
         id="perc95"
         readonly
+        type="number"
+        step="any"
         :value="percentile(droprate, 95)"
     >
     <div></div>
@@ -39,6 +47,8 @@
     <input
         id="perc99"
         readonly
+        type="number"
+        step="any"
         :value="percentile(droprate, 99)"
     >
     <div></div>
