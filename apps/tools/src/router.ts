@@ -17,6 +17,12 @@ const router = new Router({
       meta: { title: 'tools' },
     },
     {
+      path: '/html',
+      name: 'html',
+      component: () => import('./views/Html.vue'),
+      meta: { title: 'html' },
+    },
+    {
       path: '/qr',
       name: 'qr',
       component: () => import('./views/QR.vue'),

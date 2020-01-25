@@ -7,6 +7,10 @@
         <template v-slot:link-text>Generate Password</template>
         Securely generates a password using <code>window.crypto</code>
       </ToolListItem>
+      <ToolListItem tool="html">
+        <template v-slot:link-text>HTML Elements</template>
+        Demonstrations of assorted HTML elements.
+      </ToolListItem>
       <ToolListItem tool="qr">
         <template v-slot:link-text>QR Codes</template>
         Create QR codes
