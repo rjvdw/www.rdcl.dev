@@ -9,6 +9,8 @@ layout: main.hbs
 * [Quarkus - Datasources](https://quarkus.io/guides/datasource)
 * [Quarkus - Writing JSON REST Services](https://quarkus.io/guides/rest-json)
 * [Quarkus - Testing Your Application](https://quarkus.io/guides/getting-started-testing)
+* [Quarkus - Simplified MongoDB with Panache](https://quarkus.io/guides/mongodb-panache)
+* [Quarkus - Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
 
 ## CSS Tricks ([css-tricks.com](https://css-tricks.com))
 
