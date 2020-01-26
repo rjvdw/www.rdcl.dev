@@ -19,3 +19,9 @@ layout: main.hbs
 ## Testing
 
 * [Write tests that spark flow](https://www.sebastian-daschner.com/talks/tests-flow/)
+
+## Docker
+
+* [Overview of Docker Compose](https://docs.docker.com/compose/)
+* [mongo - Docker Hub](https://hub.docker.com/_/mongo)
+* [postgres - Docker Hub](https://hub.docker.com/_/postgres)
