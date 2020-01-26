@@ -27,3 +27,10 @@ layout: main.hbs
 * [Overview of Docker Compose](https://docs.docker.com/compose/)
 * [mongo - Docker Hub](https://hub.docker.com/_/mongo)
 * [postgres - Docker Hub](https://hub.docker.com/_/postgres)
+
+## Setting up jenv
+
+* [Configuring jenv the right way | Bring Developer](https://developer.bring.com/blog/configuring-jenv-the-right-way/)
+* [macos - How to install Java 8 on Mac - Stack Overflow](https://stackoverflow.com/a/28635465)
+* [Mac OS X and multiple Java versions - Stack Overflow](https://stackoverflow.com/a/29195815)
+* [Java - maven ignoring jenv settings - Stack Overflow](https://stackoverflow.com/a/37466252)
