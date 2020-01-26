@@ -6,3 +6,4 @@ layout: main.hbs
 * [Programming](./programming)
 * [Hobbying](./hobbying)
 * [Frameworks](./frameworks)
+* [Exercise](./exercise)
