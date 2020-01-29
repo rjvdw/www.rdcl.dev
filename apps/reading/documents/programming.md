@@ -11,6 +11,10 @@ layout: main.hbs
 * [Quarkus - Testing Your Application](https://quarkus.io/guides/getting-started-testing)
 * [Quarkus - Simplified MongoDB with Panache](https://quarkus.io/guides/mongodb-panache)
 * [Quarkus - Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
+* [Quarkus - Using Eclipse Vert.x](https://quarkus.io/guides/vertx)
+## Frameworks
+
+* [Vert.x](https://vertx.io)
 
 ## CSS Tricks ([css-tricks.com](https://css-tricks.com))
 
