@@ -1,0 +1,11 @@
+{
+  "name": "@rdcl-dev/agenda",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "axios": "^0.19.2",
+    "jsdom": "^16.1.0"
+  },
+  "devDependencies": {}
+}
