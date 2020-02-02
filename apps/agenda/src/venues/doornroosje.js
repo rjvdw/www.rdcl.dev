@@ -1,5 +1,8 @@
 import fetch from 'node-fetch'
+import { AllHtmlEntities } from 'html-entities'
 import { fail, success } from '../util'
+
+const entities = new AllHtmlEntities()
 
 export async function fetchAgenda() {
   try {
@@ -13,8 +16,13 @@ export async function fetchAgenda() {
     const matches = text.matchAll(/<script type="?application\/ld\+json"?>(.*?)<\/script>/g)
 
     const agenda = []
-    for (const [, data] of matches) {
-      agenda.push(JSON.parse(data))
+    for (const [, dataStr] of matches) {
+      const data = JSON.parse(entities.decode(dataStr.replace('\\r\\n', '\\n')))
+
+      if (data['@type'] === 'Event') {
+        data.description = data.description.replace(/^"|"$/g, '')
+        agenda.push(data)
+      }
     }
 
     return success({ agenda })

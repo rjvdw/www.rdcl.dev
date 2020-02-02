@@ -7,6 +7,10 @@
         <template v-slot:link-text>Generate Password</template>
         Securely generates a password using <code>window.crypto</code>
       </ToolListItem>
+      <ToolListItem tool="agenda">
+        <template v-slot:link-text>Concert Agenda</template>
+        An overview of upcoming events at popular venues in the Netherlands.
+      </ToolListItem>
       <ToolListItem tool="html">
         <template v-slot:link-text>HTML Elements</template>
         Demonstrations of assorted HTML elements.

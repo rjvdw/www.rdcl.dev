@@ -17,6 +17,12 @@ const router = new Router({
       meta: { title: 'tools' },
     },
     {
+      path: '/agenda',
+      name: 'agenda',
+      component: () => import('./views/Agenda.vue'),
+      meta: { title: 'concert agenda' },
+    },
+    {
       path: '/html',
       name: 'html',
       component: () => import('./views/Html.vue'),

@@ -13,10 +13,8 @@
 <style lang="sass">
   @import '@rdcl-dev/shared-styles/src/main.sass'
 
-  nav, main
-    max-width: $page-max-width
-    margin: 0 auto
-    padding: 0
+  body
+    padding: .5rem
 
   nav
     margin-bottom: 2rem
