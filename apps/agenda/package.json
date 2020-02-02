@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "rimraf functions && rollup -c"
+    "build": "rimraf functions && rollup -c",
+    "clean": "rimraf functions"
   },
   "dependencies": {
     "node-fetch": "^2.6.0"

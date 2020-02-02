@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "webpack-dev-server",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@rdcl-dev/canvas-util": "^0.1.0",
@@ -15,6 +16,7 @@
     "css-loader": "^3.4.0",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.11.0",
+    "rimraf": "^3.0.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.1.2",
     "ts-loader": "^6.0.0",

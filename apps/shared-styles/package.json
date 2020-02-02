@@ -8,10 +8,12 @@
   ],
   "main": "dist/main.css",
   "scripts": {
-    "build": "node-sass src/main.sass dist/main.css"
+    "build": "node-sass src/main.sass dist/main.css",
+    "clean": "rimraf dist"
   },
   "dependencies": {},
   "devDependencies": {
-    "node-sass": "^4.12.0"
+    "node-sass": "^4.12.0",
+    "rimraf": "^3.0.1"
   }
 }

@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "gulp"
+    "build": "gulp",
+    "clean": "gulp clean"
   },
   "dependencies": {
     "@rdcl-dev/agenda": "0.1.0",
