@@ -69,11 +69,13 @@ import { Orderings } from '@/types/agenda/types'
         }
 
         this.venues = (await response.json() as VenuesResponse).venues
+          .sort((a, b) => a.name.localeCompare(b.name))
+
         this.filter = {
           ...this.filter,
           venues: Object.fromEntries(this.venues.map(venue => [venue.key, true]))
         }
-      } catch(err) {
+      } catch (err) {
         console.error(err)
         this.errors.push(err)
       } finally {
