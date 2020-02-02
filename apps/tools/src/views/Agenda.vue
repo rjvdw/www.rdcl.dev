@@ -1,3 +1,4 @@
+import { Orderings } from '@/types/agenda/types'
 <template>
   <div>
     <h1>Concert Agenda</h1>
@@ -7,7 +8,6 @@
         :venues="venues"
         :expanded="filtersExpanded"
         @toggle="filtersExpanded = !filtersExpanded"
-        tabindex="0"
     />
 
     <p v-if="loading > 0">Een moment geduld, ik ben alles aan het ophalen ⏳.</p>
@@ -30,7 +30,7 @@
   import { Component, Vue } from 'vue-property-decorator'
   import { Event } from '@/types/agenda/schema'
   import EventCard from '@/components/agenda/EventCard.vue'
-  import { Filter, Ordering, Orderings, VENUE_NAMES, Venues } from '@/types/agenda/types'
+  import { Filter, ORDERINGS, Orderings, VENUE_NAMES, Venues } from '@/types/agenda/types'
   import FilterMenu from '@/components/agenda/FilterMenu.vue'
 
   type Response = { agenda: Event[] }
@@ -42,15 +42,9 @@
   export default class Agenda extends Vue {
     private readonly venues: Venues[] = Object.values(Venues)
     private eventsByVenue: { [venue in Venues]?: CollapsibleEvent[] } = {}
-    private activeOrdering: Orderings = Orderings.DATE_ASC
-    private readonly orderings: { [key in Orderings]: Ordering } = {
-      [Orderings.DATE_ASC]: (a, b) => a.startDate.localeCompare(b.startDate),
-      [Orderings.DATE_DESC]: (a, b) => b.startDate.localeCompare(a.startDate),
-      [Orderings.PRICE_ASC]: (a, b) => a.offers.price.localeCompare(b.offers.price),
-      [Orderings.PRICE_DESC]: (a, b) => b.offers.price.localeCompare(a.offers.price),
-    }
     private filtersExpanded: boolean = false
     private filter: Filter = {
+      ordering: Orderings.DATE_ASC,
       venues: {
         // [Venues.BOERDERIJ]: true,
         // [Venues.BOSUIL]: true,
@@ -106,7 +100,7 @@
 
           return true
         })
-        .sort(this.orderings[this.activeOrdering])
+        .sort(ORDERINGS[this.filter.ordering])
     }
 
     toggle(event: CollapsibleEvent): void {

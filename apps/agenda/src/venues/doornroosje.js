@@ -21,6 +21,7 @@ export async function fetchAgenda() {
 
       if (data['@type'] === 'Event') {
         data.description = data.description.replace(/^"|"$/g, '')
+        data.offers.price = String(data.offers.price)
         agenda.push(data)
       }
     }
