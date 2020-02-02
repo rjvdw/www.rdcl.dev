@@ -9,13 +9,18 @@ const PROJECT_ROOT = path.resolve(__dirname, '..', '..')
 const APPS_DIR = `${ PROJECT_ROOT }/apps`
 const PUBLIC_DIR = `${ APPS_DIR }/www/public`
 const DIST_DIR = `${ PROJECT_ROOT }/dist`
-const APPS = [
+const FUNCTIONS_DIR = `${ PROJECT_ROOT }/functions`
+
+const APP_DIST_DIRS = [
   ['fourier', 'dist'],
   ['reading', '_site'],
   ['shared-styles', 'dist'],
   ['tools', 'dist'],
-]
-const APP_DIST_DIRS = APPS.map(into`${ APPS_DIR }/{}/{}`)
+].map(into`${ APPS_DIR }/{}/{}`)
+
+const FUNCTIONS_DIST_DIRS = [
+  ['agenda', 'functions'],
+].map(into`${ APPS_DIR }/{}/{}`)
 
 gulp.task('clean', () => gulp
   .src([DIST_DIR], { read: false, allowEmpty: true })
@@ -29,11 +34,20 @@ gulp.task('collect:public', () => gulp
 
 gulp.task('collect:dists', () => gulp
   .src(APP_DIST_DIRS.map(into`{}/**/*`), { base: APPS_DIR })
-  .pipe(rename(stripDistFromDirName))
+  .pipe(stripDirName('dist', '_site'))
   .pipe(gulp.dest(DIST_DIR))
 )
 
-gulp.task('collect', gulp.parallel('collect:public', 'collect:dists'))
+gulp.task('collect:functions', () => gulp
+  .src(FUNCTIONS_DIST_DIRS.map(into`{}/**/*`), { base: APPS_DIR })
+  .pipe(rename(source => {
+    // All functions should end up in dist/functions. This means all functions should have unique names!
+    source.dirname = source.dirname.replace(/.*\/functions\/?/, '')
+  }))
+  .pipe(gulp.dest(`${ FUNCTIONS_DIR }`))
+)
+
+gulp.task('collect', gulp.parallel('collect:public', 'collect:dists', 'collect:functions'))
 
 gulp.task('default', gulp.series('clean', 'collect'))
 
@@ -49,6 +63,10 @@ function into(strings, ...vars) {
     : template.replace('{}', values)
 }
 
-function stripDistFromDirName(source) {
-  source.dirname = source.dirname.replace(/^([^\/]+)\/(?:dist|_site)/, '$1')
+function stripDirName(...dirs) {
+  const re = new RegExp(`^([^/]+)/(?:${ dirs.join('|') })`)
+
+  return rename(source => {
+    source.dirname = source.dirname.replace(re, '$1')
+  })
 }

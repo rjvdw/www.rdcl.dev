@@ -1,19 +1,22 @@
+import { fetchAgenda as fetchDoornroosje } from './venues/doornroosje'
+
 export async function handler(event, context) {
   if (event.httpMethod !== 'GET') {
     return respond(405, { reason: 'Method not allowed' })
   }
 
-  let fetch
-  switch (event.path) {
-    case 'doornroosje':
-      fetch = await import('./venues/doornroosje').fetch
-      break
-    default:
-      return respond(404, { reason: `Path '${ event.path }' not found` })
+  const { venue } = event.queryStringParameters
+  if (!venue) {
+    return respond(400, { reason: "Missing required query string parameter 'venue'" })
   }
 
-  const { status, data } = await fetch()
-  return respond(status, data)
+  switch (venue) {
+    case 'doornroosje':
+      const { status, data } = await fetchDoornroosje()
+      return respond(status, data)
+    default:
+      return respond(404, { reason: `Unknown venue '${ venue }'` })
+  }
 }
 
 function respond(status, data) {

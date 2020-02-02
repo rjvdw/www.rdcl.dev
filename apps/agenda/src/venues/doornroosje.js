@@ -1,27 +1,20 @@
-import axios from 'axios'
-import { JSDOM } from 'jsdom'
+import fetch from 'node-fetch'
 import { fail, success } from '../util'
 
-export async function fetch() {
+export async function fetchAgenda() {
   try {
-    const { data } = await axios('https://www.doornroosje.nl/agenda/')
-    const dom = new JSDOM(data)
-    const agendaElement = dom.window.document.querySelector('#agenda > .items.list')
+    const response = await fetch('https://www.doornroosje.nl/agenda/')
 
-    if (!agendaElement) {
-      return fail(500, 'Could not find "#agenda > .items.list"')
+    if (response.status !== 200) {
+      return fail(503, `'https://www.doornroosje.nl/agenda/' responded with ${ response.status }`)
     }
 
+    const text = await response.text()
+    const matches = text.matchAll(/<script type="?application\/ld\+json"?>(.*?)<\/script>/g)
+
     const agenda = []
-    for (const item of agendaElement.children) {
-      const ldScriptElement = item.querySelector('script[type="application/ld+json"]')
-
-      if (!ldScriptElement) {
-        console.warn(`Item '<${ item.tagName.toLowerCase() } data-id="${ item.dataset.id }"/>' does not seem to contain linked data`)
-        continue
-      }
-
-      agenda.push(JSON.parse(ldScriptElement.innerHTML.replace(/\\r\\n/g, '\\n')))
+    for (const [, data] of matches) {
+      agenda.push(JSON.parse(data))
     }
 
     return success({ agenda })

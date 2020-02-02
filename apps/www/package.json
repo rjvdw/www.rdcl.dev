@@ -6,6 +6,7 @@
     "build": "gulp"
   },
   "dependencies": {
+    "@rdcl-dev/agenda": "0.1.0",
     "@rdcl-dev/fourier": "0.1.0",
     "@rdcl-dev/reading": "0.1.0",
     "@rdcl-dev/tools": "0.1.0"

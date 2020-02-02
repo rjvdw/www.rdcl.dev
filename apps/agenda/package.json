@@ -2,10 +2,16 @@
   "name": "@rdcl-dev/agenda",
   "version": "0.1.0",
   "private": true,
-  "scripts": {},
-  "dependencies": {
-    "axios": "^0.19.2",
-    "jsdom": "^16.1.0"
+  "scripts": {
+    "build": "rimraf functions && rollup -c"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.0",
+    "rimraf": "^3.0.1",
+    "rollup": "^1.31.0"
+  }
 }
