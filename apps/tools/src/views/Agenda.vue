@@ -30,7 +30,7 @@
   import { Component, Vue } from 'vue-property-decorator'
   import { Event } from '@/types/agenda/schema'
   import EventCard from '@/components/agenda/EventCard.vue'
-  import { Filter, Ordering, Orderings, Venues } from '@/types/agenda/types'
+  import { Filter, Ordering, Orderings, VENUE_NAMES, Venues } from '@/types/agenda/types'
   import FilterMenu from '@/components/agenda/FilterMenu.vue'
 
   type Response = { agenda: Event[] }
@@ -52,7 +52,11 @@
     private filtersExpanded: boolean = false
     private filter: Filter = {
       venues: {
+        // [Venues.BOERDERIJ]: true,
+        // [Venues.BOSUIL]: true,
         [Venues.DOORNROOSJE]: true,
+        // [Venues.NULDERTIEN]: true,
+        // [Venues.PATRONAAT]: true,
       },
     }
     private loading: number = 0
@@ -72,7 +76,7 @@
             const response = await fetch(`/.netlify/functions/get_venue?venue=${ venue }`)
 
             if (!response.ok) {
-              this.errors.push(`Kon geen resultaten ophalen voor ${ venue }`)
+              this.errors.push(`Kon geen resultaten ophalen voor ${ VENUE_NAMES[venue] }`)
               return
             }
 
