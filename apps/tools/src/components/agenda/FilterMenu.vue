@@ -18,7 +18,7 @@
               class="filters__venue"
               v-for="venue in venues"
           >
-            <input type="checkbox" v-model="filter.venues[venue]"> {{ venueNames[venue] }}
+            <input type="checkbox" v-model="filter.venues[venue.key]"> {{ venue.name }}
           </label>
         </div>
       </section>
@@ -42,16 +42,13 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator'
-  import { Filter, ORDERINGS, VENUE_NAMES, Venues } from '@/types/agenda/types'
+  import { Filter, ORDERINGS, Venue } from '@/types/agenda/types'
 
   @Component
   export default class FilterMenu extends Vue {
     @Prop(Object) private filter!: Filter
-    @Prop(Array) private venues!: Venues[]
+    @Prop(Array) private venues!: Venue[]
     @Prop(Boolean) private expanded!: boolean
-
-    // noinspection JSUnusedLocalSymbols
-    private readonly venueNames = VENUE_NAMES
 
     // noinspection JSUnusedLocalSymbols
     private readonly orderings = ORDERINGS

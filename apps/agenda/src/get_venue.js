@@ -1,4 +1,4 @@
-import { fetchAgenda as fetchDoornroosje } from './venues/doornroosje'
+import doornroosje from './venues/doornroosje'
 
 export async function handler(event, context) {
   if (event.httpMethod !== 'GET') {
@@ -7,12 +7,16 @@ export async function handler(event, context) {
 
   const { venue } = event.queryStringParameters
   if (!venue) {
-    return respond(400, { reason: "Missing required query string parameter 'venue'" })
+    return respond(200, {
+      venues: [
+        getVenue(doornroosje),
+      ],
+    })
   }
 
   switch (venue) {
-    case 'doornroosje':
-      const { status, data } = await fetchDoornroosje()
+    case doornroosje.key:
+      const { status, data } = await doornroosje.fetch()
       return respond(status, data)
     default:
       return respond(404, { reason: `Unknown venue '${ venue }'` })
@@ -27,4 +31,8 @@ function respond(status, data) {
     },
     body: JSON.stringify(data),
   }
+}
+
+function getVenue({ key, name }) {
+  return { key, name }
 }

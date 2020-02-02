@@ -18,7 +18,7 @@ import { Orderings } from '@/types/agenda/types'
 
     <Event
         v-for="event in events"
-        :key="event.name + event.startDate + event.venue"
+        :key="event.name + event.startDate + event.venue.key"
         :event="event"
         :expanded="event.expanded"
         @toggle="toggle(event)"
@@ -30,55 +30,76 @@ import { Orderings } from '@/types/agenda/types'
   import { Component, Vue } from 'vue-property-decorator'
   import { Event } from '@/types/agenda/schema'
   import EventCard from '@/components/agenda/EventCard.vue'
-  import { Filter, ORDERINGS, Orderings, VENUE_NAMES, Venues } from '@/types/agenda/types'
+  import { Filter, ORDERINGS, Orderings, Venue } from '@/types/agenda/types'
   import FilterMenu from '@/components/agenda/FilterMenu.vue'
 
-  type Response = { agenda: Event[] }
-  type CollapsibleEvent = Event & { expanded?: boolean, venue: Venues }
+  type AgendaResponse = { agenda: Event[] }
+  type VenuesResponse = { venues: Venue[] }
+  type CollapsibleEvent = Event & { expanded?: boolean, venue: Venue }
 
   @Component({
     components: { FilterMenu, Event: EventCard }
   })
   export default class Agenda extends Vue {
-    private readonly venues: Venues[] = Object.values(Venues)
-    private eventsByVenue: { [venue in Venues]?: CollapsibleEvent[] } = {}
+    private venues: Venue[] = []
+    private eventsByVenue: { [venue: string]: CollapsibleEvent[] } = {}
     private filtersExpanded: boolean = false
     private filter: Filter = {
       ordering: Orderings.DATE_ASC,
-      venues: {
-        // [Venues.BOERDERIJ]: true,
-        // [Venues.BOSUIL]: true,
-        [Venues.DOORNROOSJE]: true,
-        // [Venues.NULDERTIEN]: true,
-        // [Venues.PATRONAAT]: true,
-      },
+      venues: {},
     }
     private loading: number = 0
     private errors: string[] = []
 
-    mounted() {
-      this.fetchData()
+    async mounted() {
+      await this.fetchVenues()
+      await this.fetchEvents()
     }
 
-    private async fetchData() {
+    private async fetchVenues() {
       try {
-        this.loading = this.venues.length
+        this.loading += 1
+        this.errors = []
+
+        const response = await fetch('/.netlify/functions/get_venue')
+
+        if (!response.ok) {
+          this.errors.push('Kon lijst van zalen niet ophalen')
+          return
+        }
+
+        this.venues = (await response.json() as VenuesResponse).venues
+        this.filter = {
+          ...this.filter,
+          venues: Object.fromEntries(this.venues.map(venue => [venue.key, true]))
+        }
+      } catch(err) {
+        console.error(err)
+        this.errors.push(err)
+      } finally {
+        this.loading -= 1
+      }
+    }
+
+    private async fetchEvents() {
+      try {
+        this.loading += this.venues.length
         this.errors = []
 
         await Promise.all(this.venues.map(async venue => {
           try {
-            const response = await fetch(`/.netlify/functions/get_venue?venue=${ venue }`)
+            const response = await fetch(`/.netlify/functions/get_venue?venue=${ venue.key }`)
 
             if (!response.ok) {
-              this.errors.push(`Kon geen resultaten ophalen voor ${ VENUE_NAMES[venue] }`)
+              this.errors.push(`Kon geen resultaten ophalen voor ${ venue.name }`)
               return
             }
 
-            const agenda = (await response.json() as Response).agenda
+            const agenda = (await response.json() as AgendaResponse).agenda
 
             this.eventsByVenue = {
               ...this.eventsByVenue,
-              [venue]: agenda.map(event => ({ ...event, venue })),
+              [venue.key]: agenda.map(event => ({ ...event, venue })),
             }
           } finally {
             this.loading -= 1
@@ -94,7 +115,7 @@ import { Orderings } from '@/types/agenda/types'
       return Object.values(this.eventsByVenue)
         .flat()
         .filter((event: CollapsibleEvent) => {
-          if (!this.filter.venues[event.venue]) {
+          if (!this.filter.venues[event.venue.key]) {
             return false
           }
 
@@ -105,7 +126,7 @@ import { Orderings } from '@/types/agenda/types'
 
     toggle(event: CollapsibleEvent): void {
       this.eventsByVenue = {
-        [event.venue]: this.eventsByVenue[event.venue]!
+        [event.venue.key]: this.eventsByVenue[event.venue.key]!
           .map(item => item === event ? { ...item, expanded: !item.expanded } : item)
       }
     }
