@@ -1,11 +1,11 @@
 import { Event } from '@/types/agenda/schema'
 
-
 export type Venue = {
   key: string
   name: string
 }
 
+export type CollapsibleEvent = Event & { expanded?: boolean, venue: Venue }
 
 export type Ordering = (a: Event, b: Event) => number
 
@@ -22,7 +22,6 @@ export const ORDERINGS: { [key in Orderings]: Ordering } = {
   [Orderings.PRICE_ASC]: (a, b) => parseFloat(a.offers.price) - parseFloat(b.offers.price),
   [Orderings.PRICE_DESC]: (a, b) => parseFloat(b.offers.price) - parseFloat(a.offers.price),
 }
-
 
 export type Filter = {
   ordering: Orderings

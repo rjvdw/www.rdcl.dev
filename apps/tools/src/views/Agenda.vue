@@ -6,6 +6,7 @@ import { Orderings } from '@/types/agenda/types'
     <FilterMenu
         :filter="filter"
         :venues="venues"
+        :eventsByVenue="eventsByVenue"
         :expanded="filtersExpanded"
         @toggle="filtersExpanded = !filtersExpanded"
     />
@@ -30,12 +31,11 @@ import { Orderings } from '@/types/agenda/types'
   import { Component, Vue } from 'vue-property-decorator'
   import { Event } from '@/types/agenda/schema'
   import EventCard from '@/components/agenda/EventCard.vue'
-  import { Filter, ORDERINGS, Orderings, Venue } from '@/types/agenda/types'
+  import { CollapsibleEvent, Filter, ORDERINGS, Orderings, Venue } from '@/types/agenda/types'
   import FilterMenu from '@/components/agenda/FilterMenu.vue'
 
   type AgendaResponse = { agenda: Event[] }
   type VenuesResponse = { venues: Venue[] }
-  type CollapsibleEvent = Event & { expanded?: boolean, venue: Venue }
 
   @Component({
     components: { FilterMenu, Event: EventCard }

@@ -18,7 +18,8 @@
               class="filters__venue"
               v-for="venue in venues"
           >
-            <input type="checkbox" v-model="filter.venues[venue.key]"> {{ venue.name }}
+            <input type="checkbox" v-model="filter.venues[venue.key]">
+            {{ venue.name }} ({{ eventsByVenue[venue.key].length }})
           </label>
         </div>
       </section>
@@ -28,7 +29,7 @@
 
         <label @click.stop>
           Sorteer op
-          <select v-model="filter.ordering">
+          <select v-model="filter.ordering" class="filters__orderings">
             <option value="date ascending">Datum (oplopend)</option>
             <option value="date descending">Datum (aflopend)</option>
             <option value="price ascending">Prijs (oplopend)</option>
@@ -42,13 +43,14 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator'
-  import { Filter, ORDERINGS, Venue } from '@/types/agenda/types'
+  import { CollapsibleEvent, Filter, ORDERINGS, Venue } from '@/types/agenda/types'
 
   @Component
   export default class FilterMenu extends Vue {
     @Prop(Object) private filter!: Filter
     @Prop(Array) private venues!: Venue[]
     @Prop(Boolean) private expanded!: boolean
+    @Prop(Object) private eventsByVenue!: { [venue: string]: CollapsibleEvent[] }
 
     // noinspection JSUnusedLocalSymbols
     private readonly orderings = ORDERINGS
@@ -93,4 +95,7 @@
       border: thin solid #aaa
       padding: .5rem
       margin-top: 1rem
+
+    &__orderings
+      font-size: 1rem
 </style>
