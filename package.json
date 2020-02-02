@@ -6,9 +6,11 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "build": "lerna run build --stream",
-    "clean": "lerna run clean --stream"
+    "clean": "lerna run clean --stream",
+    "netlify:dev": "netlify dev"
   },
   "devDependencies": {
-    "lerna": "^3.13.2"
+    "lerna": "^3.13.2",
+    "netlify-cli": "^2.31.0"
   }
 }
