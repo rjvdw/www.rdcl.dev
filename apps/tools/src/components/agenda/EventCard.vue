@@ -11,7 +11,8 @@
       <p class="event__tickets">
         Kaartjes:
         <a :href="event.offers.url" target="_blank" rel="noopener noreferrer" @click.stop>
-          {{ availability(event) }} (prijs: {{ price(event) }})
+          {{ availability(event) }}
+          <span v-if="event.offers.price">(prijs: {{ price(event) }})</span>
         </a>
       </p>
 

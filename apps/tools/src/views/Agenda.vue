@@ -128,6 +128,7 @@ import { Orderings } from '@/types/agenda/types'
 
     toggle(event: CollapsibleEvent): void {
       this.eventsByVenue = {
+        ...this.eventsByVenue,
         [event.venue.key]: this.eventsByVenue[event.venue.key]!
           .map(item => item === event ? { ...item, expanded: !item.expanded } : item)
       }
