@@ -12,9 +12,16 @@ layout: main.hbs
 * [Quarkus - Simplified MongoDB with Panache](https://quarkus.io/guides/mongodb-panache)
 * [Quarkus - Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
 * [Quarkus - Using Eclipse Vert.x](https://quarkus.io/guides/vertx)
+
 ## Frameworks
 
+* [Nuxt.js](https://nuxtjs.org)
+* [11ty](https://www.11ty.dev)
 * [Vert.x](https://vertx.io)
+
+## Auth
+
+* [Authorization Code Request - OAuth 2.0 Servers](https://www.oauth.com/oauth2-servers/access-tokens/authorization-code-request/)
 
 ## CSS Tricks ([css-tricks.com](https://css-tricks.com))
 
