@@ -13,6 +13,13 @@ layout: main.hbs
 * [Quarkus - Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
 * [Quarkus - Using Eclipse Vert.x](https://quarkus.io/guides/vertx)
 
+## Play ([playframework.com](https://www.playframework.com))
+
+* [Scala Dependency Injection - 2.8.x](https://www.playframework.com/documentation/2.8.x/ScalaDependencyInjection)
+* [Scala Json - 2.8.x](https://www.playframework.com/documentation/2.8.x/ScalaJson)
+* [Scala Testing with Scala Test - 2.8.x](https://www.playframework.com/documentation/2.8.x/ScalaTestingWithScalaTest)
+* [Scala Routing - 2.8.x ](https://www.playframework.com/documentation/2.8.x/ScalaRouting)
+
 ## Frameworks
 
 * [Nuxt.js](https://nuxtjs.org)
