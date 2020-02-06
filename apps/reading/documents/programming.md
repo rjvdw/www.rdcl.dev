@@ -32,6 +32,7 @@ layout: main.hbs
 ## Testing
 
 * [Write tests that spark flow](https://www.sebastian-daschner.com/talks/tests-flow/)
+* [ScalaTest 3.0.1 - org.scalatest.MustMatchers](http://doc.scalatest.org/3.0.1-2.12/org/scalatest/MustMatchers.html)
 
 ## Docker
 
