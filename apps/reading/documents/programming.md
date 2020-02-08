@@ -25,6 +25,7 @@ layout: main.hbs
 * [Nuxt.js](https://nuxtjs.org)
 * [11ty](https://www.11ty.dev)
 * [Vert.x](https://vertx.io)
+* [Advice from a GraphQL Expert](https://www.netlify.com/blog/2020/01/21/advice-from-a-graphql-expert/)
 
 ## Auth
 
@@ -35,6 +36,10 @@ layout: main.hbs
 * [A Complete Guide to Grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
 * [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 * [A Guide to Custom Elements for React Developers](https://css-tricks.com/a-guide-to-custom-elements-for-react-developers/)
+
+## Accessibility
+
+* [Building an accessible autocomplete control](https://adamsilver.io/articles/building-an-accessible-autocomplete-control/)
 
 ## Testing
 
