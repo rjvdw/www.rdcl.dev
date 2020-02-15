@@ -48,6 +48,7 @@ layout: main.hbs
 
 ## CI/CD
 * [GitLab CI/CD # `artifacts:reports`](https://docs.gitlab.com/ee/ci/yaml/README.html#artifactsreports)
+* [Argo CD](https://argoproj.github.io/argo-cd)
 
 ## Docker
 
