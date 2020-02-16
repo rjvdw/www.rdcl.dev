@@ -24,7 +24,7 @@ title: rdcl.dev
 
     if (isExternalLink(el)) {
       el.target = '_blank'
-    } else {
+    } else if (el.pathname.startsWith('/reading/')) {
       event.preventDefault()
       history.pushState(null, '', el.href)
       fetchPage(el)
