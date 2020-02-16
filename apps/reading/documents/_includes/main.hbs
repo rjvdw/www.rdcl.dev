@@ -14,5 +14,45 @@ title: rdcl.dev
   <a href="{{ url "/" }}">Home</a>
 </nav>
 <main>{{{ content }}}</main>
+<script type="module">
+  const main = document.body.querySelector('main')
+
+  document.body.addEventListener('click', (event) => {
+    let el = event.target
+    while (el !== document.body && el.tagName !== 'A') el = el.parentElement
+    if (el.tagName !== 'A') return
+
+    if (isExternalLink(el)) {
+      el.target = '_blank'
+    } else {
+      event.preventDefault()
+      history.pushState(null, '', el.href)
+      fetchPage(el)
+    }
+  })
+
+  window.addEventListener('popstate', (event) => {
+    console.log(event)
+    fetchPage(location)
+  })
+
+  function isExternalLink(a) {
+    return a.hostname && a.hostname !== location.hostname
+  }
+
+  async function fetchPage(location) {
+    const result = await fetch(location.href)
+    const content = await result.text()
+
+    main.innerHTML = parse(content)
+  }
+
+  function parse(content) {
+    const start = content.indexOf('<main>') + '<main>'.length
+    const end = content.indexOf('</main>', start)
+
+    return content.substring(start, end)
+  }
+</script>
 </body>
 </html>
