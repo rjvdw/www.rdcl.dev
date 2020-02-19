@@ -31,7 +31,13 @@ layout: main.hbs
 
 * [Authorization Code Request - OAuth 2.0 Servers](https://www.oauth.com/oauth2-servers/access-tokens/authorization-code-request/)
 
-## CSS Tricks ([css-tricks.com](https://css-tricks.com))
+## CSS
+
+* [How Big Is That Box? Understanding Sizing In CSS Layout](https://www.smashingmagazine.com/2018/01/understanding-sizing-css-layout/)
+* [Old CSS, new CSS](https://eev.ee/blog/2020/02/01/old-css-new-css/)
+* [While You Weren’t Looking, CSS Gradients Got Better](https://css-tricks.com/while-you-werent-looking-css-gradients-got-better/)
+
+### CSS Tricks Guides ([css-tricks.com](https://css-tricks.com))
 
 * [A Complete Guide to Grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
 * [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
