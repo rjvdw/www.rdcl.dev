@@ -1,3 +1,7 @@
+---
+layout: main.hbs
+---
+
 # Pangea Link Dump
 
 ## Database Design
