@@ -8,7 +8,7 @@ layout: main.hbs
 
 ### Idee #1 -- NoSQL (Mongo)
 
-```
+```yaml
 link_by_uuid:
   <UUID>: <Link>
 
