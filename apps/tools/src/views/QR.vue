@@ -24,7 +24,7 @@
     private readonly qrOutputWidth: number = 500
     private readonly qrOutputHeight: number = 500
 
-    qrData = ''
+    qrData = QR.getQrDataFromQueryString()
 
     get qrOutputCanvas(): HTMLCanvasElement {
       return this.$refs['qr-output'] as HTMLCanvasElement
@@ -37,16 +37,32 @@
     }
 
     mounted() {
-      this.reset()
+      this.update(false)
+      window.addEventListener('popstate', this.handlePopState)
     }
 
-    update() {
+    destroyed() {
+      window.removeEventListener('popstate', this.handlePopState)
+    }
+
+    private handlePopState(event: PopStateEvent): void {
+      this.qrData = QR.getQrDataFromQueryString()
+      this.update(false)
+    }
+
+    update(replaceState = true) {
       if (this.qrData) {
+        if (replaceState) {
+          history.replaceState(history.state, '', `?qr=${ QR.encode(this.qrData) }`)
+        }
         qr.toCanvas(this.qrOutputCanvas, this.qrData, (err) => {
           if (err === null) return
           console.error(err)
         })
       } else {
+        if (replaceState) {
+          history.replaceState(history.state, '', '?')
+        }
         this.reset()
       }
     }
@@ -55,6 +71,33 @@
       this.qrOutputCanvas.width = this.qrOutputWidth
       this.qrOutputCanvas.height = this.qrOutputHeight
       this.qrOutputContext.clearRect(0, 0, this.qrOutputWidth, this.qrOutputHeight)
+    }
+
+    private static encode(str: string): string {
+      return encodeURIComponent(str)
+    }
+
+    private static decode(str: string): string {
+      return decodeURIComponent(str)
+    }
+
+    private static getQrDataFromQueryString(): string {
+      try {
+        if (location.search) {
+          const parts = location.search.substring(1).split(/[&;]/g)
+
+          for (const part of parts) {
+            if (part.startsWith('qr=')) {
+              console.log('trying to decode', part.substring(3))
+              return QR.decode(part.substring(3))
+            }
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+
+      return ''
     }
   }
 </script>
