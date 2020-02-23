@@ -12,6 +12,8 @@ layout: main.hbs
 * [Quarkus - Simplified MongoDB with Panache](https://quarkus.io/guides/mongodb-panache)
 * [Quarkus - Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
 * [Quarkus - Using Eclipse Vert.x](https://quarkus.io/guides/vertx)
+* [Quarkus - Using JWT RBAC](https://quarkus.io/guides/security-jwt)
+  * [Well secured and documented REST API with Eclipse Microprofile and Quarkus](https://kostenko.org/blog/2020/02/jwt-openapi-microprofile-quarkus.html)
 
 ## Play ([playframework.com](https://www.playframework.com))
 
@@ -30,6 +32,7 @@ layout: main.hbs
 ## Auth
 
 * [Authorization Code Request - OAuth 2.0 Servers](https://www.oauth.com/oauth2-servers/access-tokens/authorization-code-request/)
+* [JSON Web Tokens - jwt.io](https://jwt.io)
 
 ## CSS
 
