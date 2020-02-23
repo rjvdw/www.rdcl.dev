@@ -14,6 +14,7 @@ layout: main.hbs
 * [Quarkus - Using Eclipse Vert.x](https://quarkus.io/guides/vertx)
 * [Quarkus - Using JWT RBAC](https://quarkus.io/guides/security-jwt)
   * [Well secured and documented REST API with Eclipse Microprofile and Quarkus](https://kostenko.org/blog/2020/02/jwt-openapi-microprofile-quarkus.html)
+* [Quarkus - HTTP Reference #cors-filter](https://quarkus.io/guides/http-reference#cors-filter)
 
 ## Play ([playframework.com](https://www.playframework.com))
 
