@@ -72,3 +72,11 @@ layout: main.hbs
 * [macos - How to install Java 8 on Mac - Stack Overflow](https://stackoverflow.com/a/28635465)
 * [Mac OS X and multiple Java versions - Stack Overflow](https://stackoverflow.com/a/29195815)
 * [Java - maven ignoring jenv settings - Stack Overflow](https://stackoverflow.com/a/37466252)
+
+## Operating systems
+
+* [Rancher OS](https://rancher.com/rancher-os/)
+
+## Hosting
+
+* [Render](https://render.com)
