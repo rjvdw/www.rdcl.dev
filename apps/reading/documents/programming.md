@@ -66,6 +66,10 @@ layout: main.hbs
 * [mongo - Docker Hub](https://hub.docker.com/_/mongo)
 * [postgres - Docker Hub](https://hub.docker.com/_/postgres)
 
+## Kubernetes
+
+* [Installing Kubernetes with Minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/)
+
 ## Setting up jenv
 
 * [Configuring jenv the right way | Bring Developer](https://developer.bring.com/blog/configuring-jenv-the-right-way/)
