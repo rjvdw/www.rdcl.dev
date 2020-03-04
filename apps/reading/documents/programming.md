@@ -23,6 +23,11 @@ layout: main.hbs
 * [Scala Testing with Scala Test - 2.8.x](https://www.playframework.com/documentation/2.8.x/ScalaTestingWithScalaTest)
 * [Scala Routing - 2.8.x ](https://www.playframework.com/documentation/2.8.x/ScalaRouting)
 
+## Akka HTTP
+
+* [Akka HTTP](https://doc.akka.io/docs/akka-http/current/index.html)
+* [alpakka](https://github.com/akka/alpakka)
+
 ## Frameworks
 
 * [Nuxt.js](https://nuxtjs.org)
