@@ -11,10 +11,6 @@ export class RdclSidemenuItem extends LitElement {
     return css`
       :host {
         display: block;
-
-        --active-border-width: .35rem;
-        --base-size: 3rem;
-        --icon-size: 2.5rem;
       }
 
       .link {
@@ -31,7 +27,7 @@ export class RdclSidemenuItem extends LitElement {
         outline: none;
         transition: border-left-color 200ms ease-in-out;
       }
-      
+
       .link:hover {
         border-left-color: var(--highlight-color);
       }

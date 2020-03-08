@@ -1,7 +1,9 @@
-import { LitElement, html, customElement, css } from 'lit-element'
+import { LitElement, html, customElement, css, property } from 'lit-element'
 
 @customElement('rdcl-grid')
 export class RdclGrid extends LitElement {
+  @property({ type: String }) screenType
+
   static get styles() {
     // language=CSS
     return css`
@@ -10,7 +12,7 @@ export class RdclGrid extends LitElement {
         grid-template-areas: "header          header"
                              "sidemenu        main";
         grid-template-columns: auto 1fr;
-        grid-template-rows: 5rem 1fr;
+        grid-template-rows: auto 1fr;
       }
 
       [name="header"]::slotted(*) {
@@ -28,6 +30,16 @@ export class RdclGrid extends LitElement {
       :not([name])::slotted(*) {
         grid-area: main;
         padding: 1rem;
+      }
+
+      :host([screen-type="mobile"]) {
+        grid-template-areas: "header"
+                             "main";
+        grid-template-columns: 1fr;
+      }
+
+      :host([screen-type="mobile"]) [name="sidemenu"]::slotted(*) {
+        display: none;
       }
     `
   }

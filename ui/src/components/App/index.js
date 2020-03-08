@@ -1,1 +1,1 @@
-export { App } from './App.component'
+export { App } from './App.hoc'

@@ -5,5 +5,5 @@
  * @returns {false|undefined}
  */
 export function attr(b) {
-  return b ? false : undefined
+  return b ? '' : undefined
 }

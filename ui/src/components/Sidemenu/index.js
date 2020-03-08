@@ -1,1 +1,1 @@
-export { Sidemenu } from './Sidemenu.component'
+export { Sidemenu } from './Sidemenu.hoc'

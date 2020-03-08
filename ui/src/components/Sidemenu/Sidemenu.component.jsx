@@ -7,20 +7,6 @@ export class Sidemenu extends React.Component {
   constructor(props) {
     super(props)
     this.sidemenuRef = React.createRef()
-    this.state = { collapsed: false }
-
-    const storedJson = window.localStorage.getItem('sidemenu-state')
-    if (storedJson) {
-      try {
-        const stored = JSON.parse(storedJson)
-        if (stored.collapsed) {
-          this.state.collapsed = true
-        }
-      } catch (err) {
-        console.warn(err)
-        // ignore whatever is currently in local storage
-      }
-    }
   }
 
   componentDidMount() {
@@ -33,19 +19,18 @@ export class Sidemenu extends React.Component {
 
   handleEvent(event) {
     if (event.type === 'sidemenu-toggle') {
-      this.setState(({ collapsed }) => {
-        const state = { collapsed: !collapsed }
-        window.localStorage.setItem('sidemenu-state', JSON.stringify(state))
-        return state
-      })
+      this.props.toggle()
     }
   }
 
   render() {
+    const { collapsed, sidemenuProps } = this.props
+
     return (
       <rdcl-sidemenu
-        slot="sidemenu" ref={ this.sidemenuRef }
-        collapsed={ attr(this.state.collapsed) }
+        { ...sidemenuProps }
+        ref={ this.sidemenuRef }
+        collapsed={ attr(collapsed) }
       >
         <rdcl-sidemenu-item href="/" active>
           <IconHome slot="icon"/>
