@@ -1,3 +1,5 @@
+'use strict'
+
 exports.key = 'boerderij'
 exports.name = 'Cultuurpodium Boerderij'
 exports.fetch = async (req, res) => {

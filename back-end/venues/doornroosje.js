@@ -1,3 +1,5 @@
+'use strict'
+
 const fetch = require('node-fetch')
 const { AllHtmlEntities } = require('html-entities')
 
