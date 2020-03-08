@@ -10,7 +10,8 @@ const paths = {
   PUBLIC: path.resolve(__dirname, '../public'),
 }
 
-module.exports = {
+exports.paths = paths
+exports.base = {
   entry: path.resolve(paths.SRC, 'main.jsx'),
 
   output: {
@@ -53,6 +54,16 @@ module.exports = {
           { loader: 'css-loader' },
           { loader: 'sass-loader' },
         ],
+      },
+
+      {
+        test: /components\/.*\.svg$/,
+        use: ['@svgr/webpack'],
+      },
+
+      {
+        test: /elements\/.*\.svg$/,
+        use: ['file-loader'],
       },
     ],
   },

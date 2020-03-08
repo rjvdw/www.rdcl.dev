@@ -1,6 +1,6 @@
 'use strict'
 
-const base = require('./webpack.base')
+const { base } = require('./webpack.base')
 
 module.exports = {
   ...base,

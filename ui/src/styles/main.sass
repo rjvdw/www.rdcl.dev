@@ -1,0 +1,29 @@
+@import "vars"
+@import "base"
+@import "typography"
+
+#root
+  width: 100%
+  height: 100%
+
+  --theme-color: #{$theme-color}
+  --highlight-color: #{$highlight-color}
+
+.page-header
+  display: flex
+  color: #fff
+  font-family: $headers-font-family
+  font-size: 2rem
+  align-items: center
+  padding-left: 4rem
+
+rdcl-grid
+  width: 100%
+  height: 100%
+
+  --grid-border: #{$grid-border}
+  --grid-sidemenu-background: #{$grid-sidemenu-background-color}
+  --grid-sidemenu-toggle-background: #{$grid-sidemenu-toggle-background-color}
+  --grid-sidemenu-toggle-foreground: #{$grid-sidemenu-toggle-foreground-color}
+  --grid-sidemenu-item-background: #{$grid-sidemenu-item-background-color}
+  --grid-sidemenu-item-foreground: #{$grid-sidemenu-item-foreground-color}

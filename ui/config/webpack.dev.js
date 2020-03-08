@@ -1,6 +1,6 @@
 'use strict'
 
-const base = require('./webpack.base')
+const { paths, base } = require('./webpack.base')
 
 module.exports = {
   ...base,
@@ -8,6 +8,7 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     historyApiFallback: true,
+    contentBase: paths.PUBLIC,
     overlay: {
       warnings: true,
       errors: true,
