@@ -29,7 +29,7 @@ export class Sidemenu extends React.Component {
   }
 
   render() {
-    const { collapsed, sidemenuProps } = this.props
+    const { activeRoute, collapsed, sidemenuProps } = this.props
 
     return (
       <rdcl-sidemenu
@@ -37,12 +37,12 @@ export class Sidemenu extends React.Component {
         ref={ this.sidemenuRef }
         collapsed={ attr(collapsed) }
       >
-        <rdcl-sidemenu-item href="/" active>
+        <rdcl-sidemenu-item href="/" active={ attr(activeRoute === 'home') }>
           <IconHome slot="icon"/>
           Home
         </rdcl-sidemenu-item>
 
-        <rdcl-sidemenu-item href="/tools">
+        <rdcl-sidemenu-item href="/tools" active={ attr(activeRoute === 'tools') }>
           <IconTools slot="icon"/>
           Tools
         </rdcl-sidemenu-item>

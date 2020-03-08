@@ -1,6 +1,7 @@
 import React from 'react'
 import { Sidemenu } from '../Sidemenu'
 import IconMenu from './icons/menu.svg'
+import { Home } from '../pages/Home'
 
 export const App = ({ screenType, openSidemenu }) => (
   <>
@@ -18,7 +19,7 @@ export const App = ({ screenType, openSidemenu }) => (
       ) }
 
       <main>
-        <h1>Hello, World!</h1>
+        <Home/>
       </main>
     </rdcl-grid>
 

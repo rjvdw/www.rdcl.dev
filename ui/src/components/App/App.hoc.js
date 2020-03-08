@@ -3,7 +3,7 @@ import { App as AppComponent } from './App.component'
 import { open } from '../../modules/sidemenu'
 
 export const App = connect(
-  ({ screen }) => ({
+  ({ routes, screen }) => ({
     screenType: screen.type,
   }),
 
