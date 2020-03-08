@@ -4,6 +4,7 @@ import { Sidemenu } from '../Sidemenu'
 import IconMenu from './icons/menu.svg'
 import { Home } from '../pages/Home'
 import { Tools } from '../pages/Tools'
+import { Login } from '../pages/Login'
 
 export const App = ({ screenType, openSidemenu }) => (
   <>
@@ -28,6 +29,10 @@ export const App = ({ screenType, openSidemenu }) => (
 
           <Route path="/tools">
             <Tools/>
+          </Route>
+
+          <Route path="/login">
+            <Login/>
           </Route>
         </Switch>
       </main>

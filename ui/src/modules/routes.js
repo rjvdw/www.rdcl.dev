@@ -30,5 +30,9 @@ function getActiveRoute(location) {
     return 'tools'
   }
 
-  return 'home'
+  if (location.pathname === '/') {
+    return 'home'
+  }
+
+  return ''
 }
