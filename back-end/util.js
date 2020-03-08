@@ -9,17 +9,22 @@ exports.App = class App {
     const app = express()
     const router = express.Router()
 
-    app.use(`/.netlify/functions/${ name }`, router)
-    app.use(morgan('combined'))
-
-    const handler = serverless(app)
-
     Object.defineProperties(this, {
       name: readonly(name, { enumerable: true }),
       app: readonly(app),
       router: readonly(router),
-      handler: readonly(handler),
     })
+  }
+
+  use(...args) {
+    this.app.use(...args)
+  }
+
+  getHandler() {
+    this.app.use(`/.netlify/functions/${ this.name }`, this.router)
+    this.app.use(morgan('combined'))
+
+    return serverless(this.app)
   }
 }
 
