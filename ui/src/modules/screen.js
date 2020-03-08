@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { close as closeSidemenu } from './sidemenu'
 
 const MOBILE_THRESHOLD = 640
 
@@ -24,6 +25,10 @@ export function updateScreenType() {
 
     if (type !== state.type) {
       dispatch(actions.updateScreenType(type))
+
+      if (type !== 'mobile') {
+        dispatch(closeSidemenu())
+      }
     }
   }
 }

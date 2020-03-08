@@ -1,6 +1,6 @@
 import React from 'react'
-import IconHome from '../icons/nav/home.svg'
-import IconTools from '../icons/nav/tools.svg'
+import IconHome from './icons/home.svg'
+import IconTools from './icons/tools.svg'
 import { attr } from '../../util/component'
 
 export class Sidemenu extends React.Component {
@@ -11,15 +11,20 @@ export class Sidemenu extends React.Component {
 
   componentDidMount() {
     this.sidemenuRef.current.addEventListener('sidemenu-toggle', this)
+    this.sidemenuRef.current.addEventListener('sidemenu-close', this)
   }
 
   componentWillUnmount() {
     this.sidemenuRef.current.removeEventListener('sidemenu-toggle', this)
+    this.sidemenuRef.current.removeEventListener('sidemenu-close', this)
   }
 
   handleEvent(event) {
+    console.log(event.type)
     if (event.type === 'sidemenu-toggle') {
       this.props.toggle()
+    } else if (event.type === 'sidemenu-close') {
+      this.props.close()
     }
   }
 

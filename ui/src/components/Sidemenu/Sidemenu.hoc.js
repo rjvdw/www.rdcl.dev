@@ -1,15 +1,19 @@
 import { connect } from 'react-redux'
 import { Sidemenu as SidemenuComponent } from './Sidemenu.component'
-import { toggle } from '../../modules/sidemenu'
+import { close, toggle } from '../../modules/sidemenu'
 
 export const Sidemenu = connect(
-  ({ sidemenu }) => ({
-    collapsed: sidemenu.collapsed,
+  ({ screen, sidemenu }) => ({
+    collapsed: screen.type === 'mobile' ? !sidemenu.open : sidemenu.collapsed,
   }),
 
   dispatch => ({
     toggle() {
       dispatch(toggle())
+    },
+
+    close() {
+      dispatch(close())
     },
   }),
 )(SidemenuComponent)

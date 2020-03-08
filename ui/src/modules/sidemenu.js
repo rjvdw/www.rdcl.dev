@@ -4,6 +4,7 @@ export const { actions, reducer: sidemenu } = createSlice({
   name: 'sidemenu',
   initialState: {
     collapsed: window.localStorage.getItem('sidemenu-collapsed') === '1',
+    open: false,
   },
   reducers: {
     collapse(state) {
@@ -19,8 +20,25 @@ export const { actions, reducer: sidemenu } = createSlice({
         collapsed: false,
       }
     },
+
+    open(state) {
+      return {
+        ...state,
+        open: true,
+      }
+    },
+
+    close(state) {
+      return {
+        ...state,
+        open: false,
+      }
+    },
   },
 })
+
+export const open = actions.open
+export const close = actions.close
 
 export function toggle() {
   return (dispatch, getState) => {

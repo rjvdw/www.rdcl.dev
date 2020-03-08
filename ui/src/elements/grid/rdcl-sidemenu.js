@@ -1,5 +1,6 @@
 import { css, customElement, html, LitElement, property, unsafeCSS } from 'lit-element'
-import toggleIcon from './toggle-sidemenu.svg'
+import closeIcon from './icons/close-sidemenu.svg'
+import toggleIcon from './icons/toggle-sidemenu.svg'
 
 @customElement('rdcl-sidemenu')
 export class RdclSidemenu extends LitElement {
@@ -23,6 +24,50 @@ export class RdclSidemenu extends LitElement {
 
       :host([collapsed]) {
         width: var(--base-size);
+      }
+      
+      :host([screen-type="mobile"]) {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        background: var(--menu-overlay-background-color);
+        color: var(--menu-overlay-foreground-color);
+        padding: 4rem .5rem .5rem;
+        transition: left 600ms ease;
+      }
+      
+      :host([screen-type="mobile"][collapsed]) {
+        left: calc(-100vw - 1rem);
+      }
+      
+      :host([screen-type="mobile"]) .close {
+        position: absolute;
+        top: .5rem;
+        right: .5rem;
+        background: transparent;
+        color: inherit;
+        font-size: inherit;
+        border: none;
+        margin: 0;
+        padding: 0;
+        outline: none;
+        cursor: pointer;
+      }
+      
+      :host(:not([screen-type="mobile"])) .close {
+        display: none;
+      }
+      
+      :host([screen-type="mobile"]) .close > span {
+        display: inline-block;
+        margin: auto;
+        background-image: url('${ unsafeCSS(closeIcon) }');
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 2rem;
+        height: 2rem;
       }
 
       .toggle {
@@ -69,6 +114,18 @@ export class RdclSidemenu extends LitElement {
         color: var(--grid-sidemenu-item-foreground);
         border-bottom: var(--grid-border);
       }
+      
+      :host([screen-type="mobile"]) ::slotted(*) {
+        background: var(--base-background-color);
+        color: var(--base-foreground-color);
+        margin-bottom: .5rem;
+        border: thin solid #999;
+        transition: border-color 200ms ease-in-out;
+      }
+      
+      :host([screen-type="mobile"]) ::slotted(*:hover) {
+        border-color: #333;
+      }
     `
   }
 
@@ -79,11 +136,23 @@ export class RdclSidemenu extends LitElement {
       <button class="toggle" @click="${ this.toggle }" role="presentation">
         <span></span>
       </button>
+      
+      <button class="close" @click="${ this.close }" role="presentation">
+        <span></span>      
+      </button>
     `
   }
 
   toggle() {
     this.dispatchEvent(new CustomEvent('sidemenu-toggle', {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    }))
+  }
+
+  close() {
+    this.dispatchEvent(new CustomEvent('sidemenu-close', {
       bubbles: true,
       cancelable: true,
       composed: true,

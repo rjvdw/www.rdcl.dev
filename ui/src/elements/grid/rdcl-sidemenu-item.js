@@ -38,6 +38,7 @@ export class RdclSidemenuItem extends LitElement {
       }
 
       [name="icon"]::slotted(*) {
+        display: block;
         margin: auto;
         width: var(--icon-size);
         height: var(--icon-size);

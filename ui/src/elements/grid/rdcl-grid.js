@@ -37,10 +37,6 @@ export class RdclGrid extends LitElement {
                              "main";
         grid-template-columns: 1fr;
       }
-
-      :host([screen-type="mobile"]) [name="sidemenu"]::slotted(*) {
-        display: none;
-      }
     `
   }
 
