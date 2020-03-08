@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { Router } from 'react-router-dom'
 import { store } from './store'
+import { history } from './history'
 import { App } from './components/App'
 import './elements/grid'
 import './styles/main.sass'
@@ -10,7 +12,9 @@ import { navigate } from './modules/routes'
 
 ReactDOM.render(
   <Provider store={ store }>
-    <App/>
+    <Router history={ history }>
+      <App/>
+    </Router>
   </Provider>,
   document.getElementById('root'),
 )
@@ -25,15 +29,14 @@ document.body.addEventListener('click', event => {
     return
   }
 
-  const element = event.path.find(el => el.href)
+  const element = event.composedPath().find(el => el.href)
 
-  if (element && element.origin === location.origin) {
+  if (element && !element.dataset.noHistory && element.origin === window.location.origin) {
     event.preventDefault()
-    history.pushState(null, null, element.href)
-    store.dispatch(navigate(element))
+    history.push(element.pathname)
   }
 })
 
-window.addEventListener('popstate', () => {
+history.listen(location => {
   store.dispatch(navigate(location))
 })

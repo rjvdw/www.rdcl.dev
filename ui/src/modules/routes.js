@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { history } from '../history'
 
 export const { actions, reducer: routes } = createSlice({
   name: 'routes',
   initialState: {
-    pathname: location.pathname,
-    activeRoute: getActiveRoute(location),
+    pathname: history.location.pathname,
+    activeRoute: getActiveRoute(history.location),
   },
   reducers: {
     navigate(state, { payload: { pathname, activeRoute } }) {

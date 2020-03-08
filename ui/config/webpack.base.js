@@ -17,6 +17,7 @@ exports.base = {
   output: {
     path: paths.DIST,
     filename: 'main.js',
+    publicPath: '/',
   },
 
   resolve: {

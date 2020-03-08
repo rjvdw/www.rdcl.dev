@@ -20,7 +20,6 @@ export class Sidemenu extends React.Component {
   }
 
   handleEvent(event) {
-    console.log(event.type)
     if (event.type === 'sidemenu-toggle') {
       this.props.toggle()
     } else if (event.type === 'sidemenu-close') {
@@ -29,7 +28,7 @@ export class Sidemenu extends React.Component {
   }
 
   render() {
-    const { activeRoute, collapsed, sidemenuProps } = this.props
+    const { activeRoute, close, collapsed, sidemenuProps } = this.props
 
     return (
       <rdcl-sidemenu
@@ -37,12 +36,12 @@ export class Sidemenu extends React.Component {
         ref={ this.sidemenuRef }
         collapsed={ attr(collapsed) }
       >
-        <rdcl-sidemenu-item href="/" active={ attr(activeRoute === 'home') }>
+        <rdcl-sidemenu-item href="/" active={ attr(activeRoute === 'home') } onClick={ () => close() }>
           <IconHome slot="icon"/>
           Home
         </rdcl-sidemenu-item>
 
-        <rdcl-sidemenu-item href="/tools" active={ attr(activeRoute === 'tools') }>
+        <rdcl-sidemenu-item href="/tools" active={ attr(activeRoute === 'tools') } onClick={ () => close() }>
           <IconTools slot="icon"/>
           Tools
         </rdcl-sidemenu-item>
