@@ -1,4 +1,5 @@
 import React from 'react'
+import { fetch } from '../../../util/fetch'
 
 export class Login extends React.Component {
   constructor(props) {
@@ -9,7 +10,24 @@ export class Login extends React.Component {
       password: '',
       otp: '',
       errors: [],
+      info: null,
     }
+  }
+
+  async test() {
+    const response = await fetch('/.netlify/functions/health', {
+      accessToken: this.props.accessToken,
+      refresh: async () => {
+        await this.refresh()
+        return this.props.accessToken
+      },
+    })
+
+    const body = await response.text()
+    console.log(response.status, response.headers, body)
+    this.setState({
+      info: `status: ${ response.status }, body: ${ body }`,
+    })
   }
 
   async onSubmit(event) {
@@ -58,6 +76,10 @@ export class Login extends React.Component {
 
         <button onClick={ () => this.props.logout() }>Log out</button>
         <button onClick={ () => this.refresh() }>Ververs token</button>
+
+        <hr/>
+        <p>info:{ this.state.info }</p>
+        <button onClick={ () => this.test() }>Test</button>
       </>
     } else {
       return <>
@@ -111,6 +133,10 @@ export class Login extends React.Component {
 
           <button>Submit</button>
         </form>
+
+        <hr/>
+        <p>info:{ this.state.info }</p>
+        <button onClick={ () => this.test() }>Test</button>
       </>
     }
   }

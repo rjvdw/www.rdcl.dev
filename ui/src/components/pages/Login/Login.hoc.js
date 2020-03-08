@@ -5,6 +5,7 @@ import { login, logout, refresh } from '../../../modules/auth'
 export const Login = connect(
   ({ auth }) => ({
     loggedIn: auth.loggedIn,
+    accessToken: auth.accessToken,
   }),
 
   dispatch => ({

@@ -91,8 +91,8 @@ function processResponse(now, data) {
   const loginData = {
     accessToken: data.access_token,
     refreshToken: data.refresh_token,
-    accessTokenExpires: now + data.expires_in,
-    refreshTokenExpires: now + data.refresh_expires_in,
+    accessTokenExpires: now + 1000 * data.expires_in,
+    refreshTokenExpires: now + 1000 * data.refresh_expires_in,
   }
   window.localStorage.setItem('auth', JSON.stringify(loginData))
   return actions.login(loginData)
@@ -102,12 +102,14 @@ function getInitialState() {
   const data = window.localStorage.getItem('auth')
 
   if (data) {
-    const { accessToken, refreshToken } = JSON.parse(data)
+    const { accessToken, refreshToken, accessTokenExpires, refreshTokenExpires } = JSON.parse(data)
 
     return {
       loggedIn: true,
       accessToken,
       refreshToken,
+      accessTokenExpires,
+      refreshTokenExpires,
     }
   }
 
