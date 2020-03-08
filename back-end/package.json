@@ -1,0 +1,12 @@
+{
+  "name": "@rdcl-dev/back-end",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "serverless-http": "^2.3.2"
+  },
+  "devDependencies": {}
+}
