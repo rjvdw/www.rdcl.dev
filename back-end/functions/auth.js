@@ -1,7 +1,7 @@
 'use strict'
 
 const bodyParser = require('body-parser')
-const { authenticate } = require('../auth')
+const { authenticate, revoke } = require('../auth')
 const { App } = require('../util')
 
 const app = new App('auth')
@@ -16,9 +16,24 @@ app.router.post('/login', async (req, res) => {
       otp: req.body.otp,
     })
 
-    if (response.data.access_token) res.set('X-Access-Token', response.data.access_token)
-    if (response.data.refresh_token) res.set('X-Refresh-Token', response.data.refresh_token)
+    if (response.data.access_token) res.set('x-access-token', response.data.access_token)
+    if (response.data.refresh_token) res.set('x-refresh-token', response.data.refresh_token)
     res.status(response.status).json(response.data)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ reason: 'unexpected error' })
+  }
+})
+
+app.router.post('/logout', async (req, res) => {
+  try {
+    if (req.headers['x-refresh-token']) {
+      const response = await revoke(req.headers['authorization'], req.headers['x-refresh-token'])
+      console.log(response)
+      res.status(response.status).json(response.data)
+    } else {
+      res.status(200).json({})
+    }
   } catch (err) {
     console.error(err)
     res.status(500).json({ reason: 'unexpected error' })

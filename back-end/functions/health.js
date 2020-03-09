@@ -92,7 +92,7 @@ app.router.post('/', async (req, res) => {
         ])
       )
 
-      res.set('Location', `/.netlify/functions/health/${ date }`)
+      res.set('location', `/.netlify/functions/health/${ date }`)
       res.status(201).end()
     })
   } catch (err) {

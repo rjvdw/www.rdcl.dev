@@ -22,6 +22,8 @@ export const { actions, reducer: auth } = createSlice({
 export function logout() {
   return (dispatch) => {
     window.localStorage.removeItem('auth')
+    axios.post('/auth/logout') // fire and forget
+      .catch(err => console.warn(err))
     dispatch(actions.logout())
   }
 }

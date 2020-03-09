@@ -12,7 +12,7 @@ exports.auth = () => async (req, res, next) => {
 
   if (req.headers.authorization) {
     try {
-      accessToken = req.headers.authorization.replace(/^bearer /, '')
+      accessToken = req.headers.authorization.replace(/^bearer /i, '')
       refreshToken = req.headers['x-refresh-token']
 
       req.jwt = await promisify(jwt.verify)(accessToken, PUBLIC_KEY)
