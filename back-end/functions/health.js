@@ -16,11 +16,21 @@ app.use(bodyParser.json())
 app.use(auth())
 
 app.router.get('/', async (req, res) => {
-  const to = +req.params.to || Date.now()
-  const from = +req.params.from || (to - DEFAULT_DURATION)
   const owner = req.jwt.sub
 
-  const validationResults = validator()
+  const v = validator()
+    .value('from', req.params.from, field => field
+      .validDate()
+    )
+    .value('to', req.params.to, field => field
+      .validDate()
+    )
+
+  const toDate = req.params.to ? Date.parse(req.params.to) : today()
+  const to = formatAsDate(toDate)
+  const from = formatAsDate(req.params.from ? Date.parse(req.params.from) : new Date(toDate.getTime() - DEFAULT_DURATION))
+
+  const validationResults = v
     .test(from < to).message(`invalid range: ${ from } - ${ to }`)
     .validate()
 
@@ -31,10 +41,9 @@ app.router.get('/', async (req, res) => {
 
   try {
     await connect(async (conn) => {
-      const entries = await conn.run(
-        table('days')
-          .between(from, to)
-          .filter({ owner })
+      const entries = await conn.list(
+        table('health_data_by_day')
+          .between([from, owner], [to, owner])
           .limit(MAX_RESULTS)
       )
 
@@ -52,9 +61,9 @@ app.router.post('/', async (req, res) => {
   const validationResults = validator()
     .obj(req.body, 'request body', obj => obj
       .present()
-      .field('timestamp', field => field
+      .field('date', field => field
         .required()
-        .validTimestamp()
+        .validDate()
       )
       .field('weight', field => field
         .numeric()
@@ -70,16 +79,20 @@ app.router.post('/', async (req, res) => {
 
   try {
     await connect(async (conn) => {
-      const { timestamp, ...data } = req.body
+      const { date, ...data } = req.body
 
       await conn.run(
-        table('days').insert([
-          // FIXME: day rather than timestamp
-          { timestamp, owner, data },
+        table('health_data_by_day').insert([
+          {
+            id: [date, owner],
+            date,
+            owner,
+            ...data,
+          },
         ])
       )
 
-      res.set('Location', `/.netlify/functions/health/${ timestamp }`)
+      res.set('Location', `/.netlify/functions/health/${ date }`)
       res.status(201).end()
     })
   } catch (err) {
@@ -89,6 +102,16 @@ app.router.post('/', async (req, res) => {
 })
 
 exports.handler = app.getHandler()
+
+function today() {
+  const now = new Date()
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate())
+}
+
+function formatAsDate(date) {
+  const [formatted] = date.toISOString().split('T', 1)
+  return formatted
+}
 
 function connect(cb) {
   return db.connect({ db: DB_NAME }, cb)

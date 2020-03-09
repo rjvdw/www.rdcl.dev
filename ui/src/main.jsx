@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
+import { axios } from './axios'
 import { store } from './store'
 import { history } from './history'
 import { App } from './components/App'
@@ -9,6 +10,8 @@ import './elements/grid'
 import './styles/main.sass'
 import { updateScreenType } from './modules/screen'
 import { navigate } from './modules/routes'
+
+window._axios = axios
 
 ReactDOM.render(
   <Provider store={ store }>

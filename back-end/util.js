@@ -58,9 +58,17 @@ exports.validator = () => {
 
           return this
         },
-        validTimestamp() {
-          if (present && typeof value !== 'number') {
-            errors.push(`${ field } is not a valid timestamp`)
+        validDate() {
+          if (present) {
+            let valid = false
+            if (typeof value === 'string') {
+              const parsed = Date.parse(value)
+              valid = parsed !== null && (new Date(parsed)).toISOString().startsWith(value)
+            }
+
+            if (!valid) {
+              errors.push(`${ field } is not a valid date`)
+            }
           }
 
           return this

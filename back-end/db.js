@@ -17,14 +17,27 @@ exports.connect = async (options, callback) => {
     await callback({
       run(query) {
         return new Promise((resolve, reject) => {
-          query.run(connection, (err, result) => {
+          query.run(connection, (err, cursor) => {
             if (err) {
               reject(err)
             } else {
-              resolve(result)
+              resolve(cursor)
             }
           })
         })
+      },
+
+      list(query) {
+        return this.run(query)
+          .then(cursor => new Promise((resolve, reject) => {
+            cursor.toArray((err, result) => {
+              if (err) {
+                reject(err)
+              } else {
+                resolve(result)
+              }
+            })
+          }))
       },
     })
   } finally {
