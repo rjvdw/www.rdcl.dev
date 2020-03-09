@@ -7,6 +7,9 @@ const serverless = require('serverless-http')
 exports.App = class App {
   constructor(name) {
     const app = express()
+    app.disable('x-powered-by')
+    app.use(morgan('tiny'))
+
     const router = express.Router()
 
     Object.defineProperties(this, {
@@ -22,7 +25,6 @@ exports.App = class App {
 
   getHandler() {
     this.app.use(`/.netlify/functions/${ this.name }`, this.router)
-    this.app.use(morgan('combined'))
 
     return serverless(this.app)
   }
