@@ -7,7 +7,7 @@ exports.connect = async (options, callback) => {
   let connection
 
   try {
-    connection = await promisify(r.connect.bind(r))({
+    connection = await connect({
       host: process.env.RETHINKDB_HOST,
       port: process.env.RETHINKDB_PORT,
       user: process.env.RETHINKDB_USER,
@@ -16,8 +16,16 @@ exports.connect = async (options, callback) => {
     })
 
     await callback({
-      async run(query) {
-        return await promisify(query.run.bind(query))(connection)
+      run(query) {
+        return new Promise((resolve, reject) => {
+          query.run(connection, (err, result) => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve(result)
+            }
+          })
+        })
       },
     })
   } finally {
@@ -25,4 +33,16 @@ exports.connect = async (options, callback) => {
       connection.close()
     }
   }
+}
+
+function connect(options) {
+  return new Promise((resolve, reject) => {
+    r.connect(options, (err, conn) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(conn)
+      }
+    })
+  })
 }
