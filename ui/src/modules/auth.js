@@ -1,26 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { axios } from '../axios'
 
 export const { actions, reducer: auth } = createSlice({
   name: 'auth',
   initialState: getInitialState(),
   reducers: {
-    login(state, { payload: jwtData }) {
+    login(state) {
       return {
         ...state,
         loggedIn: true,
-        accessToken: jwtData.accessToken,
-        refreshToken: jwtData.refreshToken,
-        accessTokenExpires: jwtData.accessTokenExpires,
-        refreshTokenExpires: jwtData.refreshTokenExpires,
       }
     },
     logout() {
       return {
         loggedIn: false,
-        accessToken: null,
-        refreshToken: null,
-        accessTokenExpires: null,
-        refreshTokenExpires: null,
       }
     }
   },
@@ -35,89 +28,29 @@ export function logout() {
 
 export function login({ username, password, otp }) {
   return async (dispatch) => {
-    const now = Date.now()
-
-    const response = await fetch('/.netlify/functions/auth/login', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password, otp }),
-    })
-
-    const data = await response.json()
-    if (response.ok) {
-      dispatch(processResponse(now, data))
-      return null
-    } else {
-      console.error(data)
+    try {
+      const response = await axios.post('/auth/login', { username, password, otp })
+      console.log(response)
+      dispatch(actions.login())
+    } catch (err) {
+      console.error(err)
       dispatch(logout())
-      return data.error_description || 'unknown error'
+      throw new Error('todo')
     }
   }
-}
-
-export function refresh() {
-  return async (dispatch, getState) => {
-    const now = Date.now()
-    const state = getState().auth
-
-    if (!state.refreshToken || state.refreshToken < now) {
-      dispatch(logout())
-      return 'session expired'
-    }
-
-    const response = await fetch('/.netlify/functions/auth/refresh', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ refreshToken: state.refreshToken }),
-    })
-
-    const data = await response.json()
-    if (response.ok) {
-      dispatch(processResponse(now, data))
-      return null
-    } else {
-      console.error(data)
-      dispatch(logout())
-      return data.error_description || 'unknown error'
-    }
-  }
-}
-
-function processResponse(now, data) {
-  const loginData = {
-    accessToken: data.access_token,
-    refreshToken: data.refresh_token,
-    accessTokenExpires: now + 1000 * data.expires_in,
-    refreshTokenExpires: now + 1000 * data.refresh_expires_in,
-  }
-  window.localStorage.setItem('auth', JSON.stringify(loginData))
-  return actions.login(loginData)
 }
 
 function getInitialState() {
   const data = window.localStorage.getItem('auth')
 
   if (data) {
-    const { accessToken, refreshToken, accessTokenExpires, refreshTokenExpires } = JSON.parse(data)
-
-    return {
-      loggedIn: true,
-      accessToken,
-      refreshToken,
-      accessTokenExpires,
-      refreshTokenExpires,
+    try {
+      const { accessToken } = JSON.parse(data)
+      return { loggedIn: !!accessToken }
+    } catch (err) {
+      window.localStorage.removeItem('auth')
     }
   }
 
-  return {
-    loggedIn: false,
-    accessToken: null,
-    refreshToken: null,
-    accessTokenExpires: null,
-    refreshTokenExpires: null,
-  }
+  return { loggedIn: false }
 }

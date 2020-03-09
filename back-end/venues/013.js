@@ -1,6 +1,6 @@
 'use strict'
 
-const fetch = require('node-fetch')
+const axios = require('axios').default
 
 const LOCATION = {
   '@type': 'Place',
@@ -12,14 +12,14 @@ exports.key = '013'
 exports.name = '013 Poppodium tilburg'
 exports.fetch = async (req, res) => {
   try {
-    const response = await fetch('https://www.013.nl/programma')
+    const response = await axios.get('https://www.013.nl/programma')
 
     if (response.status !== 200) {
       res.status(503).json({ reason: `'https://www.013.nl/programma' responded with ${ response.status }` })
       return
     }
 
-    const events = parseEvents(await response.text())
+    const events = parseEvents(response.data)
     const agenda = events.map(event => ({
       '@context': 'http://schema.org',
       '@type': 'Event',

@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const ms = require('ms')
 const db = require('../db')
 const { auth } = require('../middleware/auth')
-const { App, allPromises, validator } = require('../util')
+const { App, validator } = require('../util')
 
 const DEFAULT_DURATION = ms('30 days')
 const MAX_RESULTS = 500

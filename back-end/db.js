@@ -1,6 +1,5 @@
 'use strict'
 
-const { promisify } = require('util')
 const r = require('rethinkdb')
 
 exports.connect = async (options, callback) => {

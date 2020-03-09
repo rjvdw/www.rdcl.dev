@@ -1,7 +1,5 @@
 'use strict'
 
-const fs = require('fs').promises
-const path = require('path')
 const { App } = require('../util')
 
 const app = new App('venues')
@@ -35,4 +33,4 @@ app.router.get('/:key', async (req, res) => {
   }
 })
 
-exports.handler = app.handler
+exports.handler = app.getHandler()

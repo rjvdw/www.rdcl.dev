@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetch } from '../../../util/fetch'
+import { axios } from '../../../axios'
 
 export class Login extends React.Component {
   constructor(props) {
@@ -15,18 +15,13 @@ export class Login extends React.Component {
   }
 
   async test() {
-    const response = await fetch('/.netlify/functions/health', {
-      accessToken: this.props.accessToken,
-      refresh: async () => {
-        await this.refresh()
-        return this.props.accessToken
-      },
+    const response = await axios.get('/health', {
+      validateStatus: () => true,
     })
 
-    const body = await response.text()
-    console.log(response.status, response.headers, body)
+    console.log(response.status, response.headers, response.data)
     this.setState({
-      info: `status: ${ response.status }, body: ${ body }`,
+      info: `status: ${ response.status }, body: ${ JSON.stringify(response.data, null, 2) }`,
     })
   }
 
@@ -56,29 +51,15 @@ export class Login extends React.Component {
     }
   }
 
-  async refresh() {
-    const error = await this.props.refresh()
-
-    if (error) {
-      this.setState({
-        errors: [
-          ...this.state.errors,
-          error,
-        ]
-      })
-    }
-  }
-
   render() {
     if (this.props.loggedIn) {
       return <>
         <h1>Log out</h1>
 
         <button onClick={ () => this.props.logout() }>Log out</button>
-        <button onClick={ () => this.refresh() }>Ververs token</button>
 
         <hr/>
-        <p>info:{ this.state.info }</p>
+        <pre>{ this.state.info }</pre>
         <button onClick={ () => this.test() }>Test</button>
       </>
     } else {
@@ -135,7 +116,7 @@ export class Login extends React.Component {
         </form>
 
         <hr/>
-        <p>info:{ this.state.info }</p>
+        <pre>{ this.state.info }</pre>
         <button onClick={ () => this.test() }>Test</button>
       </>
     }

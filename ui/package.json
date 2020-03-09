@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.5",
+    "axios": "^0.19.2",
     "history": "^4.10.1",
     "lit-element": "^2.2.1",
     "react": "^16.13.0",
