@@ -60,16 +60,10 @@ exports.validator = () => {
 
           return this
         },
-        validDate() {
+        validTimestamp() {
           if (present) {
-            let valid = false
-            if (typeof value === 'string') {
-              const parsed = Date.parse(value)
-              valid = parsed !== null && (new Date(parsed)).toISOString().startsWith(value)
-            }
-
-            if (!valid) {
-              errors.push(`${ field } is not a valid date`)
+            if (typeof value !== 'string' || !value.match(/^\d+-\d{1,2}-\d{1,2}/) || Date.parse(value) === null) {
+              errors.push(`${ field } is not a valid timestamp`)
             }
           }
 

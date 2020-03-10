@@ -9,17 +9,19 @@ const DB_NAME = 'rdcl_health'
 exports.index = (owner, from, to) => db.connect(DB_NAME, async (conn) => {
   return await conn.list(
     healthDataByDay()
-      .between([from, owner], [to, owner])
+      .between([formatAsDate(from), owner], [formatAsDate(to), owner])
+      .orderBy({ index: 'id' })
       .limit(MAX_RESULTS)
   )
 })
 
-exports.create = (owner, date, data) => db.connect(DB_NAME, async (conn) => {
+exports.create = (owner, timestamp, data) => db.connect(DB_NAME, async (conn) => {
+  const id = [formatAsDate(timestamp), owner]
   const result = await conn.run(
     healthDataByDay().insert([
       {
-        id: [date, owner],
-        date,
+        id: id,
+        timestamp,
         owner,
         ...data,
       },
@@ -28,11 +30,13 @@ exports.create = (owner, date, data) => db.connect(DB_NAME, async (conn) => {
 
   if (result.errors) {
     if (firstError(result, fe => fe.startsWith('Duplicate primary key'))) {
-      throw new db.DuplicateEntryError(date, result)
+      throw new db.DuplicateEntryError(id[0], result)
     } else {
       throw new db.QueryError('failed to create entry', result)
     }
   }
+
+  return id
 })
 
 function healthDataByDay() {
@@ -45,4 +49,9 @@ function firstError(result, cb) {
   }
 
   return false
+}
+
+function formatAsDate(date) {
+  const [formatted] = date.toISOString().split('T', 1)
+  return formatted
 }

@@ -17,17 +17,18 @@ app.use(auth())
 app.router.get('/', async (req, res) => {
   const owner = req.jwt.sub
 
+  console.log(req.query)
+
   const v = validator()
-    .value('from', req.params.from, field => field
-      .validDate()
+    .value('from', req.query.from, field => field
+      .validTimestamp()
     )
-    .value('to', req.params.to, field => field
-      .validDate()
+    .value('to', req.query.to, field => field
+      .validTimestamp()
     )
 
-  const toDate = req.params.to ? Date.parse(req.params.to) : today()
-  const to = formatAsDate(toDate)
-  const from = formatAsDate(req.params.from ? Date.parse(req.params.from) : new Date(toDate.getTime() - DEFAULT_DURATION))
+  const to = req.query.to ? new Date(Date.parse(req.query.to)) : new Date()
+  const from = req.query.from ? new Date(Date.parse(req.query.from)) : new Date(to.getTime() - DEFAULT_DURATION)
 
   const validationResults = v
     .test(from < to).message(`invalid range: ${ from } - ${ to }`)
@@ -53,9 +54,9 @@ app.router.post('/', async (req, res) => {
   const validationResults = validator()
     .obj(req.body, 'request body', obj => obj
       .present()
-      .field('date', field => field
+      .field('timestamp', field => field
         .required()
-        .validDate()
+        .validTimestamp()
       )
       .field('weight', field => field
         .numeric()
@@ -70,10 +71,12 @@ app.router.post('/', async (req, res) => {
   }
 
   try {
-    const { date, ...data } = req.body
-    await healthService.create(owner, date, data)
+    const { timestamp: timestampStr, ...data } = req.body
+    console.log(timestampStr, Date.parse(timestampStr), new Date(Date.parse(timestampStr)))
+    const timestamp = new Date(Date.parse(timestampStr))
+    const [identifier] = await healthService.create(owner, timestamp, data)
 
-    res.set('location', `/.netlify/functions/health/${ date }`)
+    res.set('location', `/.netlify/functions/health/${ identifier }`)
     res.status(201).end()
   } catch (err) {
     if (err instanceof db.DuplicateEntryError) {
@@ -89,13 +92,3 @@ app.router.post('/', async (req, res) => {
 })
 
 exports.handler = app.getHandler()
-
-function today() {
-  const now = new Date()
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate())
-}
-
-function formatAsDate(date) {
-  const [formatted] = date.toISOString().split('T', 1)
-  return formatted
-}
