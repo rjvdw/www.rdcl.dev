@@ -1,7 +1,7 @@
 'use strict'
 
 const bodyParser = require('body-parser')
-const { authenticate, revoke } = require('../auth')
+const { authenticate, revoke } = require('../auth/auth.service')
 const { App } = require('../util')
 
 const app = new App('auth')

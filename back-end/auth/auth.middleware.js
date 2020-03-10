@@ -2,7 +2,7 @@
 
 const { promisify } = require('util')
 const jwt = require('jsonwebtoken')
-const { authenticate } = require('../auth')
+const { authenticate } = require('./auth.service')
 
 const PUBLIC_KEY = process.env.ID_PUBLIC_KEY.replace(/\\n/g, '\n')
 

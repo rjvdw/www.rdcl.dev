@@ -1,15 +1,14 @@
 'use strict'
 
-const r = require('rethinkdb')
 const bodyParser = require('body-parser')
 const ms = require('ms')
 const db = require('../db')
-const { auth } = require('../middleware/auth')
+const healthService = require('../health/health.service')
+const { auth } = require('../auth/auth.middleware')
 const { App, validator } = require('../util')
 
 const DEFAULT_DURATION = ms('30 days')
 const MAX_RESULTS = 500
-const DB_NAME = 'rdcl_health'
 
 const app = new App('health')
 app.use(bodyParser.json())
@@ -40,15 +39,8 @@ app.router.get('/', async (req, res) => {
   }
 
   try {
-    await connect(async (conn) => {
-      const entries = await conn.list(
-        table('health_data_by_day')
-          .between([from, owner], [to, owner])
-          .limit(MAX_RESULTS)
-      )
-
-      res.status(200).json({ entries })
-    })
+    const entries = await healthService.index(owner, from, to)
+    res.status(200).json({ entries })
   } catch (err) {
     console.error(err)
     res.status(500).json({ reason: 'unexpected error' })
@@ -78,26 +70,21 @@ app.router.post('/', async (req, res) => {
   }
 
   try {
-    await connect(async (conn) => {
-      const { date, ...data } = req.body
+    const { date, ...data } = req.body
+    await healthService.create(owner, date, data)
 
-      await conn.run(
-        table('health_data_by_day').insert([
-          {
-            id: [date, owner],
-            date,
-            owner,
-            ...data,
-          },
-        ])
-      )
-
-      res.set('location', `/.netlify/functions/health/${ date }`)
-      res.status(201).end()
-    })
+    res.set('location', `/.netlify/functions/health/${ date }`)
+    res.status(201).end()
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ reason: 'unexpected error' })
+    if (err instanceof db.DuplicateEntryError) {
+      res.status(409).json({ reason: err.message })
+    } else if (err instanceof db.QueryError) {
+      console.error(err)
+      res.status(500).json({ reason: err.message })
+    } else {
+      console.error(err)
+      res.status(500).json({ reason: 'unexpected error' })
+    }
   }
 })
 
@@ -111,12 +98,4 @@ function today() {
 function formatAsDate(date) {
   const [formatted] = date.toISOString().split('T', 1)
   return formatted
-}
-
-function connect(cb) {
-  return db.connect({ db: DB_NAME }, cb)
-}
-
-function table(name) {
-  return r.db(DB_NAME).table(name)
 }

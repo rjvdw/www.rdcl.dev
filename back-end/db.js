@@ -1,9 +1,14 @@
 'use strict'
 
 const r = require('rethinkdb')
+const db = module.exports
 
-exports.connect = async (options, callback) => {
+db.connect = async (config, callback) => {
   let connection
+
+  const options = typeof config === 'string'
+    ? { db: config }
+    : config
 
   try {
     connection = await connect({
@@ -14,7 +19,7 @@ exports.connect = async (options, callback) => {
       ...options,
     })
 
-    await callback({
+    return await callback({
       run(query) {
         return new Promise((resolve, reject) => {
           query.run(connection, (err, cursor) => {
@@ -44,6 +49,19 @@ exports.connect = async (options, callback) => {
     if (connection) {
       connection.close()
     }
+  }
+}
+
+db.QueryError = class QueryError extends Error {
+  constructor(message, result) {
+    super(message)
+    this.result = result
+  }
+}
+
+db.DuplicateEntryError = class DuplicateEntryError extends db.QueryError {
+  constructor(id, result) {
+    super(`entry with id ${ id } already exists`, result)
   }
 }
 
