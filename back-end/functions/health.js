@@ -8,7 +8,6 @@ const { auth } = require('../auth/auth.middleware')
 const { App, validator } = require('../util')
 
 const DEFAULT_DURATION = ms('30 days')
-const MAX_RESULTS = 500
 
 const app = new App('health')
 app.use(bodyParser.json())
