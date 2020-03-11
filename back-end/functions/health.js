@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const ms = require('ms')
 const db = require('../db')
 const healthService = require('../health/health.service')
+const { EntryAlreadyExists } = require('../errors')
 const { auth } = require('../auth/auth.middleware')
 const { App, validator } = require('../util')
 
@@ -15,8 +16,6 @@ app.use(auth())
 
 app.router.get('/', async (req, res) => {
   const owner = req.jwt.sub
-
-  console.log(req.query)
 
   const v = validator()
     .value('from', req.query.from, field => field
@@ -70,19 +69,14 @@ app.router.post('/', async (req, res) => {
   }
 
   try {
-    const { timestamp: timestampStr, ...data } = req.body
-    console.log(timestampStr, Date.parse(timestampStr), new Date(Date.parse(timestampStr)))
-    const timestamp = new Date(Date.parse(timestampStr))
-    const [identifier] = await healthService.create(owner, timestamp, data)
+    const { timestamp, ...data } = req.body
+    await healthService.create(owner, new Date(Date.parse(timestamp)), data)
 
-    res.set('location', `/.netlify/functions/health/${ identifier }`)
+    res.set('location', '/.netlify/functions/health')
     res.status(201).end()
   } catch (err) {
-    if (err instanceof db.DuplicateEntryError) {
-      res.status(409).json({ reason: err.message })
-    } else if (err instanceof db.QueryError) {
-      console.error(err)
-      res.status(500).json({ reason: err.message })
+    if (err instanceof EntryAlreadyExists) {
+      res.status(409).json({ reason: `record for ${ req.body.timestamp } already exists` })
     } else {
       console.error(err)
       res.status(500).json({ reason: 'unexpected error' })

@@ -8,6 +8,7 @@ exports.App = class App {
   constructor(name) {
     const app = express()
     app.disable('x-powered-by')
+    app.disable('etag')
     app.use(morgan('tiny'))
 
     const router = express.Router()

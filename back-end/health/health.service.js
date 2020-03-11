@@ -1,57 +1,38 @@
 'use strict'
 
-const r = require('rethinkdb')
 const db = require('../db')
+const { EntryAlreadyExists } = require('../errors')
 
 const MAX_RESULTS = 500
-const DB_NAME = 'rdcl_health'
 
-exports.index = (owner, from, to) => db.connect(DB_NAME, async (conn) => {
-  return await conn.list(
-    healthDataByDay()
-      .between([formatAsDate(from), owner], [formatAsDate(to), owner])
-      .orderBy({ index: 'id' })
-      .limit(MAX_RESULTS)
-  )
-})
+exports.index = (owner, from, to) => db.connect((client) => client.db()
+  .collection('health_data_by_timestamp')
+  .find({
+    _id: {
+      $gte: { owner, timestamp: from.toISOString() },
+      $lte: { owner, timestamp: to.toISOString() },
+    },
+  })
+  .sort({ _id: 1 })
+  .limit(MAX_RESULTS)
+  .toArray()
+)
 
-exports.create = (owner, timestamp, data) => db.connect(DB_NAME, async (conn) => {
-  const id = [formatAsDate(timestamp), owner]
-  const result = await conn.run(
-    healthDataByDay().insert([
-      {
-        id: id,
-        timestamp,
-        owner,
+exports.create = (owner, timestamp, data) => db.connect(async (client) => {
+  try {
+    const result = await client.db()
+      .collection('health_data_by_timestamp')
+      .insertOne({
+        _id: { owner, timestamp: timestamp.toISOString() },
         ...data,
-      },
-    ])
-  )
+      })
 
-  if (result.errors) {
-    if (firstError(result, fe => fe.startsWith('Duplicate primary key'))) {
-      throw new db.DuplicateEntryError(id[0], result)
+    return result.insertedId
+  } catch (err) {
+    if (err.name === 'MongoError' && err.code === 11000) {
+      throw new EntryAlreadyExists()
     } else {
-      throw new db.QueryError('failed to create entry', result)
+      throw err
     }
   }
-
-  return id
 })
-
-function healthDataByDay() {
-  return r.db(DB_NAME).table('health_data_by_day')
-}
-
-function firstError(result, cb) {
-  if (result.first_error && typeof result.first_error === 'string') {
-    return cb(result.first_error)
-  }
-
-  return false
-}
-
-function formatAsDate(date) {
-  const [formatted] = date.toISOString().split('T', 1)
-  return formatted
-}

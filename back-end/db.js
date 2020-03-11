@@ -1,78 +1,18 @@
 'use strict'
 
-const r = require('rethinkdb')
+const MongoClient = require('mongodb').MongoClient
 const db = module.exports
 
-db.connect = async (config, callback) => {
-  let connection
-
-  const options = typeof config === 'string'
-    ? { db: config }
-    : config
-
+db.connect = async (callback) => {
+  let client
   try {
-    connection = await connect({
-      host: process.env.RETHINKDB_HOST,
-      port: process.env.RETHINKDB_PORT,
-      user: process.env.RETHINKDB_USER,
-      password: process.env.RETHINKDB_PASSWORD,
-      ...options,
+    client = await MongoClient.connect(process.env.MONGODB_CONNECTION_STRING, {
+      useUnifiedTopology: true,
     })
-
-    return await callback({
-      run(query) {
-        return new Promise((resolve, reject) => {
-          query.run(connection, (err, cursor) => {
-            if (err) {
-              reject(err)
-            } else {
-              resolve(cursor)
-            }
-          })
-        })
-      },
-
-      list(query) {
-        return this.run(query)
-          .then(cursor => new Promise((resolve, reject) => {
-            cursor.toArray((err, result) => {
-              if (err) {
-                reject(err)
-              } else {
-                resolve(result)
-              }
-            })
-          }))
-      },
-    })
+    return await callback(client)
   } finally {
-    if (connection) {
-      connection.close()
+    if (client) {
+      await client.close()
     }
   }
-}
-
-db.QueryError = class QueryError extends Error {
-  constructor(message, result) {
-    super(message)
-    this.result = result
-  }
-}
-
-db.DuplicateEntryError = class DuplicateEntryError extends db.QueryError {
-  constructor(id, result) {
-    super(`entry with id ${ id } already exists`, result)
-  }
-}
-
-function connect(options) {
-  return new Promise((resolve, reject) => {
-    r.connect(options, (err, conn) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(conn)
-      }
-    })
-  })
 }

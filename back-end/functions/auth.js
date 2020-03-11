@@ -29,7 +29,6 @@ app.router.post('/logout', async (req, res) => {
   try {
     if (req.headers['x-refresh-token']) {
       const response = await revoke(req.headers['authorization'], req.headers['x-refresh-token'])
-      console.log(response)
       res.status(response.status).json(response.data)
     } else {
       res.status(200).json({})
