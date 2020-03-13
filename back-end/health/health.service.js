@@ -1,36 +1,40 @@
 'use strict'
 
-const db = require('../db')
+const { withDb } = require('../db')
 const { EntryAlreadyExists } = require('../errors')
 
 const MAX_RESULTS = 500
 
-exports.index = (owner, from, to) => db.connect((client) => client.db()
-  .collection('health_data_by_timestamp')
-  .find({
-    _id: {
-      $gte: { owner, timestamp: from.toISOString() },
-      $lte: { owner, timestamp: to.toISOString() },
-    },
-  })
-  .sort({ _id: 1 })
-  .limit(MAX_RESULTS)
-  .toArray()
-)
+exports.index = (owner, from, to) => withDb(async (db) => {
+  // language=PostgreSQL
+  const result = await db.q`
+    select
+      timestamp,
+      data
+    from health_data
+    where
+      owner = ${ owner } and
+      timestamp between ${ from } and ${ to }
+    order by timestamp
+    limit ${ MAX_RESULTS }
+  `
 
-exports.create = (owner, timestamp, data) => db.connect(async (client) => {
+  return result.rows.map(row => ({
+    timestamp: row.timestamp,
+    ...row.data,
+  }))
+})
+
+exports.create = (owner, timestamp, data) => withDb(async (db) => {
   try {
-    const result = await client.db()
-      .collection('health_data_by_timestamp')
-      .insertOne({
-        _id: { owner, timestamp: timestamp.toISOString() },
-        ...data,
-      })
-
-    return result.insertedId
+    // language=PostgreSQL
+    await db.q`
+      insert into health_data (owner, timestamp, data)
+      values (${ owner }, ${ timestamp }, ${ data })
+    `
   } catch (err) {
-    if (err.name === 'MongoError' && err.code === 11000) {
-      throw new EntryAlreadyExists()
+    if (err.code === '23505') {
+      throw new EntryAlreadyExists('duplicate key')
     } else {
       throw err
     }

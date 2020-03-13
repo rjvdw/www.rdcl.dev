@@ -1,18 +1,38 @@
 'use strict'
 
-const MongoClient = require('mongodb').MongoClient
-const db = module.exports
+const { Client } = require('pg')
 
-db.connect = async (callback) => {
-  let client
+exports.withDb = async (cb) => {
+  let client = null
+
   try {
-    client = await MongoClient.connect(process.env.MONGODB_CONNECTION_STRING, {
-      useUnifiedTopology: true,
+    client = new Client({
+      ssl: {
+        rejectUnauthorized: false,
+      },
     })
-    return await callback(client)
+    await client.connect()
+
+    return await cb({
+      client,
+
+      query(...args) {
+        return client.query(...args)
+      },
+
+      q(strs, ...vals) {
+        let query = strs[0]
+
+        for (let i = 0; i < vals.length; i += 1) {
+          query += '$' + (i + 1) + strs[i + 1]
+        }
+
+        return client.query(query, vals)
+      },
+    })
   } finally {
-    if (client) {
-      await client.close()
+    if (client !== null) {
+      await client.end()
     }
   }
 }

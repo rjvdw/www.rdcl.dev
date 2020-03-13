@@ -2,7 +2,8 @@
 
 const bodyParser = require('body-parser')
 const ms = require('ms')
-const db = require('../db')
+const subtract = require('date-fns/subMilliseconds')
+const parseISO = require('date-fns/parseISO')
 const healthService = require('../health/health.service')
 const { EntryAlreadyExists } = require('../errors')
 const { auth } = require('../auth/auth.middleware')
@@ -25,8 +26,8 @@ app.router.get('/', async (req, res) => {
       .validTimestamp()
     )
 
-  const to = req.query.to ? new Date(Date.parse(req.query.to)) : new Date()
-  const from = req.query.from ? new Date(Date.parse(req.query.from)) : new Date(to.getTime() - DEFAULT_DURATION)
+  const to = req.query.to ? parseISO(req.query.to) : new Date()
+  const from = req.query.from ? parseISO(req.query.from) : subtract(to, DEFAULT_DURATION)
 
   const validationResults = v
     .test(from < to).message(`invalid range: ${ from } - ${ to }`)
@@ -70,7 +71,7 @@ app.router.post('/', async (req, res) => {
 
   try {
     const { timestamp, ...data } = req.body
-    await healthService.create(owner, new Date(Date.parse(timestamp)), data)
+    await healthService.create(owner, parseISO(timestamp), data)
 
     res.set('location', '/.netlify/functions/health')
     res.status(201).end()
