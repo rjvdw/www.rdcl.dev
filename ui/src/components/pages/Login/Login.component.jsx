@@ -106,9 +106,9 @@ export class Login extends React.Component {
               value={ this.state.otp }
               onChange={ this.onChange('otp') }
             />
-          </rdcl-input-grid>
 
-          <button>Submit</button>
+            <span/><button>Submit</button>
+          </rdcl-input-grid>
         </form>
 
         <hr/>
