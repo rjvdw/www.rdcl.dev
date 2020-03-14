@@ -9,27 +9,13 @@ import { Qr } from '../../tools/Qr'
 
 export const Tools = () => <>
   <Switch>
-    <Route path="/tools/agenda">
-      <Agenda/>
-    </Route>
-    <Route path="/tools/html">
-      <Html/>
-    </Route>
-    <Route path="/tools/qr">
-      <Qr/>
-    </Route>
-    <Route path="/tools/countdown">
-      <Countdown/>
-    </Route>
-    <Route path="/tools/drop-rates">
-      <DropRates/>
-    </Route>
-    <Route path="/tools/bmi">
-      <Bmi/>
-    </Route>
-    <Route>
-      <Menu/>
-    </Route>
+    <Route path="/tools/agenda"><Agenda/></Route>
+    <Route path="/tools/html"><Html/></Route>
+    <Route path="/tools/qr"><Qr/></Route>
+    <Route path="/tools/countdown"><Countdown/></Route>
+    <Route path="/tools/drop-rates"><DropRates/></Route>
+    <Route path="/tools/bmi"><Bmi/></Route>
+    <Route><Menu/></Route>
   </Switch>
 </>
 
@@ -50,7 +36,7 @@ const Menu = () => <>
       Demonstrations of assorted HTML elements.
     </rdcl-tool-link>
     <rdcl-tool-link>
-      <Link slot="link" to="/tools/qr">QR Codes</Link>
+      <Link slot="link" to="/tools/qr">QR</Link>
       Create QR codes.
     </rdcl-tool-link>
     <rdcl-tool-link>
