@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
-import { axios } from './axios'
+import { axios, hasAuthData, isAuthStorageKey } from './axios'
 import { store } from './store'
 import { history } from './history'
 import { App } from './components/App'
@@ -10,6 +10,7 @@ import './elements/grid'
 import './styles/main.sass'
 import { updateScreenType } from './modules/screen'
 import { navigate } from './modules/routes'
+import { ensureLoggedOut } from './modules/auth'
 
 window._axios = axios
 
@@ -24,6 +25,18 @@ ReactDOM.render(
 
 window.addEventListener('resize', () => {
   store.dispatch(updateScreenType())
+})
+
+window.addEventListener('auth-logout', () => {
+  store.dispatch(ensureLoggedOut())
+})
+
+window.addEventListener('storage', event => {
+  if (isAuthStorageKey(event.key)) {
+    if (!hasAuthData()) {
+      store.dispatch(ensureLoggedOut())
+    }
+  }
 })
 
 document.body.addEventListener('click', event => {

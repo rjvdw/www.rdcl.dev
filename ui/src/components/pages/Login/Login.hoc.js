@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { Login as LoginComponent } from './Login.component'
-import { login, logout } from '../../../modules/auth'
+import { login, requestLogout } from '../../../modules/auth'
 
 export const Login = connect(
   ({ auth }) => ({
@@ -16,7 +16,7 @@ export const Login = connect(
       }))
     },
     logout() {
-      dispatch(logout())
+      dispatch(requestLogout())
     },
   }),
 )(LoginComponent)

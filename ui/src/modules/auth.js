@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { axios } from '../axios'
+import { axios, clearAuthData, hasAuthData } from '../axios'
 
 export const { actions, reducer: auth } = createSlice({
   name: 'auth',
@@ -19,12 +19,20 @@ export const { actions, reducer: auth } = createSlice({
   },
 })
 
-export function logout() {
-  return (dispatch) => {
-    window.localStorage.removeItem('auth')
-    axios.post('/auth/logout') // fire and forget
-      .catch(err => console.warn(err))
-    dispatch(actions.logout())
+export function requestLogout() {
+  return async () => {
+    await axios.post('/auth/logout')
+    clearAuthData()
+  }
+}
+
+export function ensureLoggedOut() {
+  return (dispatch, getState) => {
+    const { auth } = getState()
+
+    if (auth.loggedIn) {
+      dispatch(actions.logout())
+    }
   }
 }
 
@@ -36,22 +44,13 @@ export function login({ username, password, otp }) {
       dispatch(actions.login())
     } catch (err) {
       console.error(err)
-      dispatch(logout())
-      throw new Error('todo')
     }
   }
 }
 
 function getInitialState() {
-  const data = window.localStorage.getItem('auth')
-
-  if (data) {
-    try {
-      const { accessToken } = JSON.parse(data)
-      return { loggedIn: !!accessToken }
-    } catch (err) {
-      window.localStorage.removeItem('auth')
-    }
+  if (hasAuthData()) {
+    return { loggedIn: true }
   }
 
   return { loggedIn: false }
