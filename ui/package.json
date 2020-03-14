@@ -16,6 +16,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.5",
     "axios": "^0.19.2",
+    "date-fns": "^2.11.0",
     "history": "^4.10.1",
     "lit-element": "^2.2.1",
     "qrcode": "^1.4.4",
