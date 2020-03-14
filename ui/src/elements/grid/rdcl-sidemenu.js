@@ -5,7 +5,7 @@ import toggleIcon from './icons/toggle-sidemenu.svg'
 @customElement('rdcl-sidemenu')
 export class RdclSidemenu extends LitElement {
   @property({ type: Boolean }) collapsed = false
-  @property({ type: String }) screenType
+  @property({ type: String }) screentype
 
   static get styles() {
     // language=CSS
@@ -26,7 +26,7 @@ export class RdclSidemenu extends LitElement {
         width: var(--base-size);
       }
       
-      :host([screen-type="mobile"]) {
+      :host([screentype="mobile"]) {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -38,11 +38,11 @@ export class RdclSidemenu extends LitElement {
         transition: left 600ms ease;
       }
       
-      :host([screen-type="mobile"][collapsed]) {
+      :host([screentype="mobile"][collapsed]) {
         left: calc(-100vw - 1rem);
       }
       
-      :host([screen-type="mobile"]) .close {
+      :host([screentype="mobile"]) .close {
         position: absolute;
         top: .5rem;
         right: .5rem;
@@ -56,11 +56,11 @@ export class RdclSidemenu extends LitElement {
         cursor: pointer;
       }
       
-      :host(:not([screen-type="mobile"])) .close {
+      :host(:not([screentype="mobile"])) .close {
         display: none;
       }
       
-      :host([screen-type="mobile"]) .close > span {
+      :host([screentype="mobile"]) .close > span {
         display: inline-block;
         margin: auto;
         background-image: url('${ unsafeCSS(closeIcon) }');
@@ -90,7 +90,7 @@ export class RdclSidemenu extends LitElement {
         outline-offset: -.25rem;
       }
       
-      :host([screen-type="mobile"]) .toggle {
+      :host([screentype="mobile"]) .toggle {
         display: none;
       }
 
@@ -115,7 +115,7 @@ export class RdclSidemenu extends LitElement {
         border-bottom: var(--grid-border);
       }
       
-      :host([screen-type="mobile"]) ::slotted(*) {
+      :host([screentype="mobile"]) ::slotted(*) {
         background: var(--base-background-color);
         color: var(--base-foreground-color);
         margin-bottom: .5rem;
@@ -123,7 +123,7 @@ export class RdclSidemenu extends LitElement {
         transition: border-color 200ms ease-in-out;
       }
       
-      :host([screen-type="mobile"]) ::slotted(*:hover) {
+      :host([screentype="mobile"]) ::slotted(*:hover) {
         border-color: #333;
       }
     `

@@ -1,24 +1,18 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { Sidemenu } from '../Sidemenu'
-import IconMenu from './icons/menu.svg'
 import { Home } from '../pages/Home'
 import { Tools } from '../pages/Tools'
 import { Login } from '../pages/Login'
+import { PageHeader } from '../PageHeader'
 
-export const App = ({ screenType, openSidemenu }) => (
+export const App = ({ screenType }) => (
   <>
-    <rdcl-grid screen-type={ screenType }>
-      <header className="page-header" slot="header">
-        rdcl.dev
-
-        { screenType === 'mobile' ? (
-          <IconMenu onClick={ () => openSidemenu() } role="button" tabIndex={ 0 } className="page-header__menu-button"/>
-        ) : '' }
-      </header>
+    <rdcl-grid screentype={ screenType }>
+      <PageHeader pageHeaderProps={ { slot: 'header', screenType: screenType } }/>
 
       { screenType === 'mobile' ? '' : (
-        <Sidemenu sidemenuProps={ { slot: 'sidemenu', 'screen-type': screenType } }/>
+        <Sidemenu sidemenuProps={ { slot: 'sidemenu', screentype: screenType } }/>
       ) }
 
       <main>
@@ -39,7 +33,7 @@ export const App = ({ screenType, openSidemenu }) => (
     </rdcl-grid>
 
     { screenType === 'mobile' ? (
-      <Sidemenu sidemenuProps={ { slot: 'sidemenu', 'screen-type': screenType } }/>
+      <Sidemenu sidemenuProps={ { slot: 'sidemenu', screentype: screenType } }/>
     ) : '' }
   </>
 )

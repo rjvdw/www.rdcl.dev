@@ -6,10 +6,4 @@ export const App = connect(
   ({ screen }) => ({
     screenType: screen.type,
   }),
-
-  dispatch => ({
-    openSidemenu() {
-      dispatch(open())
-    },
-  }),
 )(AppComponent)

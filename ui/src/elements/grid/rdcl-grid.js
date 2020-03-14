@@ -2,7 +2,7 @@ import { LitElement, html, customElement, css, property } from 'lit-element'
 
 @customElement('rdcl-grid')
 export class RdclGrid extends LitElement {
-  @property({ type: String }) screenType
+  @property({ type: String }) screentype
 
   static get styles() {
     // language=CSS
@@ -32,7 +32,7 @@ export class RdclGrid extends LitElement {
         padding: 1rem;
       }
 
-      :host([screen-type="mobile"]) {
+      :host([screentype="mobile"]) {
         grid-template-areas: "header"
                              "main";
         grid-template-columns: 1fr;
