@@ -7,6 +7,7 @@ export class RdclToolLink extends LitElement {
     return css`
       :host {
         display: list-item;
+        margin-bottom: .75rem;
       }
 
       .link {

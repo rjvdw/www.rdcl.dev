@@ -77,8 +77,8 @@ export class Login extends React.Component {
         </> : '' }
 
         <form onSubmit={ event => this.onSubmit(event) }>
-          <div>
-            <label htmlFor="username">Username</label><br/>
+          <rdcl-input-grid>
+            <label htmlFor="username">Username</label>
             <input
               id="username"
               type="text"
@@ -88,10 +88,8 @@ export class Login extends React.Component {
               value={ this.state.username }
               onChange={ this.onChange('username') }
             />
-          </div>
 
-          <div>
-            <label htmlFor="password">Password</label><br/>
+            <label htmlFor="password">Password</label>
             <input
               id="password"
               type="password"
@@ -99,10 +97,8 @@ export class Login extends React.Component {
               value={ this.state.password }
               onChange={ this.onChange('password') }
             />
-          </div>
 
-          <div>
-            <label htmlFor="otp">OTP</label><br/>
+            <label htmlFor="otp">OTP</label>
             <input
               id="otp"
               type="text"
@@ -110,7 +106,7 @@ export class Login extends React.Component {
               value={ this.state.otp }
               onChange={ this.onChange('otp') }
             />
-          </div>
+          </rdcl-input-grid>
 
           <button>Submit</button>
         </form>
