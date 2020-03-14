@@ -1,6 +1,9 @@
 {
   "private": true,
-  "workspaces": ["back-end", "ui"],
+  "workspaces": [
+    "back-end",
+    "ui"
+  ],
   "scripts": {
     "postinstall": "lerna bootstrap",
     "build": "lerna run build --stream",
