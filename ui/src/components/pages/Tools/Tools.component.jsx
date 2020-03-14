@@ -25,7 +25,7 @@ const Menu = () => <>
   <rdcl-tools>
     <rdcl-tool-link>
       <a slot="link" href="/password.html" data-no-history>Generate Password</a>
-      Securely generates a password using <code>window.crypto</code>
+      Securely generates a password using <code>window.crypto</code>.
     </rdcl-tool-link>
     <rdcl-tool-link>
       <Link slot="link" to="/tools/agenda">Concert Agenda</Link>
