@@ -12,7 +12,7 @@ export const DropRates = () => {
       <input
         id="dropRate"
         value={ dropRate }
-        onChange={ event => setDropRate(+event.target.value) }
+        onChange={ event => setDropRate(event.target.value) }
         autoFocus
         type="number"
         inputMode="decimal"
@@ -24,7 +24,7 @@ export const DropRates = () => {
       <input
         id="nrAttempts"
         value={ nrAttempts }
-        onChange={ event => setNrAttempts(+event.target.value) }
+        onChange={ event => setNrAttempts(event.target.value) }
       />
       <span/>
 
@@ -37,7 +37,7 @@ export const DropRates = () => {
         readOnly
         type="number"
         step="any"
-        value={ chance(dropRate, nrAttempts) }
+        value={ chance(+dropRate, +nrAttempts) }
       />
       <label htmlFor="chance">%</label>
 
@@ -47,7 +47,7 @@ export const DropRates = () => {
         readOnly
         type="number"
         step="any"
-        value={ percentile(dropRate, 95) }
+        value={ percentile(+dropRate, 95) }
       />
       <span/>
 
@@ -57,7 +57,7 @@ export const DropRates = () => {
         readOnly
         type="number"
         step="any"
-        value={ percentile(dropRate, 99) }
+        value={ percentile(+dropRate, 99) }
       />
       <span/>
     </rdcl-input-grid>
