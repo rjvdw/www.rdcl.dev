@@ -3,6 +3,7 @@ command = "yarn build"
 publish = "ui/dist/"
 functions = "back-end/functions/"
 
-[dev]
+[dev] # https://github.com/netlify/cli/blob/master/docs/netlify-dev.md#netlifytoml-dev-block
 command = "yarn start"
 publish = "ui/dist/"
+autoLaunch = false
