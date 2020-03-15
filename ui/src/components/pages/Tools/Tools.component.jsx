@@ -6,6 +6,7 @@ import { Countdown } from '../../tools/Countdown'
 import { DropRates } from '../../tools/DropRates'
 import { Html } from '../../tools/Html'
 import { Qr } from '../../tools/Qr'
+import { Ratings } from '../../tools/Ratings'
 
 export const Tools = () => <>
   <Switch>
@@ -15,6 +16,7 @@ export const Tools = () => <>
     <Route path="/tools/countdown"><Countdown/></Route>
     <Route path="/tools/drop-rates"><DropRates/></Route>
     <Route path="/tools/bmi"><Bmi/></Route>
+    <Route path="/tools/ratings"><Ratings/></Route>
     <Route><Menu/></Route>
   </Switch>
 </>
@@ -50,6 +52,10 @@ const Menu = () => <>
     <rdcl-tool-link>
       <Link slot="link" to="/tools/bmi">BMI Calculator</Link>
       Body Mass Index calculator.
+    </rdcl-tool-link>
+    <rdcl-tool-link>
+      <Link slot="link" to="/tools/ratings">How to read a rating</Link>
+      Given how many reviews out of a total number of reviews are positive, computes a score.
     </rdcl-tool-link>
   </rdcl-tools>
 </>
