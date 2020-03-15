@@ -84,8 +84,7 @@ export const Health = () => {
             onChange={ event => setTo(event.target.value) }
           />
 
-          <span/>
-          <button>Haal op</button>
+          <button data-start={2}>Haal op</button>
         </rdcl-input-grid>
       </form>
     </section>
@@ -126,8 +125,7 @@ export const Health = () => {
             disabled={ saving }
           />
 
-          <span/>
-          <button disabled={ saving }>Sla op</button>
+          <button data-start={2} disabled={ saving }>Sla op</button>
         </rdcl-input-grid>
       </form>
     </section>

@@ -8,7 +8,7 @@ export const DropRates = () => {
     <h1>Drop Rate Calculator</h1>
 
     <rdcl-input-grid suffix>
-      <label htmlFor="dropRate">Drop rate</label>
+      <label data-start={1} htmlFor="dropRate">Drop rate</label>
       <input
         id="dropRate"
         value={ dropRate }
@@ -20,18 +20,16 @@ export const DropRates = () => {
       />
       <label htmlFor="dropRate">%</label>
 
-      <label htmlFor="nrAttempts">Nr. of attempts</label>
+      <label data-start={1} htmlFor="nrAttempts">Nr. of attempts</label>
       <input
         id="nrAttempts"
         value={ nrAttempts }
         onChange={ event => setNrAttempts(event.target.value) }
       />
-      <span/>
 
-      <hr/>
-      <span/>
+      <hr data-start={1} data-span={2}/>
 
-      <label htmlFor="chance">Chance</label>
+      <label data-start={1} htmlFor="chance">Chance</label>
       <input
         id="chance"
         readOnly
@@ -41,7 +39,7 @@ export const DropRates = () => {
       />
       <label htmlFor="chance">%</label>
 
-      <label htmlFor="perc95">95%</label>
+      <label data-start={1} htmlFor="perc95">95%</label>
       <input
         id="perc95"
         readOnly
@@ -49,9 +47,8 @@ export const DropRates = () => {
         step="any"
         value={ percentile(+dropRate, 95) }
       />
-      <span/>
 
-      <label htmlFor="perc99">99%</label>
+      <label data-start={1} htmlFor="perc99">99%</label>
       <input
         id="perc99"
         readOnly
@@ -59,7 +56,6 @@ export const DropRates = () => {
         step="any"
         value={ percentile(+dropRate, 99) }
       />
-      <span/>
     </rdcl-input-grid>
   </>
 }

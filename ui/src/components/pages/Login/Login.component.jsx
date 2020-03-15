@@ -58,11 +58,9 @@ export const Login = ({ loggedIn, login, logout, error, loading }) => {
         />
 
         { loggedIn ? <>
-          <span/>
-          <button type="button" onClick={ () => logout() }>Log out</button>
+          <button data-start={2} type="button" onClick={ () => logout() }>Log out</button>
         </> : <>
-          <span/>
-          <button disabled={ loading }>Submit</button>
+          <button data-start={2} disabled={ loading }>Submit</button>
         </> }
       </rdcl-input-grid>
     </form>

@@ -18,13 +18,28 @@ export class RdclInputGrid extends LitElement {
       :host([suffix]) {
         grid-template-columns: max-content 1fr max-content;
       }
-      
+
       ::slotted(hr) {
-        grid-column: span 2;
         border: none;
         border-bottom: thin solid #333;
         margin: .5rem 0;
         overflow: initial;
+      }
+
+      ::slotted([data-start="1"]) {
+        grid-column-start: 1;
+      }
+
+      ::slotted([data-start="2"]) {
+        grid-column-start: 2;
+      }
+
+      ::slotted([data-span="2"]) {
+        grid-column: span 2;
+      }
+
+      ::slotted([data-span="3"]) {
+        grid-column: span 3;
       }
     `
   }

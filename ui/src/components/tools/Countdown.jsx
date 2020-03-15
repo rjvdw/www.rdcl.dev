@@ -44,27 +44,16 @@ export const Countdown = () => {
       <rdcl-input-grid>
         <label htmlFor="cd-inp-1">Numbers:</label>
         <CDInput id="cd-inp-1" autoFocus value={ inp1 } set={ setInp1 }/>
-
-        <span/>
-        <CDInput value={ inp2 } set={ setInp2 }/>
-
-        <span/>
-        <CDInput value={ inp3 } set={ setInp3 }/>
-
-        <span/>
-        <CDInput value={ inp4 } set={ setInp4 }/>
-
-        <span/>
-        <CDInput value={ inp5 } set={ setInp5 }/>
-
-        <span/>
-        <CDInput value={ inp6 } set={ setInp6 }/>
+        <CDInput data-start={2} value={ inp2 } set={ setInp2 }/>
+        <CDInput data-start={2} value={ inp3 } set={ setInp3 }/>
+        <CDInput data-start={2} value={ inp4 } set={ setInp4 }/>
+        <CDInput data-start={2} value={ inp5 } set={ setInp5 }/>
+        <CDInput data-start={2} value={ inp6 } set={ setInp6 }/>
 
         <label htmlFor="cd-inp-target">Target:</label>
         <CDInput min={ 100 } max={ 999 } value={ target } set={ setTarget }/>
 
-        <span/>
-        <button disabled={ computing }>Let's Play Countdown!</button>
+        <button data-start={2} disabled={ computing }>Let's Play Countdown!</button>
       </rdcl-input-grid>
     </form>
 
