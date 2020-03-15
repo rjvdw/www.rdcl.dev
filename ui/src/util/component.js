@@ -7,3 +7,16 @@
 export function attr(b) {
   return b ? '' : undefined
 }
+
+/**
+ * Convenience method for preventing the default on an event handler.
+ *
+ * @param {function} handler
+ * @returns {function}
+ */
+export function preventDefault(handler) {
+  return event => {
+    event.preventDefault()
+    handler(event)
+  }
+}

@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from 'react'
-import IconHome from './icons/home.svg'
-import IconTools from './icons/tools.svg'
+import { Icon } from './icons'
 import { attr } from '../../util/component'
 
-export const Sidemenu = ({ activeRoute, toggle, close, collapsed, ...props }) => {
+export const Sidemenu = ({ activeRoute, loggedIn, toggle, close, collapsed, ...props }) => {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -23,14 +22,21 @@ export const Sidemenu = ({ activeRoute, toggle, close, collapsed, ...props }) =>
       collapsed={ attr(collapsed) }
     >
       <rdcl-sidemenu-item href="/" active={ attr(activeRoute === 'home') } onClick={ () => close() }>
-        <IconHome slot="icon"/>
+        <Icon.Home slot="icon"/>
         Home
       </rdcl-sidemenu-item>
 
       <rdcl-sidemenu-item href="/tools" active={ attr(activeRoute === 'tools') } onClick={ () => close() }>
-        <IconTools slot="icon"/>
+        <Icon.Tools slot="icon"/>
         Tools
       </rdcl-sidemenu-item>
+
+      { loggedIn && (
+        <rdcl-sidemenu-item href="/health" active={ attr(activeRoute === 'health') } onClick={ () => close() }>
+          <Icon.Health slot="icon"/>
+          Health
+        </rdcl-sidemenu-item>
+      ) }
     </rdcl-sidemenu>
   )
 }

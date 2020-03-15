@@ -5,8 +5,9 @@ import { Sidemenu } from '../Sidemenu'
 import { Home } from '../pages/Home'
 import { Tools } from '../pages/Tools'
 import { Login } from '../pages/Login'
+import { Health } from '../pages/Health'
 
-export const App = ({ screenType }) => (
+export const App = ({ screenType, loggedIn }) => (
   <>
     <rdcl-grid screentype={ screenType }>
       <PageHeader slot="header" screentype={ screenType }/>
@@ -23,6 +24,10 @@ export const App = ({ screenType }) => (
 
           <Route path="/tools">
             <Tools/>
+          </Route>
+
+          <Route path="/health">
+            { loggedIn ? <Health/> : <Login/> }
           </Route>
 
           <Route path="/login">

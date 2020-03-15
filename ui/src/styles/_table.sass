@@ -1,0 +1,21 @@
+table
+  border-collapse: collapse
+
+th
+  font-weight: bold
+
+th, td
+  text-align: left
+  border-bottom: thin solid #666
+  padding: .5rem 2.5rem .5rem 1rem
+
+thead tr:last-of-type
+  & th, & td
+    border-bottom-width: medium
+
+tbody tr:nth-of-type(odd)
+  & th, & td
+    background: #fff
+
+td[data-numeric]
+  text-align: right

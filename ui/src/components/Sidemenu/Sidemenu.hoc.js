@@ -3,9 +3,10 @@ import { Sidemenu as SidemenuComponent } from './Sidemenu.component'
 import { close, toggle } from '../../modules/sidemenu'
 
 export const Sidemenu = connect(
-  ({ routes, screen, sidemenu }) => ({
+  ({ auth, routes, screen, sidemenu }) => ({
     collapsed: screen.type === 'mobile' ? !sidemenu.open : sidemenu.collapsed,
     activeRoute: routes.activeRoute,
+    loggedIn: auth.loggedIn,
   }),
 
   dispatch => ({
