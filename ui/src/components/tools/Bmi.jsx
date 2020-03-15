@@ -14,8 +14,8 @@ export const Bmi = () => {
   return <>
     <h1>BMI Calculator</h1>
 
-    <rdcl-input-grid>
-      <label htmlFor="weight">Weight (in kgs)</label>
+    <rdcl-input-grid suffix>
+      <label htmlFor="weight">Weight</label>
       <input
         id="weight"
         type="number"
@@ -24,8 +24,9 @@ export const Bmi = () => {
         value={ formatted(weight) }
         onChange={ event => setWeight(event.target.value) }
       />
+      <label htmlFor="weight">kg</label>
 
-      <label htmlFor="height">Height (in cms)</label>
+      <label htmlFor="height">Height</label>
       <input
         id="height"
         type="number"
@@ -34,6 +35,7 @@ export const Bmi = () => {
         value={ height }
         onChange={ event => setHeight(event.target.value) }
       />
+      <label htmlFor="height">cm</label>
 
       <label htmlFor="bmi">BMI</label>
       <input
