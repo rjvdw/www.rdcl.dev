@@ -33,8 +33,8 @@ export class RdclSidemenuItem extends LitElement {
       }
 
       .link:focus {
-        outline: thin dashed #333;
-        outline-offset: -.25rem;
+        outline: var(--focus-outline);
+        outline-offset: var(--focus-offset);
       }
 
       [name="icon"]::slotted(*) {

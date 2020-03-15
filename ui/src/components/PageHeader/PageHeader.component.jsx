@@ -1,33 +1,14 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
-export class PageHeader extends React.Component {
-  constructor(props) {
-    super(props)
-    this.pageHeaderRef = React.createRef()
-  }
+export const PageHeader = ({ open, ...props }) => {
+  const ref = useRef(null)
 
-  componentDidMount() {
-    this.pageHeaderRef.current.addEventListener('mobilemenu-open', this)
-  }
+  useEffect(() => {
+    ref.current.addEventListener('mobilemenu-open', open)
+    return () => ref.current.removeEventListener('mobilemenu-open', open)
+  })
 
-  componentWillUnmount() {
-    this.pageHeaderRef.current.removeEventListener('mobilemenu-open', this)
-  }
-
-  handleEvent(event) {
-    console.log(event)
-    if (event.type === 'mobilemenu-open') {
-      this.props.open()
-    }
-  }
-
-  render() {
-    const { pageHeaderProps } = this.props
-
-    return (
-      <rdcl-page-header { ...pageHeaderProps } ref={ this.pageHeaderRef }>
-        rdcl.dev
-      </rdcl-page-header>
-    )
-  }
+  return (
+    <rdcl-page-header { ...props } ref={ ref }>rdcl.dev</rdcl-page-header>
+  )
 }

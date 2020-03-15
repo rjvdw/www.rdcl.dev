@@ -1,120 +1,70 @@
-import React from 'react'
-import { axios } from '../../../axios'
+import React, { useState } from 'react'
 
-export class Login extends React.Component {
-  constructor(props) {
-    super(props)
+export const Login = ({ loggedIn, login, logout, error, loading }) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [otp, setOtp] = useState('')
 
-    this.state = {
-      username: '',
-      password: '',
-      otp: '',
-      errors: [],
-      info: null,
-    }
+  if (loggedIn && (password || otp)) {
+    setPassword('')
+    setOtp('')
   }
 
-  async test() {
-    const response = await axios.get('/health', {
-      validateStatus: () => true,
-    })
-
-    console.log(response.status, response.headers, response.data)
-    this.setState({
-      info: `status: ${ response.status }, body: ${ JSON.stringify(response.data, null, 2) }`,
-    })
-  }
-
-  async onSubmit(event) {
+  const onSubmit = async event => {
     event.preventDefault()
-    this.setState({ errors: [] })
-
-    const error = await this.props.login(
-      this.state.username,
-      this.state.password,
-      this.state.otp,
-    )
-
-    if (error) {
-      this.setState({
-        errors: [
-          ...this.state.errors,
-          error,
-        ]
-      })
-    }
+    login(username, password, otp)
   }
 
-  onChange(field) {
-    return (event) => {
-      this.setState({ [field]: event.target.value })
-    }
-  }
+  return <>
+    <h1>Log in</h1>
 
-  render() {
-    if (this.props.loggedIn) {
-      return <>
-        <h1>Log out</h1>
+    { error ? <>
+      <h2>Fout!</h2>
+      <p>{ error }</p>
+    </> : '' }
 
-        <button onClick={ () => this.props.logout() }>Log out</button>
+    <form onSubmit={ onSubmit }>
+      <rdcl-input-grid>
+        <label htmlFor="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          inputMode="email"
+          autoFocus
+          required
+          disabled={ loggedIn || loading }
+          value={ username }
+          onChange={ event => setUsername(event.target.value) }
+        />
 
-        <hr/>
-        <pre>{ this.state.info }</pre>
-        <button onClick={ () => this.test() }>Test</button>
-      </>
-    } else {
-      return <>
-        <h1>Log in</h1>
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          required
+          disabled={ loggedIn || loading }
+          value={ password }
+          onChange={ event => setPassword(event.target.value) }
+        />
 
-        { this.state.errors.length > 0 ? <>
-          <h2>Fout!</h2>
+        <label htmlFor="otp">OTP</label>
+        <input
+          id="otp"
+          type="text"
+          inputMode="numeric"
+          disabled={ loggedIn || loading }
+          value={ otp }
+          onChange={ event => setOtp(event.target.value) }
+        />
 
-          <ul>
-            { this.state.errors.map((err, idx) => (
-              <li key={ idx }>{ err }</li>
-            )) }
-          </ul>
-        </> : '' }
-
-        <form onSubmit={ event => this.onSubmit(event) }>
-          <rdcl-input-grid>
-            <label htmlFor="username">Username</label>
-            <input
-              id="username"
-              type="text"
-              inputMode="email"
-              autoFocus
-              required
-              value={ this.state.username }
-              onChange={ this.onChange('username') }
-            />
-
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              required
-              value={ this.state.password }
-              onChange={ this.onChange('password') }
-            />
-
-            <label htmlFor="otp">OTP</label>
-            <input
-              id="otp"
-              type="text"
-              inputMode="numeric"
-              value={ this.state.otp }
-              onChange={ this.onChange('otp') }
-            />
-
-            <span/><button>Submit</button>
-          </rdcl-input-grid>
-        </form>
-
-        <hr/>
-        <pre>{ this.state.info }</pre>
-        <button onClick={ () => this.test() }>Test</button>
-      </>
-    }
-  }
+        { loggedIn ? <>
+          <span/>
+          <button type="button" onClick={ () => logout() }>Log out</button>
+        </> : <>
+          <span/>
+          <button disabled={ loading }>Submit</button>
+        </> }
+      </rdcl-input-grid>
+    </form>
+  </>
 }

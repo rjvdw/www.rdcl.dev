@@ -1,18 +1,18 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { PageHeader } from '../PageHeader'
 import { Sidemenu } from '../Sidemenu'
 import { Home } from '../pages/Home'
 import { Tools } from '../pages/Tools'
 import { Login } from '../pages/Login'
-import { PageHeader } from '../PageHeader'
 
 export const App = ({ screenType }) => (
   <>
     <rdcl-grid screentype={ screenType }>
-      <PageHeader pageHeaderProps={ { slot: 'header', screenType: screenType } }/>
+      <PageHeader slot="header" screentype={ screenType }/>
 
       { screenType === 'mobile' ? '' : (
-        <Sidemenu sidemenuProps={ { slot: 'sidemenu', screentype: screenType } }/>
+        <Sidemenu slot="sidemenu" screentype={ screenType }/>
       ) }
 
       <main>
@@ -33,7 +33,7 @@ export const App = ({ screenType }) => (
     </rdcl-grid>
 
     { screenType === 'mobile' ? (
-      <Sidemenu sidemenuProps={ { slot: 'sidemenu', screentype: screenType } }/>
+      <Sidemenu slot="sidemenu" screentype={ screenType }/>
     ) : '' }
   </>
 )

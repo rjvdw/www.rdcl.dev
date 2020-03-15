@@ -86,8 +86,8 @@ export class RdclSidemenu extends LitElement {
       }
 
       .toggle:focus {
-        outline: thin dashed #333;
-        outline-offset: -.25rem;
+        outline: var(--focus-outline);
+        outline-offset: var(--focus-offset);
       }
       
       :host([screentype="mobile"]) .toggle {

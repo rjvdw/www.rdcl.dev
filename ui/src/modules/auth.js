@@ -3,24 +3,46 @@ import { axios, clearAuthData, hasAuthData } from '../axios'
 
 export const { actions, reducer: auth } = createSlice({
   name: 'auth',
-  initialState: getInitialState(),
+  initialState: {
+    loggedIn: hasAuthData(),
+    error: null,
+    loading: false,
+  },
   reducers: {
     login(state) {
       return {
         ...state,
         loggedIn: true,
+        error: null,
+        loading: false,
       }
     },
     logout() {
       return {
         loggedIn: false,
+        error: null,
+        loading: false,
       }
-    }
+    },
+    error(state, { payload: { error } }) {
+      return {
+        ...state,
+        error,
+        loading: false,
+      }
+    },
+    loading(state) {
+      return {
+        ...state,
+        loading: true,
+      }
+    },
   },
 })
 
 export function requestLogout() {
-  return async () => {
+  return async (dispatch) => {
+    dispatch(actions.loading())
     await axios.post('/auth/logout')
     clearAuthData()
   }
@@ -39,19 +61,11 @@ export function ensureLoggedOut() {
 export function login({ username, password, otp }) {
   return async (dispatch) => {
     try {
-      const response = await axios.post('/auth/login', { username, password, otp })
-      console.log(response)
+      dispatch(actions.loading())
+      await axios.post('/auth/login', { username, password, otp })
       dispatch(actions.login())
     } catch (err) {
-      console.error(err)
+      dispatch(actions.error(err))
     }
   }
-}
-
-function getInitialState() {
-  if (hasAuthData()) {
-    return { loggedIn: true }
-  }
-
-  return { loggedIn: false }
 }

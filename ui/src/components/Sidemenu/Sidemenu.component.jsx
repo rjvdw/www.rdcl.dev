@@ -1,51 +1,36 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import IconHome from './icons/home.svg'
 import IconTools from './icons/tools.svg'
 import { attr } from '../../util/component'
 
-export class Sidemenu extends React.Component {
-  constructor(props) {
-    super(props)
-    this.sidemenuRef = React.createRef()
-  }
+export const Sidemenu = ({ activeRoute, toggle, close, collapsed, ...props }) => {
+  const ref = useRef(null)
 
-  componentDidMount() {
-    this.sidemenuRef.current.addEventListener('sidemenu-toggle', this)
-    this.sidemenuRef.current.addEventListener('sidemenu-close', this)
-  }
+  useEffect(() => {
+    ref.current.addEventListener('sidemenu-toggle', toggle)
+    ref.current.addEventListener('sidemenu-close', close)
 
-  componentWillUnmount() {
-    this.sidemenuRef.current.removeEventListener('sidemenu-toggle', this)
-    this.sidemenuRef.current.removeEventListener('sidemenu-close', this)
-  }
-
-  handleEvent(event) {
-    if (event.type === 'sidemenu-toggle') {
-      this.props.toggle()
-    } else if (event.type === 'sidemenu-close') {
-      this.props.close()
+    return () => {
+      ref.current.removeEventListener('sidemenu-toggle', toggle)
+      ref.current.removeEventListener('sidemenu-close', close)
     }
-  }
+  })
 
-  render() {
-    const { activeRoute, close, collapsed, sidemenuProps } = this.props
+  return (
+    <rdcl-sidemenu
+      { ...props }
+      ref={ ref }
+      collapsed={ attr(collapsed) }
+    >
+      <rdcl-sidemenu-item href="/" active={ attr(activeRoute === 'home') } onClick={ () => close() }>
+        <IconHome slot="icon"/>
+        Home
+      </rdcl-sidemenu-item>
 
-    return (
-      <rdcl-sidemenu
-        { ...sidemenuProps }
-        ref={ this.sidemenuRef }
-        collapsed={ attr(collapsed) }
-      >
-        <rdcl-sidemenu-item href="/" active={ attr(activeRoute === 'home') } onClick={ () => close() }>
-          <IconHome slot="icon"/>
-          Home
-        </rdcl-sidemenu-item>
-
-        <rdcl-sidemenu-item href="/tools" active={ attr(activeRoute === 'tools') } onClick={ () => close() }>
-          <IconTools slot="icon"/>
-          Tools
-        </rdcl-sidemenu-item>
-      </rdcl-sidemenu>
-    )
-  }
+      <rdcl-sidemenu-item href="/tools" active={ attr(activeRoute === 'tools') } onClick={ () => close() }>
+        <IconTools slot="icon"/>
+        Tools
+      </rdcl-sidemenu-item>
+    </rdcl-sidemenu>
+  )
 }
