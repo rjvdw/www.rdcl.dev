@@ -27,7 +27,7 @@ export function isAuthStorageKey(key) {
 
 // append authorization and x-refresh-token headers
 axios.interceptors.request.use(
-  (config) => {
+  config => {
     if (hasAuthData()) {
       config.headers['authorization'] = `bearer ${ STORAGE[ACCESS_TOKEN_KEY] }`
       config.headers['x-refresh-token'] = STORAGE[REFRESH_TOKEN_KEY]
@@ -36,23 +36,24 @@ axios.interceptors.request.use(
     return config
   },
 
-  (error) => Promise.reject(error),
+  error => Promise.reject(error),
 )
 
 // extract x-access-token and x-refresh-token headers
 axios.interceptors.response.use(
-  (response) => {
+  response => {
     if (response.headers['x-access-token']) {
       STORAGE[ACCESS_TOKEN_KEY] = response.headers['x-access-token']
       STORAGE[REFRESH_TOKEN_KEY] = response.headers['x-refresh-token']
     }
 
-    if (response.status === 401) {
-      clearAuthData()
-    }
-
     return response
   },
 
-  (error) => Promise.reject(error),
+  error => {
+    if (error.response.status === 401) {
+      setTimeout(() => clearAuthData(), 5) // async call to give components the chance to handle the response
+    }
+    return Promise.reject(error)
+  },
 )
