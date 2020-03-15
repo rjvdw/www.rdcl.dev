@@ -11,6 +11,8 @@ export class RdclCombiInput extends LitElement {
         display: grid;
         grid-template-columns: auto auto;
         grid-column-gap: .5rem;
+        max-width: 100%;
+        overflow: auto;
       }
 
       :host([mode="balanced"]) {

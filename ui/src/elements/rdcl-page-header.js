@@ -45,7 +45,7 @@ export class RdclPageHeader extends LitElement {
   render() {
     return html`
       <slot></slot>
-      
+
       ${ this.screentype === 'mobile' ? html`
         <svg
           @click=${ this.openMobileMenu }

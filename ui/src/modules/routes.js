@@ -30,6 +30,10 @@ function getActiveRoute(location) {
     return 'tools'
   }
 
+  if (location.pathname.startsWith('/health')) {
+    return 'health'
+  }
+
   if (location.pathname === '/') {
     return 'home'
   }

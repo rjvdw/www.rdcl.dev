@@ -11,22 +11,28 @@ export class RdclSidemenu extends LitElement {
     // language=CSS
     return css`
       :host {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: 1fr min-content;
         width: 15rem;
         transition: width 400ms ease-in-out;
-        overflow: hidden;
+        overflow-x: hidden;
 
         --active-border-width: .35rem;
         --base-size: 3rem;
         --icon-size: 2.5rem;
       }
+      
+      .slot-container {
+        overflow: auto;
+      }
 
       :host([collapsed]) {
         width: var(--base-size);
       }
-      
+
       :host([screentype="mobile"]) {
+        display: flex;
+        flex-direction: column;
         position: fixed;
         top: 0;
         bottom: 0;
@@ -37,11 +43,11 @@ export class RdclSidemenu extends LitElement {
         padding: 4rem .5rem .5rem;
         transition: left 600ms ease;
       }
-      
+
       :host([screentype="mobile"][collapsed]) {
         left: calc(-100vw - 1rem);
       }
-      
+
       :host([screentype="mobile"]) .close {
         position: absolute;
         top: .5rem;
@@ -55,11 +61,7 @@ export class RdclSidemenu extends LitElement {
         outline: none;
         cursor: pointer;
       }
-      
-      :host(:not([screentype="mobile"])) .close {
-        display: none;
-      }
-      
+
       :host([screentype="mobile"]) .close > span {
         display: inline-block;
         margin: auto;
@@ -89,10 +91,6 @@ export class RdclSidemenu extends LitElement {
         outline: var(--focus-outline);
         outline-offset: var(--focus-offset);
       }
-      
-      :host([screentype="mobile"]) .toggle {
-        display: none;
-      }
 
       .toggle > span {
         display: inline-block;
@@ -113,8 +111,17 @@ export class RdclSidemenu extends LitElement {
         background: var(--grid-sidemenu-item-background);
         color: var(--grid-sidemenu-item-foreground);
         border-bottom: var(--grid-border);
+        transition: background-color 100ms ease-in;
       }
-      
+
+      ::slotted([active]) {
+        background: var(--grid-sidemenu-item-background-active);
+      }
+
+      ::slotted(:hover) {
+        background: var(--grid-sidemenu-item-background-active);
+      }
+
       :host([screentype="mobile"]) ::slotted(*) {
         background: var(--base-background-color);
         color: var(--base-foreground-color);
@@ -122,7 +129,7 @@ export class RdclSidemenu extends LitElement {
         border: thin solid #999;
         transition: border-color 200ms ease-in-out;
       }
-      
+
       :host([screentype="mobile"]) ::slotted(*:hover) {
         border-color: #333;
       }
@@ -131,15 +138,17 @@ export class RdclSidemenu extends LitElement {
 
   render() {
     return html`
-      <slot></slot>
+      <div class="slot-container"><slot></slot></div>
 
-      <button class="toggle" @click="${ this.toggle }" role="presentation">
-        <span></span>
-      </button>
-      
-      <button class="close" @click="${ this.close }" role="presentation">
-        <span></span>      
-      </button>
+      ${ this.screentype === 'mobile' ? html`
+        <button class="close" @click="${ this.close }" role="presentation">
+          <span></span>
+        </button>
+      ` : html`
+        <button class="toggle" @click="${ this.toggle }" role="presentation">
+          <span></span>
+        </button>
+      ` }
     `
   }
 
