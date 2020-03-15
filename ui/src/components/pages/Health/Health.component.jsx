@@ -125,8 +125,9 @@ export const Health = () => {
           <label htmlFor="health-new-weight">Gewicht</label>
           <input
             id="health-new-weight"
-            type="numeric"
+            type="number"
             inputMode="decimal"
+            step={ .1 }
             value={ newEntry.weight }
             onChange={ event => setNewEntryValue('weight', +event.target.value) }
             required
