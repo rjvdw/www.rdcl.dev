@@ -80,7 +80,6 @@ export const Health = () => {
             type="date"
             value={ from }
             onChange={ event => setFrom(event.target.value) }
-            required
           />
 
           <label htmlFor="health-range-to">To</label>
@@ -89,7 +88,6 @@ export const Health = () => {
             type="date"
             value={ to }
             onChange={ event => setTo(event.target.value) }
-            required
           />
 
           <span/>
