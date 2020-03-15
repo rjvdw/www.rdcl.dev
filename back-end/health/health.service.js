@@ -39,7 +39,7 @@ exports.create = (owner, timestamp, data) => withDb(async (db) => {
     }
   } catch (err) {
     if (err.code === '23505') {
-      throw new EntryAlreadyExists('duplicate key')
+      throw new EntryAlreadyExists(`entry with timestamp ${ timestamp } already exists`)
     } else {
       throw err
     }

@@ -3,6 +3,11 @@
 const express = require('express')
 const morgan = require('morgan')
 const serverless = require('serverless-http')
+const ms = require('ms')
+const subtract = require('date-fns/subMilliseconds')
+const parseISO = require('date-fns/parseISO')
+const { validator } = require('./validator')
+const { EntryAlreadyExists, ForeignKeyViolation } = require('./errors')
 
 exports.App = class App {
   constructor(name) {
@@ -26,96 +31,51 @@ exports.App = class App {
 
   getHandler() {
     this.app.use(`/.netlify/functions/${ this.name }`, this.router)
+    this.app.use((err, req, res, next) => {
+      if (err instanceof EntryAlreadyExists) {
+        res.status(409).json({ reason: err.message })
+      } else if (err instanceof ForeignKeyViolation) {
+        res.status(400).json({ reason: err.message })
+      } else {
+        console.error('ERROR', err)
+        res.status(500).json({ reason: 'unexpected error' })
+      }
+    })
 
     return serverless(this.app)
   }
 }
 
-exports.validator = () => {
-  const errors = []
-  const validator = {
-    test(p) {
-      return {
-        message(msg) {
-          if (typeof p === 'function') {
-            if (!p()) {
-              errors.push(msg)
-            }
-          } else if (!p) {
-            errors.push(msg)
-          }
+exports.ex = cb => (req, res, next) => {
+  return cb(req, res, next).then(undefined, err => next(err))
+}
 
-          return validator
-        },
-      }
-    },
+exports.range = (options = {}) => (req, res, next) => {
+  const fromKey = options.fromKey || 'from'
+  const toKey = options.toKey || 'to'
+  const defaultDuration = options.defaultDuration || ms('30 days')
 
-    value(field, value, cb) {
-      const present = value !== null && value !== undefined
+  const v = validator()
+    .value(fromKey, req.query[fromKey], field => field
+      .validTimestamp()
+    )
+    .value(toKey, req.query[toKey], field => field
+      .validTimestamp()
+    )
 
-      cb({
-        required() {
-          if (!present || value === '') {
-            errors.push(`${ field } is required`)
-          }
+  const to = req.query[toKey] ? parseISO(req.query[toKey]) : new Date()
+  const from = req.query[fromKey] ? parseISO(req.query[fromKey]) : subtract(to, defaultDuration)
 
-          return this
-        },
-        validTimestamp() {
-          if (present) {
-            if (typeof value !== 'string' || !value.match(/^\d+-\d{1,2}-\d{1,2}/) || Date.parse(value) === null) {
-              errors.push(`${ field } is not a valid timestamp`)
-            }
-          }
+  const validationResults = v
+    .test(from < to).message(`invalid range: ${ from } - ${ to }`)
+    .validate()
 
-          return this
-        },
-        numeric() {
-          if (present && typeof value !== 'number') {
-            errors.push(`${ field } is not numeric`)
-          }
-
-          return this
-        },
-      })
-
-      return this
-    },
-
-    obj(obj, objName, cb) {
-      const unchecked = new Set(Object.keys(obj))
-
-      cb({
-        present() {
-          if (!obj) {
-            errors.push(`${ objName } is absent`)
-          }
-
-          return this
-        },
-        field(name, cb) {
-          unchecked.delete(name)
-
-          validator.value(`${ objName }.${ name }`, obj ? obj[name] : undefined, cb)
-
-          return this
-        },
-        noOtherFields() {
-          if (unchecked.size) {
-            errors.push(`${ objName } has undesired fields: ${ Array.from(unchecked.values()) }`)
-          }
-        },
-      })
-
-      return this
-    },
-
-    validate() {
-      return [...errors]
-    },
+  if (validationResults.length > 0) {
+    res.status(400).json({ reason: 'invalid request', errors: validationResults })
+  } else {
+    req.range = { from, to }
+    next()
   }
-
-  return validator
 }
 
 function readonly(value, opts = {}) {
