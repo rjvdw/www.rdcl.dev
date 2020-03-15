@@ -87,13 +87,14 @@ export class Agenda extends React.Component {
   }
 
   render() {
-    const { filter, venues, loadingVenues, loadingEvents, error } = this.state
+    const { filter, events, venues, loadingVenues, loadingEvents, error } = this.state
 
     return <>
       <h1>Concert Agenda</h1>
 
       <FilterMenu
         venues={ venues }
+        events={ events }
         ordering={ filter.ordering }
         setOrdering={ ordering => this.setState(state => ({
           ...state,
@@ -133,7 +134,7 @@ export class Agenda extends React.Component {
   }
 }
 
-const FilterMenu = ({ venues, ordering, setOrdering, filters, setFilter }) => (
+const FilterMenu = ({ venues, events, ordering, setOrdering, filters, setFilter }) => (
   <nav className="ca-filters">
     <header className="ca-filters__header">
       <h2 className="ca-filters__title">Filteren</h2>
@@ -150,7 +151,7 @@ const FilterMenu = ({ venues, ordering, setOrdering, filters, setFilter }) => (
                 checked={ filters[venue.key] }
                 onChange={ event => setFilter(venue.key, event.target.checked) }
               />&nbsp;
-              { venue.name } (5)
+              { venue.name } ({ events.filter(event => event.venue.key === venue.key).length })
             </label>
           )) }
         </div>
