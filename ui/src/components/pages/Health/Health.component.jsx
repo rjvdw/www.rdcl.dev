@@ -13,17 +13,11 @@ export const Health = () => {
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
   const [newEntry, setNewEntry] = useState({
-    timestamp: new Date(),
+    date: formatISO(new Date(), { representation: 'date' }),
+    time: format(new Date(), 'HH:mm'),
     weight: '',
   })
   const setNewEntryValue = (key, val) => {
-    if (key === 'date') {
-      key = 'timestamp'
-      val = combineDateAndTime(parseISO(val), newEntry.timestamp)
-    } else if (key === 'time') {
-      key = 'timestamp'
-      val = combineDateAndTime(newEntry.timestamp, parseTime(val))
-    }
     setNewEntry({ ...newEntry, [key]: val })
   }
 
@@ -49,7 +43,7 @@ export const Health = () => {
     setSaving(true)
     try {
       await axios.post('/health', {
-        timestamp: formatISO(newEntry.timestamp),
+        timestamp: formatISO(combineDateAndTime(newEntry.date, newEntry.time)),
         weight: newEntry.weight,
       })
       await fetch()
@@ -105,7 +99,7 @@ export const Health = () => {
             <input
               id="health-new-date"
               type="date"
-              value={ formatISO(newEntry.timestamp, { representation: 'date' }) }
+              value={ newEntry.date }
               onChange={ event => setNewEntryValue('date', event.target.value) }
               required
               disabled={ saving }
@@ -113,7 +107,7 @@ export const Health = () => {
             <input
               id="health-new-time"
               type="time"
-              value={ format(newEntry.timestamp, 'HH:mm') }
+              value={ newEntry.time }
               onChange={ event => setNewEntryValue('time', event.target.value) }
               required
               disabled={ saving }
@@ -163,24 +157,14 @@ export const Health = () => {
 }
 
 /**
- * @param {Date} date
- * @param {Date} time
+ * @param {string} dateStr
+ * @param {string} timeStr
  * @returns {Date}
  */
-function combineDateAndTime(date, time) {
-  return new Date(
-    date.getFullYear(), date.getMonth(), date.getDate(),
-    time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds()
-  )
-}
+function combineDateAndTime(dateStr, timeStr) {
+  const d = parseISO(dateStr)
 
-/**
- * @param {string} str
- * @returns {Date}
- */
-function parseTime(str) {
-  const [hours, minutes, seconds] = str.split(':')
-  const d = new Date()
+  const [hours, minutes, seconds] = timeStr.split(':')
   d.setHours(+hours)
   d.setMinutes(+minutes)
   if (seconds) {

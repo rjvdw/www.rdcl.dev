@@ -32,6 +32,11 @@ exports.create = (owner, timestamp, data) => withDb(async (db) => {
       insert into health_data (owner, timestamp, data)
       values (${ owner }, ${ timestamp }, ${ data })
     `
+
+    return {
+      timestamp,
+      ...data,
+    }
   } catch (err) {
     if (err.code === '23505') {
       throw new EntryAlreadyExists('duplicate key')

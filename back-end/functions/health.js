@@ -71,10 +71,10 @@ app.router.post('/', async (req, res) => {
 
   try {
     const { timestamp, ...data } = req.body
-    await healthService.create(owner, parseISO(timestamp), data)
+    const entry = await healthService.create(owner, parseISO(timestamp), data)
 
     res.set('location', '/.netlify/functions/health')
-    res.status(201).end()
+    res.status(201).json(entry)
   } catch (err) {
     if (err instanceof EntryAlreadyExists) {
       res.status(409).json({ reason: `record for ${ req.body.timestamp } already exists` })
