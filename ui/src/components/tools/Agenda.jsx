@@ -87,6 +87,7 @@ export class Agenda extends React.Component {
   }
 
   render() {
+    document.title = ['concert agenda', 'tools', 'rdcl.dev'].join(' | ') // FIXME: Generalise with useTitle...
     const { filter, events, venues, loadingVenues, loadingEvents, error } = this.state
 
     return <>

@@ -3,8 +3,11 @@ import { format, formatISO, parseISO } from 'date-fns'
 import { axios } from '../../../axios'
 import { formatDate } from '../../../util/formatters'
 import { preventDefault } from '../../../util/component'
+import { useTitle } from '../../util'
 
 export const Health = () => {
+  useTitle('health')
+
   const [data, setData] = useState([])
   const [initialized, setInitialized] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -84,7 +87,7 @@ export const Health = () => {
             onChange={ event => setTo(event.target.value) }
           />
 
-          <button data-start={2}>Haal op</button>
+          <button data-start={ 2 }>Haal op</button>
         </rdcl-input-grid>
       </form>
     </section>
@@ -125,7 +128,7 @@ export const Health = () => {
             disabled={ saving }
           />
 
-          <button data-start={2} disabled={ saving }>Sla op</button>
+          <button data-start={ 2 } disabled={ saving }>Sla op</button>
         </rdcl-input-grid>
       </form>
     </section>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useTitle } from '../util'
 
 const YOUTUBE_LINK = "https://www.youtube.com/watch?v=8idr1WZ1A7Q&t=107"
 
 export const Ratings = () => {
+  useTitle('ratings', 'tools')
   const [nrPositive, setNrPositive] = useState(19)
   const [nrTotal, setNrTotal] = useState(20)
 

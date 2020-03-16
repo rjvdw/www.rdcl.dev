@@ -7,19 +7,24 @@ import { DropRates } from '../../tools/DropRates'
 import { Html } from '../../tools/Html'
 import { Qr } from '../../tools/Qr'
 import { Ratings } from '../../tools/Ratings'
+import { useTitle } from '../../util'
 
-export const Tools = () => <>
-  <Switch>
-    <Route path="/tools/agenda"><Agenda/></Route>
-    <Route path="/tools/html"><Html/></Route>
-    <Route path="/tools/qr"><Qr/></Route>
-    <Route path="/tools/countdown"><Countdown/></Route>
-    <Route path="/tools/drop-rates"><DropRates/></Route>
-    <Route path="/tools/bmi"><Bmi/></Route>
-    <Route path="/tools/ratings"><Ratings/></Route>
-    <Route><Menu/></Route>
-  </Switch>
-</>
+export const Tools = () => {
+  useTitle('tools')
+
+  return <>
+    <Switch>
+      <Route path="/tools/agenda"><Agenda/></Route>
+      <Route path="/tools/html"><Html/></Route>
+      <Route path="/tools/qr"><Qr/></Route>
+      <Route path="/tools/countdown"><Countdown/></Route>
+      <Route path="/tools/drop-rates"><DropRates/></Route>
+      <Route path="/tools/bmi"><Bmi/></Route>
+      <Route path="/tools/ratings"><Ratings/></Route>
+      <Route><Menu/></Route>
+    </Switch>
+  </>
+}
 
 const Menu = () => <>
   <h1>Tools</h1>

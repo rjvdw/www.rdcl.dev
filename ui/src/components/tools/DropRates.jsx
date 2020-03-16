@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { useTitle } from '../util'
 
 export const DropRates = () => {
+  useTitle('drop rates', 'tools')
   const [dropRate, setDropRate] = useState(1)
   const [nrAttempts, setNrAttempts] = useState(100)
 
