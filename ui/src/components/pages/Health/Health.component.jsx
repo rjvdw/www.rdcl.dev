@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import { format, formatISO, parseISO } from 'date-fns'
+import CanvasJSReact from '../../../lib/canvasjs/canvasjs.react'
+import { differenceInDays, format, formatISO, parseISO } from 'date-fns'
 import { axios } from '../../../axios'
 import { formatDate } from '../../../util/formatters'
 import { preventDefault } from '../../../util/component'
 import { useTitle } from '../../util'
+
+const { CanvasJS, CanvasJSChart } = CanvasJSReact
 
 export const Health = () => {
   useTitle('health')
@@ -31,7 +34,10 @@ export const Health = () => {
       if (from) query.append('from', from)
       if (to) query.append('to', to)
       const response = await axios.get(`/health?${ query.toString() }`)
-      setData(response.data.entries)
+      setData(response.data.entries.map(entry => ({
+        ...entry,
+        timestamp: parseISO(entry.timestamp),
+      })))
       setError(null)
     } catch (err) {
       console.error(err)
@@ -137,6 +143,11 @@ export const Health = () => {
 
     { initialized && <>
       <hr/>
+
+      <Chart title="Gewicht" field="weight" data={ data }/>
+
+      <hr/>
+
       <table>
         <thead>
         <tr>
@@ -155,6 +166,48 @@ export const Health = () => {
       </table>
     </> }
   </>
+}
+
+const Chart = ({ data, field, window = 7, title, ...opts }) => {
+  let lastEntries = []
+  const aggr = data.reduce((aggregates, entry, idx) => {
+    const min = aggregates.min === null ? entry[field] : Math.min(aggregates.min, entry[field])
+    const max = aggregates.max === null ? entry[field] : Math.max(aggregates.max, entry[field])
+
+    lastEntries = [entry].concat(lastEntries)
+      .filter(e => differenceInDays(entry.timestamp, e.timestamp) < window)
+
+    const avg = (lastEntries.length > 0 && idx < (window - 1))
+      ? undefined
+      : lastEntries.reduce((avg, e) => avg + e[field], 0) / lastEntries.length
+
+    return { min, max, runningAverage: aggregates.runningAverage.concat([{ x: entry.timestamp, y: avg }]) }
+  }, { min: null, max: null, runningAverage: [] })
+
+  return (
+    <CanvasJSChart options={ {
+      title: title ? { text: title } : undefined,
+      ...opts,
+      axisY: {
+        minimum: aggr.min - 15,
+        maximum: aggr.max + 15,
+      },
+      data: [
+        {
+          type: 'spline',
+          dataPoints: data
+            .map(entry => ({
+              x: entry.timestamp,
+              y: entry[field],
+            })),
+        },
+        {
+          type: 'spline',
+          dataPoints: aggr.runningAverage,
+        },
+      ],
+    } }/>
+  )
 }
 
 /**
