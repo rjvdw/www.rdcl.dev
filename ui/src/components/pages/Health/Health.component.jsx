@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import CanvasJSReact from '../../../lib/canvasjs/canvasjs.react'
+import { history } from '../../../history'
 import { differenceInDays, format, formatISO, parseISO } from 'date-fns'
 import { axios } from '../../../axios'
 import { formatDate } from '../../../util/formatters'
@@ -11,18 +12,34 @@ const { CanvasJS, CanvasJSChart } = CanvasJSReact
 export const Health = () => {
   useTitle('health')
 
+  const historyState = history.location.state || {}
+
   const [data, setData] = useState([])
   const [initialized, setInitialized] = useState(false)
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
+  const [from, setFromState] = useState(historyState.from || '')
+  const [to, setToState] = useState(historyState.to || '')
   const [newEntry, setNewEntry] = useState({
     date: formatISO(new Date(), { representation: 'date' }),
     time: format(new Date(), 'HH:mm'),
     weight: '',
   })
+  const setFrom = val => {
+    setFromState(val)
+    history.replace(undefined, {
+      historyState,
+      from: val,
+    })
+  }
+  const setTo = val => {
+    setToState(val)
+    history.replace(undefined, {
+      historyState,
+      to: val,
+    })
+  }
   const setNewEntryValue = (key, val) => {
     setNewEntry({ ...newEntry, [key]: val })
   }
