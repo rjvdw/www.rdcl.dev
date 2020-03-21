@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { axios } from '../axios'
-import { formatISO, parseISO } from 'date-fns'
+import { differenceInDays, formatISO, parseISO } from 'date-fns'
 
 const INITIAL_STATE = {
   loading: false,
@@ -118,3 +118,39 @@ function asStateError(err) {
     message: err.message,
   }
 }
+
+const dataSelector = state => state.data
+
+export const selectData = createSelector(
+  dataSelector,
+  data => data.map(entry => ({
+    ...entry,
+    timestamp: parseISO(entry.timestamp),
+  })),
+)
+
+export const selectWeightGraphData = createSelector(
+  selectData,
+  () => 'weight',
+  (data, field) => {
+    const window = 7
+    let lastEntries = []
+    return data.reduce((aggregates, entry, idx) => {
+      const min = aggregates.min === null ? entry[field] : Math.min(aggregates.min, entry[field])
+      const max = aggregates.max === null ? entry[field] : Math.max(aggregates.max, entry[field])
+
+      lastEntries = [entry].concat(lastEntries)
+        .filter(e => differenceInDays(entry.timestamp, e.timestamp) < window)
+
+      const avg = (lastEntries.length > 0 && idx < (window - 1))
+        ? undefined
+        : lastEntries.reduce((avg, e) => avg + e[field], 0) / lastEntries.length
+
+      return {
+        min, max,
+        dataPoints: aggregates.dataPoints.concat([{ x: entry.timestamp, y: entry[field] }]),
+        runningAverage: aggregates.runningAverage.concat([{ x: entry.timestamp, y: avg }]),
+      }
+    }, { min: null, max: null, dataPoints: [], runningAverage: [] })
+  },
+)

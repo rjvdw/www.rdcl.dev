@@ -1,7 +1,7 @@
 import React from 'react'
 import CanvasJSReact from '../../../lib/canvasjs/canvasjs.react'
 import { history } from '../../../history'
-import { differenceInDays, format, formatISO, parseISO } from 'date-fns'
+import { format, formatISO } from 'date-fns'
 import { formatDate } from '../../../util/formatters'
 import { preventDefault } from '../../../util/component'
 import { setTitle } from '../../util'
@@ -64,7 +64,7 @@ export class Health extends React.Component {
     setTitle('health')
 
     const { newEntry, from, to } = this.state
-    const { data, errors, loading, saving, clearErrors } = this.props
+    const { data, graphData, errors, loading, saving, clearErrors } = this.props
 
     return <>
       <h1>Health</h1>
@@ -89,7 +89,7 @@ export class Health extends React.Component {
 
       { data.length > 0 && <>
         <hr/>
-        <Chart title="Gewicht" field="weight" data={ data }/>
+        <Chart title="Gewicht" graphData={ graphData }/>
         <hr/>
         <HealthTable data={ data }/>
       </> }
@@ -198,42 +198,23 @@ const HealthTable = ({ data }) => (
   </section>
 )
 
-const Chart = ({ data, field, window = 7, title, ...opts }) => {
-  let lastEntries = []
-  const aggr = data.reduce((aggregates, entry, idx) => {
-    const min = aggregates.min === null ? entry[field] : Math.min(aggregates.min, entry[field])
-    const max = aggregates.max === null ? entry[field] : Math.max(aggregates.max, entry[field])
-
-    lastEntries = [entry].concat(lastEntries)
-      .filter(e => differenceInDays(parseISO(entry.timestamp), parseISO(e.timestamp)) < window)
-
-    const avg = (lastEntries.length > 0 && idx < (window - 1))
-      ? undefined
-      : lastEntries.reduce((avg, e) => avg + e[field], 0) / lastEntries.length
-
-    return { min, max, runningAverage: aggregates.runningAverage.concat([{ x: parseISO(entry.timestamp), y: avg }]) }
-  }, { min: null, max: null, runningAverage: [] })
-
+const Chart = ({ graphData, title, ...opts }) => {
   return (
     <CanvasJSChart options={ {
       title: title ? { text: title } : undefined,
       ...opts,
       axisY: {
-        minimum: aggr.min - 15,
-        maximum: aggr.max + 15,
+        minimum: graphData.min - 15,
+        maximum: graphData.max + 15,
       },
       data: [
         {
           type: 'spline',
-          dataPoints: data
-            .map(entry => ({
-              x: parseISO(entry.timestamp),
-              y: entry[field],
-            })),
+          dataPoints: graphData.dataPoints,
         },
         {
           type: 'spline',
-          dataPoints: aggr.runningAverage,
+          dataPoints: graphData.runningAverage,
         },
       ],
     } }/>
