@@ -14,6 +14,10 @@ export const Health = connect(
       return dispatch(clearErrors())
     },
 
+    /**
+     * @param {Date} from
+     * @param {Date} to
+     */
     load(from, to) {
       return dispatch(load(from, to))
     },

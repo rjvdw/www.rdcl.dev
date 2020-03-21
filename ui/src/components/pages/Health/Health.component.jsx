@@ -1,7 +1,7 @@
 import React from 'react'
 import CanvasJSReact from '../../../lib/canvasjs/canvasjs.react'
 import { history } from '../../../history'
-import { format, formatISO } from 'date-fns'
+import { format, formatISO, parseISO } from 'date-fns'
 import { formatDate } from '../../../util/formatters'
 import { preventDefault } from '../../../util/component'
 import { setTitle } from '../../util'
@@ -33,7 +33,12 @@ export class Health extends React.Component {
   }
 
   async load() {
-    await this.props.load(this.state.from || undefined, this.state.to || undefined)
+    const { from, to } = this.state
+
+    await this.props.load(
+      from ? parseISO(`${ from }T00:00:00.000`) : undefined,
+      to ? parseISO(`${ to }T23:59:59.999`) : undefined,
+    )
   }
 
   async save() {

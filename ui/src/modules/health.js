@@ -53,14 +53,18 @@ export const health = reducer
 
 export const { clearErrors } = actions
 
+/**
+ * @param {Date} from
+ * @param {Date} to
+ */
 export function load(from, to) {
   return async dispatch => {
     dispatch(actions.loading())
 
     try {
       const query = new URLSearchParams()
-      if (from) query.append('from', from)
-      if (to) query.append('to', to)
+      if (from) query.append('from', from.toISOString())
+      if (to) query.append('to', to.toISOString())
       const response = await axios.get(`/health?${ query.toString() }`)
       dispatch(actions.loadComplete(response.data.entries))
     } catch (err) {
