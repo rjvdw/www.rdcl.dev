@@ -1,175 +1,202 @@
-import React, { useState } from 'react'
+import React from 'react'
 import CanvasJSReact from '../../../lib/canvasjs/canvasjs.react'
 import { history } from '../../../history'
 import { differenceInDays, format, formatISO, parseISO } from 'date-fns'
-import { axios } from '../../../axios'
 import { formatDate } from '../../../util/formatters'
 import { preventDefault } from '../../../util/component'
-import { useHistoryState, useTitle } from '../../util'
+import { setTitle } from '../../util'
 
 const { CanvasJS, CanvasJSChart } = CanvasJSReact
 
-export const Health = () => {
-  useTitle('health')
+export class Health extends React.Component {
 
-  const historyState = history.location.state || {}
-
-  const [data, setData] = useState([])
-  const [initialized, setInitialized] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const [error, setError] = useState(null)
-  const [from, setFrom] = useHistoryState('from', '')
-  const [to, setTo] = useHistoryState('to', '')
-  const [newEntry, setNewEntry] = useState({
-    date: formatISO(new Date(), { representation: 'date' }),
-    time: format(new Date(), 'HH:mm'),
-    weight: '',
-  })
-  const setNewEntryValue = (key, val) => {
-    setNewEntry({ ...newEntry, [key]: val })
-  }
-
-  const fetch = async () => {
-    setLoading(true)
-    try {
-      const query = new URLSearchParams()
-      if (from) query.append('from', from)
-      if (to) query.append('to', to)
-      const response = await axios.get(`/health?${ query.toString() }`)
-      setData(response.data.entries.map(entry => ({
-        ...entry,
-        timestamp: parseISO(entry.timestamp),
-      })))
-      setError(null)
-    } catch (err) {
-      console.error(err)
-      setError(err.message)
-    } finally {
-      setInitialized(true)
-      setLoading(false)
+  constructor(...args) {
+    super(...args)
+    const historyState = history.location.state || {}
+    this.state = {
+      from: historyState.from || '',
+      to: historyState.to || '',
+      newEntry: {
+        date: formatISO(new Date(), { representation: 'date' }),
+        time: format(new Date(), 'HH:mm'),
+        weight: '',
+      },
     }
   }
 
-  const saveNewEntry = async () => {
-    setSaving(true)
-    try {
-      await axios.post('/health', {
-        timestamp: formatISO(combineDateAndTime(newEntry.date, newEntry.time)),
-        weight: newEntry.weight,
-      })
-      await fetch()
-    } catch (err) {
-      console.error(err)
-      setError(err.message)
-    } finally {
-      setSaving(false)
-    }
+  componentDidMount() {
+    this.load()
   }
 
-  if (!initialized && !loading) {
-    fetch()
+  componentWillUnmount() {
+    this.props.unload()
   }
 
-  return <>
-    <h1>Health</h1>
+  async load() {
+    await this.props.load(this.state.from || undefined, this.state.to || undefined)
+  }
 
-    { error && <p>Hm... Het lijkt er op dat er iets mis is gegaan 🤔: { error }</p> }
+  async save() {
+    await this.props.save(this.state.newEntry)
+    await this.load()
+  }
 
-    <section>
-      <h2>Haal data op</h2>
-      <form onSubmit={ preventDefault(fetch) }>
-        <rdcl-input-grid>
-          <label htmlFor="health-range-from">From</label>
-          <input
-            id="health-range-from"
-            type="date"
-            value={ from }
-            onChange={ event => setFrom(event.target.value) }
-          />
+  setFrom(from) {
+    this.setState({ from })
+    history.replace(undefined, { ...history.location.state, from })
+  }
 
-          <label htmlFor="health-range-to">To</label>
-          <input
-            id="health-range-to"
-            type="date"
-            value={ to }
-            onChange={ event => setTo(event.target.value) }
-          />
+  setTo(to) {
+    this.setState({ to })
+    history.replace(undefined, { ...history.location.state, to })
+  }
 
-          <button data-start={ 2 }>Haal op</button>
-        </rdcl-input-grid>
-      </form>
-    </section>
+  setNewEntryValue(key, value) {
+    this.setState(state => ({
+      newEntry: {
+        ...state.newEntry,
+        [key]: value,
+      },
+    }))
+  }
 
-    <section>
-      <h2>Voer nieuwe regel in</h2>
-      <form onSubmit={ preventDefault(saveNewEntry) }>
-        <rdcl-input-grid>
-          <label htmlFor="health-new-date">Datum</label>
-          <rdcl-combi-input mode="balanced">
-            <input
-              id="health-new-date"
-              type="date"
-              value={ newEntry.date }
-              onChange={ event => setNewEntryValue('date', event.target.value) }
-              required
-              disabled={ saving }
-            />
-            <input
-              id="health-new-time"
-              type="time"
-              value={ newEntry.time }
-              onChange={ event => setNewEntryValue('time', event.target.value) }
-              required
-              disabled={ saving }
-            />
-          </rdcl-combi-input>
+  render() {
+    setTitle('health')
 
-          <label htmlFor="health-new-weight">Gewicht</label>
-          <input
-            id="health-new-weight"
-            type="number"
-            inputMode="decimal"
-            step={ .1 }
-            value={ newEntry.weight }
-            onChange={ event => setNewEntryValue('weight', +event.target.value) }
-            required
-            disabled={ saving }
-          />
+    const { newEntry, from, to } = this.state
+    const { data, errors, loading, saving, clearErrors } = this.props
 
-          <button data-start={ 2 } disabled={ saving }>Sla op</button>
-        </rdcl-input-grid>
-      </form>
-    </section>
+    return <>
+      <h1>Health</h1>
 
-    { loading && <p>Een moment geduld, ik ben alles aan het ophalen ⏳.</p> }
+      <ErrorMessage errors={ errors } clearErrors={ clearErrors }/>
 
-    { initialized && <>
-      <hr/>
+      <LoadDataForm
+        disabled={ loading }
+        onSubmit={ preventDefault(() => this.load()) }
+        from={ from } setFrom={ from => this.setFrom(from) }
+        to={ to } setTo={ to => this.setTo(to) }
+      />
 
-      <Chart title="Gewicht" field="weight" data={ data }/>
+      <NewEntryForm
+        disabled={ saving }
+        onSubmit={ preventDefault(() => this.save()) }
+        entry={ newEntry }
+        setValue={ (key, value) => this.setNewEntryValue(key, value) }
+      />
 
-      <hr/>
+      { loading && <p>Een moment geduld, ik ben alles aan het ophalen ⏳.</p> }
 
-      <table>
-        <thead>
-        <tr>
-          <th>Datum</th>
-          <th>Gewicht</th>
-        </tr>
-        </thead>
-        <tbody>
-        { data.map(entry => (
-          <tr key={ entry.timestamp }>
-            <td>{ formatDate(entry.timestamp) }</td>
-            <td data-numeric>{ entry.weight.toFixed(1) }</td>
-          </tr>
-        )) }
-        </tbody>
-      </table>
-    </> }
-  </>
+      { data.length > 0 && <>
+        <hr/>
+        <Chart title="Gewicht" field="weight" data={ data }/>
+        <hr/>
+        <HealthTable data={ data }/>
+      </> }
+    </>
+  }
 }
+
+const ErrorMessage = ({ errors, clearErrors }) => errors.length > 0 ? (
+  <section>
+    <p>Hm... Het lijkt er op dat er iets mis is gegaan 🤔</p>
+    <ul>
+      { errors.map(err => <li key={ err.key }>{ err.message }</li>) }
+    </ul>
+    <button onClick={ clearErrors }>Maak leeg</button>
+  </section>
+) : ''
+
+const LoadDataForm = ({ disabled, onSubmit, from, setFrom, to, setTo }) => (
+  <section>
+    <h2>Haal data op</h2>
+    <form onSubmit={ onSubmit }>
+      <rdcl-input-grid>
+        <label htmlFor="health-range-from">From</label>
+        <input
+          id="health-range-from"
+          type="date"
+          value={ from }
+          onChange={ event => setFrom(event.target.value) }
+        />
+
+        <label htmlFor="health-range-to">To</label>
+        <input
+          id="health-range-to"
+          type="date"
+          value={ to }
+          onChange={ event => setTo(event.target.value) }
+        />
+
+        <button data-start={ 2 } disabled={ disabled }>Haal op</button>
+      </rdcl-input-grid>
+    </form>
+  </section>
+)
+
+const NewEntryForm = ({ disabled, entry, setValue, onSubmit }) => (
+  <section>
+    <h2>Voer nieuwe regel in</h2>
+    <form onSubmit={ onSubmit }>
+      <rdcl-input-grid>
+        <label htmlFor="health-new-date">Datum</label>
+        <rdcl-combi-input mode="balanced">
+          <input
+            id="health-new-date"
+            type="date"
+            value={ entry.date }
+            onChange={ event => setValue('date', event.target.value) }
+            required
+            disabled={ disabled }
+          />
+          <input
+            id="health-new-time"
+            type="time"
+            value={ entry.time }
+            onChange={ event => setValue('time', event.target.value) }
+            required
+            disabled={ disabled }
+          />
+        </rdcl-combi-input>
+
+        <label htmlFor="health-new-weight">Gewicht</label>
+        <input
+          id="health-new-weight"
+          type="number"
+          inputMode="decimal"
+          step={ .1 }
+          value={ entry.weight }
+          onChange={ event => setValue('weight', numericInput(event.target.value)) }
+          required
+          disabled={ disabled }
+        />
+
+        <button data-start={ 2 } disabled={ disabled }>Sla op</button>
+      </rdcl-input-grid>
+    </form>
+  </section>
+)
+
+const HealthTable = ({ data }) => (
+  <section>
+    <table>
+      <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Gewicht</th>
+      </tr>
+      </thead>
+      <tbody>
+      { data.map(entry => (
+        <tr key={ entry.timestamp }>
+          <td>{ formatDate(entry.timestamp) }</td>
+          <td data-numeric>{ entry.weight.toFixed(1) }</td>
+        </tr>
+      )) }
+      </tbody>
+    </table>
+  </section>
+)
 
 const Chart = ({ data, field, window = 7, title, ...opts }) => {
   let lastEntries = []
@@ -178,13 +205,13 @@ const Chart = ({ data, field, window = 7, title, ...opts }) => {
     const max = aggregates.max === null ? entry[field] : Math.max(aggregates.max, entry[field])
 
     lastEntries = [entry].concat(lastEntries)
-      .filter(e => differenceInDays(entry.timestamp, e.timestamp) < window)
+      .filter(e => differenceInDays(parseISO(entry.timestamp), parseISO(e.timestamp)) < window)
 
     const avg = (lastEntries.length > 0 && idx < (window - 1))
       ? undefined
       : lastEntries.reduce((avg, e) => avg + e[field], 0) / lastEntries.length
 
-    return { min, max, runningAverage: aggregates.runningAverage.concat([{ x: entry.timestamp, y: avg }]) }
+    return { min, max, runningAverage: aggregates.runningAverage.concat([{ x: parseISO(entry.timestamp), y: avg }]) }
   }, { min: null, max: null, runningAverage: [] })
 
   return (
@@ -200,7 +227,7 @@ const Chart = ({ data, field, window = 7, title, ...opts }) => {
           type: 'spline',
           dataPoints: data
             .map(entry => ({
-              x: entry.timestamp,
+              x: parseISO(entry.timestamp),
               y: entry[field],
             })),
         },
@@ -213,21 +240,7 @@ const Chart = ({ data, field, window = 7, title, ...opts }) => {
   )
 }
 
-/**
- * @param {string} dateStr
- * @param {string} timeStr
- * @returns {Date}
- */
-function combineDateAndTime(dateStr, timeStr) {
-  const d = parseISO(dateStr)
-
-  const [hours, minutes, seconds] = timeStr.split(':')
-  d.setHours(+hours)
-  d.setMinutes(+minutes)
-  if (seconds) {
-    d.setSeconds(...seconds.split('.').map(Number))
-  } else {
-    d.setSeconds(0)
-  }
-  return d
+function numericInput(value) {
+  if (value === '') return ''
+  return +value
 }

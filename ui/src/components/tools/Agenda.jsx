@@ -2,6 +2,7 @@ import React from 'react'
 import './Agenda.styles.sass'
 import { axios } from '../../axios'
 import { formatDateTime } from '../../util/formatters'
+import { setTitle } from '../util'
 
 const ORDERINGS = {
   'date ascending': (a, b) => a.startDate.localeCompare(b.startDate),
@@ -87,7 +88,7 @@ export class Agenda extends React.Component {
   }
 
   render() {
-    document.title = ['concert agenda', 'tools', 'rdcl.dev'].join(' | ') // FIXME: Generalise with useTitle...
+    setTitle('concert agenda', 'tools')
     const { filter, events, venues, loadingVenues, loadingEvents, error } = this.state
 
     return <>

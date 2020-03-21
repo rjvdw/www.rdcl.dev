@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import { history } from '../history'
 
 export function useTitle(...title) {
-  useEffect(() => {
-    document.title = [...title, 'rdcl.dev'].join(' | ')
-  })
+  useEffect(() => setTitle(...title))
+}
+
+export function setTitle(...title) {
+  document.title = [...title, 'rdcl.dev'].join(' | ')
 }
 
 export function useHistoryState(key, initialState) {
