@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { history } from '../history'
 
-export const { actions, reducer: routes } = createSlice({
+const { actions, reducer } = createSlice({
   name: 'routes',
   initialState: {
     pathname: history.location.pathname,
@@ -17,6 +17,8 @@ export const { actions, reducer: routes } = createSlice({
     },
   },
 })
+
+export const routes = reducer
 
 export function navigate(location) {
   return actions.navigate({

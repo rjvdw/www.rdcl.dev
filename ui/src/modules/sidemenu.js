@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const { actions, reducer: sidemenu } = createSlice({
+const { actions, reducer } = createSlice({
   name: 'sidemenu',
   initialState: {
     collapsed: window.localStorage.getItem('sidemenu-collapsed') === '1',
@@ -37,8 +37,8 @@ export const { actions, reducer: sidemenu } = createSlice({
   },
 })
 
-export const open = actions.open
-export const close = actions.close
+export const sidemenu = reducer
+export const { open, close } = actions
 
 export function toggle() {
   return (dispatch, getState) => {

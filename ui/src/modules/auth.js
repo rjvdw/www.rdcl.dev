@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { axios, clearAuthData, hasAuthData } from '../axios'
 
-export const { actions, reducer: auth } = createSlice({
+const { actions, reducer } = createSlice({
   name: 'auth',
   initialState: {
     loggedIn: hasAuthData(),
@@ -39,6 +39,8 @@ export const { actions, reducer: auth } = createSlice({
     },
   },
 })
+
+export const auth = reducer
 
 export function requestLogout() {
   return async (dispatch) => {

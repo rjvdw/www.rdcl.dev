@@ -3,7 +3,7 @@ import { close as closeSidemenu } from './sidemenu'
 
 const MOBILE_THRESHOLD = 640
 
-export const { actions, reducer: screen } = createSlice({
+const { actions, reducer } = createSlice({
   name: 'screen',
   initialState: {
     type: checkScreenType(),
@@ -17,6 +17,8 @@ export const { actions, reducer: screen } = createSlice({
     },
   },
 })
+
+export const screen = reducer
 
 export function updateScreenType() {
   return (dispatch, getState) => {
