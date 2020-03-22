@@ -6,9 +6,9 @@ const { EntryAlreadyExists } = require('../errors')
 
 const MAX_RESULTS = 500
 
-exports.index = (owner, from, to) => withDb(async (db) => {
+exports.index = (owner, from, to) => withDb((db) =>
   // language=PostgreSQL
-  const result = await db.q`
+  db.select(mapRow)`
     select date, data
     from health_data
     where
@@ -17,32 +17,28 @@ exports.index = (owner, from, to) => withDb(async (db) => {
     order by date
     limit ${ MAX_RESULTS }
   `
+)
 
-  return result.rows.map(mapRow)
-})
-
-exports.save = (owner, date, data) => withDb(async (db) => {
+exports.save = (owner, date, data) => withDb((db) =>
   // language=PostgreSQL
-  const result = await db.q`
+  db.selectOne(mapRow)`
     insert into health_data (owner, date, data)
     values (${ owner }, ${ date }, ${ data })
     on conflict (owner, date) do update
       set data = ${ data }
     returning date, data
   `
+)
 
-  return result.rows.map(mapRow)[0]
-})
-
-exports.delete = (owner, date) => withDb(async (db) => {
+exports.delete = (owner, date) => withDb((db) =>
   // language=PostgreSQL
-  await db.q`
+  db.execute`
     delete from health_data
     where
       owner = ${ owner } and
       date = ${ date }
   `
-})
+)
 
 function mapRow(row) {
   return {

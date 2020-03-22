@@ -20,6 +20,36 @@ exports.withDb = async (cb) => {
         return client.query(...args)
       },
 
+      select(mapper = identity) {
+        if (arguments.length > 0 && Array.isArray(arguments[0])) {
+          return this.select()(...arguments)
+        }
+
+        return async (strs, ...vals) => {
+          const result = await this.q(strs, ...vals)
+          return result.rows.map(mapper)
+        }
+      },
+
+      selectOne(mapper = identity) {
+        if (arguments.length > 0 && Array.isArray(arguments[0])) {
+          return this.selectOne()(...arguments)
+        }
+
+        return async (strs, ...vals) => {
+          const rows = await this.select(mapper)(strs, ...vals)
+          return rows[0]
+        }
+      },
+
+      execute() {
+        if (arguments.length > 0 && Array.isArray(arguments[0])) {
+          return this.execute()(...arguments)
+        }
+
+        return (strs, ...vals) => this.q(strs, ...vals)
+      },
+
       q(strs, ...vals) {
         let query = strs[0]
 
@@ -35,4 +65,8 @@ exports.withDb = async (cb) => {
       await client.end()
     }
   }
+}
+
+function identity(row) {
+  return row
 }

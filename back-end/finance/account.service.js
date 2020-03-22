@@ -3,45 +3,31 @@
 const { withDb } = require('../db')
 const { v1: uuid } = require('uuid')
 
-exports.index = (owner) => withDb(async (db) => {
+exports.index = (owner) => withDb((db) =>
   // language=PostgreSQL
-  const result = await db.q`
-    select
-      id,
-      description
+  db.select`
+    select id, description
     from financial_accounts
-    where
-      owner = ${ owner }
+    where owner = ${ owner }
     order by id
   `
+)
 
-  return result.rows
-})
-
-exports.get = (owner, id) => withDb(async (db) => {
+exports.get = (owner, id) => withDb((db) =>
   // language=PostgreSQL
-  const result = await db.q`
-    select
-      id,
-      description
+  db.selectOne`
+    select id, description
     from financial_accounts
-    where
-      owner = ${ owner } and
-      id = ${ id }
+    where owner = ${ owner } and id = ${ id }
     limit 1
   `
+)
 
-  return result.rows[0]
-})
-
-exports.create = (owner, description) => withDb(async (db) => {
-  const id = uuid()
-
+exports.create = (owner, description) => withDb((db) =>
   // language=PostgreSQL
-  await db.q`
+  db.selectOne`
     insert into financial_accounts (owner, id, description)
-    values (${ owner }, ${ id }, ${ description })
+    values (${ owner }, ${ uuid() }, ${ description })
+    returning id, description
   `
-
-  return { id, description }
-})
+)
