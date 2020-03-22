@@ -1,33 +1,27 @@
 'use strict'
 
-const { withDb } = require('../db')
 const { v1: uuid } = require('uuid')
+const { select, selectOne } = require('../db')
 
-exports.index = (owner) => withDb((db) =>
-  // language=PostgreSQL
-  db.select`
-    select id, description
-    from financial_accounts
-    where owner = ${ owner }
-    order by id
-  `
-)
+// language=PostgreSQL
+exports.index = (owner) => select`
+  select id, description
+  from financial_accounts
+  where owner = ${ owner }
+  order by id
+`
 
-exports.get = (owner, id) => withDb((db) =>
-  // language=PostgreSQL
-  db.selectOne`
-    select id, description
-    from financial_accounts
-    where owner = ${ owner } and id = ${ id }
-    limit 1
-  `
-)
+// language=PostgreSQL
+exports.get = (owner, id) => selectOne`
+  select id, description
+  from financial_accounts
+  where owner = ${ owner } and id = ${ id }
+  limit 1
+`
 
-exports.create = (owner, description) => withDb((db) =>
-  // language=PostgreSQL
-  db.selectOne`
-    insert into financial_accounts (owner, id, description)
-    values (${ owner }, ${ uuid() }, ${ description })
-    returning id, description
-  `
-)
+// language=PostgreSQL
+exports.create = (owner, description) => selectOne`
+  insert into financial_accounts (owner, id, description)
+  values (${ owner }, ${ uuid() }, ${ description })
+  returning id, description
+`
