@@ -1,10 +1,11 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { axios } from '../axios'
-import { differenceInDays, formatISO, parseISO } from 'date-fns'
+import { differenceInDays, parseISO } from 'date-fns'
 
 const INITIAL_STATE = {
   loading: false,
   saving: false,
+  removing: {},
   data: [],
   errors: [],
 }
@@ -43,6 +44,27 @@ const { actions, reducer } = createSlice({
         errors: [...state.errors, error],
       }
     },
+    removing(state, { payload: { date, removing } }) {
+      return {
+        ...state,
+        removing: removing
+          ? { ...state.removing, [date]: true }
+          : Object.fromEntries(
+            Object.entries(state.removing)
+              .filter(([key]) => key !== date)
+          ),
+      }
+    },
+    removeFailed(state, { payload: { date, error } }) {
+      return {
+        ...state,
+        removing: Object.fromEntries(
+          Object.entries(state.removing)
+            .filter(([key]) => key !== date)
+        ),
+        errors: [...state.errors, error],
+      }
+    },
     clearErrors(state) {
       return { ...state, errors: [] }
     },
@@ -53,18 +75,14 @@ export const health = reducer
 
 export const { clearErrors } = actions
 
-/**
- * @param {Date} from
- * @param {Date} to
- */
 export function load(from, to) {
   return async dispatch => {
     dispatch(actions.loading())
 
     try {
       const query = new URLSearchParams()
-      if (from) query.append('from', from.toISOString())
-      if (to) query.append('to', to.toISOString())
+      if (from) query.append('from', from)
+      if (to) query.append('to', to)
       const response = await axios.get(`/health?${ query.toString() }`)
       dispatch(actions.loadComplete(response.data.entries))
     } catch (err) {
@@ -80,15 +98,12 @@ export function unload() {
   }
 }
 
-export function save({ date, time, ...data }) {
+export function save(data) {
   return async dispatch => {
     dispatch(actions.saving(true))
 
     try {
-      await axios.post('/health', {
-        timestamp: formatISO(combineDateAndTime(date, time)),
-        ...data,
-      })
+      await axios.post('/health', data)
       dispatch(actions.saving(false))
     } catch (err) {
       console.error(err)
@@ -97,23 +112,18 @@ export function save({ date, time, ...data }) {
   }
 }
 
-/**
- * @param {string} dateStr
- * @param {string} timeStr
- * @returns {Date}
- */
-function combineDateAndTime(dateStr, timeStr) {
-  const d = parseISO(dateStr)
+export function remove(key) {
+  return async dispatch => {
+    dispatch(actions.removing({ date: key, removing: true }))
 
-  const [hours, minutes, seconds] = timeStr.split(':')
-  d.setHours(+hours)
-  d.setMinutes(+minutes)
-  if (seconds) {
-    d.setSeconds(...seconds.split('.').map(Number))
-  } else {
-    d.setSeconds(0)
+    try {
+      await axios.delete(`/health/${ key }`)
+      dispatch(actions.removing({ date: key, removing: false }))
+    } catch (err) {
+      console.error(err)
+      dispatch(actions.removeFailed({ date: key, error: asStateError(err) }))
+    }
   }
-  return d
 }
 
 function asStateError(err) {
@@ -129,7 +139,8 @@ export const selectData = createSelector(
   dataSelector,
   data => data.map(entry => ({
     ...entry,
-    timestamp: parseISO(entry.timestamp),
+    key: entry.date,
+    date: parseISO(entry.date),
   })),
 )
 
@@ -144,7 +155,7 @@ export const selectWeightGraphData = createSelector(
       const max = aggregates.max === null ? entry[field] : Math.max(aggregates.max, entry[field])
 
       lastEntries = [entry].concat(lastEntries)
-        .filter(e => differenceInDays(entry.timestamp, e.timestamp) < window)
+        .filter(e => differenceInDays(entry.date, e.date) < window)
 
       const avg = (lastEntries.length > 0 && idx < (window - 1))
         ? undefined
@@ -152,8 +163,8 @@ export const selectWeightGraphData = createSelector(
 
       return {
         min, max,
-        dataPoints: aggregates.dataPoints.concat([{ x: entry.timestamp, y: entry[field] }]),
-        runningAverage: aggregates.runningAverage.concat([{ x: entry.timestamp, y: avg }]),
+        dataPoints: aggregates.dataPoints.concat([{ x: entry.date, y: entry[field] }]),
+        runningAverage: aggregates.runningAverage.concat([{ x: entry.date, y: avg }]),
       }
     }, { min: null, max: null, dataPoints: [], runningAverage: [] })
   },

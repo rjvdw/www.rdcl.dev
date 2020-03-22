@@ -1,10 +1,12 @@
 import React from 'react'
+import classNames from 'classnames'
 import CanvasJSReact from '../../../lib/canvasjs/canvasjs.react'
 import { history } from '../../../history'
-import { format, formatISO, parseISO } from 'date-fns'
+import { formatISO } from 'date-fns'
 import { formatDate } from '../../../util/formatters'
 import { preventDefault } from '../../../util/component'
 import { setTitle, useHistoryState } from '../../util'
+import { Icon } from './icons'
 import './Health.styles.sass'
 
 const { CanvasJS, CanvasJSChart } = CanvasJSReact
@@ -19,7 +21,6 @@ export class Health extends React.Component {
       to: historyState.to || '',
       newEntry: {
         date: formatISO(new Date(), { representation: 'date' }),
-        time: format(new Date(), 'HH:mm'),
         weight: '',
       },
     }
@@ -37,13 +38,18 @@ export class Health extends React.Component {
     const { from, to } = this.state
 
     await this.props.load(
-      from ? parseISO(`${ from }T00:00:00.000`) : undefined,
-      to ? parseISO(`${ to }T23:59:59.999`) : undefined,
+      from || undefined,
+      to || undefined,
     )
   }
 
   async save() {
     await this.props.save(this.state.newEntry)
+    await this.load()
+  }
+
+  async remove(entry) {
+    await this.props.remove(entry.key)
     await this.load()
   }
 
@@ -70,7 +76,7 @@ export class Health extends React.Component {
     setTitle('health')
 
     const { newEntry, from, to } = this.state
-    const { data, graphData, errors, loading, saving, clearErrors } = this.props
+    const { data, graphData, errors, loading, saving, removing, clearErrors } = this.props
 
     return <>
       <h1>Health</h1>
@@ -97,7 +103,7 @@ export class Health extends React.Component {
         <hr/>
         <Chart title="Gewicht" graphData={ graphData }/>
         <hr/>
-        <HealthTable data={ data }/>
+        <HealthTable data={ data } removeEntry={ entry => this.remove(entry) } removing={ removing }/>
       </> }
     </>
   }
@@ -118,7 +124,7 @@ const LoadDataForm = ({ disabled, onSubmit, from, setFrom, to, setTo }) => (
     <h2>Haal data op</h2>
     <form onSubmit={ onSubmit }>
       <rdcl-input-grid>
-        <label htmlFor="health-range-from">From</label>
+        <label htmlFor="health-range-from">Van</label>
         <input
           id="health-range-from"
           type="date"
@@ -126,7 +132,7 @@ const LoadDataForm = ({ disabled, onSubmit, from, setFrom, to, setTo }) => (
           onChange={ event => setFrom(event.target.value) }
         />
 
-        <label htmlFor="health-range-to">To</label>
+        <label htmlFor="health-range-to">Tot</label>
         <input
           id="health-range-to"
           type="date"
@@ -146,24 +152,14 @@ const NewEntryForm = ({ disabled, entry, setValue, onSubmit }) => (
     <form onSubmit={ onSubmit }>
       <rdcl-input-grid>
         <label htmlFor="health-new-date">Datum</label>
-        <rdcl-combi-input mode="balanced">
-          <input
-            id="health-new-date"
-            type="date"
-            value={ entry.date }
-            onChange={ event => setValue('date', event.target.value) }
-            required
-            disabled={ disabled }
-          />
-          <input
-            id="health-new-time"
-            type="time"
-            value={ entry.time }
-            onChange={ event => setValue('time', event.target.value) }
-            required
-            disabled={ disabled }
-          />
-        </rdcl-combi-input>
+        <input
+          id="health-new-date"
+          type="date"
+          value={ entry.date }
+          onChange={ event => setValue('date', event.target.value) }
+          required
+          disabled={ disabled }
+        />
 
         <label htmlFor="health-new-weight">Gewicht</label>
         <input
@@ -183,20 +179,35 @@ const NewEntryForm = ({ disabled, entry, setValue, onSubmit }) => (
   </section>
 )
 
-const HealthTable = ({ data }) => (
+const HealthTable = ({ removeEntry, removing, data }) => (
   <section>
     <table>
       <thead>
       <tr>
         <th>Datum</th>
         <th>Gewicht</th>
+        <th>Acties</th>
       </tr>
       </thead>
       <tbody>
       { data.map(entry => (
-        <tr key={ entry.timestamp }>
-          <td>{ formatDate(entry.timestamp) }</td>
+        <tr
+          key={ entry.key }
+          className={ classNames('health-table__row', {
+            'health-table__row--removing': removing[entry.key],
+          }) }
+        >
+          <td>{ formatDate(entry.date) }</td>
           <td data-numeric>{ entry.weight.toFixed(1) }</td>
+          <td>
+            <Icon.Remove
+              className="health-table__action health-table__action--remove"
+              role="button"
+              tabIndex={ 0 }
+              title="Regel verwijderen"
+              onClick={ preventDefault(() => removeEntry(entry)) }
+            />
+          </td>
         </tr>
       )) }
       </tbody>

@@ -1,9 +1,23 @@
-.health-graph__options-container
-  margin: .5rem auto
-  text-align: right
+.health-table
+  &__row--removing td
+    opacity: .8
+    text-decoration: line-through
 
-.health-graph__option + .health-graph__option
-  margin-left: 2rem
+  &__action
+    cursor: pointer
+    height: 1.75rem
+    width: 1.75rem
 
-.health-graph__option-checkbox
-  margin-right: .5rem
+    &--remove
+      fill: #dc0404
+
+.health-graph
+  &__options-container
+    margin: .5rem auto
+    text-align: right
+
+  &__option + &__option
+    margin-left: 2rem
+
+  &__option-checkbox
+    margin-right: .5rem

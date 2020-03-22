@@ -1,15 +1,34 @@
 'use strict'
 
 const bodyParser = require('body-parser')
-const parseISO = require('date-fns/parseISO')
 const healthService = require('../health/health.service')
 const { auth } = require('../auth/auth.middleware')
 const { App, ex, range } = require('../util')
-const { validator, validateBody } = require('../validator')
+const { validator, validateBody, validateRequestParam } = require('../validator')
 
 const app = new App('health')
 app.use(bodyParser.json())
 app.use(auth())
+
+const dateParamValidator = validateRequestParam(params => validator()
+  .value('date', params.date, field => field
+    .required()
+    .validDate()
+  )
+)
+
+const entryValidator = validateBody(body => validator()
+  .obj(body, 'request body', obj => obj
+    .present()
+    .field('date', field => field
+      .required()
+      .validDate()
+    )
+    .field('weight', field => field
+      .numeric()
+    )
+    .noOtherFields()
+  ))
 
 app.router.get('/', range(), ex(async (req, res) => {
   const owner = req.jwt.sub
@@ -19,26 +38,21 @@ app.router.get('/', range(), ex(async (req, res) => {
   res.status(200).json({ entries })
 }))
 
-const creationValidator = validateBody(body => validator()
-  .obj(body, 'request body', obj => obj
-    .present()
-    .field('timestamp', field => field
-      .required()
-      .validTimestamp()
-    )
-    .field('weight', field => field
-      .numeric()
-    )
-    .noOtherFields()
-  ))
-
-app.router.post('/', creationValidator, ex(async (req, res) => {
+app.router.post('/', entryValidator, ex(async (req, res) => {
   const owner = req.jwt.sub
-  const { timestamp, ...data } = req.body
-  const entry = await healthService.create(owner, parseISO(timestamp), data)
+  const { date, ...data } = req.body
+  const entry = await healthService.save(owner, date, data)
 
-  res.set('location', '/.netlify/functions/health')
-  res.status(201).json(entry)
+  res.set('location', `/.netlify/functions/health/${ entry.date }`)
+  res.status(200).json(entry)
+}))
+
+app.router.delete('/:date', dateParamValidator, ex(async (req, res) => {
+  const owner = req.jwt.sub
+  const { date } = req.params
+  await healthService.delete(owner, date)
+
+  res.status(204).json({})
 }))
 
 exports.handler = app.getHandler()

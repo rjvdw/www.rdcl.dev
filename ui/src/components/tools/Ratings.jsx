@@ -13,13 +13,6 @@ export const Ratings = () => {
   const percentage = nrTotal ? (100 * nrPositive / nrTotal).toFixed(2) : '∞'
   const score = (100 * (nrPositive + 1) / (nrTotal + 2)).toFixed(2)
 
-  console.log({
-    nrPositive,
-    nrTotal,
-    percentage,
-    score,
-  })
-
   return <>
     <h1>How to read a rating</h1>
 

@@ -1,6 +1,7 @@
 'use strict'
 
 const RE_TIMESTAMP = /^\d+-\d{1,2}-\d{1,2}/
+const RE_DATE = /^\d+-\d{1,2}-\d{1,2}$/
 const RE_UUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
 
 exports.validator = () => {
@@ -37,6 +38,15 @@ exports.validator = () => {
           if (present) {
             if (typeof value !== 'string' || !RE_TIMESTAMP.test(value) || Date.parse(value) === null) {
               errors.push(`${ field } is not a valid timestamp`)
+            }
+          }
+
+          return this
+        },
+        validDate() {
+          if (present) {
+            if (typeof value !== 'string' || !RE_DATE.test(value) || Date.parse(value) === null) {
+              errors.push(`${ field } is not a valid date`)
             }
           }
 
@@ -99,6 +109,15 @@ exports.validator = () => {
 
 exports.validateBody = (getValidator) => (req, res, next) => {
   const validationResults = getValidator(req.body).validate()
+  if (validationResults.length > 0) {
+    res.status(400).json({ reason: 'invalid request', errors: validationResults })
+  } else {
+    next()
+  }
+}
+
+exports.validateRequestParam = (getValidator) => (req, res, next) => {
+  const validationResults = getValidator(req.params).validate()
   if (validationResults.length > 0) {
     res.status(400).json({ reason: 'invalid request', errors: validationResults })
   } else {
