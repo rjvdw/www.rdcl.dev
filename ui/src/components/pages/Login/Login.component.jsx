@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
-import { useTitle } from '../../util'
 
 export const Login = ({ loggedIn, login, logout, error, loading }) => {
-  useTitle('login')
-
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [otp, setOtp] = useState('')

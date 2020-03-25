@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { useTitle } from '../util'
 
 export const DropRates = () => {
-  useTitle('drop rates', 'tools')
   const [dropRate, setDropRate] = useState(1)
   const [nrAttempts, setNrAttempts] = useState(100)
 
@@ -10,7 +8,7 @@ export const DropRates = () => {
     <h1>Drop Rate Calculator</h1>
 
     <rdcl-input-grid suffix>
-      <label data-start={1} htmlFor="dropRate">Drop rate</label>
+      <label data-start={ 1 } htmlFor="dropRate">Drop rate</label>
       <input
         id="dropRate"
         value={ dropRate }
@@ -22,16 +20,16 @@ export const DropRates = () => {
       />
       <label htmlFor="dropRate">%</label>
 
-      <label data-start={1} htmlFor="nrAttempts">Nr. of attempts</label>
+      <label data-start={ 1 } htmlFor="nrAttempts">Nr. of attempts</label>
       <input
         id="nrAttempts"
         value={ nrAttempts }
         onChange={ event => setNrAttempts(event.target.value) }
       />
 
-      <hr data-start={1} data-span={2}/>
+      <hr data-start={ 1 } data-span={ 2 }/>
 
-      <label data-start={1} htmlFor="chance">Chance</label>
+      <label data-start={ 1 } htmlFor="chance">Chance</label>
       <input
         id="chance"
         readOnly
@@ -41,7 +39,7 @@ export const DropRates = () => {
       />
       <label htmlFor="chance">%</label>
 
-      <label data-start={1} htmlFor="perc95">95%</label>
+      <label data-start={ 1 } htmlFor="perc95">95%</label>
       <input
         id="perc95"
         readOnly
@@ -50,7 +48,7 @@ export const DropRates = () => {
         value={ percentile(+dropRate, 95) }
       />
 
-      <label data-start={1} htmlFor="perc99">99%</label>
+      <label data-start={ 1 } htmlFor="perc99">99%</label>
       <input
         id="perc99"
         readOnly

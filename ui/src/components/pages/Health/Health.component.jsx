@@ -5,7 +5,7 @@ import { history } from '../../../history'
 import { formatISO } from 'date-fns'
 import { formatDate } from '../../../util/formatters'
 import { preventDefault } from '../../../util/component'
-import { setTitle, useHistoryState } from '../../util'
+import { useHistoryState } from '../../util'
 import { Icon } from './icons'
 import './Health.styles.sass'
 
@@ -73,8 +73,6 @@ export class Health extends React.Component {
   }
 
   render() {
-    setTitle('health')
-
     const { newEntry, from, to } = this.state
     const { data, graphData, errors, loading, saving, removing, clearErrors } = this.props
 

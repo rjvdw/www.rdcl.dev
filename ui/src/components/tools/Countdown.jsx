@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useTitle } from '../util'
 
 const OPERATIONS = {
   add(n1, n2) {
@@ -19,7 +18,6 @@ const OPERATIONS = {
 }
 
 export const Countdown = () => {
-  useTitle('countdown', 'tools')
   const [computing, setComputing] = useState(false)
   const [inp1, setInp1] = useState('')
   const [inp2, setInp2] = useState('')

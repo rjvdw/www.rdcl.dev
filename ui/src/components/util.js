@@ -1,13 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { history } from '../history'
-
-export function useTitle(...title) {
-  useEffect(() => setTitle(...title))
-}
-
-export function setTitle(...title) {
-  document.title = [...title, 'rdcl.dev'].join(' | ')
-}
 
 export function useHistoryState(key, initialState) {
   const historyState = history.location.state || {}

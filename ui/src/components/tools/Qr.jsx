@@ -1,12 +1,10 @@
 import React, { useRef, useState } from 'react'
 import qr from 'qrcode'
-import { useTitle } from '../util'
 
 const OUTPUT_WIDTH = 250
 const OUTPUT_HEIGHT = 250
 
 export const Qr = () => {
-  useTitle('qr', 'tools')
   const [data, setData] = useState('')
   const [error, setError] = useState(null)
   const ref = useRef(null)

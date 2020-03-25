@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useTitle } from '../util'
 
 export const Bmi = () => {
-  useTitle('bmi', 'tools')
   const [weight, setWeight] = useLocalStorage('bmi:weight', 75)
   const [height, setHeight] = useLocalStorage('bmi:height', 185)
 
