@@ -6,3 +6,10 @@
 * [rvdweide/serverless-tutorial](https://git.quintor.nl/rvdweide/serverless-tutorial)
 * [SG-QuintorAcademy/aws-lambda-handson](https://git.quintor.nl/SG-QuintorAcademy/aws-lambda-handson)
 * [SG-QuintorAcademy/aws-lambda-handson-frontend](https://git.quintor.nl/SG-QuintorAcademy/aws-lambda-handson-frontend)
+
+## Summercamp
+
+* [Confluence](https://wiki.summercamp.local/)
+* [GitLab](https://git.summercamp.local/)
+* [Jira](https://jira.summercamp.local/)
+* [qbot](http://qbot.summercamp.local/)
