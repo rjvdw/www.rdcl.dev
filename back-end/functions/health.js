@@ -35,7 +35,7 @@ app.router.get('/', range(), ex(async (req, res) => {
   const { from, to } = req.range
   const entries = await healthService.index(owner, from, to)
 
-  res.status(200).json({ entries })
+  res.status(200).json({ from, to, entries })
 }))
 
 app.router.post('/', entryValidator, ex(async (req, res) => {

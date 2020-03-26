@@ -7,6 +7,8 @@ const INITIAL_STATE = {
   saving: false,
   removing: {},
   data: [],
+  from: null,
+  to: null,
   errors: [],
 }
 
@@ -20,11 +22,13 @@ const { actions, reducer } = createSlice({
     loading(state) {
       return { ...state, loading: true }
     },
-    loadComplete(state, { payload: data }) {
+    loadComplete(state, { payload: { data, from, to } }) {
       return {
         ...state,
         loading: false,
         data,
+        from,
+        to,
       }
     },
     loadFailed(state, { payload: error }) {
@@ -84,7 +88,11 @@ export function load(from, to) {
       if (from) query.append('from', from)
       if (to) query.append('to', to)
       const response = await axios.get(`/health?${ query.toString() }`)
-      dispatch(actions.loadComplete(response.data.entries))
+      dispatch(actions.loadComplete({
+        data: response.data.entries,
+        from: response.data.from,
+        to: response.data.to,
+      }))
     } catch (err) {
       console.error(err)
       dispatch(actions.loadFailed(asStateError(err)))

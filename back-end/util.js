@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const serverless = require('serverless-http')
 const ms = require('ms')
 const subtract = require('date-fns/subMilliseconds')
+const formatISO = require('date-fns/formatISO')
 const parseISO = require('date-fns/parseISO')
 const { validator } = require('./validator')
 const { EntryAlreadyExists, ForeignKeyViolation } = require('./errors')
@@ -73,7 +74,10 @@ exports.range = (options = {}) => (req, res, next) => {
   if (validationResults.length > 0) {
     res.status(400).json({ reason: 'invalid request', errors: validationResults })
   } else {
-    req.range = { from, to }
+    req.range = {
+      from: formatISO(from, { representation: 'date' }),
+      to: formatISO(to, { representation: 'date' }),
+    }
     next()
   }
 }

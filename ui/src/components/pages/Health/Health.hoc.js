@@ -4,9 +4,14 @@ import { clearErrors, load, save, remove, selectData, selectWeightGraphData, unl
 
 export const Health = connect(
   ({ health }) => ({
-    ...health,
+    loading: health.loading,
+    saving: health.saving,
+    removing: health.removing,
     data: selectData(health),
     graphData: selectWeightGraphData(health),
+    actualFrom: health.from,
+    actualTo: health.to,
+    errors: health.errors,
   }),
 
   dispatch => ({

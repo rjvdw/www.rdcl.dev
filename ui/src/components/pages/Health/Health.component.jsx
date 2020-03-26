@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import CanvasJSReact from '../../../lib/canvasjs/canvasjs.react'
 import { history } from '../../../history'
-import { formatISO } from 'date-fns'
+import { addDays, formatISO, parseISO, subDays } from 'date-fns'
 import { formatDate } from '../../../util/formatters'
 import { preventDefault } from '../../../util/component'
 import { useHistoryState } from '../../util'
@@ -74,7 +74,7 @@ export class Health extends React.Component {
 
   render() {
     const { newEntry, from, to } = this.state
-    const { data, graphData, errors, loading, saving, removing, clearErrors } = this.props
+    const { data, graphData, actualFrom, actualTo, errors, loading, saving, removing, clearErrors } = this.props
 
     return <>
       <h1>Health</h1>
@@ -99,7 +99,7 @@ export class Health extends React.Component {
 
       { data.length > 0 && <>
         <hr/>
-        <Chart title="Gewicht" graphData={ graphData }/>
+        <Chart title="Gewicht" graphData={ graphData } from={ actualFrom } to={ actualTo }/>
         <hr/>
         <HealthTable data={ data } removeEntry={ entry => this.remove(entry) } removing={ removing }/>
       </> }
@@ -213,7 +213,7 @@ const HealthTable = ({ removeEntry, removing, data }) => (
   </section>
 )
 
-const Chart = ({ graphData, title, ...opts }) => {
+const Chart = ({ from, to, graphData, title, ...opts }) => {
   const [{ showData, showAverage }, setOptions] = useHistoryState('chartOptions', {
     showData: true,
     showAverage: true,
@@ -238,6 +238,10 @@ const Chart = ({ graphData, title, ...opts }) => {
       <CanvasJSChart options={ {
         title: title ? { text: title } : undefined,
         ...opts,
+        axisX: {
+          minimum: subDays(parseISO(from), 1),
+          maximum: addDays(parseISO(to), 1),
+        },
         axisY: {
           minimum: graphData.min - 15,
           maximum: graphData.max + 15,
