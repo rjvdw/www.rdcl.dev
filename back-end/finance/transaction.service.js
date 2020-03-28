@@ -1,12 +1,12 @@
 'use strict'
 
 const { EntryAlreadyExists, ForeignKeyViolation } = require('../errors')
-const { select, selectOne } = require('../db')
+const { q } = require('../db')
 
 const MAX_RESULTS = 500
 
 // language=PostgreSQL
-exports.index = (owner, from, to) => select(rowMapper)`
+exports.index = (owner, from, to) => q`
   select
     timestamp,
     account,
@@ -21,15 +21,10 @@ exports.index = (owner, from, to) => select(rowMapper)`
     timestamp between ${ from } and ${ to }
   order by timestamp
   limit ${ MAX_RESULTS }
-`
+`.select(rowMapper)
 
 // language=PostgreSQL
-exports.create = (owner, record) => selectOne(rowMapper, {
-  errorMapper: {
-    23503: () => new ForeignKeyViolation(`account ${ record.account } does not exist`),
-    23505: () => new EntryAlreadyExists(`entry with timestamp ${ record.timestamp } already exists`),
-  },
-})`
+exports.create = (owner, record) => q`
   insert into transactions (owner, timestamp, account, counter_party, currency, amount, description, category)
   values (
     ${ owner },
@@ -49,7 +44,15 @@ exports.create = (owner, record) => selectOne(rowMapper, {
     amount,
     description,
     category
-`
+`.selectOne(
+  rowMapper,
+  {
+    errorMapper: {
+      23503: () => new ForeignKeyViolation(`account ${ record.account } does not exist`),
+      23505: () => new EntryAlreadyExists(`entry with timestamp ${ record.timestamp } already exists`),
+    },
+  }
+)
 
 function rowMapper({ counter_party: counterParty, ...fields }) {
   return {
