@@ -1,19 +1,19 @@
 import React from 'react'
 
-const INPUTMODES = [
-  'none',
-  'numeric', 'decimal',
-  'tel', 'email', 'url',
-  'search',
-]
+const INPUT_ATTRS = {
+  inputmode: ['none', 'text', 'tel', 'url', 'email', 'numeric', 'decimal', 'search'],
+  enterkeyhint: ['enter', 'done', 'go', 'next', 'previous', 'search', 'send'],
+}
 
 export const Html = () => <>
   <h1>HTML Elements</h1>
 
   <rdcl-input-grid>
-    { INPUTMODES.map(im => <React.Fragment key={ `inputmode-${ im }` }>
-      <label htmlFor={ `inputmode-${ im }` }><code>inputmode="{ im }"</code></label>
-      <input id={ `inputmode-${ im }` } type="text" inputMode={ im }/>
-    </React.Fragment>) }
+    { Object.entries(INPUT_ATTRS).flatMap(([attr, vals]) => vals.map(val =>
+      <React.Fragment key={ `${ attr }-${ val }` }>
+        <label htmlFor={ `${ attr }-${ val }` }><code>{ attr }="{ val }"</code></label>
+        <input id={ `${ attr }-${ val }` } type="text" { ...{ [attr]: val } }/>
+      </React.Fragment>
+    )) }
   </rdcl-input-grid>
 </>
