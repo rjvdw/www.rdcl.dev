@@ -1,7 +1,7 @@
 {
   "private": true,
   "workspaces": [
-    "back-end",
+    "api",
     "ui"
   ],
   "scripts": {

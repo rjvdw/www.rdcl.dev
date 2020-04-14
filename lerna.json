@@ -1,5 +1,5 @@
 {
-  "packages": ["back-end", "ui"],
+  "packages": ["api", "ui"],
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "0.1.0"

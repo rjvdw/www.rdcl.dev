@@ -1,5 +1,5 @@
 {
-  "name": "@rdcl-dev/back-end",
+  "name": "@rdcl-dev/api",
   "version": "0.1.0",
   "private": true,
   "scripts": {},
