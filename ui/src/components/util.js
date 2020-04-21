@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { history } from '../history'
 
 export function useHistoryState(key, initialState) {
@@ -11,4 +11,12 @@ export function useHistoryState(key, initialState) {
       setState(value)
     },
   ]
+}
+
+export function useAutoFocusRef(initialValue = null) {
+  const field = useRef(initialValue)
+  useEffect(() => {
+    field.current.focus()
+  }, [])
+  return field
 }

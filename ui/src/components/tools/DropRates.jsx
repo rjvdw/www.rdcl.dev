@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useAutoFocusRef } from '../util'
 
 export const DropRates = () => {
   const [dropRate, setDropRate] = useState(1)
   const [nrAttempts, setNrAttempts] = useState(100)
+  const dropRateRef = useAutoFocusRef()
 
   return <>
     <h1>Drop Rate Calculator</h1>
@@ -11,6 +13,7 @@ export const DropRates = () => {
       <label data-start={ 1 } htmlFor="dropRate">Drop rate</label>
       <input
         id="dropRate"
+        ref={ dropRateRef }
         value={ dropRate }
         onChange={ event => setDropRate(event.target.value) }
         autoFocus

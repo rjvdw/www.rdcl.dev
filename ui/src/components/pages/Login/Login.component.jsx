@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useAutoFocusRef } from '../../util'
 
 export const Login = ({ loggedIn, login, logout, error, loading }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [otp, setOtp] = useState('')
+  const usernameRef = useAutoFocusRef()
 
   if (loggedIn && (password || otp)) {
     setPassword('')
@@ -28,6 +30,7 @@ export const Login = ({ loggedIn, login, logout, error, loading }) => {
         <label htmlFor="username">Username</label>
         <input
           id="username"
+          ref={ usernameRef }
           type="text"
           inputMode="email"
           autoFocus

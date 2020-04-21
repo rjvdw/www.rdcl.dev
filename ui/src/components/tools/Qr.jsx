@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import qr from 'qrcode'
+import { useAutoFocusRef } from '../util'
 
 const OUTPUT_WIDTH = 250
 const OUTPUT_HEIGHT = 250
@@ -7,21 +8,22 @@ const OUTPUT_HEIGHT = 250
 export const Qr = () => {
   const [data, setData] = useState('')
   const [error, setError] = useState(null)
-  const ref = useRef(null)
+  const inputRef = useAutoFocusRef()
+  const canvasRef = useRef(null)
 
   const reset = () => {
-    ref.current.width = OUTPUT_WIDTH
-    ref.current.height = OUTPUT_HEIGHT
-    ref.current.style.width = ''
-    ref.current.style.height = ''
-    ref.current.getContext('2d').clearRect(0, 0, OUTPUT_WIDTH, OUTPUT_HEIGHT)
+    canvasRef.current.width = OUTPUT_WIDTH
+    canvasRef.current.height = OUTPUT_HEIGHT
+    canvasRef.current.style.width = ''
+    canvasRef.current.style.height = ''
+    canvasRef.current.getContext('2d').clearRect(0, 0, OUTPUT_WIDTH, OUTPUT_HEIGHT)
   }
 
   const setQr = data => {
     setData(data)
 
     if (data) {
-      qr.toCanvas(ref.current, data, setError)
+      qr.toCanvas(canvasRef.current, data, setError)
     } else {
       reset()
     }
@@ -33,8 +35,9 @@ export const Qr = () => {
     <rdcl-input-grid>
       <label htmlFor="qr-data">Data:</label>
       <input
-        type="text"
         id="qr-data"
+        ref={ inputRef }
+        type="text"
         autoFocus
         value={ data }
         onChange={ event => setQr(event.target.value) }
@@ -43,7 +46,7 @@ export const Qr = () => {
 
     { error !== null && <p style={ { margin: '1rem 0', color: 'red' } }>Error: { error.message }</p> }
 
-    <canvas ref={ ref } style={ {
+    <canvas ref={ canvasRef } style={ {
       display: 'block',
       background: '#fff',
       border: 'thin dashed grey',
