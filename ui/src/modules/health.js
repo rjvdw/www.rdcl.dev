@@ -87,7 +87,7 @@ export function load(from, to) {
       const query = new URLSearchParams()
       if (from) query.append('from', from)
       if (to) query.append('to', to)
-      const response = await axios.get(`/health?${ query.toString() }`)
+      const response = await axios.get(`/api/health?${ query.toString() }`)
       dispatch(actions.loadComplete({
         data: response.data.entries,
         from: response.data.from,
@@ -111,7 +111,7 @@ export function save(data) {
     dispatch(actions.saving(true))
 
     try {
-      await axios.post('/health', data)
+      await axios.post('/api/health', data)
       dispatch(actions.saving(false))
     } catch (err) {
       console.error(err)
@@ -125,7 +125,7 @@ export function remove(key) {
     dispatch(actions.removing({ date: key, removing: true }))
 
     try {
-      await axios.delete(`/health/${ key }`)
+      await axios.delete(`/api/health/${ key }`)
       dispatch(actions.removing({ date: key, removing: false }))
     } catch (err) {
       console.error(err)

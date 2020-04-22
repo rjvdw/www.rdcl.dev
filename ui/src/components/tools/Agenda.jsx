@@ -38,7 +38,7 @@ export class Agenda extends React.Component {
         loadingVenues: true,
       }))
 
-      const response = await axios.get('/venues')
+      const response = await axios.get('/api/venues')
 
       this.setState(state => ({
         ...state,
@@ -54,7 +54,7 @@ export class Agenda extends React.Component {
 
       await Promise.all(
         response.data.venues.map(async venue => {
-          const response = await axios.get(`/venues/${ venue.key }`)
+          const response = await axios.get(`/api/venues/${ venue.key }`)
 
           this.setState(state => ({
             ...state,

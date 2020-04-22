@@ -32,6 +32,7 @@ exports.App = class App {
 
   getHandler() {
     this.app.use(`/${ this.name }`, this.router)
+    this.app.use(`/api/${ this.name }`, this.router)
     this.app.use(`/.netlify/functions/${ this.name }`, this.router)
     this.app.use((err, req, res, next) => {
       if (err instanceof EntryAlreadyExists) {

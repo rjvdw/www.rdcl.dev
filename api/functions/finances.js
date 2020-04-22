@@ -42,7 +42,7 @@ app.router.post('/accounts', accountCreationValidator, ex(async (req, res) => {
   const { description } = req.body
   const entry = await accountService.create(owner, description)
 
-  res.set('location', `/.netlify/functions/finances/accounts/${ entry.id }`)
+  res.set('location', `/api/finances/accounts/${ entry.id }`)
   res.status(201).json(entry)
 }))
 
@@ -87,7 +87,7 @@ app.router.post('/transactions', transactionCreationValidator, ex(async (req, re
   const record = req.body
   const entry = await transactionService.create(owner, record)
 
-  res.set('location', '/.netlify/functions/finances/transactions')
+  res.set('location', '/api/finances/transactions')
   res.status(201).json(entry)
 }))
 

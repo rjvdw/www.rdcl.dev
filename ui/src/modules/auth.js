@@ -45,7 +45,7 @@ export const auth = reducer
 export function requestLogout() {
   return async (dispatch) => {
     dispatch(actions.loading())
-    await axios.post('/auth/logout')
+    await axios.post('/api/auth/logout')
     clearAuthData()
   }
 }
@@ -64,7 +64,7 @@ export function login({ username, password, otp }) {
   return async (dispatch) => {
     try {
       dispatch(actions.loading())
-      await axios.post('/auth/login', { username, password, otp })
+      await axios.post('/api/auth/login', { username, password, otp })
       dispatch(actions.login())
     } catch (err) {
       dispatch(actions.error(err))

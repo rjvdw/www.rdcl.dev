@@ -1,8 +1,6 @@
 import Axios from 'axios'
 
-export const axios = Axios.create({
-  baseURL: '/.netlify/functions/',
-})
+export const axios = Axios.create()
 
 const ACCESS_TOKEN_KEY = 'auth:at'
 const REFRESH_TOKEN_KEY = 'auth:rt'

@@ -43,7 +43,7 @@ app.router.post('/', entryValidator, ex(async (req, res) => {
   const { date, ...data } = req.body
   const entry = await healthService.save(owner, date, data)
 
-  res.set('location', `/.netlify/functions/health/${ entry.date }`)
+  res.set('location', `/api/health/${ entry.date }`)
   res.status(200).json(entry)
 }))
 
