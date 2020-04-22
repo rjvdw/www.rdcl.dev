@@ -1,1 +1,2 @@
-/* /index.html 200
+/roll/*     /.netlify/functions/roll/:splat         200
+/*          /index.html                             200
