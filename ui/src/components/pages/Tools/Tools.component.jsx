@@ -8,6 +8,7 @@ import { Html } from '../../tools/Html'
 import { Qr } from '../../tools/Qr'
 import { Ratings } from '../../tools/Ratings'
 import { Title } from '../../Title'
+import { Timestamp } from '../../tools/Timestamp'
 
 export const Tools = () =>
   <Switch>
@@ -39,6 +40,10 @@ export const Tools = () =>
       <Title path={ ['ratings', 'tools'] }/>
       <Ratings/>
     </Route>
+    <Route path="/tools/timestamp">
+      <Title path={ ['timestamp', 'tools'] }/>
+      <Timestamp/>
+    </Route>
     <Route>
       <Menu/>
     </Route>
@@ -55,6 +60,10 @@ const Menu = () => <>
     <rdcl-tool-link>
       <Link slot="link" to="/tools/agenda">Concert Agenda</Link>
       An overview of upcoming events at popular venues in the Netherlands.
+    </rdcl-tool-link>
+    <rdcl-tool-link>
+      <Link slot="link" to="/tools/timestamp">Timestamp</Link>
+      Convert between Unix timestamps and ISO formatted dates.
     </rdcl-tool-link>
     <rdcl-tool-link>
       <Link slot="link" to="/tools/html">HTML Elements</Link>

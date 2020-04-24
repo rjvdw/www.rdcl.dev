@@ -7,3 +7,4 @@ functions = "api/functions/"
 command = "yarn start"
 publish = "ui/dist/"
 autoLaunch = false
+targetPort = 8080
