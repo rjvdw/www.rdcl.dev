@@ -184,6 +184,7 @@ const HealthTable = ({ removeEntry, removing, data }) => (
       <tr>
         <th>Datum</th>
         <th>Gewicht</th>
+        <th>Gemiddeld</th>
         <th>Acties</th>
       </tr>
       </thead>
@@ -196,7 +197,8 @@ const HealthTable = ({ removeEntry, removing, data }) => (
           }) }
         >
           <td>{ formatDate(entry.date) }</td>
-          <td data-numeric>{ entry.weight.toFixed(1) }</td>
+          <td data-numeric>{ formatNumber(entry.weight) }</td>
+          <td data-numeric>{ formatNumber(entry.slidingAverage) }</td>
           <td>
             <Icon.Remove
               className="health-table__action health-table__action--remove"
@@ -288,4 +290,9 @@ const Chart = ({ from, to, graphData, title, ...opts }) => {
 function numericInput(value) {
   if (value === '') return ''
   return +value
+}
+
+function formatNumber(number, fractionDigits = 1) {
+  if (number === null || number === undefined) return ''
+  return number.toFixed(fractionDigits)
 }

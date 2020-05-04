@@ -145,12 +145,35 @@ const dataSelector = state => state.data
 
 export const selectData = createSelector(
   dataSelector,
-  data => data.map(entry => ({
-    ...entry,
-    key: entry.date,
-    date: parseISO(entry.date),
-  })),
+  data => data
+    .map(entry => ({
+      ...entry,
+      key: entry.date,
+      date: parseISO(entry.date),
+    }))
+    .map((entry, idx, arr) => ({
+      ...entry,
+      slidingAverage: computeSlidingAverage(arr, idx, 7),
+    })),
 )
+
+function computeSlidingAverage(data, idx, windowSize) {
+  if (idx + 1 < windowSize) return null // insufficient data
+  let sum = 0
+  let count = 0
+  for (let i = idx - windowSize + 1; i <= idx; i += 1) {
+    if (differenceInDays(data[idx].date, data[i].date) < windowSize) {
+      sum += data[i].weight
+      count += 1
+    }
+  }
+
+  if (count > 0) {
+    return sum / count
+  } else {
+    return null
+  }
+}
 
 export const selectWeightGraphData = createSelector(
   selectData,
