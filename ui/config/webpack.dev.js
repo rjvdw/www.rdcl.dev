@@ -2,6 +2,8 @@
 
 const { paths, base } = require('./webpack.base')
 
+const FUNCTIONS_HOST = process.env.FUNCTIONS_HOST || 'http://localhost:8888'
+
 module.exports = {
   ...base,
   mode: 'development',
@@ -14,13 +16,14 @@ module.exports = {
       errors: true,
     },
     proxy: {
-      // TODO:
-      // '/api': {
-      //   // target: 'https://serverless-tutorial.aws.rdcl.dev', // TODO
-      //   target: 'https://k416dn05q2.execute-api.eu-west-1.amazonaws.com',
-      //   pathRewrite: { '^/api': '/dev/api' },
-      //   changeOrigin: true,
-      // },
+      '/roll': {
+        target: FUNCTIONS_HOST,
+        pathRewrite: { '^/roll': '/.netlify/functions/roll' },
+      },
+      '/api': {
+        target: FUNCTIONS_HOST,
+        pathRewrite: { '^/api': '/.netlify/functions' },
+      },
     },
   },
 }

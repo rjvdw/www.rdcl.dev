@@ -4,8 +4,9 @@ publish = "ui/dist/"
 functions = "api/functions/"
 ignore = "git diff --quiet HEAD^..HEAD -- . ':!doc'"
 
-[dev] # https://github.com/netlify/cli/blob/master/docs/netlify-dev.md#netlifytoml-dev-block
+# https://github.com/netlify/cli/blob/master/docs/netlify-dev.md#netlifytoml-dev-block
+[dev]
 command = "yarn start"
-publish = "ui/dist/"
+#publish = "ui/public/" # Redirects do not play nice with webpack, let webpack handle redirects for now
 autoLaunch = false
 targetPort = 8080
