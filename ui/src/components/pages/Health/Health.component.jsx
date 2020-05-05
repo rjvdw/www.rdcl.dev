@@ -178,7 +178,7 @@ const NewEntryForm = ({ disabled, entry, setValue, onSubmit }) => (
 )
 
 const HealthTable = ({ removeEntry, removing, data }) => (
-  <section>
+  <section style={ { maxWidth: '100%', overflow: 'auto' } }>
     <table>
       <thead>
       <tr>
@@ -198,7 +198,7 @@ const HealthTable = ({ removeEntry, removing, data }) => (
         >
           <td>{ formatDate(entry.date) }</td>
           <td data-numeric>{ formatNumber(entry.weight) }</td>
-          <td data-numeric>{ formatNumber(entry.slidingAverage) }</td>
+          <td data-numeric>{ formatNumber(entry.averageWeight) }</td>
           <td>
             <Icon.Remove
               className="health-table__action health-table__action--remove"

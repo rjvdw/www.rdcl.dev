@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { axios } from '../axios'
-import { differenceInDays, parseISO } from 'date-fns'
+import { parseISO } from 'date-fns'
 
 const INITIAL_STATE = {
   loading: false,
@@ -150,52 +150,22 @@ export const selectData = createSelector(
       ...entry,
       key: entry.date,
       date: parseISO(entry.date),
-    }))
-    .map((entry, idx, arr) => ({
-      ...entry,
-      slidingAverage: computeSlidingAverage(arr, idx, 7),
     })),
 )
-
-function computeSlidingAverage(data, idx, windowSize) {
-  if (idx + 1 < windowSize) return null // insufficient data
-  let sum = 0
-  let count = 0
-  for (let i = idx - windowSize + 1; i <= idx; i += 1) {
-    if (differenceInDays(data[idx].date, data[i].date) < windowSize) {
-      sum += data[i].weight
-      count += 1
-    }
-  }
-
-  if (count > 0) {
-    return sum / count
-  } else {
-    return null
-  }
-}
 
 export const selectWeightGraphData = createSelector(
   selectData,
   () => 'weight',
-  (data, field) => {
-    const window = 7
-    let lastEntries = []
-    return data.reduce((aggregates, entry, idx) => {
+  () => 'averageWeight',
+  (data, field, averageField) => {
+    return data.reduce((aggregates, entry) => {
       const min = aggregates.min === null ? entry[field] : Math.min(aggregates.min, entry[field])
       const max = aggregates.max === null ? entry[field] : Math.max(aggregates.max, entry[field])
-
-      lastEntries = [entry].concat(lastEntries)
-        .filter(e => differenceInDays(entry.date, e.date) < window)
-
-      const avg = (lastEntries.length > 0 && idx < (window - 1))
-        ? undefined
-        : lastEntries.reduce((avg, e) => avg + e[field], 0) / lastEntries.length
 
       return {
         min, max,
         dataPoints: aggregates.dataPoints.concat([{ x: entry.date, y: entry[field] }]),
-        runningAverage: aggregates.runningAverage.concat([{ x: entry.date, y: avg }]),
+        runningAverage: aggregates.runningAverage.concat([{ x: entry.date, y: entry[averageField] }]),
       }
     }, { min: null, max: null, dataPoints: [], runningAverage: [] })
   },
