@@ -14,3 +14,4 @@
 * [Devastator Tank](https://thepihut.com/collections/adafruit-robotics-cnc/products/devastator-tank-mobile-robot-platform-metal-dc-gear-motor)
 * [SmartiPi Touch 2](https://thepihut.com/products/smartipi-touch-2?variant=30582798188606)
 * [RasPiKey](https://thepihut.com/products/raspikey-plug-and-play-emmc-module-for-raspberry-pi)
+* [Zebra Bramble Cluster Case](https://thepihut.com/products/zebra-bramble-cluster-case-4-stack)
