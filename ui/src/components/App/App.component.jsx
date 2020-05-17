@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { PageHeader } from '../PageHeader'
 import { Sidemenu } from '../Sidemenu'
+import { Botw } from '../pages/Botw'
 import { Home } from '../pages/Home'
 import { Tools } from '../pages/Tools'
 import { Login } from '../pages/Login'
@@ -24,6 +25,11 @@ export const App = ({ screenType, loggedIn }) => (
             <Home/>
           </Route>
 
+          <Route path="/login">
+            <Title title="login"/>
+            <Login/>
+          </Route>
+
           <Route path="/tools">
             <Title title="tools"/>
             <Tools/>
@@ -34,9 +40,9 @@ export const App = ({ screenType, loggedIn }) => (
             { loggedIn ? <Health/> : <Login/> }
           </Route>
 
-          <Route path="/login">
-            <Title title="login"/>
-            <Login/>
+          <Route path="/botw">
+            <Title title="botw"/>
+            <Botw/>
           </Route>
         </Switch>
       </main>

@@ -28,6 +28,12 @@ exports.base = {
   module: {
     rules: [
       {
+        test: /\.ya?ml?$/,
+        type: 'json',
+        use: 'yaml-loader',
+      },
+
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
