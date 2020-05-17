@@ -7,9 +7,13 @@ module.exports = {
   ...base,
   mode: 'production',
   plugins: [
-    new CopyPlugin([
-      { from: paths.PUBLIC, to: paths.DIST, ignore: ['index.html'] },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        { from: paths.PUBLIC, to: paths.DIST, globOptions: {
+          ignore: ['index.html'],
+        } },
+      ],
+    }),
 
     ...base.plugins,
   ],
