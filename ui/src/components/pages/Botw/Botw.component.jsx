@@ -23,7 +23,7 @@ export const Botw = ({ sets }) => <>
       { set.parts.map((part, idx) => (
         <tr key={ part.name }>
           { idx === 0 && (
-            <th rowSpan={ set.parts.length }>{ set.name }</th>
+            <th rowSpan={ set.parts.length }>{ set.name === 'n/a' ? '' : set.name }</th>
           ) }
           <td>{ part.name }</td>
           { part.upgrades.map((upgrade, idx) => (

@@ -211,7 +211,81 @@ sets:
       - 5x Courser Bee Honey, 2x Dinraal's Claw
       - 5x Energetic Rhino Beetle, 2x Shard of Dinraal's Fang
       - 1x Star Fragment, 2x Shard of Dinraal's Horn
+  "Royal Guard Set":
+    "Royal Guard Cap": n/a
+    "Royal Guard Uniform": n/a
+    "Royal Guard Boots": n/a
   "Dark Set":
     "Dark Hood": n/a
     "Dark Tunic": n/a
     "Dark Trousers": n/a
+  "Tingle's Outfit":
+    "Tingle's Hood": n/a
+    "Tingle's Shirt": n/a
+    "Tingle's Tights": n/a
+  "Phantom Set":
+    "Phantom Helmet": n/a
+    "Phantom Armor": n/a
+    "Phantom Greaves": n/a
+  "Phantom Ganon Set":
+    "Phantom Ganon Skull": n/a
+    "Phantom Ganon Armor": n/a
+    "Phantom Ganon Greaves": n/a
+  "Salvager Set":
+    "Salvager Headwear": n/a
+    "Salvager Vest": n/a
+    "Salvager Trousers": n/a
+  "n/a":
+    "Amber Earrings":
+      - 5x Amber, 3x Flint
+      - 10x Amber, 3x Flint
+      - 20x Amber, 3x Flint
+      - 30x Amber, 3x Flint
+    "Opal Earrings":
+      - 5x Opal, 3x Flint
+      - 8x Opal, 3x Flint
+      - 16x Opal, 3x Flint
+      - 20x Opal, 3x Flint
+    "Topaz Earrings":
+      - 2x Topaz, 3x Flint
+      - 4x Topaz, 3x Flint
+      - 6x Topaz, 1x Star Fragment
+      - 10x Topaz, 1x Star Fragment
+    "Sapphire Circlet":
+      - 2x Sapphire, 3x Flint
+      - 4x Sapphire, 3x Flint
+      - 6x Sapphire, 1x Star Fragment
+      - 10x Sapphire, 1x Star Fragment
+    "Ruby Circlet":
+      - 2x Ruby, 3x Flint
+      - 4x Ruby, 3x Flint
+      - 6x Ruby, 1x Star Fragment
+      - 10x Ruby, 1x Star Fragment
+    "Diamond Circlet":
+      - 2x Diamond, 3x Flint
+      - 4x Diamond, 3x Flint
+      - 6x Diamond, 1x Star Fragment
+      - 10x Diamond, 1x Star Fragment
+    "Thunder Helm": n/a
+    "Bokoblin Mask": n/a
+    "Lizalfos Mask": n/a
+    "Moblin Mask": n/a
+    "Lynel Mask": n/a
+    "Korok Mask": n/a
+    "Midna's Helmet": n/a
+    "Majora's Mask": n/a
+    "Ravio's Hood": n/a
+    "Zant's Helmet": n/a
+    "Nintendo Switch Shirt": n/a
+    "Warm Doublet": n/a
+    "Island Lobster Shirt": n/a
+    "Snow Boots":
+      - 5x Octorok Tentacle, 10x Hightail Lizard
+      - 5x Octo Balloon, 10x Swift Carrot
+      - 5x Octorok Eyeball, 15x Rushroom
+      - 2x Naydra's Scale, 15x Swift Violet
+    "Sand Boots":
+      - 5x Molduga Fin, 10x Hightail Lizard
+      - 10x Molduga Fin, 10x Swift Carrot
+      - 2x Molduga Guts, 15x Rushroom
+      - 4x Molduga Guts, 15x Swift Violet
