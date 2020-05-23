@@ -22,21 +22,20 @@ export const Botw = ({ sets }) => <>
       <tbody key={ set.name }>
       { set.parts.map((part, idx) => (
         <tr key={ part.name }>
-          { idx === 0 && (
-            <th rowSpan={ set.parts.length }>{ set.name === 'n/a' ? '' : set.name }</th>
-          ) }
+          { idx === 0 && <th rowSpan={ set.parts.length }>{ set.name === 'n/a' ? '' : set.name }</th> }
           <td>{ part.name }</td>
-          { part.upgrades.map((upgrade, idx) => (
+          { part.upgrades === null ? (
+            <td colSpan={ 4 }>N/A</td>
+          ) : part.upgrades.map((upgrade, idx) => (
             <td key={ idx }>
-              { upgrade === null ? <>
-                <em>N/A</em>
-              </> : <ul>
+              <ul>
                 { upgrade.map(([count, name], idx) => (
                   <li key={ idx }>{ count }⨉ { name }</li>
                 )) }
-              </ul> }
+              </ul>
             </td>
-          )) }
+          ))
+          }
         </tr>
       )) }
       </tbody>
