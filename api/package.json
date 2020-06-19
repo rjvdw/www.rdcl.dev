@@ -15,7 +15,7 @@
     "ms": "^2.1.2",
     "pg": "^8.0.2",
     "serverless-http": "^2.5.0",
-    "uuid": "^8.1.0"
+    "uuid": "^8.2.0"
   },
   "devDependencies": {}
 }
