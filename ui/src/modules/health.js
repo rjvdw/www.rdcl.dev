@@ -89,7 +89,7 @@ export function load(from, to) {
       if (to) query.append('to', to)
       const response = await axios.get(`/api/health?${ query.toString() }`)
       dispatch(actions.loadComplete({
-        data: response.data.entries,
+        data: response.data.entries.reverse(),
         from: response.data.from,
         to: response.data.to,
       }))

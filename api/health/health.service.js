@@ -20,7 +20,6 @@ exports.index = (owner, from, to) => {
     where
       owner = ${ owner } and
       date between ${ formatISO(subDays(fromDate, SLIDING_WINDOW)) } and ${ to }
-    order by date desc
     limit ${ MAX_RESULTS }
   `.select(mapRow), fromDate)
 }
