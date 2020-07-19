@@ -7,7 +7,7 @@
     "@rdcl/pg": "^2.0.0",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
-    "date-fns": "^2.14.0",
+    "date-fns": "^2.15.0",
     "express": "^4.17.1",
     "html-entities": "^1.2.1",
     "jsonwebtoken": "^8.5.1",
