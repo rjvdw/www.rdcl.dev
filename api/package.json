@@ -14,7 +14,7 @@
     "morgan": "^1.9.1",
     "ms": "^2.1.2",
     "pg": "^8.3.3",
-    "serverless-http": "^2.5.0",
+    "serverless-http": "^2.6.0",
     "uuid": "^8.3.0"
   },
   "devDependencies": {}
