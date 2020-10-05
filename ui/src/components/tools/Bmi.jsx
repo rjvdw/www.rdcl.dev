@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 export const Bmi = () => {
   const [weight, setWeight] = useLocalStorage('bmi:weight', 75)
   const [height, setHeight] = useLocalStorage('bmi:height', 185)
+  const [bmiIsEmpty, setBmiIsEmpty] = useState(false)
 
-  const cHeight = (height / 100) ** 2
+  const cHeight = height === '' ? Number.NaN : (height / 100) ** 2
   const bmi = weight / cHeight
 
   const setBmi = value => {
+    setBmiIsEmpty(value === '')
     setWeight(value * cHeight)
   }
 
@@ -43,7 +45,7 @@ export const Bmi = () => {
         type="number"
         inputMode="decimal"
         step="any"
-        value={ formatted(bmi) }
+        value={ bmiIsEmpty ? '' : formatted(bmi) }
         onChange={ event => setBmi(event.target.value) }
       />
     </rdcl-input-grid>
@@ -68,11 +70,11 @@ function useLocalStorage(key, initial) {
     value,
     newValue => {
       localStorage[key] = newValue
-      setValue(+newValue)
+      setValue(newValue === '' ? newValue : +newValue)
     },
   ]
 }
 
 function formatted(value) {
-  return value === 0 ? '' : Number(value.toFixed(2))
+  return (value === '' || Number.isNaN(value)) ? '' : Number(value.toFixed(2))
 }
