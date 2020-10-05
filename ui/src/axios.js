@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import jwt from 'jsonwebtoken'
 
 export const axios = Axios.create()
 
@@ -15,8 +16,9 @@ export function clearAuthData() {
 export function hasAuthData() {
   const accessToken = STORAGE[ACCESS_TOKEN_KEY]
   const refreshToken = STORAGE[REFRESH_TOKEN_KEY]
+  const isExpired = jwt.decode(refreshToken).exp * 1000 < Date.now()
 
-  return !!(accessToken && refreshToken)
+  return !isExpired && !!(accessToken && refreshToken)
 }
 
 export function isAuthStorageKey(key) {
