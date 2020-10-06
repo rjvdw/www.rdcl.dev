@@ -16,9 +16,12 @@ export function clearAuthData() {
 export function hasAuthData() {
   const accessToken = STORAGE[ACCESS_TOKEN_KEY]
   const refreshToken = STORAGE[REFRESH_TOKEN_KEY]
-  const isExpired = jwt.decode(refreshToken).exp * 1000 < Date.now()
 
-  return !isExpired && !!(accessToken && refreshToken)
+  return Boolean(accessToken && refreshToken && !isExpired(refreshToken))
+}
+
+function isExpired(token) {
+  return token && jwt.decode(token).exp * 1000 < Date.now()
 }
 
 export function isAuthStorageKey(key) {
