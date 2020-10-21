@@ -1,9 +1,9 @@
 import React from 'react'
 
 const INPUT_ATTRS = {
-  inputmode: ['none', 'text', 'tel', 'url', 'email', 'numeric', 'decimal', 'search'],
-  enterkeyhint: ['enter', 'done', 'go', 'next', 'previous', 'search', 'send'],
-  autocapitalize: ['off', 'none', 'on', 'sentences', 'words', 'characters'],
+  inputMode: ['none', 'text', 'tel', 'url', 'email', 'numeric', 'decimal', 'search'],
+  enterKeyHint: ['enter', 'done', 'go', 'next', 'previous', 'search', 'send'],
+  autoCapitalize: ['off', 'none', 'on', 'sentences', 'words', 'characters'],
 }
 
 export const Html = () => <>
