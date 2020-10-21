@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "lerna": "^3.22.1",
-    "netlify-cli": "2.65.3"
+    "netlify-cli": "2.65.7"
   }
 }
