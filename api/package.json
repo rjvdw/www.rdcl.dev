@@ -5,7 +5,7 @@
   "scripts": {},
   "dependencies": {
     "@rdcl/pg": "^2.0.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "body-parser": "^1.19.0",
     "date-fns": "^2.16.1",
     "express": "^4.17.1",
