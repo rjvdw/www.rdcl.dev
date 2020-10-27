@@ -30,7 +30,7 @@ export const Botw = ({ sets }) => <>
             <td key={ idx }>
               <ul>
                 { upgrade.map(([count, name], idx) => (
-                  <li key={ idx }>{ count }⨉ { name }</li>
+                  <li key={ idx }>{ count }× { name }</li>
                 )) }
               </ul>
             </td>
