@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { PageHeader } from '../PageHeader'
 import { Sidemenu } from '../Sidemenu'
 import { Botw } from '../pages/Botw'
+import { ConnectFour } from '../pages/ConnectFour'
 import { Home } from '../pages/Home'
 import { Tools } from '../pages/Tools'
 import { Login } from '../pages/Login'
@@ -43,6 +44,11 @@ export const App = ({ screenType, loggedIn }) => (
           <Route path="/botw">
             <Title title="botw"/>
             <Botw/>
+          </Route>
+
+          <Route path="/connect-four">
+            <Title title="connect four"/>
+            <ConnectFour/>
           </Route>
         </Switch>
       </main>
