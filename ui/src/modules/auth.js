@@ -24,7 +24,7 @@ const { actions, reducer } = createSlice({
         loading: false,
       }
     },
-    error(state, { payload: { error } }) {
+    error(state, { payload: error }) {
       return {
         ...state,
         error,
@@ -67,7 +67,11 @@ export function login({ username, password, otp }) {
       await axios.post('/api/auth/login', { username, password, otp })
       dispatch(actions.login())
     } catch (err) {
-      dispatch(actions.error(err))
+      console.error(err)
+      dispatch(actions.error({
+        message: err.message,
+        reason: err.response.data && (err.response.data.reason || err.response.data.error_description),
+      }))
     }
   }
 }

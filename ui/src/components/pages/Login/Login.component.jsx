@@ -22,7 +22,7 @@ export const Login = ({ loggedIn, login, logout, error, loading }) => {
 
     { error ? <>
       <h2>Fout!</h2>
-      <p>{ error }</p>
+      <p>{ error.message } { error.reason ? `(Reason: ${error.reason}` : '' }</p>
     </> : '' }
 
     <form onSubmit={ onSubmit }>
