@@ -1956,7 +1956,7 @@
   resolved "https://registry.yarnpkg.com/@netlify/traffic-mesh-agent-win32-x64/-/traffic-mesh-agent-win32-x64-0.24.0.tgz#029cebe029bf8b702d596069a11725491817361f"
   integrity sha512-9K4QA5VcJK9Wrx9BTKSaeOaX9es7lfS97iJMB1micSFuLIK5o/DS9oxaa4tMjzIy0Ck/Pa717XX9TGx9MpCexA==
 
-"@netlify/traffic-mesh-agent@^0.24.0-pre.23":
+"@netlify/traffic-mesh-agent@^0.24.0":
   version "0.24.0"
   resolved "https://registry.yarnpkg.com/@netlify/traffic-mesh-agent/-/traffic-mesh-agent-0.24.0.tgz#38974b85524df151fe55c81975d18c543273bdd8"
   integrity sha512-m3nfdolp8+jwy7sBKz6iuw1MRRZR27onrUtQz3Iwor7CE0+rIWJm+aPc5AFYUlISDM5zTCXgVGDeiPHJv5cOQQ==
@@ -3388,14 +3388,14 @@ axios@^0.21.0:
   dependencies:
     follow-redirects "^1.10.0"
 
-babel-loader@^8.0.6:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.1.0.tgz#c611d5112bd5209abe8b9fa84c3e4da25275f1c3"
-  integrity sha512-7q7nC1tYOrqvUrN3LQK4GwSk/TQorZSOlO9C+RZDZpODgyN4ZlCqE5q9cDsyWOliN+aU9B4JX01xK9eJXowJLw==
+babel-loader@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.2.1.tgz#e53313254677e86f27536f5071d807e01d24ec00"
+  integrity sha512-dMF8sb2KQ8kJl21GUjkW1HWmcsL39GOV5vnzjqrCzEPNY0S0UfMLnumidiwIajDSBmKhYf5iRW+HXaM4cvCKBw==
   dependencies:
     find-cache-dir "^2.1.0"
     loader-utils "^1.4.0"
-    mkdirp "^0.5.3"
+    make-dir "^2.1.0"
     pify "^4.0.1"
     schema-utils "^2.6.5"
 
@@ -9322,7 +9322,7 @@ mkdirp@*, mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5, mkdirp@~0.5.1:
+mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.5, mkdirp@~0.5.1:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
@@ -9496,15 +9496,15 @@ nested-error-stacks@^2.0.0, nested-error-stacks@^2.1.0:
   resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.1.0.tgz#0fbdcf3e13fe4994781280524f8b96b0cdff9c61"
   integrity sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==
 
-netlify-cli@2.67.4:
-  version "2.67.4"
-  resolved "https://registry.yarnpkg.com/netlify-cli/-/netlify-cli-2.67.4.tgz#a5518b7e0def31ec1ae7175f388c4a043f61f40d"
-  integrity sha512-f+l6IF7ocXzFoYnwyoxI6onhbJ1jGWX16otN+4JPQtH4hHBESo469JRsl+YZ7Wi3r5bZognDRjvO2kEcIu2GuA==
+netlify-cli@2.68.4:
+  version "2.68.4"
+  resolved "https://registry.yarnpkg.com/netlify-cli/-/netlify-cli-2.68.4.tgz#c3e8afb548cbcad98d00911d0fc7ad05d608cdaa"
+  integrity sha512-EPbmBaAFLpQ8T3HswE5zJfk2E8LhB231c4PbrTNknxf9x098TAwNyPd+g79RJA9l0ZPbcXVYaj0ydHe3TZKYPw==
   dependencies:
     "@netlify/build" "^5.0.0"
     "@netlify/config" "^2.0.9"
     "@netlify/plugin-edge-handlers" "^1.9.0"
-    "@netlify/traffic-mesh-agent" "^0.24.0-pre.23"
+    "@netlify/traffic-mesh-agent" "^0.24.0"
     "@netlify/zip-it-and-ship-it" "^1.3.9"
     "@oclif/command" v1.6.1
     "@oclif/config" v1.15.1
@@ -10607,10 +10607,10 @@ pg-pool@^3.2.2:
   resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-3.2.2.tgz#a560e433443ed4ad946b84d774b3f22452694dff"
   integrity sha512-ORJoFxAlmmros8igi608iVEbQNNZlp89diFVx6yV5v+ehmpMY9sK6QgpmgoXbmkNaBAx8cOOZh9g80kJv1ooyA==
 
-pg-protocol@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/pg-protocol/-/pg-protocol-1.3.0.tgz#3c8fb7ca34dbbfcc42776ce34ac5f537d6e34770"
-  integrity sha512-64/bYByMrhWULUaCd+6/72c9PMWhiVFs3EVxl9Ct6a3v/U8+rKgqP2w+kKg/BIGgMJyB+Bk/eNivT32Al+Jghw==
+pg-protocol@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/pg-protocol/-/pg-protocol-1.4.0.tgz#43a71a92f6fe3ac559952555aa3335c8cb4908be"
+  integrity sha512-El+aXWcwG/8wuFICMQjM5ZSAm6OWiJicFdNYo+VY3QP+8vI4SvLIWVe51PppTzMhikUJR+PsyIFKqfdXPz/yxA==
 
 pg-types@^2.1.0:
   version "2.2.0"
@@ -10623,16 +10623,16 @@ pg-types@^2.1.0:
     postgres-date "~1.0.4"
     postgres-interval "^1.1.0"
 
-pg@^8.4.2:
-  version "8.4.2"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-8.4.2.tgz#2aa58166a23391e91d56a7ea57c6d99931c0642a"
-  integrity sha512-E9FlUrrc7w3+sbRmL1CSw99vifACzB2TjhMM9J5w9D1LIg+6un0jKkpHS1EQf2CWhKhec2bhrBLVMmUBDbjPRQ==
+pg@^8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-8.5.0.tgz#c29332763ffd51ce52b07dc20dc2337f4d213d08"
+  integrity sha512-h+KHEwce67pAQilZhMCpCx1RC7rR1US7mdjwvKzHRaRxKQxbbFtv5UlwjzqILQ1dwhK+RVGqOVcahE/2KOcaeA==
   dependencies:
     buffer-writer "2.0.0"
     packet-reader "1.0.0"
     pg-connection-string "^2.4.0"
     pg-pool "^3.2.2"
-    pg-protocol "^1.3.0"
+    pg-protocol "^1.4.0"
     pg-types "^2.1.0"
     pgpass "1.x"
 
@@ -11810,10 +11810,10 @@ sass-graph@2.2.5:
     scss-tokenizer "^0.2.3"
     yargs "^13.3.2"
 
-sass-loader@^10.0.5:
-  version "10.0.5"
-  resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-10.0.5.tgz#f53505b5ddbedf43797470ceb34066ded82bb769"
-  integrity sha512-2LqoNPtKkZq/XbXNQ4C64GFEleSEHKv6NPSI+bMC/l+jpEXGJhiRYkAQToO24MR7NU4JRY2RpLpJ/gjo2Uf13w==
+sass-loader@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-10.1.0.tgz#1727fcc0c32ab3eb197cda61d78adf4e9174a4b3"
+  integrity sha512-ZCKAlczLBbFd3aGAhowpYEy69Te3Z68cg8bnHHl6WnSCvnKpbM6pQrz957HWMa8LKVuhnD9uMplmMAHwGQtHeg==
   dependencies:
     klona "^2.0.4"
     loader-utils "^2.0.0"
