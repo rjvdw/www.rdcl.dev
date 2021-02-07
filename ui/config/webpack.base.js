@@ -78,7 +78,7 @@ exports.base = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(paths.PUBLIC, 'index.html'),
+      template: path.resolve(paths.SRC, 'index.html'),
     }),
   ],
 }
