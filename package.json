@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "lerna": "^4.0.0",
-    "netlify-cli": "3.10.12",
+    "netlify-cli": "3.13.7",
     "yarn": "1.22.10"
   }
 }
