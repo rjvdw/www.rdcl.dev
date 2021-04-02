@@ -16,7 +16,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
-    "classnames": "^2.2.6",
+    "classnames": "^2.3.0",
     "date-fns": "^2.19.0",
     "history": "^4.10.1",
     "lit-element": "^2.4.0",
@@ -28,7 +28,7 @@
     "redux": "^4.0.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.13",
+    "@babel/core": "^7.13.14",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-decorators": "^7.13.5",
     "@babel/preset-env": "^7.13.12",
@@ -43,7 +43,7 @@
     "node-sass": "^5.0.0",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
-    "webpack": "^5.28.0",
+    "webpack": "^5.30.0",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2",
     "yaml-loader": "^0.6.0"
