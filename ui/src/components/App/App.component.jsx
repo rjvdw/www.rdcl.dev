@@ -3,13 +3,13 @@ import { Route, Switch } from 'react-router-dom'
 import { PageHeader } from '../PageHeader'
 import { Sidemenu } from '../Sidemenu'
 import { Title } from '../Title'
-import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary.component'
+import { ErrorBoundary } from '../ErrorBoundary'
+import { Tools } from '../pages/Tools'
+import { Login } from '../pages/Login'
+import { Home } from '../pages/Home'
 
 const Botw = React.lazy(() => import('../pages/Botw'))
 const ConnectFour = React.lazy(() => import('../pages/ConnectFour'))
-const Home = React.lazy(() => import('../pages/Home'))
-const Tools = React.lazy(() => import('../pages/Tools'))
-const Login = React.lazy(() => import('../pages/Login'))
 const Health = React.lazy(() => import('../pages/Health'))
 
 export const App = ({ screenType, loggedIn }) => (
