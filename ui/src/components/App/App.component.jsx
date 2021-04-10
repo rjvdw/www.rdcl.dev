@@ -23,7 +23,7 @@ export const App = ({ screenType, loggedIn }) => (
 
       <main>
         <ErrorBoundary>
-          <Suspense fallback={ <></> }>
+          <Suspense fallback={ <rdcl-spinner></rdcl-spinner> }>
             <Switch>
               <Route path="/" exact>
                 <Title/>
