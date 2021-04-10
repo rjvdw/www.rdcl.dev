@@ -52,6 +52,8 @@ export const Bmi = () => {
   </>
 }
 
+export default Bmi
+
 function useLocalStorage(key, initial) {
   const getFromLocalStorage = () => localStorage[key] ? +localStorage[key] : initial
   const [value, setValue] = useState(getFromLocalStorage())

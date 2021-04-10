@@ -1,1 +1,1 @@
-export { Health } from './Health.hoc'
+export { Health, Health as default } from './Health.hoc'

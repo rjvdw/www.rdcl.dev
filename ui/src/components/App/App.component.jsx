@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { PageHeader } from '../PageHeader'
 import { Sidemenu } from '../Sidemenu'
-import { Botw } from '../pages/Botw'
-import { ConnectFour } from '../pages/ConnectFour'
-import { Home } from '../pages/Home'
-import { Tools } from '../pages/Tools'
-import { Login } from '../pages/Login'
-import { Health } from '../pages/Health'
 import { Title } from '../Title'
+import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary.component'
+
+const Botw = React.lazy(() => import('../pages/Botw'))
+const ConnectFour = React.lazy(() => import('../pages/ConnectFour'))
+const Home = React.lazy(() => import('../pages/Home'))
+const Tools = React.lazy(() => import('../pages/Tools'))
+const Login = React.lazy(() => import('../pages/Login'))
+const Health = React.lazy(() => import('../pages/Health'))
 
 export const App = ({ screenType, loggedIn }) => (
   <>
@@ -20,37 +22,41 @@ export const App = ({ screenType, loggedIn }) => (
       ) }
 
       <main>
-        <Switch>
-          <Route path="/" exact>
-            <Title/>
-            <Home/>
-          </Route>
+        <ErrorBoundary>
+          <Suspense fallback={ <></> }>
+            <Switch>
+              <Route path="/" exact>
+                <Title/>
+                <Home/>
+              </Route>
 
-          <Route path="/login">
-            <Title title="login"/>
-            <Login/>
-          </Route>
+              <Route path="/login">
+                <Title title="login"/>
+                <Login/>
+              </Route>
 
-          <Route path="/tools">
-            <Title title="tools"/>
-            <Tools/>
-          </Route>
+              <Route path="/tools">
+                <Title title="tools"/>
+                <Tools/>
+              </Route>
 
-          <Route path="/health">
-            <Title title="health"/>
-            { loggedIn ? <Health/> : <Login/> }
-          </Route>
+              <Route path="/health">
+                <Title title="health"/>
+                { loggedIn ? <Health/> : <Login/> }
+              </Route>
 
-          <Route path="/botw">
-            <Title title="botw"/>
-            <Botw/>
-          </Route>
+              <Route path="/botw">
+                <Title title="botw"/>
+                <Botw/>
+              </Route>
 
-          <Route path="/connect-four">
-            <Title title="connect four"/>
-            <ConnectFour/>
-          </Route>
-        </Switch>
+              <Route path="/connect-four">
+                <Title title="connect four"/>
+                <ConnectFour/>
+              </Route>
+            </Switch>
+          </Suspense>
+        </ErrorBoundary>
       </main>
     </rdcl-grid>
 

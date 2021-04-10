@@ -63,3 +63,5 @@ export const Ratings = () => {
     </rdcl-input-grid>
   </>
 }
+
+export default Ratings

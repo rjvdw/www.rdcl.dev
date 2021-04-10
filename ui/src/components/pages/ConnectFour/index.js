@@ -1,1 +1,1 @@
-export { ConnectFour } from './ConnectFour.hoc'
+export { ConnectFour, ConnectFour as default } from './ConnectFour.hoc'

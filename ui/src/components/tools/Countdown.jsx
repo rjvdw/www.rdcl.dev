@@ -88,6 +88,8 @@ export const Countdown = () => {
   </>
 }
 
+export default Countdown
+
 const CDInput = ({ set, ...props }) =>
   <input
     type="number"

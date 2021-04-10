@@ -45,6 +45,7 @@ exports.base = {
             ],
             plugins: [
               '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-syntax-export-default-from',
               ['@babel/plugin-proposal-decorators', {
                 decoratorsBeforeExport: true,
               }],

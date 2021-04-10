@@ -24,3 +24,5 @@ export const Html = () => <>
     ) }
   </rdcl-input-grid>
 </>
+
+export default Html

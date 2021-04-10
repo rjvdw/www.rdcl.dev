@@ -134,6 +134,8 @@ export class Agenda extends React.Component {
   }
 }
 
+export default Agenda
+
 const FilterMenu = ({ venues, events, ordering, setOrdering, filters, setFilter }) => (
   <nav className="ca-filters">
     <header className="ca-filters__header">

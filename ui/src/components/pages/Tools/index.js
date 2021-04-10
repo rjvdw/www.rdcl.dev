@@ -1,1 +1,1 @@
-export { Tools } from './Tools.component'
+export { Tools, Tools as default } from './Tools.component'

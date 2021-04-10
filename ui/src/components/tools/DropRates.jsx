@@ -63,6 +63,8 @@ export const DropRates = () => {
   </>
 }
 
+export default DropRates
+
 function chance(dropRate, nrAttempts) {
   const p = dropRate / 100
   const n = Math.round(nrAttempts)

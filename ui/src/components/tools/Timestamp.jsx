@@ -41,6 +41,8 @@ export const Timestamp = () => {
   </>
 }
 
+export default Timestamp
+
 function updateIso(setMs, setTimestamp, setIso, cleanUp = false) {
   return (event) => {
     const ms = Date.parse(event.target.value)

@@ -1,1 +1,1 @@
-export { Login } from './Login.hoc'
+export { Login, Login as default } from './Login.hoc'

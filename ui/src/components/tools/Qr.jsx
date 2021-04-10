@@ -54,3 +54,5 @@ export const Qr = () => {
     } } width={ OUTPUT_WIDTH } height={ OUTPUT_HEIGHT }/>
   </>
 }
+
+export default Qr
