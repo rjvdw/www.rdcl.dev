@@ -15,7 +15,7 @@ const Timestamp = React.lazy(() => import('../../tools/Timestamp'))
 
 export const Tools = () =>
   <ErrorBoundary>
-    <Suspense fallback={ <Menu/> }>
+    <Suspense fallback={ <rdcl-spinner/> }>
       <Switch>
         <Route path="/tools/agenda">
           <Title path={ ['agenda', 'tools'] }/>
