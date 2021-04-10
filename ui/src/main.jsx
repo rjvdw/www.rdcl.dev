@@ -40,6 +40,10 @@ window.addEventListener('storage', event => {
 })
 
 document.body.addEventListener('click', event => {
+  if (event.defaultPrevented) {
+    return
+  }
+
   if (event.ctrlKey || event.shiftKey || event.metaKey || event.button === 1) {
     // user is trying to open a new tab, don't interfere
     return
