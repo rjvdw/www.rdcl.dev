@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import classNames from 'classnames'
-import CanvasJSReact from '../../../lib/canvasjs/canvasjs.react'
 import { history } from '../../../history'
 import { addDays, formatISO, parseISO, subDays } from 'date-fns'
 import { formatDate } from '../../../util/formatters'
@@ -9,7 +8,7 @@ import { useHistoryState } from '../../util'
 import { Icon } from './icons'
 import './Health.styles.sass'
 
-const { CanvasJS, CanvasJSChart } = CanvasJSReact
+const CanvasJSChart = React.lazy(() => import('./CanvasJS'))
 
 export class Health extends React.Component {
 
@@ -237,30 +236,32 @@ const Chart = ({ from, to, graphData, title, ...opts }) => {
 
   return (
     <section>
-      <CanvasJSChart options={ {
-        title: title ? { text: title } : undefined,
-        ...opts,
-        axisX: {
-          minimum: subDays(parseISO(from), 1),
-          maximum: addDays(parseISO(to), 1),
-        },
-        axisY: {
-          minimum: graphData.min - 15,
-          maximum: graphData.max + 15,
-        },
-        data: [
-          showData && {
-            type: 'spline',
-            dataPoints: graphData.dataPoints,
-            color: '#4f81bc',
+      <Suspense fallback={ <rdcl-spinner/> }>
+        <CanvasJSChart options={ {
+          title: title ? { text: title } : undefined,
+          ...opts,
+          axisX: {
+            minimum: subDays(parseISO(from), 1),
+            maximum: addDays(parseISO(to), 1),
           },
-          showAverage && {
-            type: 'spline',
-            dataPoints: graphData.runningAverage,
-            color: '#c0504e',
+          axisY: {
+            minimum: graphData.min - 15,
+            maximum: graphData.max + 15,
           },
-        ].filter(d => d),
-      } }/>
+          data: [
+            showData && {
+              type: 'spline',
+              dataPoints: graphData.dataPoints,
+              color: '#4f81bc',
+            },
+            showAverage && {
+              type: 'spline',
+              dataPoints: graphData.runningAverage,
+              color: '#c0504e',
+            },
+          ].filter(d => d),
+        } }/>
+      </Suspense>
 
       <div className="health-graph__options-container">
         <label className="health-graph__option">
