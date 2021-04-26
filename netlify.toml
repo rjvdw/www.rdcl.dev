@@ -4,9 +4,10 @@ publish = "ui/dist"
 functions = "api/functions"
 ignore = "git diff --quiet HEAD^..HEAD -- . ':!doc'"
 
-[functions]
-node_bundler = "esbuild"
-external_node_modules = ["express", "pg-native"]
+# https://github.com/netlify/cli/issues/2238
+#[functions]
+#node_bundler = "esbuild"
+#external_node_modules = ["express", "pg-native"]
 
 # https://github.com/netlify/cli/blob/master/docs/netlify-dev.md#netlifytoml-dev-block
 [dev]
