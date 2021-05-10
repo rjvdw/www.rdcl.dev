@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welles</title>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #222;
+    color: #aaa;
+  }
+}
+h1 {
+  font-family: sans-serif;
+  font-size: 400%;
+  user-select: none;
+  cursor: default;
+}
+/* i do not know of a way to reset the animation, so i just create two
+ * classes between which i toggle 🙃
+ */
+.pop-in-a { animation: pop-in-a 1.5s }
+@keyframes pop-in-a {
+  0% { opacity: 0; transform: scale(0.1) rotate(-1080deg) }
+  55% { opacity: 1; transform: scale(1) rotate(0deg) }
+  62.5% { opacity: .5 }
+  70% { opacity: 1 }
+  77.5% { opacity: .5 }
+  85% { opacity: 1 }
+  92.5% { opacity: .5 }
+  100% { opacity: 1 }
+}
+.pop-in-b { animation: pop-in-b 1.5s }
+@keyframes pop-in-b {
+  0% { opacity: 0; transform: scale(0.1) rotate(-1080deg) }
+  55% { opacity: 1; transform: scale(1) rotate(0deg) }
+  62.5% { opacity: .5 }
+  70% { opacity: 1 }
+  77.5% { opacity: .5 }
+  85% { opacity: 1 }
+  92.5% { opacity: .5 }
+  100% { opacity: 1 }
+}
+</style>
+<h1 class=pop-in-a>Welles!</h1>
+<script>
+(function () {
+  'use strict'
+  const { body } = document
+  const h1 = document.querySelector('h1')
+  body.addEventListener('click', () => {
+    h1.classList.toggle('pop-in-a')
+    h1.classList.toggle('pop-in-b')
+  })
+}())
+</script>

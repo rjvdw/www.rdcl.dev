@@ -2,4 +2,7 @@
 # https://docs.netlify.com/routing/redirects/redirect-options/
 /roll/*     /.netlify/functions/roll/:splat         200
 /api/*      /.netlify/functions/:splat              200
+/de-wet     /silly/de-wet.html                      200
+/nietes     /silly/nietes.html                      200
+/welles     /silly/welles.html                      200
 /*          /index.html                             200
