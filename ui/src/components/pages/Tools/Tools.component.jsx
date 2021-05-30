@@ -6,6 +6,7 @@ import { ErrorBoundary } from '../../ErrorBoundary'
 
 const Agenda = React.lazy(() => import('../../tools/Agenda'))
 const Bmi = React.lazy(() => import('../../tools/Bmi'))
+const Conversions = React.lazy(() => import('../../tools/Conversions'))
 const Countdown = React.lazy(() => import('../../tools/Countdown'))
 const DropRates = React.lazy(() => import('../../tools/DropRates'))
 const Html = React.lazy(() => import('../../tools/Html'))
@@ -36,6 +37,10 @@ export const Tools = () =>
         <Route path="/tools/drop-rates">
           <Title path={ ['drop rates', 'tools'] }/>
           <DropRates/>
+        </Route>
+        <Route path="/tools/conversions">
+          <Title path={ ['conversions', 'tools'] }/>
+          <Conversions/>
         </Route>
         <Route path="/tools/bmi">
           <Title path={ ['bmi', 'tools'] }/>

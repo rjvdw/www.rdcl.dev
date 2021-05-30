@@ -34,6 +34,10 @@ export const Menu = () => <>
       Given a drop rate, computes how many attempts you actually need to get your item.
     </rdcl-tool-link>
     <rdcl-tool-link>
+      <Link slot="link" to="/tools/conversions">Common Unit Conversions</Link>
+      Quickly convert common units into each other.
+    </rdcl-tool-link>
+    <rdcl-tool-link>
       <Link slot="link" to="/tools/bmi">BMI Calculator</Link>
       Body Mass Index calculator.
     </rdcl-tool-link>
