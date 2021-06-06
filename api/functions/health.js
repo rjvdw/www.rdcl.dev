@@ -25,7 +25,7 @@ const entryValidator = validateBody(body => validator()
       .validDate()
     )
     .field('weight', field => field
-      .numeric()
+      .isNumber()
     )
     .noOtherFields()
   ))

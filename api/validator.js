@@ -59,12 +59,23 @@ exports.validator = () => {
 
           return this
         },
-        numeric() {
+        isNumber() {
           if (present && typeof value !== 'number') {
-            errors.push(`${ field } is not numeric`)
+            errors.push(`${ field } is not a number`)
           }
 
           return this
+        },
+        isNumeric() {
+          if (!present) return this
+          if (typeof value === 'number') return this
+          if (typeof value === 'string') {
+            if (!Number.isNaN(Number(value))) {
+              return this
+            }
+          }
+
+          errors.push(`${ field } is not numeric`)
         },
       })
 

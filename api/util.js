@@ -10,6 +10,9 @@ const parseISO = require('date-fns/parseISO')
 const { validator } = require('./validator')
 const { EntryAlreadyExists, ForeignKeyViolation } = require('./errors')
 
+/**
+ * Wrapper around express so that it can easily be exposed as a Netlify function.
+ */
 exports.App = class App {
   constructor(name) {
     const app = express()
@@ -26,10 +29,20 @@ exports.App = class App {
     })
   }
 
+  /**
+   * Proxy `Router#use()` to add middleware to the app router.
+   * See Router#use() documentation for details.
+   *
+   * If the _fn_ parameter is an express app, then it will be
+   * mounted at the _route_ specified.
+   */
   use(...args) {
     this.app.use(...args)
   }
 
+  /**
+   * Returns the handler that should be exposed to Netlify.
+   */
   getHandler() {
     this.app.use(`/${ this.name }`, this.router)
     this.app.use(`/api/${ this.name }`, this.router)
@@ -49,6 +62,9 @@ exports.App = class App {
   }
 }
 
+/**
+ * Catches any uncaught errors.
+ */
 exports.ex = cb => (req, res, next) => {
   return cb(req, res, next).then(undefined, err => next(err))
 }

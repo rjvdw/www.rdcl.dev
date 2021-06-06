@@ -73,7 +73,7 @@ const transactionCreationValidator = validateBody(body => validator()
     )
     .field('amount', field => field
       .required()
-      .numeric()
+      .isNumber()
     )
     .field('description', field => field
       .required()
