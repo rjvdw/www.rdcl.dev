@@ -25,3 +25,6 @@
 
 /welles
   Content-Security-Policy: default-src 'self' 'unsafe-inline'
+
+/pfizer-batches
+  Content-Security-Policy: default-src 'self' 'unsafe-inline'
