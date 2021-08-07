@@ -17,6 +17,9 @@
 /silly/*
   Content-Security-Policy: default-src 'self' 'unsafe-inline'
 
+/password.html
+  Content-Security-Policy: default-src 'self' 'unsafe-inline'
+
 /de-wet
   Content-Security-Policy: default-src 'self' 'unsafe-inline'
 
