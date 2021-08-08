@@ -26,14 +26,14 @@
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.1.2",
-    "redux": "^4.1.0"
+    "redux": "^4.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.8",
+    "@babel/core": "^7.15.0",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/plugin-proposal-decorators": "^7.14.5",
     "@babel/plugin-syntax-export-default-from": "^7.14.5",
-    "@babel/preset-env": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@svgr/webpack": "^5.5.0",
     "babel-loader": "^8.2.2",
@@ -45,7 +45,7 @@
     "node-sass": "^6.0.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
-    "webpack": "^5.47.1",
+    "webpack": "^5.49.0",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2",
     "yaml-loader": "^0.6.0"
