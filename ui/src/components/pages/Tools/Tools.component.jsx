@@ -5,6 +5,7 @@ import { Menu } from './Menu'
 import { ErrorBoundary } from '../../ErrorBoundary'
 
 const Agenda = React.lazy(() => import('../../tools/Agenda'))
+const Ascii = React.lazy(() => import('../../tools/Ascii'))
 const Bmi = React.lazy(() => import('../../tools/Bmi'))
 const Conversions = React.lazy(() => import('../../tools/Conversions'))
 const Countdown = React.lazy(() => import('../../tools/Countdown'))
@@ -21,6 +22,10 @@ export const Tools = () =>
         <Route path="/tools/agenda">
           <Title path={ ['agenda', 'tools'] }/>
           <Agenda/>
+        </Route>
+        <Route path="/tools/ascii">
+          <Title path={['ascii', 'tools']}/>
+          <Ascii/>
         </Route>
         <Route path="/tools/html">
           <Title path={ ['html elements', 'tools'] }/>

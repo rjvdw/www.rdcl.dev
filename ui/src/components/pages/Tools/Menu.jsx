@@ -14,6 +14,10 @@ export const Menu = () => <>
       An overview of upcoming events at popular venues in the Netherlands.
     </rdcl-tool-link>
     <rdcl-tool-link>
+      <Link slot="link" to="/tools/ascii">ASCII Converter</Link>
+      Converts between ASCII and plain text.
+    </rdcl-tool-link>
+    <rdcl-tool-link>
       <Link slot="link" to="/tools/timestamp">Timestamp</Link>
       Convert between Unix timestamps and ISO formatted dates.
     </rdcl-tool-link>
