@@ -4,7 +4,6 @@ import { Title } from '../../Title'
 import { Menu } from './Menu'
 import { ErrorBoundary } from '../../ErrorBoundary'
 
-const Agenda = React.lazy(() => import('../../tools/Agenda'))
 const Ascii = React.lazy(() => import('../../tools/Ascii'))
 const Bmi = React.lazy(() => import('../../tools/Bmi'))
 const Conversions = React.lazy(() => import('../../tools/Conversions'))
@@ -19,10 +18,6 @@ export const Tools = () =>
   <ErrorBoundary>
     <Suspense fallback={ <rdcl-spinner/> }>
       <Switch>
-        <Route path="/tools/agenda">
-          <Title path={ ['agenda', 'tools'] }/>
-          <Agenda/>
-        </Route>
         <Route path="/tools/ascii">
           <Title path={['ascii', 'tools']}/>
           <Ascii/>

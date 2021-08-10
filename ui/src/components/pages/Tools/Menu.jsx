@@ -10,10 +10,6 @@ export const Menu = () => <>
       Securely generates a password using <code>window.crypto</code>.
     </rdcl-tool-link>
     <rdcl-tool-link>
-      <Link slot="link" to="/tools/agenda">Concert Agenda</Link>
-      An overview of upcoming events at popular venues in the Netherlands.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
       <Link slot="link" to="/tools/ascii">ASCII Converter</Link>
       Converts between ASCII and plain text.
     </rdcl-tool-link>
