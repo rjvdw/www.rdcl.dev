@@ -10,10 +10,14 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     historyApiFallback: true,
-    contentBase: paths.PUBLIC,
-    overlay: {
-      warnings: true,
-      errors: true,
+    static: {
+      directory: paths.PUBLIC,
+    },
+    client: {
+      overlay: {
+        warnings: true,
+        errors: true,
+      },
     },
     proxy: {
       '/roll': {
