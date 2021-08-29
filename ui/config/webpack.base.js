@@ -12,7 +12,7 @@ const paths = {
 
 exports.paths = paths
 exports.base = {
-  entry: path.resolve(paths.SRC, 'main.jsx'),
+  entry: path.resolve(paths.SRC, 'main.tsx'),
 
   output: {
     path: paths.DIST,
@@ -21,7 +21,7 @@ exports.base = {
   },
 
   resolve: {
-    extensions: ['.jsx', '.js', '.json'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
     alias: { '@': paths.SRC },
   },
 
@@ -31,6 +31,12 @@ exports.base = {
         test: /\.ya?ml?$/,
         type: 'json',
         use: 'yaml-loader',
+      },
+
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
 
       {
@@ -66,12 +72,12 @@ exports.base = {
 
       {
         test: /components\/.*\.svg$/,
-        use: ['@svgr/webpack'],
+        use: '@svgr/webpack',
       },
 
       {
         test: /elements\/.*\.svg$/,
-        use: ['file-loader'],
+        use: 'file-loader',
       },
     ],
   },
