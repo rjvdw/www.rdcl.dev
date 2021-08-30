@@ -2,7 +2,7 @@ import { css, customElement, html, LitElement, property } from 'lit-element'
 
 @customElement('rdcl-combi-input')
 export class RdclCombiInput extends LitElement {
-  @property({ type: String }) mode
+  @property({ type: String }) mode: string | undefined
 
   static get styles() {
     // language=CSS

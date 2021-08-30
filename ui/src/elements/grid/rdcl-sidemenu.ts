@@ -1,11 +1,13 @@
 import { css, customElement, html, LitElement, property, unsafeCSS } from 'lit-element'
+// @ts-ignore
 import closeIcon from './icons/close-sidemenu.svg'
+// @ts-ignore
 import toggleIcon from './icons/toggle-sidemenu.svg'
 
 @customElement('rdcl-sidemenu')
 export class RdclSidemenu extends LitElement {
   @property({ type: Boolean }) collapsed = false
-  @property({ type: String }) screentype
+  @property({ type: String }) screentype: string | undefined
 
   static get styles() {
     // language=CSS

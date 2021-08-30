@@ -2,7 +2,7 @@ import { css, customElement, html, LitElement, property } from 'lit-element'
 
 @customElement('rdcl-page-header')
 export class RdclPageHeader extends LitElement {
-  @property({ type: String }) screentype
+  @property({ type: String }) screentype: string | undefined
 
   static get styles() {
     // language=CSS

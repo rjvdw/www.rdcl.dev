@@ -2,9 +2,9 @@ import { css, customElement, html, LitElement, property } from 'lit-element'
 
 @customElement('rdcl-sidemenu-item')
 export class RdclSidemenuItem extends LitElement {
-  @property() icon
-  @property() href
-  @property() accesskey
+  @property() icon: string | undefined
+  @property() href: string | undefined
+  @property() accesskey: string | undefined
 
   static get styles() {
     // language=CSS

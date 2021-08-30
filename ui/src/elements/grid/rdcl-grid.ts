@@ -1,8 +1,8 @@
-import { LitElement, html, customElement, css, property } from 'lit-element'
+import { css, customElement, html, LitElement, property } from 'lit-element'
 
 @customElement('rdcl-grid')
 export class RdclGrid extends LitElement {
-  @property({ type: String }) screentype
+  @property({ type: String }) screentype: string | undefined
 
   static get styles() {
     // language=CSS
