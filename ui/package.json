@@ -29,17 +29,10 @@
     "redux": "^4.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/plugin-proposal-class-properties": "^7.14.5",
-    "@babel/plugin-proposal-decorators": "^7.14.5",
-    "@babel/plugin-syntax-export-default-from": "^7.14.5",
-    "@babel/preset-env": "^7.15.0",
-    "@babel/preset-react": "^7.14.5",
     "@svgr/webpack": "^5.5.0",
     "@types/qrcode": "^1.4.1",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",
-    "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.2.0",

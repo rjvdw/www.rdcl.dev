@@ -34,30 +34,9 @@ exports.base = {
       },
 
       {
-        test: /\.tsx?$/,
+        test: /\.[tj]sx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      },
-
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react',
-            ],
-            plugins: [
-              '@babel/plugin-proposal-class-properties',
-              '@babel/plugin-syntax-export-default-from',
-              ['@babel/plugin-proposal-decorators', {
-                decoratorsBeforeExport: true,
-              }],
-            ],
-          },
-        },
       },
 
       {
