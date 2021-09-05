@@ -1,0 +1,66 @@
+html {
+  font-size: 16px;
+  --grid-cell-radius: 2.5rem;
+  --grid-padding: .5rem;
+  --grid-border: .5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #543210;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  /*justify-content: safe center;*/
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+.hex-grid {
+  background: #caa472;
+  border: var(--grid-border) solid #855e42;
+  border-radius: 1.5rem;
+  box-shadow: .25rem .25rem .5rem #000a, inset .1rem .1rem .25rem #000c;
+  padding: var(--grid-padding);
+  padding-bottom: calc(var(--grid-padding) + 0.5 * var(--grid-cell-radius));
+  margin: auto;
+}
+
+.hex-grid__row {
+  overflow: visible;
+  height: calc(1.5 * var(--grid-cell-radius));
+  white-space: nowrap;
+}
+
+.hex-grid__row--odd {
+  margin-left: calc(var(--grid-cell-radius) / 1.1547);
+}
+
+.hex-grid__cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: calc(2 * var(--grid-cell-radius) / 1.1547);
+  height: calc(2 * var(--grid-cell-radius));
+
+  overflow: hidden;
+  font-size: 8px;
+  white-space: nowrap;
+  clip-path: polygon(50% 1%, 1% 25%, 1% 75%, 50% 99%, 99% 75%, 99% 25%);
+
+  background: #fff8dc;
+}
+
+.hex-grid__cell:hover {
+  background: #855e42;
+}

@@ -31,3 +31,6 @@
 
 /pfizer-batches
   Content-Security-Policy: default-src 'self' 'unsafe-inline'
+
+/hex-grid
+  Content-Security-Policy: default-src 'self'
