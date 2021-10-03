@@ -37,8 +37,8 @@ export function isAuthStorageKey(key: string|null): boolean {
 axios.interceptors.request.use(
   config => {
     if (hasAuthData()) {
-      config.headers['authorization'] = `bearer ${ STORAGE[ACCESS_TOKEN_KEY] }`
-      config.headers['x-refresh-token'] = STORAGE[REFRESH_TOKEN_KEY]
+      config.headers!['authorization'] = `bearer ${ STORAGE[ACCESS_TOKEN_KEY] }`
+      config.headers!['x-refresh-token'] = STORAGE[REFRESH_TOKEN_KEY]
     }
 
     return config

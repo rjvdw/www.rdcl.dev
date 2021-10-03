@@ -113,6 +113,12 @@ export const health = reducer
 
 export const { clearErrors } = actions
 
+interface GetHealthResponse {
+  entries: object[],
+  from: string
+  to: string
+}
+
 export function load(from?: string, to?: string) {
   return async (dispatch: StoreDispatch) => {
     dispatch(actions.loading())
@@ -121,7 +127,7 @@ export function load(from?: string, to?: string) {
       const query = new URLSearchParams()
       if (from) query.append('from', from)
       if (to) query.append('to', to)
-      const response = await axios.get(`/api/health?${ query.toString() }`)
+      const response = await axios.get<GetHealthResponse>(`/api/health?${ query.toString() }`)
       dispatch(actions.loadComplete({
         data: response.data.entries.reverse(),
         from: response.data.from,

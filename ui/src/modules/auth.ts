@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { axios, clearAuthData, hasAuthData } from '../axios'
 import { StoreDispatch, StoreGetState } from '../store'
-import Axios from 'axios'
+import Axios, { AxiosError, AxiosResponse } from 'axios'
 
 type AuthState = {
   loggedIn: boolean,
@@ -79,9 +79,10 @@ export function login({ username, password, otp }: { username: string, password:
     } catch (err) {
       console.error(err)
       if (Axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError<any>;
         dispatch(actions.error({
-          message: err.message,
-          reason: err.response?.data && (err.response.data.reason || err.response.data.error_description),
+          message: axiosError.message,
+          reason: axiosError.response?.data && (axiosError.response.data.reason || axiosError.response.data.error_description),
         }))
       } else {
         dispatch(actions.error({
