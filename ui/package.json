@@ -14,13 +14,13 @@
     "build": "webpack --config=config/webpack.prod.js"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.6.1",
+    "@reduxjs/toolkit": "^1.6.2",
     "axios": "^0.22.0",
     "classnames": "^2.3.0",
-    "date-fns": "^2.24.0",
+    "date-fns": "^2.25.0",
     "decimal.js": "^10.3.1",
     "history": "^4.10.1",
-    "lit-element": "^3.0.0",
+    "lit-element": "^3.0.1",
     "qrcode": "^1.4.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -32,7 +32,7 @@
     "@svgr/webpack": "^5.5.0",
     "@types/qrcode": "^1.4.1",
     "@types/react-dom": "^17.0.9",
-    "@types/react-router-dom": "^5.3.0",
+    "@types/react-router-dom": "^5.3.1",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.3.0",
@@ -43,9 +43,9 @@
     "style-loader": "^3.3.0",
     "ts-loader": "^9.2.6",
     "typescript": "^4.4.3",
-    "webpack": "^5.56.0",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.3.0",
+    "webpack": "^5.58.1",
+    "webpack-cli": "^4.9.0",
+    "webpack-dev-server": "^4.3.1",
     "yaml-loader": "^0.6.0"
   }
 }
