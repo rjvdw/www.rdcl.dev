@@ -24,7 +24,7 @@ export const Float = () => {
         onChange={ event => setNumberValue(event.target.value) }
       />
 
-      <span>Precision:</span>
+      <span data-start={ 1 }>Precision:</span>
       <label data-start={ 2 }>
         <input
           type="radio"

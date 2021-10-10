@@ -41,6 +41,10 @@ export class RdclInputGrid extends LitElement {
       ::slotted([data-span="3"]) {
         grid-column: span 3;
       }
+
+      ::slotted([data-start="2"][data-span="2"]) {
+        grid-column: 2 / span 2;
+      }
     `
   }
 
