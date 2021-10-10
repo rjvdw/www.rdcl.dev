@@ -19,10 +19,7 @@ export const Float = () => {
       <label htmlFor="float-input">Number:</label>
       <input
         id="float-input"
-        type="number"
-        inputMode="decimal"
-        step="any"
-        autoFocus
+        type="text"
         value={ numberValue }
         onChange={ event => setNumberValue(event.target.value) }
       />
@@ -56,6 +53,8 @@ export const Float = () => {
       () => {
         const bytes = floatToBytes(number, precision)
         const [sign, exponent, mantissa] = deconstructFloat(bytes, precision)
+        const parsedExponent = parseExponent(exponent)
+
         return <>
           <table className="simple-table float-analysis">
             <tbody>
@@ -87,8 +86,11 @@ export const Float = () => {
               <th>Scientific notation</th>
               <td>
                 { sign === '0' ? '' : '-' }
-                { parseMantissa(mantissa) }
-                &times;2<sup>{ parseExponent(exponent) }</sup>
+                { conditionally(
+                  isZeroExponent(exponent),
+                  <>{ parseSubnormalMantissa(mantissa) }&times;2<sup>{ parsedExponent + 1 }</sup></>,
+                  <>{ parseNormalMantissa(mantissa) }&times;2<sup>{ parsedExponent }</sup></>,
+                ) }
               </td>
             </tr>
             </tbody>
@@ -109,16 +111,36 @@ export const Float = () => {
             (since we are considering { precision } bits floating points).
             To get the exponent value, simply interpret the number as an unsigned integer, and then subtract
             { ' ' }{ 2 ** (exponent.length - 1) - 1 }.
-            In our case, the exponent is <span className="exponent">{ exponent }</span>, so its value is
-            { ' ' }<span className="exponent">{ parseExponent(exponent) }</span>.
-            Finally, the mantissa represents the decimal part of the number when written in the form
-            { ' ' }<i>mantissa&times;2<sup>exponent</sup></i>.
-            The mantissa is always stored as a normalized value, which means it always starts with <i>1.&hellip;</i>.
-            To get the mantissa value, just add <i>1.</i> in front of it, and interpret it as a binary number.
-            In our case, the mantissa is <span className="mantissa">{ mantissa }</span>, which means that its actual
-            value is <span className="mantissa">1.{ mantissa.replace(/0+$/, '').padEnd(1, '0') }</span>.
-            Converted to decimal, this is <span className="mantissa">{ parseMantissa(mantissa) }</span>
-            {' '}(<em>please note that this conversion to decimal may lead to inaccuracies</em>).
+            { ' ' }{ conditionally(
+              isZeroExponent(exponent),
+              <>
+                In our case however, the exponent has the minimal value of <span className="exponent">{ exponent }</span>,
+                so we need to follow a different set of rules.
+                We will instead use an exponent of <span className="exponent">{ parsedExponent + 1 }</span>.
+                Finally, the mantissa represents the decimal part of the number when written in the form
+                { ' ' }<i>mantissa&times;2<sup>exponent</sup></i>.
+                Since we are in the special case where the exponent has the minimal value, this means the mantissa is
+                not normalized.
+                Usually the mantissa would be normalized and would always start with <i>1.&hellip;</i>, but in our case
+                the mantissa will start with <i>0.&hellip;</i>.
+                Our mantissa is <span className="mantissa">{ mantissa }</span>, which means that its actual value is
+                { ' ' }<span className="mantissa">0.{ mantissa.replace(/0+$/, '').padEnd(1, '0') }</span>.
+                Converted to decimal, this is <span className="mantissa">{ parseSubnormalMantissa(mantissa) }</span>
+                { ' ' }(<em>please note that this conversion to decimal may lead to inaccuracies</em>).
+              </>,
+              <>
+                In our case, the exponent is <span className="exponent">{ exponent }</span>, so its value is
+                { ' ' }<span className="exponent">{ parsedExponent }</span>.
+                Finally, the mantissa represents the decimal part of the number when written in the form
+                { ' ' }<i>mantissa&times;2<sup>exponent</sup></i>.
+                The mantissa is always stored as a normalized value, which means it always starts with <i>1.&hellip;</i>.
+                To get the mantissa value, just add <i>1.</i> in front of it, and interpret it as a binary number.
+                In our case, the mantissa is <span className="mantissa">{ mantissa }</span>, which means that its actual
+                value is <span className="mantissa">1.{ mantissa.replace(/0+$/, '').padEnd(1, '0') }</span>.
+                Converted to decimal, this is <span className="mantissa">{ parseNormalMantissa(mantissa) }</span>
+                { ' ' }(<em>please note that this conversion to decimal may lead to inaccuracies</em>).
+              </>,
+            ) }
           </p>
         </>
       },
@@ -189,7 +211,19 @@ function hexRepresentation(bytes: Uint8Array): string {
     .join(' ')
 }
 
-function parseMantissa(mantissa: string): number {
+function isZeroExponent(exponent: string): boolean {
+  return exponent.match(/^0+$/) !== null
+}
+
+function parseNormalMantissa(mantissa: string): number {
+  return parseMantissa(mantissa, 1)
+}
+
+function parseSubnormalMantissa(mantissa: string): number {
+  return parseMantissa(mantissa, 0)
+}
+
+function parseMantissa(mantissa: string, initialValue: 0 | 1): number {
   return mantissa
     .replace(/0+$/, '')
     .split('')
@@ -200,7 +234,7 @@ function parseMantissa(mantissa: string): number {
         }
         return acc
       },
-      1,
+      initialValue,
     )
 }
 
