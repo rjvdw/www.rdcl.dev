@@ -119,7 +119,7 @@ interface GetHealthResponse {
   to: string
 }
 
-export function load(from?: string, to?: string) {
+export function load(from?: string, to?: string, owner?: string | null) {
   return async (dispatch: StoreDispatch) => {
     dispatch(actions.loading())
 
@@ -127,7 +127,9 @@ export function load(from?: string, to?: string) {
       const query = new URLSearchParams()
       if (from) query.append('from', from)
       if (to) query.append('to', to)
-      const response = await axios.get<GetHealthResponse>(`/api/health?${ query.toString() }`)
+      const response = owner
+        ? await axios.get<GetHealthResponse>(`/api/health/${ owner }?${ query.toString() }`)
+        : await axios.get<GetHealthResponse>(`/api/health?${ query.toString() }`)
       dispatch(actions.loadComplete({
         data: response.data.entries.reverse(),
         from: response.data.from,
@@ -146,12 +148,16 @@ export function unload() {
   }
 }
 
-export function save(data: HealthData) {
+export function save(data: HealthData, owner?: string | null) {
   return async (dispatch: StoreDispatch) => {
     dispatch(actions.saving(true))
 
     try {
-      await axios.post('/api/health', data)
+      if (owner) {
+        await axios.post(`/api/health/${ owner }`, data)
+      } else {
+        await axios.post('/api/health', data)
+      }
       dispatch(actions.saving(false))
     } catch (err) {
       console.error(err)
@@ -160,12 +166,16 @@ export function save(data: HealthData) {
   }
 }
 
-export function remove(key: string) {
+export function remove(key: string, owner?: string | null) {
   return async (dispatch: StoreDispatch) => {
     dispatch(actions.removing({ date: key, removing: true }))
 
     try {
-      await axios.delete(`/api/health/${ key }`)
+      if (owner) {
+        await axios.delete(`/api/health/${ owner }/${ key }`)
+      } else {
+        await axios.delete(`/api/health/${ key }`)
+      }
       dispatch(actions.removing({ date: key, removing: false }))
     } catch (err) {
       console.error(err)

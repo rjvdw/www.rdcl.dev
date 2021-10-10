@@ -24,13 +24,14 @@ type HealthProps = {
   graphData: Aggregates,
   actualFrom: string | null,
   actualTo: string | null,
+  owner: string | null | undefined,
   errors: StateError[],
 
   clearErrors: () => void,
-  load: (from?: string, to?: string) => void,
+  load: (from?: string, to?: string, owner?: string | null) => void,
   unload: () => void,
-  save: (entry: HealthData) => void,
-  remove: (key: string) => void,
+  save: (entry: HealthData, owner?: string | null) => void,
+  remove: (key: string, owner?: string | null) => void,
 }
 type HealthState = {
   from: string,
@@ -66,20 +67,25 @@ export class Health extends React.Component<HealthProps, HealthState> {
 
   async load() {
     const { from, to } = this.state
+    const { owner } = this.props
 
     await this.props.load(
       from || undefined,
       to || undefined,
+      owner,
     )
   }
 
   async save() {
-    await this.props.save(this.state.newEntry)
+    const { newEntry } = this.state
+    const { owner } = this.props
+    await this.props.save(newEntry, owner)
     await this.load()
   }
 
   async remove(entry: HealthData) {
-    await this.props.remove(entry.key)
+    const { owner } = this.props
+    await this.props.remove(entry.key, owner)
     await this.load()
   }
 

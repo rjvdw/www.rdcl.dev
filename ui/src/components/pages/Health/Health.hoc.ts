@@ -29,9 +29,9 @@ export const Health = connect(
       return dispatch(clearErrors())
     },
 
-    load(from?: string, to?: string) {
+    load(from?: string, to?: string, owner?: string | null) {
       // @ts-ignore
-      return dispatch(load(from, to))
+      return dispatch(load(from, to, owner))
     },
 
     unload() {
@@ -39,14 +39,14 @@ export const Health = connect(
       return dispatch(unload())
     },
 
-    save(entry: HealthData) {
+    save(entry: HealthData, owner?: string | null) {
       // @ts-ignore
-      return dispatch(save(entry))
+      return dispatch(save(entry, owner))
     },
 
-    remove(key: string) {
+    remove(key: string, owner?: string | null) {
       // @ts-ignore
-      return dispatch(remove(key))
+      return dispatch(remove(key, owner))
     },
   }),
 )(HealthComponent)
