@@ -1,0 +1,220 @@
+import React, { ChangeEvent, useState } from 'react'
+import { conditionally } from '../../util/component'
+import './Float.styles.sass'
+
+type FloatPrecision = 32 | 64
+
+export const Float = () => {
+  const [numberValue, setNumberValue] = useState<string>('4')
+  const number = parseFloat(numberValue)
+  const [precision, setPrecision] = useState<FloatPrecision>(64)
+
+  const onPrecisionChanged = (event: ChangeEvent<HTMLInputElement>) =>
+    event.target.checked && setPrecision(event.target.value === '32' ? 32 : 64)
+
+  return <>
+    <h1>Float Calculator</h1>
+
+    <rdcl-input-grid>
+      <label htmlFor="float-input">Number:</label>
+      <input
+        id="float-input"
+        type="number"
+        inputMode="decimal"
+        step="any"
+        autoFocus
+        value={ numberValue }
+        onChange={ event => setNumberValue(event.target.value) }
+      />
+
+      <span>Precision:</span>
+      <label data-start={ 2 }>
+        <input
+          type="radio"
+          name="float-type-input"
+          value={ 32 }
+          checked={ precision === 32 }
+          onChange={ onPrecisionChanged }
+        /> Single precision (32 bit)
+      </label>
+      <label data-start={ 2 }>
+        <input
+          type="radio"
+          name="float-type-input"
+          value={ 64 }
+          checked={ precision === 64 }
+          onChange={ onPrecisionChanged }
+        /> Double precision (64 bit)
+      </label>
+    </rdcl-input-grid>
+
+    <hr/>
+
+    { conditionally(
+      Number.isNaN(number),
+      <p>Input cannot be interpreted as a number.</p>,
+      () => {
+        const bytes = floatToBytes(number, precision)
+        const [sign, exponent, mantissa] = deconstructFloat(bytes, precision)
+        return <>
+          <table className="simple-table float-analysis">
+            <tbody>
+            <tr>
+              <th>Input</th>
+              <td>{ number }</td>
+            </tr>
+
+            <tr>
+              <th>Binary representation</th>
+              <td>{ binaryRepresentation(bytes) }</td>
+            </tr>
+
+            <tr>
+              <th>Deconstructed</th>
+              <td>
+                <span className="sign">{ sign }</span>
+                <span className="exponent">{ groupDigits(exponent, 8, sign.length) }</span>
+                <span className="mantissa">{ groupDigits(mantissa, 8, sign.length + exponent.length) }</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>Hex representation</th>
+              <td>{ hexRepresentation(bytes) }</td>
+            </tr>
+
+            <tr>
+              <th>Scientific notation</th>
+              <td>
+                { sign === '0' ? '' : '-' }
+                { parseMantissa(mantissa) }
+                &times;2<sup>{ parseExponent(exponent) }</sup>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <h2>Explanation</h2>
+          <p>
+            A floating point number consists of three parts: Its sign, its exponent and its mantissa.
+            The sign is represented as either a 0 (positive) or a 1 (negative).
+            In our case, the sign is <span className="sign">{ sign }</span>, so our number is
+            <span className="sign">{ sign === '0' ? ' positive' : ' negative' }</span>.
+            The exponent represents a number between
+            { conditionally(
+              precision === 32,
+              () => ' -126 and 127 ',
+              () => ' -1022 and 1023 ',
+            ) }
+            (since we are considering { precision } bits floating points).
+            To get the exponent value, simply interpret the number as an unsigned integer, and then subtract
+            { ' ' }{ 2 ** (exponent.length - 1) - 1 }.
+            In our case, the exponent is <span className="exponent">{ exponent }</span>, so its value is
+            { ' ' }<span className="exponent">{ parseExponent(exponent) }</span>.
+            Finally, the mantissa represents the decimal part of the number when written in the form
+            { ' ' }<i>mantissa&times;2<sup>exponent</sup></i>.
+            The mantissa is always stored as a normalized value, which means it always starts with <i>1.&hellip;</i>.
+            To get the mantissa value, just add <i>1.</i> in front of it, and interpret it as a binary number.
+            In our case, the mantissa is <span className="mantissa">{ mantissa }</span>, which means that its actual
+            value is <span className="mantissa">1.{ mantissa.replace(/0+$/, '').padEnd(1, '0') }</span>.
+            Converted to decimal, this is <span className="mantissa">{ parseMantissa(mantissa) }</span>
+            {' '}(<em>please note that this conversion to decimal may lead to inaccuracies</em>).
+          </p>
+        </>
+      },
+    ) }
+  </>
+}
+
+export default Float
+
+function floatToBytes(number: number, precision: FloatPrecision): Uint8Array {
+  let buffer: ArrayBuffer
+  switch (precision) {
+    case 32:
+      buffer = new ArrayBuffer(4)
+      new DataView(buffer).setFloat32(0, number)
+      break
+    case 64:
+      buffer = new ArrayBuffer(8)
+      new DataView(buffer).setFloat64(0, number)
+      break
+    default:
+      throw new Error('Invalid precision')
+  }
+  return new Uint8Array(buffer)
+}
+
+function deconstructFloat(bytes: Uint8Array, precision: FloatPrecision): [string, string, string] {
+  const str = bytes.reduce<string>(
+    (p, c) => p + c.toString(2).padStart(8, '0'),
+    '',
+  )
+
+  const sign = str[0]
+  let exponent: string
+  let mantissa: string
+
+  switch (precision) {
+    case 32:
+      exponent = str.substr(1, 8)
+      mantissa = str.substr(9)
+      break
+    case 64:
+      exponent = str.substr(1, 11)
+      mantissa = str.substr(12)
+      break
+    default:
+      throw new Error('Invalid precision')
+  }
+
+  return [sign, exponent, mantissa]
+}
+
+function binaryRepresentation(bytes: Uint8Array): string {
+  return bytes
+    .reduce<string[]>(
+      (p, c) => p.concat(c.toString(2).padStart(8, '0')),
+      [],
+    )
+    .join(' ')
+}
+
+function hexRepresentation(bytes: Uint8Array): string {
+  return bytes
+    .reduce<string[]>(
+      (p, c) => p.concat(c.toString(16).padStart(2, '0')),
+      [],
+    )
+    .join(' ')
+}
+
+function parseMantissa(mantissa: string): number {
+  return mantissa
+    .replace(/0+$/, '')
+    .split('')
+    .reduce<number>(
+      (acc, val, idx) => {
+        if (val === '1') {
+          acc += 2 ** (-idx - 1)
+        }
+        return acc
+      },
+      1,
+    )
+}
+
+function parseExponent(exponent: string): number {
+  return parseInt(exponent, 2) - (2 ** (exponent.length - 1) - 1)
+}
+
+function groupDigits(input: string, groupSize: number, offset: number, separator: string = ' '): string {
+  input = input.padStart(input.length + offset, 'X')
+  for (let i = groupSize; i < input.length; i += groupSize + separator.length) {
+    input = input.substring(0, i) + separator + input.substring(i)
+    if (i < offset) {
+      offset += separator.length
+    }
+  }
+  return input.substring(offset)
+}

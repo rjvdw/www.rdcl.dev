@@ -13,9 +13,10 @@ thead tr:last-of-type
   & th, & td
     border-bottom-width: medium
 
-tbody:nth-of-type(odd) tr:nth-of-type(odd), tbody:nth-of-type(even) tr:nth-of-type(even)
-  & th, & td
-    background: #fff
+table:not(.simple-table)
+  tbody:nth-of-type(odd) tr:nth-of-type(odd), tbody:nth-of-type(even) tr:nth-of-type(even)
+    & th, & td
+      background: #fff
 
 td[data-numeric]
   text-align: right

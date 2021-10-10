@@ -14,6 +14,10 @@ export const Menu = () => <>
       Converts between ASCII and plain text.
     </rdcl-tool-link>
     <rdcl-tool-link>
+      <Link slot="link" to="/tools/float">Float Calculator</Link>
+      Calculator to help with floating point numbers.
+    </rdcl-tool-link>
+    <rdcl-tool-link>
       <Link slot="link" to="/tools/timestamp">Timestamp</Link>
       Convert between Unix timestamps and ISO formatted dates.
     </rdcl-tool-link>

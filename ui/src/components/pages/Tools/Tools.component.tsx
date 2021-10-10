@@ -8,6 +8,7 @@ const Ascii = React.lazy(() => import('../../tools/Ascii'))
 const Bmi = React.lazy(() => import('../../tools/Bmi'))
 const Countdown = React.lazy(() => import('../../tools/Countdown'))
 const DropRates = React.lazy(() => import('../../tools/DropRates'))
+const Float = React.lazy(() => import('../../tools/Float'))
 const Html = React.lazy(() => import('../../tools/Html'))
 const Ratings = React.lazy(() => import('../../tools/Ratings'))
 const Qr = React.lazy(() => import('../../tools/Qr'))
@@ -20,6 +21,10 @@ export const Tools = () =>
         <Route path="/tools/ascii">
           <Title path={['ascii', 'tools']}/>
           <Ascii/>
+        </Route>
+        <Route path="/tools/float">
+          <Title path={['float', 'tools']}/>
+          <Float/>
         </Route>
         <Route path="/tools/html">
           <Title path={ ['html elements', 'tools'] }/>
