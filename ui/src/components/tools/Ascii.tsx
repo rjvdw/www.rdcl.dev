@@ -13,26 +13,27 @@ const ASCII_TABLE = Array(128).fill(0)
 type StateType = {
   text: string,
   ascii: string,
+  radix: 2 | 16,
   error?: Error,
 }
 
 export const Ascii = () => {
-  const [{ text, ascii, error }, setState] = useState<StateType>({ text: '', ascii: '' })
+  const [{ text, ascii, radix, error }, setState] = useState<StateType>({ text: '', ascii: '', radix: 2 })
 
   const setText = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const text = event.target.value
-    const ascii = toAscii(text)
+    const ascii = toAscii(text, radix)
 
-    setState({ text, ascii, error: undefined })
+    setState({ text, ascii, radix, error: undefined })
   }
 
   const setAscii = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const ascii = event.target.value
+    const ascii = event.target.value.toUpperCase()
     let text = ''
     let error = undefined
 
     try {
-      text = fromAscii(ascii)
+      text = fromAscii(ascii, radix)
     } catch (err) {
       if (err instanceof Error) {
         error = err
@@ -41,7 +42,14 @@ export const Ascii = () => {
       }
     }
 
-    setState({ text, ascii, error })
+    setState({ text, ascii, radix, error })
+  }
+
+  const setRadix = (event: ChangeEvent<HTMLInputElement>) => {
+    const radix = event.target.value === '2' ? 2 : 16
+    const ascii = toAscii(text, radix)
+
+    setState({ text, ascii, radix, error })
   }
 
   return <>
@@ -57,7 +65,7 @@ export const Ascii = () => {
       cols={ 40 }
     />
 
-    <h2><label htmlFor="ascii-converter-plain-text">ASCII</label></h2>
+    <h2><label htmlFor="ascii-converter-ascii">ASCII</label></h2>
     <textarea
       id="ascii-converter-ascii"
       className="ascii-conversion-input"
@@ -66,6 +74,27 @@ export const Ascii = () => {
       rows={ 10 }
       cols={ 40 }
     />
+    <p className="ascii-conversion-radix">
+      <label>
+        <input
+          type="radio"
+          name="ascii-converter-radix"
+          value={ 2 }
+          checked={ radix === 2 }
+          onChange={ setRadix }
+        /> binary
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="ascii-converter-radix"
+          value={ 16 }
+          checked={ radix === 16 }
+          onChange={ setRadix }
+        /> hex
+      </label>
+    </p>
 
     { error ? <section className="error-message">
       <h2>Error</h2>
@@ -97,20 +126,20 @@ export const Ascii = () => {
 
 export default Ascii
 
-function toAscii(text: string): string {
+function toAscii(text: string, radix: 2 | 16): string {
   return text
     .split('')
     .map(x => x.codePointAt(0))
-    .map(x => x?.toString(2) || '')
-    .map(x => x.padStart(8, '0'))
+    .map(x => x?.toString(radix) || '')
+    .map(x => x.padStart(radix === 2 ? 8 : 2, '0'))
     .join(' ')
 }
 
-function fromAscii(ascii: string): string {
+function fromAscii(ascii: string, radix: 2 | 16): string {
   return ascii
     .split(' ')
     .filter(x => x !== '')
-    .map(x => parseInt(x, 2))
+    .map(x => parseInt(x, radix))
     .map(x => String.fromCodePoint(x))
     .join('')
 }
