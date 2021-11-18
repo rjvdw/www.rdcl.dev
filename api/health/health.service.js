@@ -8,7 +8,7 @@ const subDays = require('date-fns/subDays')
 const { q } = require('../db')
 
 const ORIGINAL_DATE_KEY = Symbol('original_date_key')
-const MAX_RESULTS = 500
+const MAX_RESULTS = 5000
 const SLIDING_WINDOW = 7
 
 // language=PostgreSQL
