@@ -4,6 +4,7 @@
     "api",
     "ui"
   ],
+  "packageManager": "yarn@3.1.1",
   "scripts": {
     "postinstall": "lerna bootstrap",
     "build": "lerna run build --stream",
