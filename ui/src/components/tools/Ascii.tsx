@@ -13,7 +13,7 @@ const ASCII_TABLE = Array(128).fill(0)
 type StateType = {
   text: string,
   ascii: string,
-  radix: 2 | 16,
+  radix: 2 | 10 | 16,
   error?: Error,
 }
 
@@ -46,7 +46,18 @@ export const Ascii = () => {
   }
 
   const setRadix = (event: ChangeEvent<HTMLInputElement>) => {
-    const radix = event.target.value === '2' ? 2 : 16
+    let radix: 2 | 10 | 16;
+    switch (event.target.value) {
+      case '2':
+        radix = 2;
+        break;
+      case '10':
+        radix = 10;
+        break;
+      default:
+        radix = 16;
+        break;
+    }
     const ascii = toAscii(text, radix)
 
     setState({ text, ascii, radix, error })
@@ -83,6 +94,16 @@ export const Ascii = () => {
           checked={ radix === 2 }
           onChange={ setRadix }
         /> binary
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="ascii-converter-radix"
+          value={ 10 }
+          checked={ radix === 10 }
+          onChange={ setRadix }
+        /> decimal
       </label>
 
       <label>
@@ -126,16 +147,27 @@ export const Ascii = () => {
 
 export default Ascii
 
-function toAscii(text: string, radix: 2 | 16): string {
+function toAscii(text: string, radix: 2 | 10 | 16): string {
   return text
     .split('')
     .map(x => x.codePointAt(0))
     .map(x => x?.toString(radix) || '')
-    .map(x => x.padStart(radix === 2 ? 8 : 2, '0'))
+    .map(x => x.padStart(getPaddingForRadix(radix), '0'))
     .join(' ')
 }
 
-function fromAscii(ascii: string, radix: 2 | 16): string {
+function getPaddingForRadix(radix: 2 | 10 | 16): number {
+  switch (radix) {
+    case 2:
+      return 8;
+    case 10:
+      return 0;
+    default:
+      return 2;
+  }
+}
+
+function fromAscii(ascii: string, radix: 2 | 10 | 16): string {
   return ascii
     .split(' ')
     .filter(x => x !== '')
