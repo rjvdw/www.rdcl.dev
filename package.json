@@ -14,10 +14,7 @@
   },
   "devDependencies": {
     "lerna": "^4.0.0",
-    "netlify-cli": "8.6.15",
+    "netlify-cli": "8.6.18",
     "yarn": "1.22.17"
-  },
-  "resolutions": {
-    "colors": "1.4.0"
   }
 }
