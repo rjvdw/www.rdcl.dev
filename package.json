@@ -17,8 +17,12 @@
     "url": "git+https://github.com/rjvdw/www.rdcl.dev.git"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.7.1",
+    "lit-element": "^3.1.2",
     "react": "^17",
-    "react-dom": "^17"
+    "react-dom": "^17",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.2.0",
