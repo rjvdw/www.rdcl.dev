@@ -11,6 +11,7 @@ import {
 } from '../modules/sidemenu'
 import { selectScreenType } from '../modules/screen'
 import { selectActiveRoute } from '../modules/routes'
+import { useNavigate } from 'react-router-dom'
 
 const selectIsCollapsed = createSelector(
   selectScreenType,
@@ -33,13 +34,34 @@ export const Sidemenu: React.FunctionComponent = () => {
   const screenType = useSelector(selectScreenType)
   const collapsed = useSelector(selectIsCollapsed)
 
+  const navigate = useNavigate()
+  const handleClick = (event: MouseEvent) => {
+    if (event.defaultPrevented) {
+      return
+    }
+
+    if (event.ctrlKey || event.shiftKey || event.metaKey || event.button === 1) {
+      // user is trying to open a new tab, don't interfere
+      return
+    }
+
+    const element = event.composedPath().find(el => (el as HTMLAnchorElement).href) as HTMLAnchorElement
+
+    if (element && !element.dataset.noHistory && element.origin === window.location.origin) {
+      event.preventDefault()
+      navigate(element.pathname)
+    }
+  }
+
   useEffect(() => {
     ref.current?.addEventListener('sidemenu-toggle', toggle)
     ref.current?.addEventListener('sidemenu-close', close)
+    ref.current?.addEventListener('click', handleClick)
 
     return () => {
       ref.current?.removeEventListener('sidemenu-toggle', toggle)
       ref.current?.removeEventListener('sidemenu-close', close)
+      ref.current?.removeEventListener('click', handleClick)
     }
   })
 
