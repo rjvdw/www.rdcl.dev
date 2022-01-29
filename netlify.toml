@@ -1,0 +1,12 @@
+[build]
+command = "npm run build"
+publish = "dist"
+functions = "api/functions"
+
+# https://github.com/netlify/cli/blob/master/docs/netlify-dev.md#netlifytoml-dev-block
+[dev]
+command = "npm start"
+framework = "#custom"
+#publish = "public/" # Redirects do not play nice with webpack, let webpack handle redirects for now
+autoLaunch = false
+targetPort = 8080
