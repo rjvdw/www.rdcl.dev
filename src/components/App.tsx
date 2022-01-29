@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { PageHeader } from './PageHeader'
 import { Sidemenu } from './Sidemenu'
+import { Title } from './Title'
+import { Home } from './pages/Home'
+import { ErrorBoundary } from './ErrorBoundary'
 import { selectScreenType } from '../modules/screen'
 
 export const App: React.FunctionComponent = () => {
@@ -14,7 +17,12 @@ export const App: React.FunctionComponent = () => {
       { screenType === 'mobile' ? '' : <Sidemenu/> }
 
       <main>
-        <h1>Hello, World!</h1>
+        <ErrorBoundary>
+          <Suspense fallback={ <rdcl-spinner/> }>
+            <Title/>
+            <Home/>
+          </Suspense>
+        </ErrorBoundary>
       </main>
     </rdcl-grid>
 
