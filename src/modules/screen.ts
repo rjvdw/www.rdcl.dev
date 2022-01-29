@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { close as closeSidemenu } from './sidemenu'
-import { StoreDispatch, StoreGetState } from '../store'
+import { StoreDispatch, StoreGetState, StoreState } from '../store'
 
 export type ScreenType = 'mobile' | 'desktop'
 
@@ -49,3 +49,5 @@ function checkScreenType(): ScreenType {
     ? 'mobile'
     : 'desktop'
 }
+
+export const selectScreenType = (state: StoreState) => state.screen.type

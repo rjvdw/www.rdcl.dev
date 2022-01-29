@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { StoreDispatch, StoreGetState } from '../store'
+import { StoreDispatch, StoreGetState, StoreState } from '../store'
 
 type SidemenuState = {
   collapsed: boolean,
@@ -61,3 +61,6 @@ export function toggle() {
     }
   }
 }
+
+export const selectIsCollapsed = (state: StoreState) => state.sidemenu.collapsed
+export const selectIsOpen = (state: StoreState) => state.sidemenu.open

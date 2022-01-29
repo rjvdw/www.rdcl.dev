@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { history } from '../history'
+import { StoreState } from '../store'
 
 type RoutesState = {
   pathname: string,
@@ -33,6 +34,8 @@ export function navigate(location: { pathname: string }) {
     activeRoute: getActiveRoute(location),
   })
 }
+
+export const selectActiveRoute = (state: StoreState) => state.routes.activeRoute
 
 function getActiveRoute(location: { pathname: string }) {
   if (location.pathname.startsWith('/tools')) {
