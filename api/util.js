@@ -57,7 +57,12 @@ exports.App = class App {
       }
     })
 
-    return serverless(this.app)
+    return serverless(this.app, {
+      request(req, event, context) {
+        req.event = event
+        req.context = context
+      },
+    })
   }
 }
 

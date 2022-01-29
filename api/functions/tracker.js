@@ -31,6 +31,8 @@ const entryValidator = validateBody(body => validator()
 const whereIsDateTerm = el => typeof el === 'string' && el.match(/^\d{4}-\d{2}-\d{2}$/)
 
 app.router.get('/', range(), ex(async (req, res) => {
+  console.log(req.context)
+
   const { from, to } = req.range
   const { data: entries, ...result } = await db.query(
     q.Call(

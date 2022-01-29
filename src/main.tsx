@@ -8,6 +8,9 @@ import './elements'
 import './styles/main.sass'
 import { updateScreenType } from './modules/screen'
 
+// window._axios = axios
+// window._auth = auth
+
 ReactDOM.render(
   <Provider store={ store }>
     <BrowserRouter>

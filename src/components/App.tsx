@@ -5,6 +5,7 @@ import { PageHeader } from './PageHeader'
 import { Sidemenu } from './Sidemenu'
 import { Title } from './Title'
 import { Home } from './pages/Home'
+import { Auth } from './Auth'
 import { ErrorBoundary } from './ErrorBoundary'
 import { selectScreenType } from '../modules/screen'
 import Tools from './pages/Tools'
@@ -41,5 +42,7 @@ export const App: React.FunctionComponent = () => {
     </rdcl-grid>
 
     { screenType === 'mobile' && <Sidemenu/> }
+
+    <Auth/>
   </>
 }

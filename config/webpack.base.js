@@ -1,6 +1,7 @@
 'use strict'
 
 const path = require('path')
+const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -62,6 +63,7 @@ exports.base = {
   },
 
   plugins: [
+    new webpack.EnvironmentPlugin(['URL']),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(paths.SRC, 'index.html'),
