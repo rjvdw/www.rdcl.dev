@@ -5,14 +5,15 @@ import { PageHeader } from './PageHeader'
 import { Sidemenu } from './Sidemenu'
 import { Title } from './Title'
 import { Home } from './pages/Home'
-import { Auth } from './Auth'
 import { ErrorBoundary } from './ErrorBoundary'
 import { selectScreenType } from '../modules/screen'
 import Tools from './pages/Tools'
 import { SetActiveRoute } from './SetActiveRoute'
+import { selectIsLoggedIn } from '../modules/auth'
 
 export const App: React.FunctionComponent = () => {
   const screenType = useSelector(selectScreenType)
+  const loggedIn = useSelector(selectIsLoggedIn)
 
   return <>
     <rdcl-grid screentype={ screenType }>
@@ -30,6 +31,18 @@ export const App: React.FunctionComponent = () => {
                 <Home/>
               </> }/>
 
+              <Route path="/tracker/*" element={
+                loggedIn
+                  ? <>
+                    <Title title="health"/>
+                    <h1>Logged in</h1>
+                  </>
+                  : <>
+                    <Title title="log in"/>
+                    <h1>Not logged in</h1>
+                  </>
+              }/>
+
               <Route path="/tools/*" element={ <>
                 <Title title="tools"/>
                 <SetActiveRoute route="tools"/>
@@ -42,7 +55,5 @@ export const App: React.FunctionComponent = () => {
     </rdcl-grid>
 
     { screenType === 'mobile' && <Sidemenu/> }
-
-    <Auth/>
   </>
 }

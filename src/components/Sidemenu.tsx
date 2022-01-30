@@ -12,6 +12,7 @@ import {
 import { selectScreenType } from '../modules/screen'
 import { selectActiveRoute } from '../modules/routes'
 import { useNavigate } from 'react-router-dom'
+import { selectIsLoggedIn } from '../modules/auth'
 
 const selectIsCollapsed = createSelector(
   selectScreenType,
@@ -30,7 +31,7 @@ export const Sidemenu: React.FunctionComponent = () => {
   const ref: React.MutableRefObject<null | HTMLElement> = useRef(null)
 
   const activeRoute = useSelector(selectActiveRoute)
-  const loggedIn = false // TODO
+  const loggedIn = useSelector(selectIsLoggedIn)
   const screenType = useSelector(selectScreenType)
   const collapsed = useSelector(selectIsCollapsed)
 

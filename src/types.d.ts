@@ -3,7 +3,6 @@ export {}
 declare global {
   interface Window {
     _axios: any,
-    _auth: any,
   }
 
   namespace JSX {
