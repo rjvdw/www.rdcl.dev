@@ -22,6 +22,7 @@ netlifyIdentity.on('logout', () => {
   store.dispatch(setUnauthenticated())
 })
 
+window.netlifyIdentity = netlifyIdentity
 netlifyIdentity.init({
   APIUrl: `${ process.env.URL }/.netlify/identity`,
 })

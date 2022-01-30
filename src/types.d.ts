@@ -3,6 +3,7 @@ export {}
 declare global {
   interface Window {
     _axios: any,
+    netlifyIdentity: any,
   }
 
   namespace JSX {
