@@ -6,6 +6,7 @@ const { auth } = require('../auth-middleware')
 const { validator, validateBody, validateRequestParam } = require('../validator')
 const { query: q } = require('faunadb')
 const db = require('../db')
+const { subDays, formatISO } = require('date-fns')
 
 const app = new App('tracker')
 app.use(bodyParser.json())
@@ -32,6 +33,29 @@ const whereIsDateTerm = el => typeof el === 'string' && el.match(/^\d{4}-\d{2}-\
 app.router.get('/', auth(), range(), ex(async (req, res) => {
   const owner = req.user.sub
   const { from, to } = req.range
+  const { leading } = req.query
+
+  let leadingEntries = undefined
+  if (leading) {
+    const leadingFrom = formatISO(
+      subDays(Date.parse(from), leading),
+      { representation: 'date' }
+    )
+    const leadingTo = formatISO(
+      subDays(Date.parse(from), 1),
+      { representation: 'date' }
+    )
+
+    const { data } = await db.query(
+      q.Call(
+        q.Function('GetTrackingDataForUser'),
+        owner, leadingFrom, leadingTo
+      )
+    )
+
+    leadingEntries = data
+  }
+
   const { data: entries, ...result } = await db.query(
     q.Call(
       q.Function('GetTrackingDataForUser'),
@@ -40,7 +64,7 @@ app.router.get('/', auth(), range(), ex(async (req, res) => {
   )
   const { before, after } = beforeAfterWhere(result, whereIsDateTerm)
 
-  res.status(200).json({ from, to, before, after, entries })
+  res.status(200).json({ from, to, before, after, entries, leading: leadingEntries })
 }))
 
 app.router.get('/:date', auth(), dateParamValidator, ex(async (req, res) => {
