@@ -2,7 +2,7 @@ export {}
 
 declare global {
   interface Window {
-    _axios: any,
+    axios: any,
     netlifyIdentity: any,
   }
 

@@ -5,11 +5,10 @@ import { BrowserRouter } from 'react-router-dom'
 import { store } from './store'
 import { App } from './components/App'
 import './identity-provider'
+import './axios'
 import './elements'
 import './styles/main.sass'
 import { updateScreenType } from './modules/screen'
-
-// window._axios = axios
 
 ReactDOM.render(
   <Provider store={ store }>
