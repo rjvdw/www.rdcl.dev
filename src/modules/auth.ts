@@ -6,8 +6,8 @@ export type UserData = {
   email: string,
   role: string,
   meta: {
-    avatar: string,
-    name: string,
+    avatar: string | undefined,
+    name: string | undefined,
   },
 }
 

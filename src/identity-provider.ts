@@ -33,8 +33,8 @@ function mapUserData(user: User): UserData {
     email: user.email,
     role: user.role,
     meta: {
-      avatar: user.user_metadata.avatar_url,
-      name: user.user_metadata.full_name,
+      avatar: user?.user_metadata?.avatar_url,
+      name: user?.user_metadata?.full_name,
     },
   }
 }
