@@ -4,11 +4,11 @@ export function html(strs: TemplateStringsArray, ...vars: unknown[]): string {
     full += vars[i]
     full += strs[i + 1]
   }
-  return minifyHtml(full)
+  return normalizeHtml(full)
 }
 
-export function minifyHtml(html: string): string {
+export function normalizeHtml(html: string): string {
   return html
     .trim()
-    .replace(/>\s+</g, '><')
+    .replace(/\s+/g, '') // FIXME: Find a better way of normalizing HTML....
 }

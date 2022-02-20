@@ -1,7 +1,9 @@
 Feature: Tools/Countdown
 
-  Scenario: User enters values that have a solution.
+  Background:
     Given the current page is /tools/countdown
+
+  Scenario: User enters values that have a solution.
     When the user enters the following:
       | input field    | value |
       | #cd-inp-1      | 100   |
@@ -25,7 +27,6 @@ Feature: Tools/Countdown
       """
 
   Scenario: User enters values that do not have a solution.
-    Given the current page is /tools/countdown
     When the user enters the following:
       | input field    | value |
       | #cd-inp-1      | 1     |

@@ -1,6 +1,6 @@
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { TableDefinition } from 'cypress-cucumber-preprocessor'
-import { minifyHtml } from './util'
+import { normalizeHtml } from './util'
 
 Given(/^the current page is (.+)$/, (path: string) => {
   cy.visit(path)
@@ -16,9 +16,19 @@ When(/^the user clicks on "(.+)"$/, (selector: string) => {
   cy.get(selector).click()
 })
 
+Then(/^"(.*)" has value "(.*)"$/, (selector: string, value: string) => {
+  cy.get(selector)
+    .should('have.value', value)
+})
+
+Then(/^"(.*)" has value:$/, (selector: string, value: string) => {
+  cy.get(selector)
+    .should('have.value', value)
+})
+
 Then(/^"(.+)" matches:$/, (selector: string, body: string) => {
   cy.get(selector)
     .then(($el: JQuery<HTMLElement>) => {
-      expect($el.html()).to.equal(minifyHtml(body))
+      expect(normalizeHtml($el.html())).to.equal(normalizeHtml(body))
     })
 })
