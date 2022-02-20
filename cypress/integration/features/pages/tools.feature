@@ -5,9 +5,9 @@ Feature: Tools Page
 
   Scenario: User visits the tools page.
     Then "main > h1" matches:
-      """
-      Tools
-      """
+    """
+    Tools
+    """
     And the following tools are present:
       | tool                 | url               | description                                                                             |
       | Generate Password    | /password.html    | Securely generates a password using window.crypto                                       |

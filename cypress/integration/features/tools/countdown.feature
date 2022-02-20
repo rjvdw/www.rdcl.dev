@@ -15,16 +15,16 @@ Feature: Tools/Countdown
       | #cd-inp-target | 716   |
     And the user clicks on "main > form button"
     Then "#cd-solution" matches:
-      """
-      <h2>Solution</h2>
-      <ul>
-        <li>multiply(100, 7) → 700</li>
-        <li>multiply(75, 5) → 375</li>
-        <li>divide(2, 700) → 350</li>
-        <li>subtract(9, 375) → 366</li>
-        <li>add(350, 366) → 716</li>
-      </ul>
-      """
+    """
+    <h2>Solution</h2>
+    <ul>
+      <li>multiply(100, 7) → 700</li>
+      <li>multiply(75, 5) → 375</li>
+      <li>divide(2, 700) → 350</li>
+      <li>subtract(9, 375) → 366</li>
+      <li>add(350, 366) → 716</li>
+    </ul>
+    """
 
   Scenario: User enters values that do not have a solution.
     When the user enters the following:
@@ -38,7 +38,7 @@ Feature: Tools/Countdown
       | #cd-inp-target | 314   |
     And the user clicks on "main > form button"
     Then "#cd-solution" matches:
-      """
-      <h2>Solution</h2>
-      <p>This one is not possible</p>
-      """
+    """
+    <h2>Solution</h2>
+    <p>This one is not possible</p>
+    """

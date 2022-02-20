@@ -6,9 +6,21 @@ Given(/^the current page is (.+)$/, (path: string) => {
   cy.visit(path)
 })
 
+When(/^the user navigates to (.*)$/, (path: string) => {
+  cy.visit(path)
+})
+
+When(/^the user refreshes the page$/, (path: string) => {
+  cy.reload()
+})
+
 When(/^the user enters the following:$/, (data: TableDefinition) => {
   for (const [selector, value] of data.rows()) {
-    cy.get(selector).type(value)
+    if (value === "") {
+      cy.get(selector).clear()
+    } else {
+      cy.get(selector).clear().type(value)
+    }
   }
 })
 
