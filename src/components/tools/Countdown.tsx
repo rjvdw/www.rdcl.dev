@@ -49,21 +49,21 @@ export const Countdown = () => {
 
         <rdcl-combi-input>
           <CDInput id="cd-inp-1" autoFocus value={ inp1 } set={ setInp1 }/>
-          <CDInput value={ inp2 } set={ setInp2 }/>
+          <CDInput id="cd-inp-2" value={ inp2 } set={ setInp2 }/>
         </rdcl-combi-input>
 
         <rdcl-combi-input data-start={ 2 }>
-          <CDInput value={ inp3 } set={ setInp3 }/>
-          <CDInput value={ inp4 } set={ setInp4 }/>
+          <CDInput id="cd-inp-3" value={ inp3 } set={ setInp3 }/>
+          <CDInput id="cd-inp-4" value={ inp4 } set={ setInp4 }/>
         </rdcl-combi-input>
 
         <rdcl-combi-input data-start={ 2 }>
-          <CDInput value={ inp5 } set={ setInp5 }/>
-          <CDInput value={ inp6 } set={ setInp6 }/>
+          <CDInput id="cd-inp-5" value={ inp5 } set={ setInp5 }/>
+          <CDInput id="cd-inp-6" value={ inp6 } set={ setInp6 }/>
         </rdcl-combi-input>
 
         <label htmlFor="cd-inp-target">Target:</label>
-        <CDInput min={ 100 } max={ 999 } value={ target } set={ setTarget }/>
+        <CDInput id="cd-inp-target" min={ 100 } max={ 999 } value={ target } set={ setTarget }/>
 
         <button data-start={ 2 } disabled={ computing }>Let's Play Countdown!</button>
       </rdcl-input-grid>
@@ -73,20 +73,22 @@ export const Countdown = () => {
       <h2>Computing...</h2>
     </> }
 
-    { !computing && solution && <>
-      <h2>Solution</h2>
-
-      <ul>
-        { solution.map((line, key) => (
-          <li key={ key }>{ line[0] }({ line[1] }, { line[2] }) &rarr; { line[3] }</li>
-        )) }
-      </ul>
-    </> }
+    { !computing && solution &&
+      <section id="cd-solution">
+        <h2>Solution</h2>
+        <ul>
+          { solution.map((line, key) => (
+            <li key={ key }>{ line[0] }({ line[1] }, { line[2] }) &rarr; { line[3] }</li>
+          )) }
+        </ul>
+      </section>
+    }
 
     { !computing && solution === null && <>
-      <h2>Solution</h2>
-
-      <p>This one is not possible</p>
+      <section id="cd-solution">
+        <h2>Solution</h2>
+        <p>This one is not possible</p>
+      </section>
     </> }
   </>
 }

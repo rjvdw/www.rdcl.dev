@@ -1,0 +1,8 @@
+{
+  "projectId": "o4io9b",
+  "baseUrl": "http://localhost:8888",
+  "testFiles": [
+    "**/*.feature",
+    "**/*.spec.*"
+  ]
+}

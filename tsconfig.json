@@ -9,7 +9,10 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "allowJs": true,
+    "allowJs": false,
     "useDefineForClassFields": false
-  }
+  },
+  "exclude": [
+    "cypress/**/*"
+  ]
 }
