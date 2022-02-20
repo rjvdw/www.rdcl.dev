@@ -28,6 +28,14 @@ When(/^the user clicks on "(.+)"$/, (selector: string) => {
   cy.get(selector).click()
 })
 
+Then(/^the page url is "(.*)"$/, (url: string) => {
+  //
+})
+
+Then(/^the page title is "(.*)"$/, (title: string) => {
+  cy.title().should('equal', title)
+})
+
 Then(/^"(.*)" has value "(.*)"$/, (selector: string, value: string) => {
   cy.get(selector)
     .should('have.value', value)
@@ -39,6 +47,13 @@ Then(/^"(.*)" has value:$/, (selector: string, value: string) => {
 })
 
 Then(/^"(.+)" matches:$/, (selector: string, body: string) => {
+  cy.get(selector)
+    .then(($el: JQuery<HTMLElement>) => {
+      expect(normalizeHtml($el.html())).to.equal(normalizeHtml(body))
+    })
+})
+
+Then(/^"(.+)" matches "(.*)"$/, (selector: string, body: string) => {
   cy.get(selector)
     .then(($el: JQuery<HTMLElement>) => {
       expect(normalizeHtml($el.html())).to.equal(normalizeHtml(body))

@@ -4,10 +4,8 @@ Feature: Tools Page
     Given the current page is /tools
 
   Scenario: User visits the tools page.
-    Then "main > h1" matches:
-    """
-    Tools
-    """
+    Then the page title is "tools | rdcl.dev"
+    And "main > h1" matches "Tools"
     And the following tools are present:
       | tool                 | url               | description                                                                             |
       | Generate Password    | /password.html    | Securely generates a password using window.crypto                                       |

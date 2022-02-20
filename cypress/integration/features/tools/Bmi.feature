@@ -3,6 +3,9 @@ Feature: Tools/BMI
   Background:
     Given the current page is /tools/bmi
 
+  Scenario: User visits the /tools/bmi page.
+    Then the page title is "bmi | tools | rdcl.dev"
+
   Scenario: User enters their weight and height.
     When the user enters the following:
       | input field | value |

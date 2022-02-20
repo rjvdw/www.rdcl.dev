@@ -4,7 +4,8 @@ Feature: Home Page
     Given the current page is /
 
   Scenario: User visits the home page.
-    Then "main" matches:
+    Then the page title is "rdcl.dev"
+    And "main" matches:
     """
     <h1>rdcl.dev</h1>
     <p>

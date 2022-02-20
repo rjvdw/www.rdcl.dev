@@ -3,6 +3,9 @@ Feature: Tools/DropRates
   Background:
     Given the current page is /tools/drop-rates
 
+  Scenario: User visits the /tools/drop-rates page.
+    Then the page title is "drop rates | tools | rdcl.dev"
+
   Scenario: User enters a drop rate and a number of attempts.
     When the user enters the following:
       | input field | values |

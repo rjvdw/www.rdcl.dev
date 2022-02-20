@@ -57,7 +57,10 @@ export const Tools = () =>
           <Timestamp/>
         </> }/>
 
-        <Route path="*" element={ <Index/> }/>
+        <Route path="*" element={ <>
+          <Title title="tools"/>
+          <Index/>
+        </> }/>
       </Routes>
     </Suspense>
   </ErrorBoundary>

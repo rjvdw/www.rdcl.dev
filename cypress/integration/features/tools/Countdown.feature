@@ -3,6 +3,9 @@ Feature: Tools/Countdown
   Background:
     Given the current page is /tools/countdown
 
+  Scenario: User visits the /tools/countdown page.
+    Then the page title is "countdown | tools | rdcl.dev"
+
   Scenario: User enters values that have a solution.
     When the user enters the following:
       | input field    | value |

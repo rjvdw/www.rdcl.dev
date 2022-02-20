@@ -3,6 +3,9 @@ Feature: Tools/ASCII
   Background:
     Given the current page is /tools/ascii
 
+  Scenario: User visits the /tools/ascii page.
+    Then the page title is "ascii | tools | rdcl.dev"
+
   Scenario: User enters text and converts it to binary.
     When the user clicks on "input[name=ascii-converter-radix][value=2]"
     And the user enters the following:
