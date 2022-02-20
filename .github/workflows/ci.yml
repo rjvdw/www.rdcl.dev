@@ -1,0 +1,20 @@
+name: CI
+
+on: [ push ]
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run Tests
+        uses: cypress-io/github-action@v2
+        with:
+          start: npm run start:ci
+          record: true
+          #parallel: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: http://localhost:8888

@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "start": "webpack serve --config=config/webpack.dev.js",
+    "start:ci": "webpack serve --config=config/webpack.ci.js",
     "build": "webpack --config=config/webpack.prod.js"
   },
   "repository": {
