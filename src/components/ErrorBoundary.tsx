@@ -1,6 +1,8 @@
 import React from 'react'
 
-type ErrorBoundaryProps = {}
+type ErrorBoundaryProps = {
+  children?: React.ReactNode,
+}
 type ErrorBoundaryState = {
   hasError: boolean,
 }
