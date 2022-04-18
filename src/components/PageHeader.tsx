@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { StoreDispatch } from '../store'
 import { RdclPageHeader } from '../elements/rdcl-page-header'
 import { open as openSideMenu } from '../modules/sidemenu'
 import { selectScreenType } from '../modules/screen'
 
 export const PageHeader: React.FunctionComponent = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<StoreDispatch>()
   const open = () => dispatch(openSideMenu())
 
   const ref: React.MutableRefObject<RdclPageHeader | null> = useRef(null)

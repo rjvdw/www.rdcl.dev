@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from '@reduxjs/toolkit'
+import { useNavigate } from 'react-router-dom'
+import { StoreDispatch } from '../store'
 import { attr } from '../util/component'
 import { Icon } from './icons'
 import {
@@ -11,7 +13,6 @@ import {
 } from '../modules/sidemenu'
 import { selectScreenType } from '../modules/screen'
 import { selectActiveRoute } from '../modules/routes'
-import { useNavigate } from 'react-router-dom'
 import { selectIsLoggedIn } from '../modules/auth'
 
 const selectIsCollapsed = createSelector(
@@ -24,7 +25,7 @@ const selectIsCollapsed = createSelector(
 )
 
 export const Sidemenu: React.FunctionComponent = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<StoreDispatch>()
   const toggle = () => dispatch(toggleSidemenu())
   const close = () => dispatch(closeSidemenu())
 
