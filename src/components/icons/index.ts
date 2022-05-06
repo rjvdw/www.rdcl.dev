@@ -1,14 +1,18 @@
-// @ts-ignore
 import Home from './home.svg'
-// @ts-ignore
 import Tools from './tools.svg'
-// @ts-ignore
 import Health from './health.svg'
-// @ts-ignore
 import Remove from './remove.svg'
+import React from 'react'
 
-// type ReactSvgComponent = React.FunctionComponent<React.SVGProps<SVGSVGElement>>
-type ReactSvgComponent = any // FIXME
+/**
+ * Additional properties that exist on SVG elements but are not recognized.
+ */
+interface Props extends React.SVGProps<SVGSVGElement> {
+  title?: string,
+  slot?: string,
+}
+
+type ReactSvgComponent = React.FunctionComponent<Props>
 
 export const Icon = {
   Home: Home as ReactSvgComponent,

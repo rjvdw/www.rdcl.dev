@@ -95,36 +95,36 @@ export const Health: React.FunctionComponent = () => {
     <section style={ { maxWidth: '100%', overflow: 'auto' } }>
       <table>
         <thead>
-        <tr>
-          <th>Datum</th>
-          <th>Gewicht</th>
-          <th>Gemiddelde</th>
-          <th>Acties</th>
-        </tr>
+          <tr>
+            <th>Datum</th>
+            <th>Gewicht</th>
+            <th>Gemiddelde</th>
+            <th>Acties</th>
+          </tr>
         </thead>
 
         <tbody>
-        { reverseMap(state.entries, entry => (
-          <tr
-            key={ entry.date }
-            className={ classNames('health-table__row', {
-              'health-table__row--removing': removing[entry.date],
-            }) }
-          >
-            <td>{ formatDate(entry.date) }</td>
-            <td>{ formatNumber(entry.weight) }</td>
-            <td>{ formatNumber(entry.averageWeight) }</td>
-            <td>
-              <Icon.Remove
-                className="health-table__action health-table__action--remove"
-                role="button"
-                tabIndex={ 0 }
-                title="Regel verwijderen"
-                onClick={ preventDefault(() => remove(entry.date)) }
-              />
-            </td>
-          </tr>
-        )) }
+          { reverseMap(state.entries, entry => (
+            <tr
+              key={ entry.date }
+              className={ classNames('health-table__row', {
+                'health-table__row--removing': removing[entry.date],
+              }) }
+            >
+              <td>{ formatDate(entry.date) }</td>
+              <td>{ formatNumber(entry.weight) }</td>
+              <td>{ formatNumber(entry.averageWeight) }</td>
+              <td>
+                <Icon.Remove
+                  className="health-table__action health-table__action--remove"
+                  role="button"
+                  tabIndex={ 0 }
+                  title="Regel verwijderen"
+                  onClick={ preventDefault(() => remove(entry.date)) }
+                />
+              </td>
+            </tr>
+          )) }
         </tbody>
       </table>
     </section>
@@ -141,11 +141,11 @@ function reverseMap<T, V>(items: T[], mapper: (item: T) => V): V[] {
   return result
 }
 
-function doAsync(
+function doAsync<S, T extends Array<S>>(
   setLoading: (state: boolean) => void,
   setError: (state: string | null) => void,
-  action: (...args: any[]) => Promise<void>,
-): (...args: any[]) => Promise<void> {
+  action: (...args: T) => Promise<void>,
+): (...args: T) => Promise<void> {
   return async (...args) => {
     try {
       setLoading(true)
@@ -166,6 +166,11 @@ type FetchDataOptionalParams = {
   after?: string,
 }
 
+type DataEntry = {
+  date: string,
+  weight: number,
+}
+
 async function fetchData({ from, to, after }: FetchDataOptionalParams): Promise<State> {
   const query = new URLSearchParams()
   query.append('leading', (SLIDING_WINDOW - 1).toString())
@@ -174,7 +179,7 @@ async function fetchData({ from, to, after }: FetchDataOptionalParams): Promise<
   if (after) query.append('after', after)
 
   const { data } = await axios.get(`/api/tracker?${ query.toString() }`)
-  let averageWeight: { date: string, weight: number }[] = (data.leading || []).map((entry: any) => ({
+  let averageWeight: { date: string, weight: number }[] = (data.leading || []).map((entry: DataEntry) => ({
     date: entry.date,
     weight: entry.weight,
   }))
@@ -182,7 +187,7 @@ async function fetchData({ from, to, after }: FetchDataOptionalParams): Promise<
     from: data.from,
     to: data.to,
     after: data.after,
-    entries: data.entries.map((entry: any) => {
+    entries: data.entries.map((entry: DataEntry) => {
       averageWeight = averageWeight
         .filter(({ date }) => differenceInDays(Date.parse(entry.date), Date.parse(date)) < SLIDING_WINDOW)
         .concat(({

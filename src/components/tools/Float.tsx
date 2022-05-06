@@ -58,47 +58,47 @@ export const Float = () => {
         return <>
           <table className="simple-table float-analysis">
             <tbody>
-            <tr>
-              <th>Input</th>
-              <td>{ number }</td>
-            </tr>
+              <tr>
+                <th>Input</th>
+                <td>{ number }</td>
+              </tr>
 
-            <tr>
-              <th>Binary representation</th>
-              <td>{ binaryRepresentation(bytes) }</td>
-            </tr>
+              <tr>
+                <th>Binary representation</th>
+                <td>{ binaryRepresentation(bytes) }</td>
+              </tr>
 
-            <tr>
-              <th>Deconstructed</th>
-              <td>
-                <span className="sign">{ sign }</span>
-                <span className="exponent">{ groupDigits(exponent, 8, sign.length) }</span>
-                <span className="mantissa">{ groupDigits(mantissa, 8, sign.length + exponent.length) }</span>
-              </td>
-            </tr>
+              <tr>
+                <th>Deconstructed</th>
+                <td>
+                  <span className="sign">{ sign }</span>
+                  <span className="exponent">{ groupDigits(exponent, 8, sign.length) }</span>
+                  <span className="mantissa">{ groupDigits(mantissa, 8, sign.length + exponent.length) }</span>
+                </td>
+              </tr>
 
-            <tr>
-              <th>Hex representation</th>
-              <td>{ hexRepresentation(bytes) }</td>
-            </tr>
+              <tr>
+                <th>Hex representation</th>
+                <td>{ hexRepresentation(bytes) }</td>
+              </tr>
 
-            <tr>
-              <th>Scientific notation</th>
-              <td>
-                { conditionally(
-                  isMaxExponent(exponent),
-                  '-',
-                  <>
-                    { sign === '0' ? '' : '-' }
-                    { conditionally(
-                      isZeroExponent(exponent),
-                      <>{ parseSubnormalMantissa(mantissa) }&times;2<sup>{ parsedExponent + 1 }</sup></>,
-                      <>{ parseNormalMantissa(mantissa) }&times;2<sup>{ parsedExponent }</sup></>,
-                    ) }
-                  </>
-                ) }
-              </td>
-            </tr>
+              <tr>
+                <th>Scientific notation</th>
+                <td>
+                  { conditionally(
+                    isMaxExponent(exponent),
+                    '-',
+                    <>
+                      { sign === '0' ? '' : '-' }
+                      { conditionally(
+                        isZeroExponent(exponent),
+                        <>{ parseSubnormalMantissa(mantissa) }&times;2<sup>{ parsedExponent + 1 }</sup></>,
+                        <>{ parseNormalMantissa(mantissa) }&times;2<sup>{ parsedExponent }</sup></>,
+                      ) }
+                    </>
+                  ) }
+                </td>
+              </tr>
             </tbody>
           </table>
 
@@ -193,12 +193,12 @@ function deconstructFloat(bytes: Uint8Array, precision: FloatPrecision): [string
 
   switch (precision) {
     case 32:
-      exponent = str.substr(1, 8)
-      mantissa = str.substr(9)
+      exponent = str.substring(1, 9)
+      mantissa = str.substring(9)
       break
     case 64:
-      exponent = str.substr(1, 11)
-      mantissa = str.substr(12)
+      exponent = str.substring(1, 12)
+      mantissa = str.substring(12)
       break
     default:
       throw new Error('Invalid precision')

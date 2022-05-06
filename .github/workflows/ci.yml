@@ -3,11 +3,20 @@ name: CI
 on: [ push ]
 
 jobs:
-  cypress:
+  Verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-targets
+      - name: Install dependencies
+        run: npm install
+      - name: Run Linter
+        run: npm run lint
       - name: Run Tests
         uses: cypress-io/github-action@v2
         with:

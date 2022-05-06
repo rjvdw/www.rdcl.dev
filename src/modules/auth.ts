@@ -36,7 +36,7 @@ const { actions, reducer } = createSlice({
         user: userData as UserData,
       }
     },
-    setUnauthenticated(_state) {
+    setUnauthenticated() {
       return {
         authenticated: false,
       }

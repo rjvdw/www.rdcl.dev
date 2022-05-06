@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 
-const YOUTUBE_LINK = "https://www.youtube.com/watch?v=8idr1WZ1A7Q&t=107"
+const YOUTUBE_LINK = 'https://www.youtube.com/watch?v=8idr1WZ1A7Q&t=107'
 
 export const Ratings = () => {
   const [nrPositive, setNrPositive] = useState<number | ''>(19)
@@ -18,8 +18,8 @@ export const Ratings = () => {
     <h1>How to read a rating</h1>
 
     <p>
-      Based on "<a target="_blank" rel="noopener noreferrer" href={ YOUTUBE_LINK }>Which rating is better,
-      mathematically speaking?</a>".
+      Based on &quot;<a target="_blank" rel="noopener noreferrer" href={ YOUTUBE_LINK }>Which rating is better,
+      mathematically speaking?</a>&quot;.
     </p>
 
     <rdcl-input-grid suffix>

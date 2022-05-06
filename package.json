@@ -11,7 +11,9 @@
   "scripts": {
     "start": "webpack serve --config=config/webpack.dev.js",
     "start:ci": "webpack serve --config=config/webpack.ci.js",
-    "build": "webpack --config=config/webpack.prod.js"
+    "build": "webpack --config=config/webpack.prod.js",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
   },
   "repository": {
     "type": "git",
@@ -40,12 +42,17 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
     "body-parser": "^1.19.1",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.2.2",
     "css-loader": "^6.5.1",
     "cypress": "^9.5.0",
     "cypress-cucumber-preprocessor": "^4.3.1",
+    "eslint": "^8.14.0",
+    "eslint-plugin-editorconfig": "^3.2.0",
+    "eslint-plugin-react": "^7.29.4",
     "express": "^4.17.2",
     "faunadb": "^4.4.2",
     "file-loader": "^6.2.0",

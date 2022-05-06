@@ -65,7 +65,7 @@ export const Countdown = () => {
         <label htmlFor="cd-inp-target">Target:</label>
         <CDInput id="cd-inp-target" min={ 100 } max={ 999 } value={ target } set={ setTarget }/>
 
-        <button data-start={ 2 } disabled={ computing }>Let's Play Countdown!</button>
+        <button data-start={ 2 } disabled={ computing }>Let&apos;s Play Countdown!</button>
       </rdcl-input-grid>
     </form>
 
@@ -95,7 +95,7 @@ export const Countdown = () => {
 
 export default Countdown
 
-const CDInput = ({ set, ...props }: { set: (value: number | string) => void, [key: string]: any }) =>
+const CDInput = ({ set, ...props }: { set: (value: number | string) => void, [key: string]: unknown }) =>
   <input
     type="number"
     inputMode="numeric"

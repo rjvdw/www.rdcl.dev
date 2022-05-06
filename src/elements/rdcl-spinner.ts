@@ -1,7 +1,7 @@
 import { css, customElement, html, LitElement } from 'lit-element'
 
 @customElement('rdcl-spinner')
-export class Spinner extends LitElement {
+export class RdclSpinner extends LitElement {
   static get styles() {
     // language=CSS
     return css`

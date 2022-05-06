@@ -46,17 +46,17 @@ export const Ascii = () => {
   }
 
   const setRadix = (event: ChangeEvent<HTMLInputElement>) => {
-    let radix: 2 | 10 | 16;
+    let radix: 2 | 10 | 16
     switch (event.target.value) {
       case '2':
-        radix = 2;
-        break;
+        radix = 2
+        break
       case '10':
-        radix = 10;
-        break;
+        radix = 10
+        break
       default:
-        radix = 16;
-        break;
+        radix = 16
+        break
     }
     const ascii = toAscii(text, radix)
 
@@ -126,20 +126,20 @@ export const Ascii = () => {
 
     <table className="ascii-table">
       <thead>
-      <tr>
-        <th><abbr title="Decimal">Dec</abbr></th>
-        <th>Binary</th>
-        <th>Hex</th>
-        <th><abbr title="Character">Char</abbr></th>
-      </tr>
+        <tr>
+          <th><abbr title="Decimal">Dec</abbr></th>
+          <th>Binary</th>
+          <th>Hex</th>
+          <th><abbr title="Character">Char</abbr></th>
+        </tr>
       </thead>
       <tbody>
-      { ASCII_TABLE.map(row => <tr key={ row.decimal }>
-        <td>{ row.decimal }</td>
-        <td>{ row.binary }</td>
-        <td>{ row.hex }</td>
-        <td>{ row.character }</td>
-      </tr>) }
+        { ASCII_TABLE.map(row => <tr key={ row.decimal }>
+          <td>{ row.decimal }</td>
+          <td>{ row.binary }</td>
+          <td>{ row.hex }</td>
+          <td>{ row.character }</td>
+        </tr>) }
       </tbody>
     </table>
   </>
@@ -159,11 +159,11 @@ function toAscii(text: string, radix: 2 | 10 | 16): string {
 function getPaddingForRadix(radix: 2 | 10 | 16): number {
   switch (radix) {
     case 2:
-      return 8;
+      return 8
     case 10:
-      return 0;
+      return 0
     default:
-      return 2;
+      return 2
   }
 }
 

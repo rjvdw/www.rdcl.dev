@@ -9,7 +9,14 @@ type LoadDataFormProps = {
   setTo: (value: string) => void,
 }
 
-export const LoadDataForm: React.FunctionComponent<LoadDataFormProps> = ({ disabled, onSubmit, from, setFrom, to, setTo }) => (
+export const LoadDataForm: React.FunctionComponent<LoadDataFormProps> = ({
+  disabled,
+  onSubmit,
+  from,
+  setFrom,
+  to,
+  setTo,
+}) => (
   <section>
     <h2>Haal data op</h2>
     <form onSubmit={ onSubmit }>

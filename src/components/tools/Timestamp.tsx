@@ -115,6 +115,6 @@ function formatIso(time: number | string) {
   try {
     return new Date(time).toISOString()
   } catch (e) {
-    return "invalid time"
+    return 'invalid time'
   }
 }

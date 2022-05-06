@@ -1,6 +1,7 @@
 {
   "projectId": "o4io9b",
   "baseUrl": "http://localhost:8888",
+  "fixturesFolder": "cypress/fixtures",
   "testFiles": [
     "**/*.features",
     "**/*.feature",

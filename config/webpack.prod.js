@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict'
 
 const CopyPlugin = require('copy-webpack-plugin')

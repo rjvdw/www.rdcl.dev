@@ -1,7 +1,5 @@
 import { css, customElement, html, LitElement, property, unsafeCSS } from 'lit-element'
-// @ts-ignore
 import closeIcon from './icons/close-sidemenu.svg'
-// @ts-ignore
 import toggleIcon from './icons/toggle-sidemenu.svg'
 
 @customElement('rdcl-sidemenu')
@@ -23,7 +21,7 @@ export class RdclSidemenu extends LitElement {
         --base-size: 3rem;
         --icon-size: 2.5rem;
       }
-      
+
       .slot-container {
         overflow: auto;
       }
@@ -140,7 +138,9 @@ export class RdclSidemenu extends LitElement {
 
   render() {
     return html`
-      <div class="slot-container"><slot></slot></div>
+      <div class="slot-container">
+        <slot></slot>
+      </div>
 
       ${ this.screentype === 'mobile' ? html`
         <button class="close" @click="${ this.close }" role="presentation">
