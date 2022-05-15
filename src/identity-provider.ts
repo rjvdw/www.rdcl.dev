@@ -1,5 +1,5 @@
 import netlifyIdentity, { User } from 'netlify-identity-widget'
-import { setAuthenticated, setUnauthenticated, UserData } from './modules/auth'
+import { setAuthenticated, setUnauthenticated, UserData } from './slices/auth'
 import { store } from './store'
 
 netlifyIdentity.on('init', (user) => {

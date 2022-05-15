@@ -7,7 +7,7 @@ import './identity-provider'
 import './axios'
 import './elements'
 import './styles/main.sass'
-import { updateScreenType } from './modules/screen'
+import { updateScreenType } from './slices/screen'
 import { store } from './store'
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

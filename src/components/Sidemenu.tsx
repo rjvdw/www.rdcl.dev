@@ -2,15 +2,15 @@ import { createSelector } from '@reduxjs/toolkit'
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { selectIsLoggedIn } from '../modules/auth'
-import { selectActiveRoute } from '../modules/routes'
-import { selectScreenType } from '../modules/screen'
+import { selectIsLoggedIn } from '../slices/auth'
+import { selectActiveRoute } from '../slices/routes'
+import { selectScreenType } from '../slices/screen'
 import {
   close as closeSidemenu,
   selectIsCollapsed as selectIsSidemenuCollapsed,
   selectIsOpen as selectIsSidemenuOpen,
   toggle as toggleSidemenu,
-} from '../modules/sidemenu'
+} from '../slices/sidemenu'
 import { StoreDispatch } from '../store'
 import { attr } from '../util/component'
 import { Icon } from './icons'
