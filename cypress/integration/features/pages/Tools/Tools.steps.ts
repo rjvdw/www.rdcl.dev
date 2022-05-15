@@ -1,5 +1,5 @@
-import { Then } from 'cypress-cucumber-preprocessor/steps'
 import { TableDefinition } from 'cypress-cucumber-preprocessor'
+import { Then } from 'cypress-cucumber-preprocessor/steps'
 
 Then(/^the following tools are present:$/, (data: TableDefinition) => {
   for (const [tool, url, description] of data.rows()) {

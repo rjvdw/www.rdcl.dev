@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { StoreDispatch } from '../store'
 import { setActiveRoute } from '../modules/routes'
+import { StoreDispatch } from '../store'
 
 type SetActiveRouteProps = {
   route: string,

@@ -95,7 +95,7 @@ export const Float = () => {
                         <>{ parseSubnormalMantissa(mantissa) }&times;2<sup>{ parsedExponent + 1 }</sup></>,
                         <>{ parseNormalMantissa(mantissa) }&times;2<sup>{ parsedExponent }</sup></>,
                       ) }
-                    </>
+                    </>,
                   ) }
                 </td>
               </tr>

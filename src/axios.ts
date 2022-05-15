@@ -1,5 +1,5 @@
-import netlifyIdentity from 'netlify-identity-widget'
 import Axios from 'axios'
+import netlifyIdentity from 'netlify-identity-widget'
 
 export const axios = Axios.create()
 window.axios = axios

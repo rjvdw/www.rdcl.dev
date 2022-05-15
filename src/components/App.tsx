@@ -1,17 +1,17 @@
 import React, { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { selectIsLoggedIn } from '../modules/auth'
+import { selectScreenType } from '../modules/screen'
+import { ErrorBoundary } from './ErrorBoundary'
 import { PageHeader } from './PageHeader'
+import { SetActiveRoute } from './SetActiveRoute'
 import { Sidemenu } from './Sidemenu'
 import { Title } from './Title'
 import { Home } from './pages/Home'
-import { ErrorBoundary } from './ErrorBoundary'
-import { selectIsLoggedIn } from '../modules/auth'
-import { selectScreenType } from '../modules/screen'
 import { Login } from './pages/Login'
 import { Logout } from './pages/Logout'
 import { Tools } from './pages/Tools'
-import { SetActiveRoute } from './SetActiveRoute'
 
 const Health = React.lazy(() => import('./pages/Health'))
 

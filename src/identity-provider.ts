@@ -1,6 +1,6 @@
 import netlifyIdentity, { User } from 'netlify-identity-widget'
-import { store } from './store'
 import { setAuthenticated, setUnauthenticated, UserData } from './modules/auth'
+import { store } from './store'
 
 netlifyIdentity.on('init', (user) => {
   if (user === null) {

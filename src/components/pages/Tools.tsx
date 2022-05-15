@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { ErrorBoundary } from '../ErrorBoundary'
 import { Title } from '../Title'
 import { Index } from '../tools/Index'
-import { ErrorBoundary } from '../ErrorBoundary'
 
 const Ascii = React.lazy(() => import('../tools/Ascii'))
 const Bmi = React.lazy(() => import('../tools/Bmi'))

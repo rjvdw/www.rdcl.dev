@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { StoreDispatch } from '../store'
 import { RdclPageHeader } from '../elements/rdcl-page-header'
-import { open as openSideMenu } from '../modules/sidemenu'
 import { selectScreenType } from '../modules/screen'
+import { open as openSideMenu } from '../modules/sidemenu'
+import { StoreDispatch } from '../store'
 
 export const PageHeader: React.FunctionComponent = () => {
   const dispatch = useDispatch<StoreDispatch>()

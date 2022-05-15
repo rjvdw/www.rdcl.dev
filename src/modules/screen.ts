@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { close as closeSidemenu } from './sidemenu'
 import { StoreDispatch, StoreGetState, StoreState } from '../store'
+import { close as closeSidemenu } from './sidemenu'
 
 export type ScreenType = 'mobile' | 'desktop'
 

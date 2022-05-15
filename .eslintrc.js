@@ -29,13 +29,27 @@ module.exports = {
     'react',
     'editorconfig',
     '@typescript-eslint',
+    'import',
   ],
   rules: {
+    'comma-dangle': ['warn', 'always-multiline'],
+    'object-curly-spacing': ['warn', 'always'],
+    'quotes': ['error', 'single'],
+    'semi': ['error', 'never'],
     'editorconfig/indent': ['error', {
       SwitchCase: 1,
     }],
-    'quotes': ['error', 'single'],
-    'semi': ['error', 'never'],
+    'import/order': ['error', {
+      alphabetize: { order: 'asc' },
+    }],
+    'react/jsx-curly-spacing': ['warn', {
+      when: 'always',
+      children: { when: 'always' },
+      attributes: { when: 'always' },
+    }],
+    'react/jsx-tag-spacing': ['warn', {
+      beforeSelfClosing: 'never',
+    }],
     '@typescript-eslint/no-inferrable-types': 'off',
   },
 }

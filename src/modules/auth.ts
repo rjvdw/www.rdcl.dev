@@ -40,7 +40,7 @@ const { actions, reducer } = createSlice({
       return {
         authenticated: false,
       }
-    }
+    },
   },
 })
 

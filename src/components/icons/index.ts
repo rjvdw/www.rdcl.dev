@@ -1,8 +1,8 @@
-import Home from './home.svg'
-import Tools from './tools.svg'
-import Health from './health.svg'
-import Remove from './remove.svg'
 import React from 'react'
+import Health from './health.svg'
+import Home from './home.svg'
+import Remove from './remove.svg'
+import Tools from './tools.svg'
 
 /**
  * Additional properties that exist on SVG elements but are not recognized.

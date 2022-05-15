@@ -12,8 +12,8 @@
     "start": "webpack serve --config=config/webpack.dev.js",
     "start:ci": "webpack serve --config=config/webpack.ci.js",
     "build": "webpack --config=config/webpack.prod.js",
-    "lint": "eslint src",
-    "lint:fix": "eslint --fix src",
+    "lint": "eslint src cypress",
+    "lint:fix": "eslint --fix src cypress",
     "prepare": "husky install"
   },
   "repository": {
@@ -53,6 +53,7 @@
     "cypress-cucumber-preprocessor": "^4.3.1",
     "eslint": "^8.14.0",
     "eslint-plugin-editorconfig": "^3.2.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.29.4",
     "express": "^4.17.2",
     "faunadb": "^4.4.2",

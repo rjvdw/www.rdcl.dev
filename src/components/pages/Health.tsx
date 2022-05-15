@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
+import { differenceInDays, formatISO } from 'date-fns'
+import React, { useEffect, useState } from 'react'
 import { axios } from '../../axios'
-import { Icon } from '../icons'
 import { preventDefault } from '../../util/component'
 import { formatDate, formatNumber } from '../../util/formatters'
 import { LoadDataForm } from '../health/LoadDataForm'
 import { NewEntry, NewEntryForm } from '../health/NewEntryForm'
+import { Icon } from '../icons'
 import '../health/styles.sass'
-import { differenceInDays, formatISO } from 'date-fns'
 
 const SLIDING_WINDOW = 7
 

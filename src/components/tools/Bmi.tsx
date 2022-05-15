@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Serde } from '../../util/types'
 import { useLocalStorage } from '../../util/hooks'
+import { Serde } from '../../util/types'
 
 const serde: Serde<number | ''> = {
   serialize(value) {
