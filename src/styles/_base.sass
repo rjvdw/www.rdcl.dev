@@ -1,4 +1,4 @@
-@import "vars"
+@use "vars"
 
 html, body
   margin: 0
@@ -7,17 +7,17 @@ html, body
   height: 100%
 
 html
-  accent-color: $highlight-color
+  accent-color: vars.$highlight-color
   box-sizing: border-box
   font:
-    family: $base-font-family
-    size: $base-font-size
+    family: vars.$base-font-family
+    size: vars.$base-font-size
   scroll-behavior: smooth
   text-rendering: optimizeLegibility
 
 body
-  background-color: $base-background-color
-  color: $base-foreground-color
+  background-color: vars.$base-background-color
+  color: vars.$base-foreground-color
 
 *
   box-sizing: inherit

@@ -1,22 +1,22 @@
-@import "vars"
-@import "base"
-@import "typography"
-@import "form"
-@import "table"
+@use "vars"
+@use "base"
+@use "typography"
+@use "form"
+@use "table"
 
 #root
   width: 100%
   height: 100%
 
-  --headers-font-family: #{$headers-font-family}
-  --theme-color: #{$theme-color}
-  --highlight-color: #{$highlight-color}
-  --base-background-color: #{$base-background-color}
-  --base-foreground-color: #{$base-foreground-color}
-  --menu-overlay-background-color: #{rgba($base-background-color, .9)}
-  --menu-overlay-foreground-color: #{$base-foreground-color}
-  --focus-outline: #{$focus-outline}
-  --focus-offset: #{$focus-offset}
+  --headers-font-family: #{vars.$headers-font-family}
+  --theme-color: #{vars.$theme-color}
+  --highlight-color: #{vars.$highlight-color}
+  --base-background-color: #{vars.$base-background-color}
+  --base-foreground-color: #{vars.$base-foreground-color}
+  --menu-overlay-background-color: #{rgba(vars.$base-background-color, .9)}
+  --menu-overlay-foreground-color: #{vars.$base-foreground-color}
+  --focus-outline: #{vars.$focus-outline}
+  --focus-offset: #{vars.$focus-offset}
 
 main
   overflow: auto
@@ -25,13 +25,13 @@ rdcl-grid
   width: 100%
   height: 100%
 
-  --grid-border: #{$grid-border}
-  --grid-sidemenu-background: #{$grid-sidemenu-background-color}
-  --grid-sidemenu-toggle-background: #{$grid-sidemenu-toggle-background-color}
-  --grid-sidemenu-toggle-foreground: #{$grid-sidemenu-toggle-foreground-color}
-  --grid-sidemenu-item-background: #{$grid-sidemenu-item-background-color}
-  --grid-sidemenu-item-background-active: #{$grid-sidemenu-item-background-color-active}
-  --grid-sidemenu-item-foreground: #{$grid-sidemenu-item-foreground-color}
+  --grid-border: #{vars.$grid-border}
+  --grid-sidemenu-background: #{vars.$grid-sidemenu-background-color}
+  --grid-sidemenu-toggle-background: #{vars.$grid-sidemenu-toggle-background-color}
+  --grid-sidemenu-toggle-foreground: #{vars.$grid-sidemenu-toggle-foreground-color}
+  --grid-sidemenu-item-background: #{vars.$grid-sidemenu-item-background-color}
+  --grid-sidemenu-item-background-active: #{vars.$grid-sidemenu-item-background-color-active}
+  --grid-sidemenu-item-foreground: #{vars.$grid-sidemenu-item-foreground-color}
 
 .error-message
   color: #c33

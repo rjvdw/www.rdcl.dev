@@ -1,4 +1,4 @@
-@import "vars"
+@use "vars"
 
 @mixin focusable-ui-component
   font-size: 1rem
@@ -6,8 +6,8 @@
   outline: none
 
   &:focus
-    outline: $focus-outline
-    outline-offset: $focus-offset
+    outline: vars.$focus-outline
+    outline-offset: vars.$focus-offset
 
   &:disabled
     cursor: not-allowed
