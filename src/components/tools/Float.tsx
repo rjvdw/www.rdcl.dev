@@ -61,7 +61,7 @@ export const Float = () => {
         const parsedExponent = parseExponent(exponent)
 
         return <>
-          <table className="simple-table float-analysis">
+          <table className="simple-table float-analysis" data-testid="float-analysis">
             <tbody>
               <tr>
                 <th>Input</th>
