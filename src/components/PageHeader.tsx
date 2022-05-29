@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RdclPageHeader } from '../elements/rdcl-page-header'
 import { selectScreenType } from '../slices/screen'
-import { open as openSideMenu } from '../slices/sidemenu'
+import { open as openSideMenu } from '../slices/side-menu'
 import { StoreDispatch } from '../store'
 
 export const PageHeader: React.FunctionComponent = () => {

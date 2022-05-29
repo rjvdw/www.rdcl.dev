@@ -1,3 +1,3 @@
 import './rdcl-grid'
-import './rdcl-sidemenu'
-import './rdcl-sidemenu-item'
+import './rdcl-side-menu'
+import './rdcl-side-menu-item'

@@ -1,9 +1,9 @@
 import { css, customElement, html, LitElement, property, unsafeCSS } from 'lit-element'
-import closeIcon from './icons/close-sidemenu.svg'
-import toggleIcon from './icons/toggle-sidemenu.svg'
+import closeIcon from './icons/close-side-menu.svg'
+import toggleIcon from './icons/toggle-side-menu.svg'
 
-@customElement('rdcl-sidemenu')
-export class RdclSidemenu extends LitElement {
+@customElement('rdcl-side-menu')
+export class RdclSideMenu extends LitElement {
   @property({ type: Boolean }) collapsed = false
   @property({ type: String }) screentype: string | undefined
 
@@ -74,8 +74,8 @@ export class RdclSidemenu extends LitElement {
 
       .toggle {
         display: flex;
-        background: var(--grid-sidemenu-toggle-background);
-        color: var(--grid-sidemenu-toggle-foreground);
+        background: var(--grid-side-menu-toggle-background);
+        color: var(--grid-side-menu-toggle-foreground);
         height: 3rem;
         font-size: inherit;
         border: none;
@@ -108,18 +108,18 @@ export class RdclSidemenu extends LitElement {
       }
 
       ::slotted(*) {
-        background: var(--grid-sidemenu-item-background);
-        color: var(--grid-sidemenu-item-foreground);
+        background: var(--grid-side-menu-item-background);
+        color: var(--grid-side-menu-item-foreground);
         border-bottom: var(--grid-border);
         transition: background-color 100ms ease-in;
       }
 
       ::slotted([active]) {
-        background: var(--grid-sidemenu-item-background-active);
+        background: var(--grid-side-menu-item-background-active);
       }
 
       ::slotted(:hover) {
-        background: var(--grid-sidemenu-item-background-active);
+        background: var(--grid-side-menu-item-background-active);
       }
 
       :host([screentype="mobile"]) ::slotted(*) {
@@ -155,7 +155,7 @@ export class RdclSidemenu extends LitElement {
   }
 
   toggle() {
-    this.dispatchEvent(new CustomEvent('sidemenu-toggle', {
+    this.dispatchEvent(new CustomEvent('side-menu-toggle', {
       bubbles: true,
       cancelable: true,
       composed: true,
@@ -163,7 +163,7 @@ export class RdclSidemenu extends LitElement {
   }
 
   close() {
-    this.dispatchEvent(new CustomEvent('sidemenu-close', {
+    this.dispatchEvent(new CustomEvent('side-menu-close', {
       bubbles: true,
       cancelable: true,
       composed: true,

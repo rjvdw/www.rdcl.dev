@@ -10,8 +10,8 @@ declare global {
     interface IntrinsicElements {
       'rdcl-grid': unknown, // TODO: RdclGrid,
       'rdcl-page-header': unknown, // TODO: RdclPageHeader,
-      'rdcl-sidemenu': unknown, // TODO: RdclSidemenu,
-      'rdcl-sidemenu-item': unknown, // TODO: RdclSidemenuItem,
+      'rdcl-side-menu': unknown, // TODO: RdclSideMenu,
+      'rdcl-side-menu-item': unknown, // TODO: RdclSideMenuItem,
       'rdcl-input-grid': unknown, // TODO: RdclInputGrid,
       'rdcl-combi-input': unknown, // TODO: RdclCombiInput,
       'rdcl-tools': unknown, // TODO: RdclTools,

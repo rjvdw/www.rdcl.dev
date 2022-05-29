@@ -1,7 +1,7 @@
 import { css, customElement, html, LitElement, property } from 'lit-element'
 
-@customElement('rdcl-sidemenu-item')
-export class RdclSidemenuItem extends LitElement {
+@customElement('rdcl-side-menu-item')
+export class RdclSideMenuItem extends LitElement {
   @property() icon: string | undefined
   @property() href: string | undefined
   @property() accesskey: string | undefined

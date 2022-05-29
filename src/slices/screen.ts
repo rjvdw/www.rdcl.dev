@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { StoreDispatch, StoreGetState, StoreState } from '../store'
-import { close as closeSidemenu } from './sidemenu'
+import { close as closeSideMenu } from './side-menu'
 
 export type ScreenType = 'mobile' | 'desktop'
 
@@ -38,7 +38,7 @@ export function updateScreenType() {
       dispatch(actions.updateScreenType(type))
 
       if (type !== 'mobile') {
-        dispatch(closeSidemenu())
+        dispatch(closeSideMenu())
       }
     }
   }

@@ -6,28 +6,28 @@ import { selectIsLoggedIn } from '../slices/auth'
 import { selectActiveRoute } from '../slices/routes'
 import { selectScreenType } from '../slices/screen'
 import {
-  close as closeSidemenu,
-  selectIsCollapsed as selectIsSidemenuCollapsed,
-  selectIsOpen as selectIsSidemenuOpen,
-  toggle as toggleSidemenu,
-} from '../slices/sidemenu'
+  close as closeSideMenu,
+  selectIsCollapsed as selectIsSideMenuCollapsed,
+  selectIsOpen as selectIsSideMenuOpen,
+  toggle as toggleSideMenu,
+} from '../slices/side-menu'
 import { StoreDispatch } from '../store'
 import { attr } from '../util/component'
 import { Icon } from './icons'
 
 const selectIsCollapsed = createSelector(
   selectScreenType,
-  selectIsSidemenuCollapsed,
-  selectIsSidemenuOpen,
+  selectIsSideMenuCollapsed,
+  selectIsSideMenuOpen,
   (screenType, collapsed, open) => screenType === 'mobile'
     ? !open
     : collapsed,
 )
 
-export const Sidemenu: React.FunctionComponent = () => {
+export const SideMenu: React.FunctionComponent = () => {
   const dispatch = useDispatch<StoreDispatch>()
-  const toggle = () => dispatch(toggleSidemenu())
-  const close = () => dispatch(closeSidemenu())
+  const toggle = () => dispatch(toggleSideMenu())
+  const close = () => dispatch(closeSideMenu())
 
   const ref: React.MutableRefObject<null | HTMLElement> = useRef(null)
 
@@ -56,40 +56,40 @@ export const Sidemenu: React.FunctionComponent = () => {
   }
 
   useEffect(() => {
-    ref.current?.addEventListener('sidemenu-toggle', toggle)
-    ref.current?.addEventListener('sidemenu-close', close)
+    ref.current?.addEventListener('side-menu-toggle', toggle)
+    ref.current?.addEventListener('side-menu-close', close)
     ref.current?.addEventListener('click', handleClick)
 
     return () => {
-      ref.current?.removeEventListener('sidemenu-toggle', toggle)
-      ref.current?.removeEventListener('sidemenu-close', close)
+      ref.current?.removeEventListener('side-menu-toggle', toggle)
+      ref.current?.removeEventListener('side-menu-close', close)
       ref.current?.removeEventListener('click', handleClick)
     }
   })
 
   return (
-    <rdcl-sidemenu
-      slot="sidemenu"
+    <rdcl-side-menu
+      slot="side-menu"
       screentype={ screenType }
       ref={ ref }
       collapsed={ attr(collapsed) }
     >
-      <rdcl-sidemenu-item href="/" active={ attr(activeRoute === 'home') } onClick={ () => close() }>
+      <rdcl-side-menu-item href="/" active={ attr(activeRoute === 'home') } onClick={ () => close() }>
         <Icon.Home slot="icon"/>
         Home
-      </rdcl-sidemenu-item>
+      </rdcl-side-menu-item>
 
-      <rdcl-sidemenu-item href="/tools" active={ attr(activeRoute === 'tools') } onClick={ () => close() }>
+      <rdcl-side-menu-item href="/tools" active={ attr(activeRoute === 'tools') } onClick={ () => close() }>
         <Icon.Tools slot="icon"/>
         Tools
-      </rdcl-sidemenu-item>
+      </rdcl-side-menu-item>
 
       { loggedIn && (
-        <rdcl-sidemenu-item href="/health" active={ attr(activeRoute === 'health') } onClick={ () => close() }>
+        <rdcl-side-menu-item href="/health" active={ attr(activeRoute === 'health') } onClick={ () => close() }>
           <Icon.Health slot="icon"/>
           Health
-        </rdcl-sidemenu-item>
+        </rdcl-side-menu-item>
       ) }
-    </rdcl-sidemenu>
+    </rdcl-side-menu>
   )
 }

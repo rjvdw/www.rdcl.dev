@@ -6,7 +6,7 @@ import { selectScreenType } from '../slices/screen'
 import { ErrorBoundary } from './ErrorBoundary'
 import { PageHeader } from './PageHeader'
 import { SetActiveRoute } from './SetActiveRoute'
-import { Sidemenu } from './Sidemenu'
+import { SideMenu } from './SideMenu'
 import { Title } from './Title'
 import { Home } from './pages/Home'
 import { Login } from './pages/Login'
@@ -23,7 +23,7 @@ export const App: React.FunctionComponent = () => {
     <rdcl-grid screentype={ screenType }>
       <PageHeader/>
 
-      { screenType !== 'mobile' && <Sidemenu/> }
+      { screenType !== 'mobile' && <SideMenu/> }
 
       <main>
         <ErrorBoundary>
@@ -66,6 +66,6 @@ export const App: React.FunctionComponent = () => {
       </main>
     </rdcl-grid>
 
-    { screenType === 'mobile' && <Sidemenu/> }
+    { screenType === 'mobile' && <SideMenu/> }
   </>
 }

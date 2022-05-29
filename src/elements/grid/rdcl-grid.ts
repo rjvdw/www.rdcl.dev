@@ -10,7 +10,7 @@ export class RdclGrid extends LitElement {
       :host {
         display: grid;
         grid-template-areas: "header          header"
-                             "sidemenu        main";
+                             "side-menu       main";
         grid-template-columns: auto 1fr;
         grid-template-rows: auto 1fr;
       }
@@ -21,10 +21,10 @@ export class RdclGrid extends LitElement {
         border-bottom: var(--grid-border);
       }
 
-      [name="sidemenu"]::slotted(*) {
-        grid-area: sidemenu;
+      [name="side-menu"]::slotted(*) {
+        grid-area: side-menu;
         border-right: var(--grid-border);
-        background: var(--grid-sidemenu-background);
+        background: var(--grid-side-menu-background);
       }
 
       :not([name])::slotted(*) {
@@ -43,7 +43,7 @@ export class RdclGrid extends LitElement {
   render() {
     return html`
       <slot name="header"></slot>
-      <slot name="sidemenu"></slot>
+      <slot name="side-menu"></slot>
       <slot></slot>
     `
   }

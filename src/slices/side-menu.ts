@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { StoreDispatch, StoreGetState, StoreState } from '../store'
 
-type SidemenuState = {
+type SideMenuState = {
   collapsed: boolean,
   open: boolean,
 }
 
-const INITIAL_STATE: SidemenuState = {
-  collapsed: window.localStorage.getItem('sidemenu-collapsed') === '1',
+const INITIAL_STATE: SideMenuState = {
+  collapsed: window.localStorage.getItem('side-menu-collapsed') === '1',
   open: false,
 }
 
 const { actions, reducer } = createSlice({
-  name: 'sidemenu',
+  name: 'side-menu',
   initialState: INITIAL_STATE,
   reducers: {
     collapse(state) {
@@ -45,22 +45,22 @@ const { actions, reducer } = createSlice({
   },
 })
 
-export const sidemenu = reducer
+export const sideMenu = reducer
 export const { open, close } = actions
 
 export function toggle() {
   return (dispatch: StoreDispatch, getState: StoreGetState) => {
-    const state = getState().sidemenu
+    const state = getState().sideMenu
 
     if (state.collapsed) {
-      window.localStorage.removeItem('sidemenu-collapsed')
+      window.localStorage.removeItem('side-menu-collapsed')
       dispatch(actions.expand())
     } else {
-      window.localStorage.setItem('sidemenu-collapsed', '1')
+      window.localStorage.setItem('side-menu-collapsed', '1')
       dispatch(actions.collapse())
     }
   }
 }
 
-export const selectIsCollapsed = (state: StoreState) => state.sidemenu.collapsed
-export const selectIsOpen = (state: StoreState) => state.sidemenu.open
+export const selectIsCollapsed = (state: StoreState) => state.sideMenu.collapsed
+export const selectIsOpen = (state: StoreState) => state.sideMenu.open
