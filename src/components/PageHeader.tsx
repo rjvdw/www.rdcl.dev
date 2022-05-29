@@ -14,8 +14,8 @@ export const PageHeader: React.FunctionComponent = () => {
   const screenType = useSelector(selectScreenType)
 
   useEffect(() => {
-    ref.current?.addEventListener('mobilemenu-open', open)
-    return () => ref.current?.removeEventListener('mobilemenu-open', open)
+    ref.current?.addEventListener('mobile-menu-open', open)
+    return () => ref.current?.removeEventListener('mobile-menu-open', open)
   })
 
   return (

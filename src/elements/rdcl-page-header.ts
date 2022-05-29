@@ -63,7 +63,7 @@ export class RdclPageHeader extends LitElement {
   }
 
   openMobileMenu() {
-    this.dispatchEvent(new CustomEvent('mobilemenu-open', {
+    this.dispatchEvent(new CustomEvent('mobile-menu-open', {
       bubbles: true,
       cancelable: true,
       composed: true,
