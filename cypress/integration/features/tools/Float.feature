@@ -7,10 +7,8 @@ Feature: Tools/Float
     Then the page title is "float | tools | rdcl.dev"
 
   Scenario: User enters 10 and chooses single precision.
-    When the user enters the following:
-      | input field                 | value |
-      | [data-testid="float-input"] | 10    |
-    And the user clicks on "[name=float-type-input][value=32]"
+    When the user enters 10
+    And the user chooses single precision
     Then ".float-analysis" matches:
     """
     <tbody>
@@ -40,10 +38,8 @@ Feature: Tools/Float
     """
 
   Scenario: User enters -10 and chooses single precision.
-    When the user enters the following:
-      | input field                 | value |
-      | [data-testid="float-input"] | -10   |
-    And the user clicks on "[data-testid="float-type-input-single"]"
+    When the user enters -10
+    And the user chooses single precision
     Then ".float-analysis" matches:
     """
     <tbody>
@@ -73,10 +69,8 @@ Feature: Tools/Float
     """
 
   Scenario: User enters 0.3 and chooses double precision.
-    When the user enters the following:
-      | input field                 | value |
-      | [data-testid="float-input"] | 0.3   |
-    And the user clicks on "[data-testid="float-type-input-double"]"
+    When the user enters 0.3
+    And the user chooses double precision
     Then ".float-analysis" matches:
     """
     <tbody>
