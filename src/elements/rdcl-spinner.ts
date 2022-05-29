@@ -1,4 +1,5 @@
-import { css, customElement, html, LitElement } from 'lit-element'
+import { css, html, LitElement } from 'lit'
+import { customElement } from 'lit/decorators.js'
 
 @customElement('rdcl-spinner')
 export class RdclSpinner extends LitElement {
@@ -18,15 +19,15 @@ export class RdclSpinner extends LitElement {
         opacity: 0;
         background: #666;
       }
-      
+
       div:nth-child(1) {
         animation: 2s infinite pulse;
       }
-      
+
       div:nth-child(3) {
         animation: 2s .25s infinite pulse;
       }
-      
+
       div:nth-child(5) {
         animation: 2s .5s infinite pulse;
       }

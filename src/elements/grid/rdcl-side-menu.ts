@@ -1,4 +1,5 @@
-import { css, customElement, html, LitElement, property, unsafeCSS } from 'lit-element'
+import { css, html, LitElement, unsafeCSS } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
 import closeIcon from './icons/close-side-menu.svg'
 import toggleIcon from './icons/toggle-side-menu.svg'
 
