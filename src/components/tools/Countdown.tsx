@@ -1,9 +1,13 @@
 import React, { useId, useState } from 'react'
 
-type Answer = [string, number, number, number]
 type Operation = (n1: number, n2: number) => number | null
-
-const OPERATIONS: { [op: string]: Operation } = {
+type AllOperations = {
+  add: Operation,
+  multiply: Operation,
+  subtract: Operation,
+  divide: Operation,
+}
+const OPERATIONS: AllOperations = {
   add(n1, n2) {
     return n1 + n2
   },
@@ -19,6 +23,10 @@ const OPERATIONS: { [op: string]: Operation } = {
     return null
   },
 }
+type OperationType = keyof typeof OPERATIONS
+type Answer = [OperationType, number, number, number]
+
+const ALL_OPERATIONS: OperationType[] = ['add', 'multiply', 'subtract', 'divide']
 
 export const Countdown = () => {
   const id = useId()
@@ -118,7 +126,7 @@ export const Countdown = () => {
         <h2>Solution</h2>
         <ul>
           { solution.map((line, key) => (
-            <li key={ key }>{ line[0] }({ line[1] }, { line[2] }) &rarr; { line[3] }</li>
+            <li key={ key }>{ formatLine(...line) }</li>
           )) }
         </ul>
       </section>
@@ -135,7 +143,10 @@ export const Countdown = () => {
 
 export default Countdown
 
-const CDInput = ({ set, ...props }: { set: (value: number | string) => void, [key: string]: unknown }) =>
+type CDInputProps = {
+  set: (value: number | string) => void,
+} & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+const CDInput: React.FunctionComponent<CDInputProps> = ({ set, ...props }) =>
   <input
     type="number"
     inputMode="numeric"
@@ -177,7 +188,7 @@ function _solve(target: number, numbers: number[]): Answer[] | null {
         .concat(numbers.slice(j + 1))
       reduced.length += 1
 
-      for (const key in OPERATIONS) {
+      for (const key of ALL_OPERATIONS) {
         const operation = OPERATIONS[key]
         const result = operation(n1, n2)
 
@@ -185,7 +196,9 @@ function _solve(target: number, numbers: number[]): Answer[] | null {
           continue
         }
 
-        const answer: Answer = [key, n1, n2, result]
+        const answer: Answer = (key === 'subtract' || key === 'divide') && n2 > n1
+          ? [key, n2, n1, result]
+          : [key, n1, n2, result]
 
         if (result === target) {
           return [answer]
@@ -203,4 +216,17 @@ function _solve(target: number, numbers: number[]): Answer[] | null {
   }
 
   return null
+}
+
+function formatLine(operation: OperationType, op1: number, op2: number, result: number): string {
+  switch (operation) {
+    case 'add':
+      return `${ op1 } + ${ op2 } = ${ result }`
+    case 'multiply':
+      return `${ op1 } * ${ op2 } = ${ result }`
+    case 'subtract':
+      return `${ op1 } - ${ op2 } = ${ result }`
+    case 'divide':
+      return `${ op1 } / ${ op2 } = ${ result }`
+  }
 }

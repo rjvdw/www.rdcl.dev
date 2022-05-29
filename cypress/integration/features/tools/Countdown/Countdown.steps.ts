@@ -24,7 +24,7 @@ Then(/^the following solution is found:$/, (data: TableDefinition) => {
     <h2>Solution</h2>
     <ul>
       ${ data.rows().map(([operation, op1, op2, result]) => `
-        <li>${ formatOperation(operation, op1, op2, result) }</li>
+        <li>${ op1 } ${ operation } ${ op2 } = ${ result }</li>
       `).join('') }
     </ul>
   `
@@ -44,24 +44,3 @@ Then(/^no solution is found$/, () => {
       `))
     })
 })
-
-function formatOperation(operation: string, op1: string, op2: string, result: string): string {
-  let op
-  switch (operation) {
-    case '+':
-      op = 'add'
-      break
-    case '-':
-      op = 'subtract'
-      break
-    case '*':
-      op = 'multiply'
-      break
-    case '/':
-      op = 'divide'
-      break
-    default:
-      throw new Error(`Invalid operation: ${ operation }`)
-  }
-  return `${ op }(${ op1 }, ${ op2 }) → ${ result }`
-}

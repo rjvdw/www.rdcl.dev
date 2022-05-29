@@ -14,8 +14,8 @@ Feature: Tools/Countdown
       | operation | operand 1 | operand 2 | result |
       | *         | 100       | 7         | 700    |
       | *         | 75        | 5         | 375    |
-      | /         | 2         | 700       | 350    |
-      | -         | 9         | 375       | 366    |
+      | /         | 700       | 2         | 350    |
+      | -         | 375       | 9         | 366    |
       | +         | 350       | 366       | 716    |
 
   Scenario: User enters values that do not have a solution.
