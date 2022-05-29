@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useId, useState } from 'react'
 import './Ascii.styles.sass'
 
 const ASCII_TABLE = Array(128).fill(0)
@@ -18,6 +18,8 @@ type StateType = {
 }
 
 export const Ascii = () => {
+  const id = useId()
+
   const [{ text, ascii, radix, error }, setState] = useState<StateType>({ text: '', ascii: '', radix: 2 })
 
   const setText = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -66,9 +68,10 @@ export const Ascii = () => {
   return <>
     <h1>ASCII Converter</h1>
 
-    <h2><label htmlFor="ascii-converter-plain-text">Plain Text</label></h2>
+    <h2><label htmlFor={ `${ id }:plain` }>Plain Text</label></h2>
     <textarea
-      id="ascii-converter-plain-text"
+      id={ `${ id }:plain` }
+      data-testid="ascii-converter-plain-text"
       className="ascii-conversion-input"
       value={ text }
       onChange={ setText }
@@ -76,9 +79,10 @@ export const Ascii = () => {
       cols={ 40 }
     />
 
-    <h2><label htmlFor="ascii-converter-ascii">ASCII</label></h2>
+    <h2><label htmlFor={ `${ id }:ascii` }>ASCII</label></h2>
     <textarea
-      id="ascii-converter-ascii"
+      id={ `${ id }:ascii` }
+      data-testid="ascii-converter-ascii"
       className="ascii-conversion-input"
       value={ ascii }
       onChange={ setAscii }
@@ -89,6 +93,7 @@ export const Ascii = () => {
       <label>
         <input
           type="radio"
+          data-testid="ascii-converter-radix-2"
           name="ascii-converter-radix"
           value={ 2 }
           checked={ radix === 2 }
@@ -99,6 +104,7 @@ export const Ascii = () => {
       <label>
         <input
           type="radio"
+          data-testid="ascii-converter-radix-10"
           name="ascii-converter-radix"
           value={ 10 }
           checked={ radix === 10 }
@@ -109,6 +115,7 @@ export const Ascii = () => {
       <label>
         <input
           type="radio"
+          data-testid="ascii-converter-radix-16"
           name="ascii-converter-radix"
           value={ 16 }
           checked={ radix === 16 }

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useId, useState } from 'react'
 import { HookSetter } from '../../util/types'
 
 type SetMs = HookSetter<number | string>
@@ -6,6 +6,8 @@ type SetTimestamp = HookSetter<number | string>
 type SetIso = HookSetter<string>
 
 export const Timestamp = () => {
+  const id = useId()
+
   const now = Date.now()
   const [ms, setMs] = useState<number | string>(now)
   const [timestamp, setTimestamp] = useState<number | string>(now / 1000)
@@ -15,18 +17,18 @@ export const Timestamp = () => {
     <h1>Timestamp</h1>
 
     <rdcl-input-grid>
-      <label htmlFor="iso">ISO</label>
+      <label htmlFor={ `${ id }:iso` }>ISO</label>
       <input
-        id="iso"
+        id={ `${ id }:iso` }
         value={ iso }
         onChange={ updateIso(setMs, setTimestamp, setIso) }
         onBlur={ updateIso(setMs, setTimestamp, setIso, true) }
         type="text"
       />
 
-      <label htmlFor="ms">Timestamp (ms)</label>
+      <label htmlFor={ `${ id }:ms` }>Timestamp (ms)</label>
       <input
-        id="ms"
+        id={ `${ id }:ms` }
         value={ ms }
         onChange={ updateMs(setMs, setTimestamp, setIso) }
         onBlur={ updateMs(setMs, setTimestamp, setIso, true) }
@@ -34,9 +36,9 @@ export const Timestamp = () => {
         inputMode="numeric"
       />
 
-      <label htmlFor="timestamp">Timestamp (s)</label>
+      <label htmlFor={ `${ id }:timestamp` }>Timestamp (s)</label>
       <input
-        id="timestamp"
+        id={ `${ id }:timestamp` }
         value={ timestamp }
         onChange={ updateTimestamp(setMs, setTimestamp, setIso) }
         onBlur={ updateTimestamp(setMs, setTimestamp, setIso, true) }

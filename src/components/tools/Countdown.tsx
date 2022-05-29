@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useId, useState } from 'react'
 
 type Answer = [string, number, number, number]
 type Operation = (n1: number, n2: number) => number | null
@@ -21,6 +21,8 @@ const OPERATIONS: { [op: string]: Operation } = {
 }
 
 export const Countdown = () => {
+  const id = useId()
+
   const [computing, setComputing] = useState(false)
   const [inp1, setInp1] = useState<number | string>('')
   const [inp2, setInp2] = useState<number | string>('')
@@ -45,25 +47,63 @@ export const Countdown = () => {
         })
     } }>
       <rdcl-input-grid>
-        <label htmlFor="cd-inp-1">Numbers:</label>
+        <label htmlFor={ `${ id }:cd-inp-1` }>Numbers:</label>
 
         <rdcl-combi-input>
-          <CDInput id="cd-inp-1" autoFocus value={ inp1 } set={ setInp1 }/>
-          <CDInput id="cd-inp-2" value={ inp2 } set={ setInp2 }/>
+          <CDInput
+            id={ `${ id }:cd-inp-1` }
+            data-testid="cd-inp-1"
+            autoFocus
+            value={ inp1 }
+            set={ setInp1 }
+          />
+          <CDInput
+            id={ `${ id }:cd-inp-2` }
+            data-testid="cd-inp-2"
+            value={ inp2 }
+            set={ setInp2 }
+          />
         </rdcl-combi-input>
 
         <rdcl-combi-input data-start={ 2 }>
-          <CDInput id="cd-inp-3" value={ inp3 } set={ setInp3 }/>
-          <CDInput id="cd-inp-4" value={ inp4 } set={ setInp4 }/>
+          <CDInput
+            id={ `${ id }:cd-inp-3` }
+            data-testid="cd-inp-3"
+            value={ inp3 }
+            set={ setInp3 }
+          />
+          <CDInput
+            id={ `${ id }:cd-inp-4` }
+            data-testid="cd-inp-4"
+            value={ inp4 }
+            set={ setInp4 }
+          />
         </rdcl-combi-input>
 
         <rdcl-combi-input data-start={ 2 }>
-          <CDInput id="cd-inp-5" value={ inp5 } set={ setInp5 }/>
-          <CDInput id="cd-inp-6" value={ inp6 } set={ setInp6 }/>
+          <CDInput
+            id={ `${ id }:cd-inp-5` }
+            data-testid="cd-inp-5"
+            value={ inp5 }
+            set={ setInp5 }
+          />
+          <CDInput
+            id={ `${ id }:cd-inp-6` }
+            data-testid="cd-inp-6"
+            value={ inp6 }
+            set={ setInp6 }
+          />
         </rdcl-combi-input>
 
-        <label htmlFor="cd-inp-target">Target:</label>
-        <CDInput id="cd-inp-target" min={ 100 } max={ 999 } value={ target } set={ setTarget }/>
+        <label htmlFor={ `${ id }:cd-inp-target` }>Target:</label>
+        <CDInput
+          id={ `${ id }:cd-inp-target` }
+          data-testid="cd-inp-target"
+          min={ 100 }
+          max={ 999 }
+          value={ target }
+          set={ setTarget }
+        />
 
         <button data-start={ 2 } disabled={ computing }>Let&apos;s Play Countdown!</button>
       </rdcl-input-grid>
@@ -74,7 +114,7 @@ export const Countdown = () => {
     </> }
 
     { !computing && solution &&
-      <section id="cd-solution">
+      <section data-testid="cd-solution">
         <h2>Solution</h2>
         <ul>
           { solution.map((line, key) => (
@@ -85,7 +125,7 @@ export const Countdown = () => {
     }
 
     { !computing && solution === null && <>
-      <section id="cd-solution">
+      <section data-testid="cd-solution">
         <h2>Solution</h2>
         <p>This one is not possible</p>
       </section>

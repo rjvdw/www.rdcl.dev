@@ -8,8 +8,8 @@ Feature: Tools/Float
 
   Scenario: User enters 10 and chooses single precision.
     When the user enters the following:
-      | input field  | value |
-      | #float-input | 10    |
+      | input field                 | value |
+      | [data-testid="float-input"] | 10    |
     And the user clicks on "[name=float-type-input][value=32]"
     Then ".float-analysis" matches:
     """
@@ -41,9 +41,9 @@ Feature: Tools/Float
 
   Scenario: User enters -10 and chooses single precision.
     When the user enters the following:
-      | input field  | value |
-      | #float-input | -10   |
-    And the user clicks on "[name=float-type-input][value=32]"
+      | input field                 | value |
+      | [data-testid="float-input"] | -10   |
+    And the user clicks on "[data-testid="float-type-input-single"]"
     Then ".float-analysis" matches:
     """
     <tbody>
@@ -74,9 +74,9 @@ Feature: Tools/Float
 
   Scenario: User enters 0.3 and chooses double precision.
     When the user enters the following:
-      | input field  | value |
-      | #float-input | 0.3   |
-    And the user clicks on "[name=float-type-input][value=64]"
+      | input field                 | value |
+      | [data-testid="float-input"] | 0.3   |
+    And the user clicks on "[data-testid="float-type-input-double"]"
     Then ".float-analysis" matches:
     """
     <tbody>

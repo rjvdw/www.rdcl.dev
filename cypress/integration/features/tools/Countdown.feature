@@ -8,16 +8,16 @@ Feature: Tools/Countdown
 
   Scenario: User enters values that have a solution.
     When the user enters the following:
-      | input field    | value |
-      | #cd-inp-1      | 100   |
-      | #cd-inp-2      | 75    |
-      | #cd-inp-3      | 7     |
-      | #cd-inp-4      | 2     |
-      | #cd-inp-5      | 5     |
-      | #cd-inp-6      | 9     |
-      | #cd-inp-target | 716   |
+      | input field                   | value |
+      | [data-testid="cd-inp-1"]      | 100   |
+      | [data-testid="cd-inp-2"]      | 75    |
+      | [data-testid="cd-inp-3"]      | 7     |
+      | [data-testid="cd-inp-4"]      | 2     |
+      | [data-testid="cd-inp-5"]      | 5     |
+      | [data-testid="cd-inp-6"]      | 9     |
+      | [data-testid="cd-inp-target"] | 716   |
     And the user clicks on "main > form button"
-    Then "#cd-solution" matches:
+    Then "[data-testid="cd-solution"]" matches:
     """
     <h2>Solution</h2>
     <ul>
@@ -31,16 +31,16 @@ Feature: Tools/Countdown
 
   Scenario: User enters values that do not have a solution.
     When the user enters the following:
-      | input field    | value |
-      | #cd-inp-1      | 1     |
-      | #cd-inp-2      | 2     |
-      | #cd-inp-3      | 3     |
-      | #cd-inp-4      | 4     |
-      | #cd-inp-5      | 5     |
-      | #cd-inp-6      | 6     |
-      | #cd-inp-target | 314   |
+      | input field                   | value |
+      | [data-testid="cd-inp-1"]      | 1     |
+      | [data-testid="cd-inp-2"]      | 2     |
+      | [data-testid="cd-inp-3"]      | 3     |
+      | [data-testid="cd-inp-4"]      | 4     |
+      | [data-testid="cd-inp-5"]      | 5     |
+      | [data-testid="cd-inp-6"]      | 6     |
+      | [data-testid="cd-inp-target"] | 314   |
     And the user clicks on "main > form button"
-    Then "#cd-solution" matches:
+    Then "[data-testid="cd-solution"]" matches:
     """
     <h2>Solution</h2>
     <p>This one is not possible</p>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useId, useState } from 'react'
 import { useLocalStorage } from '../../util/hooks'
 import { Serde } from '../../util/types'
 
@@ -13,6 +13,8 @@ const serde: Serde<number | ''> = {
 }
 
 export const Bmi = () => {
+  const id = useId()
+
   const [weight, setWeight] = useLocalStorage('bmi:weight', 75, serde)
   const [height, setHeight] = useLocalStorage('bmi:height', 185, serde)
   const [bmiIsEmpty, setBmiIsEmpty] = useState(false)
@@ -29,31 +31,34 @@ export const Bmi = () => {
     <h1>BMI Calculator</h1>
 
     <rdcl-input-grid suffix>
-      <label htmlFor="weight">Weight</label>
+      <label htmlFor={ `${ id }:weight` }>Weight</label>
       <input
-        id="weight"
+        id={ `${ id }:weight` }
+        data-testid="weight"
         type="number"
         inputMode="decimal"
         step="any"
         value={ formatted(weight) }
         onChange={ getHandler(setWeight) }
       />
-      <label htmlFor="weight">kg</label>
+      <label htmlFor={ `${ id }:weight` }>kg</label>
 
-      <label htmlFor="height">Height</label>
+      <label htmlFor={ `${ id }:height` }>Height</label>
       <input
-        id="height"
+        id={ `${ id }:height` }
+        data-testid="height"
         type="number"
         inputMode="decimal"
         step="any"
         value={ height }
         onChange={ getHandler(setHeight) }
       />
-      <label htmlFor="height">cm</label>
+      <label htmlFor={ `${ id }:height` }>cm</label>
 
-      <label htmlFor="bmi">BMI</label>
+      <label htmlFor={ `${ id }:bmi` }>BMI</label>
       <input
-        id="bmi"
+        id={ `${ id }:bmi` }
+        data-testid="bmi"
         type="number"
         inputMode="decimal"
         step="any"

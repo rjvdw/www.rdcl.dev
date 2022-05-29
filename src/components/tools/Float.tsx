@@ -1,10 +1,12 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useId, useState } from 'react'
 import { conditionally } from '../../util/component'
 import './Float.styles.sass'
 
 type FloatPrecision = 32 | 64
 
 export const Float = () => {
+  const id = useId()
+
   const [numberValue, setNumberValue] = useState<string>('4')
   const number = parseFloat(numberValue)
   const [precision, setPrecision] = useState<FloatPrecision>(64)
@@ -16,9 +18,10 @@ export const Float = () => {
     <h1>Float Calculator</h1>
 
     <rdcl-input-grid>
-      <label htmlFor="float-input">Number:</label>
+      <label htmlFor={ `${ id }:float-input` }>Number:</label>
       <input
-        id="float-input"
+        id={ `${ id }:float-input` }
+        data-testid="float-input"
         type="text"
         value={ numberValue }
         onChange={ event => setNumberValue(event.target.value) }
@@ -27,6 +30,7 @@ export const Float = () => {
       <span data-start={ 1 }>Precision:</span>
       <label data-start={ 2 }>
         <input
+          data-testid="float-type-input-single"
           type="radio"
           name="float-type-input"
           value={ 32 }
@@ -36,6 +40,7 @@ export const Float = () => {
       </label>
       <label data-start={ 2 }>
         <input
+          data-testid="float-type-input-double"
           type="radio"
           name="float-type-input"
           value={ 64 }
