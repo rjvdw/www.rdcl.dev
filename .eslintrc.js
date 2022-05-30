@@ -27,6 +27,7 @@ module.exports = {
   },
   plugins: [
     'react',
+    'react-hooks',
     'editorconfig',
     '@typescript-eslint',
     'import',
@@ -51,5 +52,7 @@ module.exports = {
       beforeSelfClosing: 'never',
     }],
     '@typescript-eslint/no-inferrable-types': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 }

@@ -56,14 +56,16 @@ export const SideMenu: React.FunctionComponent = () => {
   }
 
   useEffect(() => {
-    ref.current?.addEventListener('side-menu-toggle', toggle)
-    ref.current?.addEventListener('side-menu-close', close)
-    ref.current?.addEventListener('click', handleClick)
+    const { current } = ref
+
+    current?.addEventListener('side-menu-toggle', toggle)
+    current?.addEventListener('side-menu-close', close)
+    current?.addEventListener('click', handleClick)
 
     return () => {
-      ref.current?.removeEventListener('side-menu-toggle', toggle)
-      ref.current?.removeEventListener('side-menu-close', close)
-      ref.current?.removeEventListener('click', handleClick)
+      current?.removeEventListener('side-menu-toggle', toggle)
+      current?.removeEventListener('side-menu-close', close)
+      current?.removeEventListener('click', handleClick)
     }
   })
 
