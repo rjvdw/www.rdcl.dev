@@ -1,0 +1,43 @@
+.syncopation
+  $height: 2rem
+
+  margin-bottom: 1rem
+
+  &__radio
+    padding: 0
+
+  &__time
+    line-height: $height
+    padding:
+      top: 0
+      right: .5rem
+      bottom: 0
+      left: .5rem
+
+    & > span
+      background: green
+      visibility: hidden
+      display: inline-block
+      width: .5rem
+      height: .5rem
+      margin-left: .5rem
+      border-radius: 50%
+      border: thin solid black
+
+    &--active > span
+      visibility: unset
+
+  &__beats th, &__beats td
+    border-bottom: 0
+
+  &__beat
+    padding: 0
+    line-height: $height
+    width: 1rem
+    border-left: thin dotted grey
+
+    &--accent
+      background: #ccc
+
+  &--checked &__beat--current
+    background: yellow

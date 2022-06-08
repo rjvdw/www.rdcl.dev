@@ -41,5 +41,9 @@ export const Index = () => <>
       <Link slot="link" to="/tools/ratings">How to read a rating</Link>
       Given how many reviews out of a total number of reviews are positive, computes a score.
     </rdcl-tool-link>
+    <rdcl-tool-link>
+      <Link slot="link" to="/tools/syncopation">Syncopation</Link>
+      Display syncopated rhythms.
+    </rdcl-tool-link>
   </rdcl-tools>
 </>
