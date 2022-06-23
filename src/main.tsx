@@ -10,17 +10,21 @@ import './styles/main.sass'
 import { updateScreenType } from './slices/screen'
 import { store } from './store'
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const root = createRoot(document.getElementById('root')!)
-root.render(
-  <Provider store={ store }>
-    <BrowserRouter>
-      <React.StrictMode>
-        <App/>
-      </React.StrictMode>
-    </BrowserRouter>
-  </Provider>,
-)
+export class RdclDev extends HTMLElement {
+  connectedCallback() {
+    const root = createRoot(this)
+    root.render(
+      <Provider store={ store }>
+        <BrowserRouter>
+          <React.StrictMode>
+            <App/>
+          </React.StrictMode>
+        </BrowserRouter>
+      </Provider>,
+    )
+  }
+}
+window.customElements.define('rdcl-dev', RdclDev)
 
 window.addEventListener('resize', () => {
   store.dispatch(updateScreenType())
