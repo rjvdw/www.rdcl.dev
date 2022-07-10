@@ -52,7 +52,7 @@
     "cypress": "^9.5.0",
     "cypress-cucumber-preprocessor": "^4.3.1",
     "eslint": "^8.14.0",
-    "eslint-plugin-editorconfig": "^3.2.0",
+    "eslint-plugin-editorconfig": "^4.0.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
