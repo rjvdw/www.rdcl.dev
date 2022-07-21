@@ -11,9 +11,9 @@ Feature: Tools/DropRates
       | field       | value |
       | drop rate   | .25   |
       | nr attempts | 250   |
-    Then the chance is 46.52
-    And the 95th percentile is 1196
-    And the 99th percentile is 1840
+    Then the chance is "46.52"
+    And the 95th percentile is "1196"
+    And the 99th percentile is "1840"
 
   Scenario: User clears the drop rate and number of attempts.
     When the user enters:
@@ -22,7 +22,7 @@ Feature: Tools/DropRates
       | nr attempts |       |
     Then the drop rate is ""
     And the nr attempts is ""
-    And the chance is 0
+    And the chance is "0"
     And the 95th percentile is ""
     And the 99th percentile is ""
 
@@ -31,6 +31,6 @@ Feature: Tools/DropRates
       | field       | value |
       | drop rate   | 0     |
       | nr attempts | 100   |
-    Then the chance is 0.00
+    Then the chance is "0.00"
     And the 95th percentile is ""
     And the 99th percentile is ""

@@ -11,21 +11,21 @@ Feature: Tools/BMI
       | field  | value |
       | weight | 75    |
       | height | 185   |
-    Then bmi has value 21.91
+    Then bmi has value "21.91"
 
   Scenario: User enters their height and BMI.
     When the user enters:
       | field  | value |
       | height | 185   |
       | bmi    | 22    |
-    Then weight has value 75.3
+    Then weight has value "75.3"
 
   Scenario: User clears the weight field.
     When the user enters:
       | field  | value |
       | weight |       |
     Then weight has value ""
-    And bmi has value 0
+    And bmi has value "0"
 
   Scenario: User clears the weight and the height field.
     When the user enters:
@@ -42,5 +42,5 @@ Feature: Tools/BMI
       | weight | 60    |
       | height | 170   |
     And the user refreshes the page
-    Then weight has value 60
-    And height has value 170
+    Then weight has value "60"
+    And height has value "170"

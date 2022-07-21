@@ -1,24 +1,31 @@
-import { DataTable, Then, When } from '@badeball/cypress-cucumber-preprocessor'
+import { DataTable, defineParameterType, Then, When } from '@badeball/cypress-cucumber-preprocessor'
 import { normalizeHtml } from '../../../support/step_definitions/util'
 
-When(/^the user enters the numbers (?<numbers>.*)$/, (numbers: string) => {
-  const nrs = numbers.split(/\D+/g)
+defineParameterType({
+  name: 'numbers',
+  regexp: /\d+(?:\D+\d+)*/,
+  transformer: numbers => numbers
+    .split(/\D+/g)
+    .map(number => parseInt(number)),
+})
+
+When('the user enters the numbers {numbers}', (numbers: number[]) => {
   for (let i = 0; i < 6; i += 1) {
     cy.get(`[data-testid="cd-inp-${ i + 1 }"]`)
       .clear()
-      .type(nrs[i])
+      .type(String(numbers[i]))
   }
 })
 
-When(/^the user enters a target of (?<target>.*)$/, (target: string) => {
-  cy.get('[data-testid="cd-inp-target"]').clear().type(target)
+When('the user enters a target of {int}', (target: number) => {
+  cy.get('[data-testid="cd-inp-target"]').clear().type(String(target))
 })
 
-When(/^the user tries to find a solution$/, () => {
+When('the user tries to find a solution', () => {
   cy.get('main > form button').click()
 })
 
-Then(/^the following solution is found:$/, (data: DataTable) => {
+Then('the following solution is found:', (data: DataTable) => {
   const expectedHtml = `
     <h2>Solution</h2>
     <ul>
@@ -34,7 +41,7 @@ Then(/^the following solution is found:$/, (data: DataTable) => {
     })
 })
 
-Then(/^no solution is found$/, () => {
+Then('no solution is found', () => {
   cy.get('[data-testid="cd-solution"]')
     .then(($el: JQuery<HTMLElement>) => {
       expect(normalizeHtml($el.html())).to.equal(normalizeHtml(`

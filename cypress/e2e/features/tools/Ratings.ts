@@ -1,6 +1,12 @@
-import { DataTable, Then, When } from '@badeball/cypress-cucumber-preprocessor'
+import { DataTable, defineParameterType, Then, When } from '@badeball/cypress-cucumber-preprocessor'
 
-When(/^the user enters:$/, (data: DataTable) => {
+defineParameterType({
+  name: 'field',
+  regexp: /total|positive review count|percentage|score/,
+  transformer: getSelector,
+})
+
+When('the user enters:', (data: DataTable) => {
   for (const [field, value] of data.rows()) {
     const selector = getSelector(field)
     if (value === '') {
@@ -11,8 +17,8 @@ When(/^the user enters:$/, (data: DataTable) => {
   }
 })
 
-Then(/^the (?<field>total|positive review count|percentage|score) is (?<value>""|.*)$/, (field: string, value: string) => {
-  cy.get(getSelector(field))
+Then('the {field} is {string}', (selector: string, value: string) => {
+  cy.get(selector)
     .should('have.value', value == '""' ? '' : value)
 })
 

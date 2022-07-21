@@ -1,14 +1,20 @@
-import { Then, When } from '@badeball/cypress-cucumber-preprocessor'
+import { defineParameterType, Then, When } from '@badeball/cypress-cucumber-preprocessor'
 
-When(/^the user enters "(?<value>.*)"$/, (value: string) => {
+defineParameterType({
+  name: 'radix',
+  regexp: /binary|decimal|hex/,
+  transformer: parseRadix,
+})
+
+When('the user enters {string}', (value: string) => {
   cy.get('[data-testid="ascii-converter-plain-text"]').clear().type(value)
 })
 
-When(/^the user chooses to convert to (?<radix>binary|decimal|hex)$/, (radix: string) => {
-  cy.get(`[data-testid="ascii-converter-radix-${ parseRadix(radix) }"]`).click()
+When('the user chooses to convert to {radix}', (radix: 2|10|16) => {
+  cy.get(`[data-testid="ascii-converter-radix-${ radix }"]`).click()
 })
 
-Then(/^the result is "(?<result>.*)"$/, (result: string) => {
+Then('the result is {string}', (result: string) => {
   cy.get('[data-testid="ascii-converter-ascii"]')
     .should('have.value', result)
 })

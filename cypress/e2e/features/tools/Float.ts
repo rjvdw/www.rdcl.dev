@@ -1,15 +1,21 @@
-import { DataTable, Then, When } from '@badeball/cypress-cucumber-preprocessor'
+import { DataTable, defineParameterType, Then, When } from '@badeball/cypress-cucumber-preprocessor'
 import { normalizeHtml } from '../../../support/step_definitions/util'
 
-When(/^the user enters (?<value>.*)$/, (value: string) => {
+defineParameterType({
+  name: 'precision',
+  regexp: /(single|double) precision/,
+  transformer: s => s,
+})
+
+When('the user enters {}', (value: string) => {
   cy.get('[data-testid="float-input"]').clear().type(value)
 })
 
-When(/^the user chooses (?<precision>single|double) precision$/, (precision: string) => {
+When('the user chooses {precision}', (precision: string) => {
   cy.get(`[data-testid="float-type-input-${ precision }"]`).click()
 })
 
-Then(/^the analysis shows the following:$/, (data: DataTable) => {
+Then('the analysis shows the following:', (data: DataTable) => {
   const analysis = parseData(data)
   const expectedHtml = `
   <tbody>
