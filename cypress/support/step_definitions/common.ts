@@ -1,5 +1,4 @@
-import { TableDefinition } from 'cypress-cucumber-preprocessor'
-import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
+import { DataTable, Given, Then, When } from '@badeball/cypress-cucumber-preprocessor'
 import { normalizeHtml } from './util'
 
 Given(/^the current page is (?<path>.+)$/, (path: string) => {
@@ -14,7 +13,7 @@ When(/^the user refreshes the page$/, () => {
   cy.reload()
 })
 
-When(/^the user enters the following:$/, (data: TableDefinition) => {
+When(/^the user enters the following:$/, (data: DataTable) => {
   for (const [selector, value] of data.rows()) {
     if (value === '') {
       cy.get(selector).clear()

@@ -1,7 +1,6 @@
-import { TableDefinition } from 'cypress-cucumber-preprocessor'
-import { Then } from 'cypress-cucumber-preprocessor/steps'
+import { DataTable, Then } from '@badeball/cypress-cucumber-preprocessor'
 
-Then(/^the following tools are present:$/, (data: TableDefinition) => {
+Then(/^the following tools are present:$/, (data: DataTable) => {
   for (const [tool, url, description] of data.rows()) {
     cy.get('main rdcl-tool-link')
       .filter(function (this: HTMLElement) {

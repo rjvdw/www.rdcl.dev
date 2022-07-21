@@ -1,6 +1,5 @@
-import { TableDefinition } from 'cypress-cucumber-preprocessor'
-import { Then, When } from 'cypress-cucumber-preprocessor/steps'
-import { normalizeHtml } from '../../../common/util'
+import { DataTable, Then, When } from '@badeball/cypress-cucumber-preprocessor'
+import { normalizeHtml } from '../../../support/step_definitions/util'
 
 When(/^the user enters the numbers (?<numbers>.*)$/, (numbers: string) => {
   const nrs = numbers.split(/\D+/g)
@@ -19,7 +18,7 @@ When(/^the user tries to find a solution$/, () => {
   cy.get('main > form button').click()
 })
 
-Then(/^the following solution is found:$/, (data: TableDefinition) => {
+Then(/^the following solution is found:$/, (data: DataTable) => {
   const expectedHtml = `
     <h2>Solution</h2>
     <ul>

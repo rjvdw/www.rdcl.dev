@@ -1,6 +1,5 @@
-import { TableDefinition } from 'cypress-cucumber-preprocessor'
-import { Then, When } from 'cypress-cucumber-preprocessor/steps'
-import { normalizeHtml } from '../../../common/util'
+import { DataTable, Then, When } from '@badeball/cypress-cucumber-preprocessor'
+import { normalizeHtml } from '../../../support/step_definitions/util'
 
 When(/^the user enters (?<value>.*)$/, (value: string) => {
   cy.get('[data-testid="float-input"]').clear().type(value)
@@ -10,7 +9,7 @@ When(/^the user chooses (?<precision>single|double) precision$/, (precision: str
   cy.get(`[data-testid="float-type-input-${ precision }"]`).click()
 })
 
-Then(/^the analysis shows the following:$/, (data: TableDefinition) => {
+Then(/^the analysis shows the following:$/, (data: DataTable) => {
   const analysis = parseData(data)
   const expectedHtml = `
   <tbody>
@@ -58,7 +57,7 @@ type FloatAnalysis = {
   },
 }
 
-function parseData(data: TableDefinition): FloatAnalysis {
+function parseData(data: DataTable): FloatAnalysis {
   const result: Record<string, string> = {}
   let sn: string = ''
   for (const [field, value] of data.rows()) {

@@ -33,9 +33,9 @@
     "redux": "^4.1.2"
   },
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^11.5.1",
     "@cypress/browserify-preprocessor": "^3.0.2",
     "@svgr/webpack": "^6.2.0",
-    "@types/cypress-cucumber-preprocessor": "^4.0.1",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-router-dom": "^5.3.3",
@@ -44,8 +44,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.5.1",
-    "cypress": "^9.5.0",
-    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress": "^10.3.1",
     "eslint": "^8.14.0",
     "eslint-plugin-editorconfig": "^4.0.2",
     "eslint-plugin-import": "^2.26.0",
@@ -63,8 +62,5 @@
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.3",
     "yaml-loader": "^0.8.0"
-  },
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true
   }
 }

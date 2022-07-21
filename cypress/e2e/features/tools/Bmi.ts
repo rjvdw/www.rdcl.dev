@@ -1,7 +1,6 @@
-import { TableDefinition } from 'cypress-cucumber-preprocessor'
-import { Then, When } from 'cypress-cucumber-preprocessor/steps'
+import { DataTable, Then, When } from '@badeball/cypress-cucumber-preprocessor'
 
-When(/^the user enters:$/, (data: TableDefinition) => {
+When(/^the user enters:$/, (data: DataTable) => {
   for (const [field, value] of data.rows()) {
     const selector = `[data-testid="${ field }"]`
     if (value === '') {

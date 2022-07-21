@@ -1,4 +1,4 @@
-import { Then, When } from 'cypress-cucumber-preprocessor/steps'
+import { Then, When } from '@badeball/cypress-cucumber-preprocessor'
 
 When(/^the user enters "(?<value>.*)"$/, (value: string) => {
   cy.get('[data-testid="ascii-converter-plain-text"]').clear().type(value)
