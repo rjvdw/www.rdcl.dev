@@ -1,11 +1,6 @@
 export {}
 
 declare global {
-  interface Window {
-    axios: unknown,
-    netlifyIdentity: unknown,
-  }
-
   namespace JSX {
     interface IntrinsicElements {
       'rdcl-grid': unknown, // TODO: RdclGrid,

@@ -2,7 +2,6 @@ import { createSelector } from '@reduxjs/toolkit'
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { selectIsLoggedIn } from '../slices/auth'
 import { selectActiveRoute } from '../slices/routes'
 import { selectScreenType } from '../slices/screen'
 import {
@@ -32,7 +31,6 @@ export const SideMenu: React.FunctionComponent = () => {
   const ref: React.MutableRefObject<null | HTMLElement> = useRef(null)
 
   const activeRoute = useSelector(selectActiveRoute)
-  const loggedIn = useSelector(selectIsLoggedIn)
   const screenType = useSelector(selectScreenType)
   const collapsed = useSelector(selectIsCollapsed)
 
@@ -85,13 +83,6 @@ export const SideMenu: React.FunctionComponent = () => {
         <Icon.Tools slot="icon"/>
         Tools
       </rdcl-side-menu-item>
-
-      { loggedIn && (
-        <rdcl-side-menu-item href="/health" active={ attr(activeRoute === 'health') } onClick={ () => close() }>
-          <Icon.Health slot="icon"/>
-          Health
-        </rdcl-side-menu-item>
-      ) }
     </rdcl-side-menu>
   )
 }
