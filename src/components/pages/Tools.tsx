@@ -10,6 +10,7 @@ const Countdown = React.lazy(() => import('../tools/Countdown'))
 const DropRates = React.lazy(() => import('../tools/DropRates'))
 const Float = React.lazy(() => import('../tools/Float'))
 const Html = React.lazy(() => import('../tools/Html'))
+const MarkdownViewer = React.lazy(() => import('../tools/MarkdownViewer'))
 const Ratings = React.lazy(() => import('../tools/Ratings'))
 const Syncopation = React.lazy(() => import('../tools/Syncopation'))
 const Timestamp = React.lazy(() => import('../tools/Timestamp'))
@@ -46,6 +47,11 @@ export const Tools = () =>
         <Route path="/bmi" element={ <>
           <Title path={ ['bmi', 'tools'] }/>
           <Bmi/>
+        </> }/>
+
+        <Route path="/markdown-viewer" element={ <>
+          <Title path={ ['markdown viewer', 'tools'] }/>
+          <MarkdownViewer/>
         </> }/>
 
         <Route path="/ratings" element={ <>

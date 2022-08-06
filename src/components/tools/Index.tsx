@@ -38,6 +38,10 @@ export const Index = () => <>
       Body Mass Index calculator.
     </rdcl-tool-link>
     <rdcl-tool-link>
+      <Link slot="link" to="/tools/markdown-viewer">Markdown viewer</Link>
+      View a markdown file in your browser.
+    </rdcl-tool-link>
+    <rdcl-tool-link>
       <Link slot="link" to="/tools/ratings">How to read a rating</Link>
       Given how many reviews out of a total number of reviews are positive, computes a score.
     </rdcl-tool-link>
