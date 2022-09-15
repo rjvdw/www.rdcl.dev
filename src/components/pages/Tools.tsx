@@ -12,7 +12,6 @@ const Float = React.lazy(() => import('../tools/Float'))
 const Html = React.lazy(() => import('../tools/Html'))
 const MarkdownViewer = React.lazy(() => import('../tools/MarkdownViewer'))
 const Ratings = React.lazy(() => import('../tools/Ratings'))
-const Syncopation = React.lazy(() => import('../tools/Syncopation'))
 const Timestamp = React.lazy(() => import('../tools/Timestamp'))
 
 export const Tools = () =>
@@ -57,11 +56,6 @@ export const Tools = () =>
         <Route path="/ratings" element={ <>
           <Title path={ ['ratings', 'tools'] }/>
           <Ratings/>
-        </> }/>
-
-        <Route path="/syncopation" element={ <>
-          <Title path={ ['syncopation', 'tools'] }/>
-          <Syncopation/>
         </> }/>
 
         <Route path="/timestamp" element={ <>
