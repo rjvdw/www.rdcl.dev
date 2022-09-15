@@ -30,7 +30,7 @@ export const App: React.FunctionComponent = () => {
               </> }/>
 
               <Route path="/tools/*" element={ <>
-                <Title title="tools"/>
+                <Title>tools</Title>
                 <SetActiveRoute route="tools"/>
                 <Tools/>
               </> }/>

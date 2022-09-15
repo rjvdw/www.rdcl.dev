@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { FunctionComponent, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { ErrorBoundary } from '../ErrorBoundary'
 import { Title } from '../Title'
@@ -19,52 +19,52 @@ export const Tools = () =>
     <Suspense fallback={ <rdcl-spinner/> }>
       <Routes>
         <Route path="/ascii" element={ <>
-          <Title path={ ['ascii', 'tools'] }/>
+          <ToolsTitle>ascii</ToolsTitle>
           <Ascii/>
         </> }/>
 
         <Route path="/float" element={ <>
-          <Title path={ ['float', 'tools'] }/>
+          <ToolsTitle>float</ToolsTitle>
           <Float/>
         </> }/>
 
         <Route path="/html" element={ <>
-          <Title path={ ['html elements', 'tools'] }/>
+          <ToolsTitle>html elements</ToolsTitle>
           <Html/>
         </> }/>
 
         <Route path="/countdown" element={ <>
-          <Title path={ ['countdown', 'tools'] }/>
+          <ToolsTitle>countdown</ToolsTitle>
           <Countdown/>
         </> }/>
 
         <Route path="/drop-rates" element={ <>
-          <Title path={ ['drop rates', 'tools'] }/>
+          <ToolsTitle>drop rates</ToolsTitle>
           <DropRates/>
         </> }/>
 
         <Route path="/bmi" element={ <>
-          <Title path={ ['bmi', 'tools'] }/>
+          <ToolsTitle>bmi</ToolsTitle>
           <Bmi/>
         </> }/>
 
         <Route path="/markdown-viewer" element={ <>
-          <Title path={ ['markdown viewer', 'tools'] }/>
+          <ToolsTitle>markdown viewer</ToolsTitle>
           <MarkdownViewer/>
         </> }/>
 
         <Route path="/ratings" element={ <>
-          <Title path={ ['ratings', 'tools'] }/>
+          <ToolsTitle>ratings</ToolsTitle>
           <Ratings/>
         </> }/>
 
         <Route path="/timestamp" element={ <>
-          <Title path={ ['timestamp', 'tools'] }/>
+          <ToolsTitle>timestamp</ToolsTitle>
           <Timestamp/>
         </> }/>
 
         <Route path="*" element={ <>
-          <Title title="tools"/>
+          <Title>tools</Title>
           <Index/>
         </> }/>
       </Routes>
@@ -72,3 +72,7 @@ export const Tools = () =>
   </ErrorBoundary>
 
 export default Tools
+
+const ToolsTitle: FunctionComponent<{ children: string }> = ({ children }) => (
+  <Title>{ [children, 'tools'] }</Title>
+)
