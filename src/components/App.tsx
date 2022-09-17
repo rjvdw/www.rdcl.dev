@@ -2,9 +2,9 @@ import React, { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import { selectScreenType } from '../slices/screen'
+import { ActiveRoute } from './ActiveRoute'
 import { ErrorBoundary } from './ErrorBoundary'
 import { PageHeader } from './PageHeader'
-import { SetActiveRoute } from './SetActiveRoute'
 import { SideMenu } from './SideMenu'
 import { Title } from './Title'
 import { Home } from './pages/Home'
@@ -25,13 +25,13 @@ export const App: React.FunctionComponent = () => {
             <Routes>
               <Route path="/" element={ <>
                 <Title/>
-                <SetActiveRoute route="home"/>
+                <ActiveRoute>home</ActiveRoute>
                 <Home/>
               </> }/>
 
               <Route path="/tools/*" element={ <>
                 <Title>tools</Title>
-                <SetActiveRoute route="tools"/>
+                <ActiveRoute>tools</ActiveRoute>
                 <Tools/>
               </> }/>
             </Routes>
