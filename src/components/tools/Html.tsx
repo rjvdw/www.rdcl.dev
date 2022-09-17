@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 const INPUT_ATTRS = {
   inputMode: ['none', 'text', 'tel', 'url', 'email', 'numeric', 'decimal', 'search'],
@@ -12,15 +12,15 @@ export const Html = () => <>
   <h2>Input Attributes</h2>
   <rdcl-input-grid>
     { Object.entries(INPUT_ATTRS).flatMap(([attr, vals]) => (
-      <React.Fragment key={ attr }>
+      <Fragment key={ attr }>
         <h3 data-span={ 2 }>{ attr }</h3>
         { vals.map(val => (
-          <React.Fragment key={ val }>
+          <Fragment key={ val }>
             <label htmlFor={ `${ attr }-${ val }` }><code>{ val }</code></label>
             <input id={ `${ attr }-${ val }` } type="text" { ...{ [attr]: val } }/>
-          </React.Fragment>
+          </Fragment>
         )) }
-      </React.Fragment>
+      </Fragment>
     )) }
   </rdcl-input-grid>
 </>
