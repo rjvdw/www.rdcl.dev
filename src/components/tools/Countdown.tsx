@@ -1,4 +1,4 @@
-import React, { useId, useState } from 'react'
+import React, { DetailedHTMLProps, FunctionComponent, InputHTMLAttributes, useId, useState } from 'react'
 
 type Operation = (n1: number, n2: number) => number | null
 type AllOperations = {
@@ -145,8 +145,8 @@ export default Countdown
 
 type CDInputProps = {
   set: (value: number | string) => void,
-} & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-const CDInput: React.FunctionComponent<CDInputProps> = ({ set, ...props }) =>
+} & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+const CDInput: FunctionComponent<CDInputProps> = ({ set, ...props }) =>
   <input
     type="number"
     inputMode="numeric"

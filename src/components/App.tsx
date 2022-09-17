@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { FunctionComponent, Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import { selectScreenType } from '../slices/screen'
@@ -10,7 +10,7 @@ import { Title } from './Title'
 import { Home } from './pages/Home'
 import { Tools } from './pages/Tools'
 
-export const App: React.FunctionComponent = () => {
+export const App: FunctionComponent = () => {
   const screenType = useSelector(selectScreenType)
 
   return <>

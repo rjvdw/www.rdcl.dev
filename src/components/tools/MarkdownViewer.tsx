@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useId, useState } from 'react'
+import React, { ChangeEventHandler, Fragment, useId, useState } from 'react'
 import './MarkdownViewer.styles.sass'
 import ReactMarkdown from 'react-markdown'
 
@@ -62,7 +62,7 @@ export const MarkdownViewer = () => {
     </rdcl-input-grid>
 
     { data.map(entry => (
-      <React.Fragment key={ entry.file.name }>
+      <Fragment key={ entry.file.name }>
         <h2>File: { entry.file.name }</h2>
         {
           entry.type === 'valid' ? (
@@ -82,7 +82,7 @@ export const MarkdownViewer = () => {
               </p>
             </>
           ) }
-      </React.Fragment>
+      </Fragment>
     )) }
   </>
 }

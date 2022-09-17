@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { useSelector } from 'react-redux'
 import { RdclSideMenu } from '../../elements/grid/rdcl-side-menu'
 import { selectActiveRoute } from '../../slices/routes'
@@ -8,7 +8,7 @@ import { Icon } from '../icons'
 import { selectIsCollapsed } from './selectIsCollapsed'
 import { useSideMenuControls } from './useSideMenuControls'
 
-export const SideMenu: React.FunctionComponent = () => {
+export const SideMenu: FunctionComponent = () => {
   const activeRoute = useSelector(selectActiveRoute)
   const screenType = useSelector(selectScreenType)
   const collapsed = useSelector(selectIsCollapsed)
