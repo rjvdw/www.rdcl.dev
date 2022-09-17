@@ -4,7 +4,7 @@ import { RdclSideMenu } from '../../elements/grid/rdcl-side-menu'
 import { selectActiveRoute } from '../../slices/routes'
 import { selectScreenType } from '../../slices/screen'
 import { attr } from '../../util/component'
-import { Icon } from '../icons'
+import { Icon } from '../Icon'
 import { selectIsCollapsed } from './selectIsCollapsed'
 import { useSideMenuControls } from './useSideMenuControls'
 

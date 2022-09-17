@@ -1,7 +1,6 @@
 import { FunctionComponent, SVGProps } from 'react'
-import Home from './home.svg'
-import Remove from './remove.svg'
-import Tools from './tools.svg'
+import { ReactComponent as Home } from '../icons/home.svg'
+import { ReactComponent as Tools } from '../icons/tools.svg'
 
 /**
  * Additional properties that exist on SVG elements but are not recognized.
@@ -16,5 +15,4 @@ type ReactSvgComponent = FunctionComponent<Props>
 export const Icon = {
   Home: Home as ReactSvgComponent,
   Tools: Tools as ReactSvgComponent,
-  Remove: Remove as ReactSvgComponent,
 }

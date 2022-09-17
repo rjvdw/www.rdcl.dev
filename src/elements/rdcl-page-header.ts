@@ -1,9 +1,20 @@
 import { css, html, LitElement } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { ScreenType } from '../slices/screen'
+import { CustomElementAttributes } from './types/CustomElementAttributes'
 
-@customElement('rdcl-page-header')
 export class RdclPageHeader extends LitElement {
-  @property({ type: String }) screentype: string | undefined
+  screentype?: ScreenType
+
+  constructor() {
+    super()
+    this.screentype = undefined
+  }
+
+  static get properties() {
+    return {
+      screentype: { type: String },
+    }
+  }
 
   static get styles() {
     // language=CSS
@@ -68,5 +79,24 @@ export class RdclPageHeader extends LitElement {
       cancelable: true,
       composed: true,
     }))
+  }
+}
+
+customElements.define('rdcl-page-header', RdclPageHeader)
+
+interface RdclPageHeaderAttributes extends CustomElementAttributes<RdclPageHeader> {
+  screentype: ScreenType
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'rdcl-page-header': RdclPageHeader
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'rdcl-page-header': RdclPageHeaderAttributes
+    }
   }
 }

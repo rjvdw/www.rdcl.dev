@@ -1,7 +1,6 @@
 import { css, html, LitElement } from 'lit'
-import { customElement } from 'lit/decorators.js'
+import { CustomElementAttributes } from '../types/CustomElementAttributes'
 
-@customElement('rdcl-tools')
 export class RdclTools extends LitElement {
   static get styles() {
     // language=CSS
@@ -22,5 +21,23 @@ export class RdclTools extends LitElement {
     return html`
       <slot></slot>
     `
+  }
+}
+
+customElements.define('rdcl-tools', RdclTools)
+
+interface RdclToolsAttributes extends CustomElementAttributes<RdclTools> {
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'rdcl-tools': RdclTools
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'rdcl-tools': RdclToolsAttributes
+    }
   }
 }

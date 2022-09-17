@@ -1,9 +1,20 @@
 import { css, html, LitElement } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { ScreenType } from '../../slices/screen'
+import { CustomElementAttributes } from '../types/CustomElementAttributes'
 
-@customElement('rdcl-grid')
 export class RdclGrid extends LitElement {
-  @property({ type: String }) screentype: string | undefined
+  screentype?: ScreenType
+
+  constructor() {
+    super()
+    this.screentype = undefined
+  }
+
+  static get properties() {
+    return {
+      screentype: { type: String },
+    }
+  }
 
   static get styles() {
     // language=CSS
@@ -47,5 +58,24 @@ export class RdclGrid extends LitElement {
       <slot name="side-menu"></slot>
       <slot></slot>
     `
+  }
+}
+
+customElements.define('rdcl-grid', RdclGrid)
+
+interface RdclGridAttributes extends CustomElementAttributes<RdclGrid> {
+  screentype: ScreenType
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'rdcl-grid': RdclGrid
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'rdcl-grid': RdclGridAttributes
+    }
   }
 }

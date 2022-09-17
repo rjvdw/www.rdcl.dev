@@ -1,11 +1,20 @@
 import { css, html, LitElement } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { CustomElementAttributes } from '../types/CustomElementAttributes'
+import { FlagAttribute } from '../types/FlagAttribute'
 
-@customElement('rdcl-side-menu-item')
 export class RdclSideMenuItem extends LitElement {
-  @property() icon: string | undefined
-  @property() href: string | undefined
-  @property() accesskey: string | undefined
+  href?: string
+
+  constructor() {
+    super()
+    this.href = undefined
+  }
+
+  static get properties() {
+    return {
+      href: { type: String },
+    }
+  }
 
   static get styles() {
     // language=CSS
@@ -66,5 +75,25 @@ export class RdclSideMenuItem extends LitElement {
         <span class="content"><slot></slot></span>
       </a>
     `
+  }
+}
+
+customElements.define('rdcl-side-menu-item', RdclSideMenuItem)
+
+interface RdclSideMenuItemAttributes extends CustomElementAttributes<RdclSideMenuItem> {
+  href: string
+  active: FlagAttribute
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'rdcl-side-menu-item': RdclSideMenuItem
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'rdcl-side-menu-item': RdclSideMenuItemAttributes
+    }
   }
 }

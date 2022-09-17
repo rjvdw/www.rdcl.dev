@@ -21,10 +21,10 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           browser: chrome
-          start: npm run start:ci
+          start: npm run start
           record: true
           spec: cypress/e2e/**/*.feature
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          URL: http://localhost:8888
+          URL: http://localhost:3000

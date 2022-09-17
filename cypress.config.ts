@@ -5,7 +5,7 @@ import { defineConfig } from 'cypress'
 export default defineConfig({
   projectId: 'o4io9b',
   e2e: {
-    baseUrl: 'http://localhost:8888',
+    baseUrl: 'http://localhost:3000',
     specPattern: [
       'cypress/**/*.feature',
       'cypress/**/*.spec.*',
