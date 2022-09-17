@@ -1,6 +1,10 @@
 import React from 'react'
+import { ActiveRoute } from '../components/ActiveRoute'
+import { Title } from '../components/Title'
 
 export const Home = () => <>
+  <Title/>
+  <ActiveRoute>home</ActiveRoute>
   <h1>rdcl.dev</h1>
 
   <p>

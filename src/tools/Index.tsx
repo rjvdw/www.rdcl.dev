@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Title } from '../components/Title'
 
 export const Index = () => <>
+  <Title>tools</Title>
   <h1>Tools</h1>
 
   <rdcl-tools>

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { Title } from '../components/Title'
 
 const INPUT_ATTRS = {
   inputMode: ['none', 'text', 'tel', 'url', 'email', 'numeric', 'decimal', 'search'],
@@ -7,6 +8,7 @@ const INPUT_ATTRS = {
 }
 
 export const Html = () => <>
+  <Title prefix={ ['tools'] }>html</Title>
   <h1>HTML Elements</h1>
 
   <h2>Input Attributes</h2>

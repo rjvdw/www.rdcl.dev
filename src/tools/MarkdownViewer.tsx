@@ -1,6 +1,7 @@
 import React, { ChangeEventHandler, Fragment, useId, useState } from 'react'
 import './MarkdownViewer.styles.sass'
 import ReactMarkdown from 'react-markdown'
+import { Title } from '../components/Title'
 
 type ValidEntry = {
   type: 'valid'
@@ -47,6 +48,7 @@ export const MarkdownViewer = () => {
   }
 
   return <>
+    <Title prefix={ ['tools'] }>markdown viewer</Title>
     <h1>Markdown Viewer</h1>
 
     <rdcl-input-grid>

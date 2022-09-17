@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useId, useState } from 'react'
+import { Title } from '../components/Title'
 
 const YOUTUBE_LINK = 'https://www.youtube.com/watch?v=8idr1WZ1A7Q&t=107'
 
@@ -17,6 +18,7 @@ export const Ratings = () => {
   const score = (100 * (nrPositiveNr + 1) / (nrTotalNr + 2)).toFixed(2)
 
   return <>
+    <Title prefix={ ['tools'] }>ratings</Title>
     <h1>How to read a rating</h1>
 
     <p>
