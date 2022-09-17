@@ -24,7 +24,6 @@
     "@reduxjs/toolkit": "^1.7.1",
     "classnames": "^2.3.1",
     "cypress-file-upload": "^5.0.8",
-    "date-fns": "^2.28.0",
     "history": "^5.2.0",
     "lit": "^2.2.5",
     "react": "^18",
