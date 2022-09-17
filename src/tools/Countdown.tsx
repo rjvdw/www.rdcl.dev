@@ -1,4 +1,5 @@
 import React, { DetailedHTMLProps, FunctionComponent, InputHTMLAttributes, useId, useState } from 'react'
+import { Title } from '../components/Title'
 
 type Operation = (n1: number, n2: number) => number | null
 type AllOperations = {
@@ -42,6 +43,7 @@ export const Countdown = () => {
   const [solution, setSolution] = useState<Answer[] | null | undefined>(undefined)
 
   return <>
+    <Title prefix={ ['tools'] }>countdown</Title>
     <h1>Countdown</h1>
 
     <form onSubmit={ event => {

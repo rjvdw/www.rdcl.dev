@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useId, useState } from 'react'
-import { useLocalStorage } from '../../util/hooks'
-import { Serde } from '../../util/types'
+import { Title } from '../components/Title'
+import { useLocalStorage } from '../util/hooks'
+import { Serde } from '../util/types'
 
 const serde: Serde<number | ''> = {
   serialize(value) {
@@ -28,6 +29,7 @@ export const Bmi = () => {
   }
 
   return <>
+    <Title prefix={ ['tools'] }>bmi</Title>
     <h1>BMI Calculator</h1>
 
     <rdcl-input-grid suffix>

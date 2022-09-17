@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useId, useState } from 'react'
 import './Ascii.styles.sass'
+import { Title } from '../components/Title'
 
 const ASCII_TABLE = Array(128).fill(0)
   .map((_, idx) => idx)
@@ -66,6 +67,7 @@ export const Ascii = () => {
   }
 
   return <>
+    <Title prefix={ ['tools'] }>ascii</Title>
     <h1>ASCII Converter</h1>
 
     <h2><label htmlFor={ `${ id }:plain` }>Plain Text</label></h2>

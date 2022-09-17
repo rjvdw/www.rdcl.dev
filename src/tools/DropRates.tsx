@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useId, useState } from 'react'
-import { useAutoFocusRef } from '../../util/hooks'
+import { Title } from '../components/Title'
+import { useAutoFocusRef } from '../util/hooks'
 
 export const DropRates = () => {
   const id = useId()
@@ -8,6 +9,7 @@ export const DropRates = () => {
   const dropRateRef = useAutoFocusRef<HTMLInputElement>()
 
   return <>
+    <Title prefix={ ['tools'] }>drop rates</Title>
     <h1>Drop Rate Calculator</h1>
 
     <rdcl-input-grid suffix>

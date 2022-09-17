@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useId, useState } from 'react'
-import { conditionally } from '../../util/component'
+import { Title } from '../components/Title'
+import { conditionally } from '../util/component'
 import './Float.styles.sass'
 
 type FloatPrecision = 32 | 64
@@ -15,6 +16,7 @@ export const Float = () => {
     event.target.checked && setPrecision(event.target.value === '32' ? 32 : 64)
 
   return <>
+    <Title prefix={ ['tools'] }>float</Title>
     <h1>Float Calculator</h1>
 
     <rdcl-input-grid>

@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useId, useState } from 'react'
-import { HookSetter } from '../../util/types'
+import { Title } from '../components/Title'
+import { HookSetter } from '../util/types'
 
 type SetMs = HookSetter<number | string>
 type SetTimestamp = HookSetter<number | string>
@@ -14,6 +15,7 @@ export const Timestamp = () => {
   const [iso, setIso] = useState(formatIso(now))
 
   return <>
+    <Title prefix={ ['tools'] }>timestamp</Title>
     <h1>Timestamp</h1>
 
     <rdcl-input-grid>
