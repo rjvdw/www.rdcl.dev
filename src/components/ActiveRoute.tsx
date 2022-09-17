@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setActiveRoute } from '../slices/routes'
 import { StoreDispatch } from '../store'
 
-type SetActiveRouteProps = {
-  route: string,
+type ActiveRouteProps = {
+  children?: string,
 }
 
-export const SetActiveRoute: React.FunctionComponent<SetActiveRouteProps> = ({ route }) => {
+export const ActiveRoute: FunctionComponent<ActiveRouteProps> = ({ children: route = '' }) => {
   const dispatch = useDispatch<StoreDispatch>()
   useEffect(() => {
     dispatch(setActiveRoute(route))
