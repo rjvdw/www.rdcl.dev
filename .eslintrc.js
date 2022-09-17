@@ -52,6 +52,7 @@ module.exports = {
       beforeSelfClosing: 'never',
     }],
     '@typescript-eslint/no-inferrable-types': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
   },

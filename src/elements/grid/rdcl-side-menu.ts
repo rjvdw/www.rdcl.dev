@@ -1,12 +1,26 @@
 import { css, html, LitElement, unsafeCSS } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
-import closeIcon from './icons/close-side-menu.svg'
-import toggleIcon from './icons/toggle-side-menu.svg'
+import closeIcon from '../../icons/close-side-menu.svg'
+import toggleIcon from '../../icons/toggle-side-menu.svg'
+import { ScreenType } from '../../slices/screen'
+import { CustomElementAttributes } from '../types/CustomElementAttributes'
+import { FlagAttribute } from '../types/FlagAttribute'
 
-@customElement('rdcl-side-menu')
 export class RdclSideMenu extends LitElement {
-  @property({ type: Boolean }) collapsed = false
-  @property({ type: String }) screentype: string | undefined
+  collapsed: boolean
+  screentype?: ScreenType
+
+  constructor() {
+    super()
+    this.collapsed = false
+    this.screentype = undefined
+  }
+
+  static get properties() {
+    return {
+      collapsed: { type: Boolean },
+      screentype: { type: String },
+    }
+  }
 
   static get styles() {
     // language=CSS
@@ -169,5 +183,25 @@ export class RdclSideMenu extends LitElement {
       cancelable: true,
       composed: true,
     }))
+  }
+}
+
+customElements.define('rdcl-side-menu', RdclSideMenu)
+
+interface RdclSideMenuAttributes extends CustomElementAttributes<RdclSideMenu> {
+  collapsed: FlagAttribute
+  screentype: ScreenType
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'rdcl-side-menu': RdclSideMenu
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'rdcl-side-menu': RdclSideMenuAttributes
+    }
   }
 }

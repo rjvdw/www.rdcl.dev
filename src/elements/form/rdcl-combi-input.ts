@@ -1,9 +1,16 @@
 import { css, html, LitElement } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { CustomElementAttributes } from '../types/CustomElementAttributes'
 
-@customElement('rdcl-combi-input')
+type ModeType = 'balanced' | 'maximize first' | 'maximize last'
+
 export class RdclCombiInput extends LitElement {
-  @property({ type: String }) mode: string | undefined
+  mode?: ModeType
+
+  static get properties() {
+    return {
+      mode: { type: String },
+    }
+  }
 
   static get styles() {
     // language=CSS
@@ -34,5 +41,24 @@ export class RdclCombiInput extends LitElement {
     return html`
       <slot></slot>
     `
+  }
+}
+
+customElements.define('rdcl-combi-input', RdclCombiInput)
+
+interface RdclCombiInputAttributes extends CustomElementAttributes<RdclCombiInput> {
+  mode?: ModeType
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'rdcl-combi-input': RdclCombiInput
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'rdcl-combi-input': RdclCombiInputAttributes
+    }
   }
 }

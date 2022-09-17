@@ -1,9 +1,20 @@
 import { css, html, LitElement } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { CustomElementAttributes } from '../types/CustomElementAttributes'
+import { FlagAttribute } from '../types/FlagAttribute'
 
-@customElement('rdcl-input-grid')
 export class RdclInputGrid extends LitElement {
-  @property({ type: Boolean }) suffix = false
+  suffix: boolean
+
+  constructor() {
+    super()
+    this.suffix = false
+  }
+
+  static get properties() {
+    return {
+      suffix: { type: Boolean },
+    }
+  }
 
   static get styles() {
     // language=CSS
@@ -53,5 +64,24 @@ export class RdclInputGrid extends LitElement {
     return html`
       <slot></slot>
     `
+  }
+}
+
+customElements.define('rdcl-input-grid', RdclInputGrid)
+
+interface RdclInputGridAttributes extends CustomElementAttributes<RdclInputGrid> {
+  suffix?: FlagAttribute
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'rdcl-input-grid': RdclInputGrid
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'rdcl-input-grid': RdclInputGridAttributes
+    }
   }
 }

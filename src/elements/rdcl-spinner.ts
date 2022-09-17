@@ -1,7 +1,6 @@
 import { css, html, LitElement } from 'lit'
-import { customElement } from 'lit/decorators.js'
+import { CustomElementAttributes } from './types/CustomElementAttributes'
 
-@customElement('rdcl-spinner')
 export class RdclSpinner extends LitElement {
   static get styles() {
     // language=CSS
@@ -68,5 +67,23 @@ export class RdclSpinner extends LitElement {
       <div></div>
       <div></div>
     `
+  }
+}
+
+customElements.define('rdcl-spinner', RdclSpinner)
+
+interface RdclSpinnerAttributes extends CustomElementAttributes<RdclSpinner> {
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'rdcl-spinner': RdclSpinner
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'rdcl-spinner': RdclSpinnerAttributes
+    }
   }
 }

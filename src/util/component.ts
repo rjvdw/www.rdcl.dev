@@ -3,7 +3,7 @@ import { EventHandler, ReactNode, SyntheticEvent } from 'react'
 /**
  * Workaround for boolean attributes. Returns the correct values to show or not show the attribute.
  */
-export function attr(b: boolean): string | undefined {
+export function attr(b: boolean): '' | undefined {
   return b ? '' : undefined
 }
 
