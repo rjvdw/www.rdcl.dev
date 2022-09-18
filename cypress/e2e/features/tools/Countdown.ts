@@ -11,7 +11,7 @@ defineParameterType({
 
 When('the user enters the numbers {numbers}', (numbers: number[]) => {
   for (let i = 0; i < 6; i += 1) {
-    cy.get(`[data-testid="cd-inp-${ i + 1 }"]`)
+    cy.get(`[data-testid="cd-inp-numbers.${ i }"]`)
       .clear()
       .type(String(numbers[i]))
   }
@@ -23,6 +23,11 @@ When('the user enters a target of {int}', (target: number) => {
 
 When('the user tries to find a solution', () => {
   cy.get('main > form button').click()
+})
+
+Then('no solution is shown', () => {
+  cy.get('[data-testid="cd-solution"]')
+    .should('not.exist')
 })
 
 Then('the following solution is found:', (data: DataTable) => {

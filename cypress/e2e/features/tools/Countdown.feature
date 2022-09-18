@@ -5,6 +5,7 @@ Feature: Tools/Countdown
 
   Scenario: User visits the /tools/countdown page.
     Then the page title is "countdown | tools | rdcl.dev"
+    And no solution is shown
 
   Scenario: User enters values that have a solution.
     When the user enters the numbers 100, 75, 7, 2, 5, 9
