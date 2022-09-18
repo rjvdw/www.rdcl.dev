@@ -18,7 +18,7 @@ export const Ratings = () => {
   const score = (100 * (nrPositiveNr + 1) / (nrTotalNr + 2)).toFixed(2)
 
   return <>
-    <Title prefix={ ['tools'] }>ratings</Title>
+    <Title prefix="tools">ratings</Title>
     <h1>How to read a rating</h1>
 
     <p>

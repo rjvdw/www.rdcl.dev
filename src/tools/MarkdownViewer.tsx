@@ -48,7 +48,7 @@ export const MarkdownViewer = () => {
   }
 
   return <>
-    <Title prefix={ ['tools'] }>markdown viewer</Title>
+    <Title prefix="tools">markdown viewer</Title>
     <h1>Markdown Viewer</h1>
 
     <rdcl-input-grid>

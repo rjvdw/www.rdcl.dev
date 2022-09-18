@@ -8,7 +8,7 @@ const INPUT_ATTRS = {
 }
 
 export const Html = () => <>
-  <Title prefix={ ['tools'] }>html</Title>
+  <Title prefix="tools">html</Title>
   <h1>HTML Elements</h1>
 
   <h2>Input Attributes</h2>

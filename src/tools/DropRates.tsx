@@ -7,7 +7,7 @@ export const DropRates = () => {
   const { form: { register }, chance, perc95, perc99 } = useDropRates()
 
   return <>
-    <Title prefix={ ['tools'] }>drop rates</Title>
+    <Title prefix="tools">drop rates</Title>
     <h1>Drop Rate Calculator</h1>
 
     <rdcl-input-grid suffix>

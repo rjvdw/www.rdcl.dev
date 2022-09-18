@@ -7,7 +7,7 @@ export const Bmi = () => {
   const { form: { register }, targetBmiIsShown, showTargetBmi, targetBmi } = useBmi()
 
   return <>
-    <Title prefix={ ['tools'] }>bmi</Title>
+    <Title prefix="tools">bmi</Title>
     <h1>BMI Calculator</h1>
 
     <rdcl-input-grid suffix>

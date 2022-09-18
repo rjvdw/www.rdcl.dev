@@ -15,7 +15,7 @@ export const Timestamp = () => {
   const [iso, setIso] = useState(formatIso(now))
 
   return <>
-    <Title prefix={ ['tools'] }>timestamp</Title>
+    <Title prefix="tools">timestamp</Title>
     <h1>Timestamp</h1>
 
     <rdcl-input-grid>

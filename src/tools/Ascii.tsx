@@ -23,7 +23,7 @@ export const Ascii = () => {
   } = useAscii()
 
   return <>
-    <Title prefix={ ['tools'] }>ascii</Title>
+    <Title prefix="tools">ascii</Title>
     <h1>ASCII Converter</h1>
 
     <h2><label htmlFor={ `${ id }:plain` }>Plain Text</label></h2>

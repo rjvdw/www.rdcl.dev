@@ -16,7 +16,7 @@ export const Float = () => {
     event.target.checked && setPrecision(event.target.value === '32' ? 32 : 64)
 
   return <>
-    <Title prefix={ ['tools'] }>float</Title>
+    <Title prefix="tools">float</Title>
     <h1>Float Calculator</h1>
 
     <rdcl-input-grid>

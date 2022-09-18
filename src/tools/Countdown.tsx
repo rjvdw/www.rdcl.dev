@@ -33,7 +33,7 @@ export const Countdown = () => {
   )
 
   return <>
-    <Title prefix={ ['tools'] }>countdown</Title>
+    <Title prefix="tools">countdown</Title>
     <h1>Countdown</h1>
 
     <form onSubmit={ onSubmit }>
