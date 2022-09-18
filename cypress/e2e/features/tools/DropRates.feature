@@ -22,7 +22,7 @@ Feature: Tools/DropRates
       | nr attempts |       |
     Then the drop rate is ""
     And the nr attempts is ""
-    And the chance is "0"
+    And the chance is ""
     And the 95th percentile is ""
     And the 99th percentile is ""
 
