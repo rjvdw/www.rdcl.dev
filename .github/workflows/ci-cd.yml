@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on: [ push ]
 
@@ -14,17 +14,24 @@ jobs:
             node_modules
           key: ${{ runner.os }}-targets
       - name: Install dependencies
-        run: npm install
+        run: npm clean-install
       - name: Run Linter
         run: npm run lint
-      - name: Run Tests
+      - name: Run Unit Tests
+        run: npm run test
+      - name: Run E2E Tests
         uses: cypress-io/github-action@v4
         with:
           browser: chrome
           start: npm run start
-          record: true
+# Publishing to cypress has been disabled for now.
+#          record: true
           spec: cypress/e2e/**/*.feature
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           URL: http://localhost:3000
+# Triggering Netlify deploys has been disabled for now
+#      - name: Trigger Netlify Deploy
+#        if: success() && github.ref == 'refs/heads/main'
+#        run: curl -d '{}' ${{ secrets.NETLIFY_DEPLOY_HOOK }}?trigger_branch=main
