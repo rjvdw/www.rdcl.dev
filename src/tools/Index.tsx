@@ -1,51 +1,41 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Title } from '../components/Title'
+import { ToolLink } from '../components/ToolLink'
 
 export const Index = () => <>
   <Title>tools</Title>
   <h1>Tools</h1>
 
   <rdcl-tools>
-    <rdcl-tool-link>
-      <a slot="link" href="/password.html" data-no-history>Generate Password</a>
+    <ToolLink href="/password.html" title="Generate Password">
       Securely generates a password using <code>window.crypto</code>.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
-      <Link slot="link" to="/tools/ascii">ASCII Converter</Link>
+    </ToolLink>
+    <ToolLink to="/tools/ascii" title="ASCII Converter">
       Converts between ASCII and plain text.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
-      <Link slot="link" to="/tools/float">Float Calculator</Link>
+    </ToolLink>
+    <ToolLink to="/tools/float" title="Float Calculator">
       Calculator to help with floating point numbers.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
-      <Link slot="link" to="/tools/timestamp">Timestamp</Link>
+    </ToolLink>
+    <ToolLink to="/tools/timestamp" title="Timestamp">
       Convert between Unix timestamps and ISO formatted dates.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
-      <Link slot="link" to="/tools/html">HTML Elements</Link>
+    </ToolLink>
+    <ToolLink to="/tools/html" title="HTML Elements">
       Demonstrations of assorted HTML elements.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
-      <Link slot="link" to="/tools/countdown">Countdown</Link>
+    </ToolLink>
+    <ToolLink to="/tools/countdown" title="Countdown">
       Solves the numbers game in Countdown.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
-      <Link slot="link" to="/tools/drop-rates">Drop Rate Calculator</Link>
+    </ToolLink>
+    <ToolLink to="/tools/drop-rates" title="Drop Rate Calculator">
       Given a drop rate, computes how many attempts you actually need to get your item.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
-      <Link slot="link" to="/tools/bmi">BMI Calculator</Link>
+    </ToolLink>
+    <ToolLink to="/tools/bmi" title="BMI Calculator">
       Body Mass Index calculator.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
-      <Link slot="link" to="/tools/markdown-viewer">Markdown viewer</Link>
+    </ToolLink>
+    <ToolLink to="/tools/markdown-viewer" title="Markdown viewer">
       View a markdown file in your browser.
-    </rdcl-tool-link>
-    <rdcl-tool-link>
-      <Link slot="link" to="/tools/ratings">How to read a rating</Link>
+    </ToolLink>
+    <ToolLink to="/tools/ratings" title="How to read a rating">
       Given how many reviews out of a total number of reviews are positive, computes a score.
-    </rdcl-tool-link>
+    </ToolLink>
   </rdcl-tools>
 </>
