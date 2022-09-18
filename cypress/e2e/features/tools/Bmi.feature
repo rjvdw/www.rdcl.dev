@@ -17,7 +17,7 @@ Feature: Tools/BMI
     When the user enters:
       | field  | value |
       | height | 185   |
-      | bmi    | 22    |
+    And the user enters a bmi of 22
     Then weight has value "75.3"
 
   Scenario: User clears the weight field.
@@ -25,7 +25,7 @@ Feature: Tools/BMI
       | field  | value |
       | weight |       |
     Then weight has value ""
-    And bmi has value "0"
+    And bmi has value ""
 
   Scenario: User clears the weight and the height field.
     When the user enters:

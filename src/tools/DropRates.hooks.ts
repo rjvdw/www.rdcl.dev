@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { isValid } from '../util/number'
 
 export type DropRatesForm = {
   dropRate?: number
@@ -43,10 +44,6 @@ export const useDropRates = () => {
     form,
     ...state,
   }
-}
-
-function isValid(value: number | undefined): value is number {
-  return value !== undefined && !Number.isNaN(value)
 }
 
 function computeChance(dropRate: number, nrAttempts: number): string {
