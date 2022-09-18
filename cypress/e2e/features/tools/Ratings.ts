@@ -19,7 +19,7 @@ When('the user enters:', (data: DataTable) => {
 
 Then('the {field} is {string}', (selector: string, value: string) => {
   cy.get(selector)
-    .should('have.value', value == '""' ? '' : value)
+    .should('have.value', value === '""' ? '' : value)
 })
 
 function getSelector(field: string): string {

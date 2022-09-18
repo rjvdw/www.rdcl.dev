@@ -19,5 +19,5 @@ When('the user enters:', (data: DataTable) => {
 
 Then('{field} has value {string}', (field: string, value: string) => {
   cy.get(`[data-testid="${ field }"]`)
-    .should('have.value', value == '""' ? '' : value)
+    .should('have.value', value === '""' ? '' : value)
 })
