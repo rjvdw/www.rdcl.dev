@@ -1,20 +1,16 @@
 import { useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
 import { RdclPageHeader } from '../../elements/rdcl-page-header'
-import { open as openSideMenu } from '../../slices/side-menu'
-import { StoreDispatch } from '../../store'
+import { useOpen } from '../SideMenu'
 
-export const usePageHeaderControls = () => {
-  const dispatch = useDispatch<StoreDispatch>()
-  const open = () => dispatch(openSideMenu())
-
+export const usePageHeaderRef = () => {
   const ref = useRef<RdclPageHeader>(null)
+  const open = useOpen()
 
   useEffect(() => {
     const { current } = ref
     current?.addEventListener('mobile-menu-open', open)
     return () => current?.removeEventListener('mobile-menu-open', open)
-  })
+  }, [ref, open])
 
-  return { ref }
+  return ref
 }

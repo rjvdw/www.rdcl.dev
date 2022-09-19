@@ -1,6 +1,5 @@
 import { css, html, LitElement } from 'lit'
 import { CustomElementAttributes } from '../types/CustomElementAttributes'
-import { FlagAttribute } from '../types/FlagAttribute'
 
 export class RdclSideMenuItem extends LitElement {
   href?: string
@@ -54,7 +53,7 @@ export class RdclSideMenuItem extends LitElement {
         height: var(--icon-size);
       }
 
-      :host([active]) .link {
+      :host([active]:not([active="false"])) .link {
         border-left-color: var(--theme-color);
       }
 
@@ -82,7 +81,7 @@ customElements.define('rdcl-side-menu-item', RdclSideMenuItem)
 
 interface RdclSideMenuItemAttributes extends CustomElementAttributes<RdclSideMenuItem> {
   href: string
-  active: FlagAttribute
+  active: boolean
 }
 
 declare global {

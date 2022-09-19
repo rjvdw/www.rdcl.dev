@@ -3,7 +3,6 @@ import closeIcon from '../../icons/close-side-menu.svg'
 import toggleIcon from '../../icons/toggle-side-menu.svg'
 import { ScreenType } from '../../slices/screen'
 import { CustomElementAttributes } from '../types/CustomElementAttributes'
-import { FlagAttribute } from '../types/FlagAttribute'
 
 export class RdclSideMenu extends LitElement {
   collapsed: boolean
@@ -41,7 +40,7 @@ export class RdclSideMenu extends LitElement {
         overflow: auto;
       }
 
-      :host([collapsed]) {
+      :host([collapsed]:not([collapsed="false"])) {
         width: var(--base-size);
       }
 
@@ -59,7 +58,7 @@ export class RdclSideMenu extends LitElement {
         transition: left 600ms ease;
       }
 
-      :host([screentype="mobile"][collapsed]) {
+      :host([screentype="mobile"][collapsed]:not([collapsed="false"])) {
         left: calc(-100vw - 1rem);
       }
 
@@ -118,7 +117,7 @@ export class RdclSideMenu extends LitElement {
         height: 2rem;
       }
 
-      :host([collapsed]) .toggle > span {
+      :host([collapsed]:not([collapsed="false"])) .toggle > span {
         transform: rotate(180deg);
       }
 
@@ -189,7 +188,7 @@ export class RdclSideMenu extends LitElement {
 customElements.define('rdcl-side-menu', RdclSideMenu)
 
 interface RdclSideMenuAttributes extends CustomElementAttributes<RdclSideMenu> {
-  collapsed: FlagAttribute
+  collapsed: boolean
   screentype: ScreenType
 }
 

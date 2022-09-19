@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react'
 import { useSelector } from 'react-redux'
 import { selectScreenType } from '../../slices/screen'
-import { usePageHeaderControls } from './usePageHeaderControls'
+import { usePageHeaderRef } from './PageHeader.hooks'
 
 export const PageHeader: FunctionComponent = () => {
   const screenType = useSelector(selectScreenType)
-  const { ref } = usePageHeaderControls()
+  const ref = usePageHeaderRef()
 
   return (
     <rdcl-page-header

@@ -1,6 +1,5 @@
 import { css, html, LitElement } from 'lit'
 import { CustomElementAttributes } from '../types/CustomElementAttributes'
-import { FlagAttribute } from '../types/FlagAttribute'
 
 export class RdclInputGrid extends LitElement {
   suffix: boolean
@@ -70,7 +69,7 @@ export class RdclInputGrid extends LitElement {
 customElements.define('rdcl-input-grid', RdclInputGrid)
 
 interface RdclInputGridAttributes extends CustomElementAttributes<RdclInputGrid> {
-  suffix?: FlagAttribute
+  suffix?: boolean
 }
 
 declare global {

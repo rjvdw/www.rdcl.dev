@@ -1,13 +1,6 @@
 import { EventHandler, ReactNode, SyntheticEvent } from 'react'
 
 /**
- * Workaround for boolean attributes. Returns the correct values to show or not show the attribute.
- */
-export function attr(b: boolean): '' | undefined {
-  return b ? '' : undefined
-}
-
-/**
  * Convenience method for preventing the default on an event handler.
  */
 export function preventDefault<T extends SyntheticEvent>(handler: EventHandler<T>): EventHandler<T> {
