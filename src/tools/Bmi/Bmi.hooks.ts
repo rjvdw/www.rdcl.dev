@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
-import { isValid, rounded } from '../util/number'
+import { isValid, rounded } from '../../util/number'
 
 export type BmiForm = {
   weight?: number

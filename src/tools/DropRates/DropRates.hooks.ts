@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { isValid } from '../util/number'
+import { isValid } from '../../util/number'
 
 export type DropRatesForm = {
   dropRate?: number

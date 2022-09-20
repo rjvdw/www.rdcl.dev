@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useId, useState } from 'react'
-import { Title } from '../components/Title'
+import { Title } from '../../components/Title'
 
 const YOUTUBE_LINK = 'https://www.youtube.com/watch?v=8idr1WZ1A7Q&t=107'
 

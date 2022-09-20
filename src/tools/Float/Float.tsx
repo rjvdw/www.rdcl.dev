@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useId, useState } from 'react'
-import { Title } from '../components/Title'
-import { conditionally } from '../util/component'
+import { Title } from '../../components/Title'
+import { conditionally } from '../../util/component'
 import './Float.styles.sass'
 
 type FloatPrecision = 32 | 64

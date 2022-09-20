@@ -1,7 +1,7 @@
 import React, { useId } from 'react'
-import './Ascii.styles.sass'
-import { Title } from '../components/Title'
+import { Title } from '../../components/Title'
 import { useAscii } from './Ascii.hooks'
+import './Ascii.styles.sass'
 
 const ASCII_TABLE = Array(128).fill(0)
   .map((_, idx) => idx)

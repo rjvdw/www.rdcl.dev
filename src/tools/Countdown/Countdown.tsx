@@ -1,6 +1,6 @@
 import React, { useId } from 'react'
 import { FieldPath } from 'react-hook-form'
-import { Title } from '../components/Title'
+import { Title } from '../../components/Title'
 import { CountdownForm, useCountdown } from './Countdown.hooks'
 
 type CDInputType = (

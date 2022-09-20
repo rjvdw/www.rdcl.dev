@@ -13,14 +13,8 @@ export const Index = () => <>
     <ToolLink to="/tools/ascii" title="ASCII Converter">
       Converts between ASCII and plain text.
     </ToolLink>
-    <ToolLink to="/tools/float" title="Float Calculator">
-      Calculator to help with floating point numbers.
-    </ToolLink>
-    <ToolLink to="/tools/timestamp" title="Timestamp">
-      Convert between Unix timestamps and ISO formatted dates.
-    </ToolLink>
-    <ToolLink to="/tools/html" title="HTML Elements">
-      Demonstrations of assorted HTML elements.
+    <ToolLink to="/tools/bmi" title="BMI Calculator">
+      Body Mass Index calculator.
     </ToolLink>
     <ToolLink to="/tools/countdown" title="Countdown">
       Solves the numbers game in Countdown.
@@ -28,8 +22,8 @@ export const Index = () => <>
     <ToolLink to="/tools/drop-rates" title="Drop Rate Calculator">
       Given a drop rate, computes how many attempts you actually need to get your item.
     </ToolLink>
-    <ToolLink to="/tools/bmi" title="BMI Calculator">
-      Body Mass Index calculator.
+    <ToolLink to="/tools/float" title="Float Calculator">
+      Calculator to help with floating point numbers.
     </ToolLink>
     <ToolLink to="/tools/markdown-viewer" title="Markdown viewer">
       View a markdown file in your browser.

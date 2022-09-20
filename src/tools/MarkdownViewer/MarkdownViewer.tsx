@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, Fragment, useId, useState } from 'react'
-import './MarkdownViewer.styles.sass'
 import ReactMarkdown from 'react-markdown'
-import { Title } from '../components/Title'
+import { Title } from '../../components/Title'
+import './MarkdownViewer.styles.sass'
 
 type ValidEntry = {
   type: 'valid'

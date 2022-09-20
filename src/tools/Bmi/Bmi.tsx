@@ -1,5 +1,5 @@
 import React, { useId } from 'react'
-import { Title } from '../components/Title'
+import { Title } from '../../components/Title'
 import { useBmi } from './Bmi.hooks'
 
 export const Bmi = () => {

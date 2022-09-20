@@ -15,10 +15,8 @@ const Bmi = React.lazy(() => import('../tools/Bmi'))
 const Countdown = React.lazy(() => import('../tools/Countdown'))
 const DropRates = React.lazy(() => import('../tools/DropRates'))
 const Float = React.lazy(() => import('../tools/Float'))
-const Html = React.lazy(() => import('../tools/Html'))
 const MarkdownViewer = React.lazy(() => import('../tools/MarkdownViewer'))
 const Ratings = React.lazy(() => import('../tools/Ratings'))
-const Timestamp = React.lazy(() => import('../tools/Timestamp'))
 
 export const App: FunctionComponent = () => {
   const screenType = useSelector(selectScreenType)
@@ -35,16 +33,14 @@ export const App: FunctionComponent = () => {
             <Routes>
               <Route path="/" element={ <Home/> }/>
               <Route path="/tools" element={ <Tools/> }>
-                <Route path="" element={ <Index/> }/>
+                <Route index element={ <Index/> }/>
                 <Route path="ascii" element={ <Ascii/> }/>
                 <Route path="bmi" element={ <Bmi/> }/>
                 <Route path="countdown" element={ <Countdown/> }/>
                 <Route path="drop-rates" element={ <DropRates/> }/>
                 <Route path="float" element={ <Float/> }/>
-                <Route path="html" element={ <Html/> }/>
                 <Route path="markdown-viewer" element={ <MarkdownViewer/> }/>
                 <Route path="ratings" element={ <Ratings/> }/>
-                <Route path="timestamp" element={ <Timestamp/> }/>
               </Route>
               <Route path="*" element={ <NotFound/> }/>
             </Routes>
