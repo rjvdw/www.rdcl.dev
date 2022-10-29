@@ -1,3 +1,5 @@
+@use "sass:math"
+
 $grid-cell-radius: 2.5rem
 $grid-padding: .5rem
 $grid-border: .5rem
@@ -45,16 +47,16 @@ body
     white-space: nowrap
 
   &--offset-odd &__row--odd
-    margin-left: $grid-cell-radius / $half-hex-width
+    margin-left: math.div($grid-cell-radius, $half-hex-width)
 
   &--offset-even &__row--even
-    margin-left: $grid-cell-radius / $half-hex-width
+    margin-left: math.div($grid-cell-radius, $half-hex-width)
 
   &__cell
     background: #fff8dc
     display: inline-grid
     place-items: center
-    width: 2*$grid-cell-radius / $half-hex-width
+    width: math.div(2*$grid-cell-radius, $half-hex-width)
     height: 2*$grid-cell-radius
     overflow: hidden
     font-size: 8px
