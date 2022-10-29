@@ -6,3 +6,119 @@ functions = "api/functions"
 [functions]
 node_bundler = "esbuild"
 external_node_modules = ["express"]
+
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/:splat"
+status = 200
+force = true
+
+[[redirects]]
+from = "/de-wet"
+to = "/silly/de-wet.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/nietes"
+to = "/silly/nietes.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/welles"
+to = "/silly/welles.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/sus"
+to = "/silly/sus.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/pfizer-batches"
+to = "/silly/pfizer-batches.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/hex-grid"
+to = "/html-hex-grid/index.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/hex-grid/*"
+to = "/html-hex-grid/:splat.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Download-Options = "noopen"
+X-Frame-Options = "DENY"
+X-Permitted-Cross-Domain-Policies = "master-only"
+X-XSS-Protection = "1; mode=block"
+Strict-Transport-Security = "max-age=63072000; preload"
+Permissions-Policy = "interest-cohort=()"
+Referrer-Policy = "no-referrer"
+Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' 'unsafe-inline'"
+
+[[headers]]
+for = "/favicon.ico"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/silly/*"
+[headers.values]
+Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+
+[[headers]]
+for = "/password.html"
+[headers.values]
+Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+
+[[headers]]
+for = "/de-wet"
+[headers.values]
+Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+
+[[headers]]
+for = "/nietes"
+[headers.values]
+Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+
+[[headers]]
+for = "/welles"
+[headers.values]
+Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+
+[[headers]]
+for = "/sus"
+[headers.values]
+Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+
+[[headers]]
+for = "/pfizer-batches"
+[headers.values]
+Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+
+[[headers]]
+for = "/hex-grid"
+[headers.values]
+Content-Security-Policy = "default-src 'self'"
+
+[[headers]]
+for = "/hex-grid/*"
+[headers.values]
+Content-Security-Policy = "default-src 'self'"
