@@ -40,7 +40,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src cypress",
+    "lint": "eslint src cypress public",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky install"
   },
