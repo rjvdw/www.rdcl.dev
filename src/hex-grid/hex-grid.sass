@@ -1,6 +1,7 @@
 $grid-cell-radius: 2.5rem
 $grid-padding: .5rem
 $grid-border: .5rem
+$half-hex-width: 1.1547
 
 body
   background: #543210
@@ -24,14 +25,17 @@ body
     height: 1.5*$grid-cell-radius
     white-space: nowrap
 
-    &--odd
-      margin-left: $grid-cell-radius / 1.1547
+  &--offset-odd &__row--odd
+    margin-left: $grid-cell-radius / $half-hex-width
+
+  &--offset-even &__row--even
+    margin-left: $grid-cell-radius / $half-hex-width
 
   &__cell
     background: #fff8dc
     display: inline-grid
     place-items: center
-    width: 2*$grid-cell-radius / 1.1547
+    width: 2*$grid-cell-radius / $half-hex-width
     height: 2*$grid-cell-radius
     overflow: hidden
     font-size: 8px
@@ -40,3 +44,6 @@ body
 
     &:hover
       background: #855e42
+
+    &--hidden
+      visibility: hidden
