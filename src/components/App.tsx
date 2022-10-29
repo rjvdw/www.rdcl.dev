@@ -1,6 +1,6 @@
 import React, { FunctionComponent, Suspense } from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { Home } from '../pages/Home'
 import { NotFound } from '../pages/NotFound'
 import { Tools } from '../pages/Tools'
@@ -9,6 +9,8 @@ import { Index } from '../tools/Index'
 import { ErrorBoundary } from './ErrorBoundary'
 import { PageHeader } from './PageHeader'
 import { SideMenu } from './SideMenu'
+
+const HexGrid = React.lazy(() => import('../hex-grid'))
 
 const Ascii = React.lazy(() => import('../tools/Ascii'))
 const Bmi = React.lazy(() => import('../tools/Bmi'))
@@ -20,6 +22,15 @@ const Ratings = React.lazy(() => import('../tools/Ratings'))
 
 export const App: FunctionComponent = () => {
   const screenType = useSelector(selectScreenType)
+  const location = useLocation()
+
+  if (location.pathname.startsWith('/hex-grid')) {
+    return <>
+      <Suspense fallback={ <rdcl-spinner/> }>
+        <HexGrid/>
+      </Suspense>
+    </>
+  }
 
   return <>
     <rdcl-grid screentype={ screenType }>

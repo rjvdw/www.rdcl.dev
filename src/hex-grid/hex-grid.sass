@@ -1,0 +1,42 @@
+$grid-cell-radius: 2.5rem
+$grid-padding: .5rem
+$grid-border: .5rem
+
+body
+  background: #543210
+  display: grid
+  place-items: center
+
+#root
+  display: contents
+
+.hex-grid
+  background: #caa472
+  border: $grid-border solid #855e42
+  border-radius: 1.5rem
+  box-shadow: .25rem .25rem .5rem #000a, inset .1rem .1rem .25rem #000c
+  padding: $grid-padding
+    bottom: $grid-padding + 0.5*$grid-cell-radius
+  margin: auto
+
+  &__row
+    overflow: visible
+    height: 1.5*$grid-cell-radius
+    white-space: nowrap
+
+    &--odd
+      margin-left: $grid-cell-radius / 1.1547
+
+  &__cell
+    background: #fff8dc
+    display: inline-grid
+    place-items: center
+    width: 2*$grid-cell-radius / 1.1547
+    height: 2*$grid-cell-radius
+    overflow: hidden
+    font-size: 8px
+    white-space: nowrap
+    clip-path: polygon(50% 1%, 1% 25%, 1% 75%, 50% 99%, 99% 75%, 99% 25%)
+
+    &:hover
+      background: #855e42
