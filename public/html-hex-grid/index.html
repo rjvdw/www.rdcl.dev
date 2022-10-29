@@ -4,8 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HTML Hex Grid</title>
+
   <link rel="stylesheet" href="/html-hex-grid/main.css">
-  <script async type="module" src="/html-hex-grid/main.js"></script>
+
+  <script defer type="module">
+    import { initializeHexGrid } from './grid.mjs'
+
+    initializeHexGrid(document.querySelector('.hex-grid'))
+  </script>
 </head>
 
 <body>

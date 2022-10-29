@@ -1,18 +1,4 @@
-if (document.readyState === 'interactive' || document.readyState === 'complete') {
-  initialize()
-} else {
-  window.addEventListener('DOMContentLoaded', () => {
-    initialize()
-  })
-}
-
-function initialize() {
-  document.querySelectorAll('.hex-grid').forEach(hg => {
-    initializeHexGrid(hg)
-  })
-}
-
-function initializeHexGrid(el) {
+export function initializeHexGrid(el) {
   const gridStartX = +el.dataset.gridStartX
   const gridEndX = +el.dataset.gridEndX
   const gridStartY = +el.dataset.gridStartY

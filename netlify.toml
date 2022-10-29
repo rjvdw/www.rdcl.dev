@@ -7,54 +7,14 @@ functions = "api/functions"
 node_bundler = "esbuild"
 external_node_modules = ["express"]
 
+# Let Netlify functions handle /api/-calls
 [[redirects]]
 from = "/api/*"
 to = "/.netlify/functions/:splat"
 status = 200
 force = true
 
-[[redirects]]
-from = "/de-wet"
-to = "/silly/de-wet.html"
-status = 200
-force = true
-
-[[redirects]]
-from = "/nietes"
-to = "/silly/nietes.html"
-status = 200
-force = true
-
-[[redirects]]
-from = "/welles"
-to = "/silly/welles.html"
-status = 200
-force = true
-
-[[redirects]]
-from = "/sus"
-to = "/silly/sus.html"
-status = 200
-force = true
-
-[[redirects]]
-from = "/pfizer-batches"
-to = "/silly/pfizer-batches.html"
-status = 200
-force = true
-
-[[redirects]]
-from = "/hex-grid"
-to = "/html-hex-grid/index.html"
-status = 200
-force = true
-
-[[redirects]]
-from = "/hex-grid/*"
-to = "/html-hex-grid/:splat.html"
-status = 200
-force = true
-
+# All requests that could not be resolved are routed to the SPA
 [[redirects]]
 from = "/*"
 to = "/index.html"
@@ -79,46 +39,6 @@ for = "/favicon.ico"
 Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-for = "/silly/*"
+for = "/*.html"
 [headers.values]
 Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
-
-[[headers]]
-for = "/password.html"
-[headers.values]
-Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
-
-[[headers]]
-for = "/de-wet"
-[headers.values]
-Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
-
-[[headers]]
-for = "/nietes"
-[headers.values]
-Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
-
-[[headers]]
-for = "/welles"
-[headers.values]
-Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
-
-[[headers]]
-for = "/sus"
-[headers.values]
-Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
-
-[[headers]]
-for = "/pfizer-batches"
-[headers.values]
-Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
-
-[[headers]]
-for = "/hex-grid"
-[headers.values]
-Content-Security-Policy = "default-src 'self'"
-
-[[headers]]
-for = "/hex-grid/*"
-[headers.values]
-Content-Security-Policy = "default-src 'self'"
