@@ -1,36 +1,7 @@
-import './catan.sass'
-import { range } from '../lib/Range'
-import { RowSpec, Spec } from './types'
-
-const CELL_CHAR_WIDTH = 3
-const CELL_MODIFIERS: Record<string, Tile> = {
-  f: 'forest',
-  p: 'pasture',
-  F: 'field',
-  h: 'hill',
-  m: 'mountain',
-  g: 'gold field',
-  o: 'ocean',
-  d: 'desert',
-}
-
-export type Tile =
-  | 'forest'
-  | 'pasture'
-  | 'field'
-  | 'hill'
-  | 'mountain'
-  | 'gold field'
-  | 'ocean'
-  | 'desert'
-
-export type CatanCellSpec = {
-  outOfBounds: true
-} | {
-  outOfBounds: false
-  modifier: Tile
-  value: number
-}
+import { range } from '../../lib/Range'
+import { RowSpec, Spec } from '../types'
+import { CELL_CHAR_WIDTH, CELL_MODIFIERS } from './constants'
+import { CatanCellSpec, Tile } from './types'
 
 /**
  * Parse the raw board specification.

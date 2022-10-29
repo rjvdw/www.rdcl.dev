@@ -1,6 +1,8 @@
-import classNames from 'classnames'
 import React from 'react'
-import { Range } from '../lib/Range'
+import { DebugToggle } from './DebugToggle'
+import { HexGridCell } from './HexGrid.Cell'
+import { HexGridContainer } from './HexGrid.Container'
+import { HexGridRow } from './HexGrid.Row'
 import { BaseCellSpec, Spec } from './types'
 
 const DEFAULT_OFFSET = 'odd'
@@ -10,79 +12,63 @@ type HexGridProps<T extends BaseCellSpec> = {
   debug?: boolean
 }
 
-export class HexGrid<T extends BaseCellSpec> extends React.Component<HexGridProps<T>, never> {
+type HexGridState = {
+  debugFromProps: boolean
+  debug: boolean
+}
+
+export class HexGrid<T extends BaseCellSpec> extends React.Component<HexGridProps<T>, HexGridState> {
+
+  constructor(props: HexGridProps<T>) {
+    super(props)
+    const debug = props.debug ?? false
+    this.state = {
+      debugFromProps: debug,
+      debug,
+    }
+  }
+
+  static getDerivedStateFromProps<T extends BaseCellSpec>(props: HexGridProps<T>, state: HexGridState): HexGridState {
+    const debug = props.debug ?? false
+    if (debug !== state.debugFromProps) {
+      return {
+        debugFromProps: debug,
+        debug,
+      }
+    }
+
+    return state
+  }
+
   render() {
-    const { children: spec, debug = false } = this.props
+    const { children: spec } = this.props
+    const { debug } = this.state
     const boundY = Array.from(spec.bounds.y)
 
+    const toggleDebug = (v: boolean) => this.setState({ debug: v })
+    const getBoundX = (row: number) => Array.from(spec.cells?.[row]?.bounds ?? spec.bounds.x)
+    const getCellSpec = (row: number, col: number) => spec.cells?.[row]?.cells?.[col]
+
     return (
-      <div className={ hexGridClassName(spec) }>
-        { boundY.map((row) => (
-          <div
-            key={ row }
-            className={ hexGridRowClassName(row) }
-            data-y={ row }
-          >
-            { Array.from(getBoundX(spec, row)).map((col) => (
-              <div
-                key={ col }
-                className={ hexGridCellClassName(col, spec.cells?.[row]?.cells?.[col]) }
-                data-x={ col - Math.floor(row / 2) }
-                data-y={ row }
-              >{ debug ? `${ row },${ col }` : null }</div>
-            )) }
-          </div>
-        )) }
+      <div className="hex-grid-wrapper">
+        <DebugToggle debug={ debug } toggle={ toggleDebug }/>
+
+        <HexGridContainer offset={ spec.offset ?? DEFAULT_OFFSET }>
+          { boundY.map(row => (
+            <HexGridRow key={ row } row={ row }>
+              { getBoundX(row).map(col => (
+                <HexGridCell
+                  key={ col }
+                  row={ row }
+                  col={ col }
+                  debug={ debug }
+                  cellSpec={ getCellSpec(row, col) }
+                />
+              )) }
+            </HexGridRow>
+          )) }
+        </HexGridContainer>
       </div>
     )
   }
-}
-
-/**
- * Determine the x-bounds from the specification.
- *
- * @param spec
- * @param row
- */
-function getBoundX(spec: Spec, row: number): Range {
-  return spec.cells?.[row]?.bounds ?? spec.bounds.x
-}
-
-/**
- * Determine the class for the hex grid container.
- *
- * @param spec
- */
-function hexGridClassName(spec: Spec): string {
-  return classNames(
-    'hex-grid',
-    `hex-grid--offset-${ spec.offset ?? DEFAULT_OFFSET }`,
-  )
-}
-
-/**
- * Determine the class for a row within the hex grid.
- *
- * @param row
- */
-function hexGridRowClassName(row: number): string {
-  return classNames(
-    'hex-grid__row',
-    `hex-grid__row--${ row % 2 === 0 ? 'even' : 'odd' }`,
-  )
-}
-
-/**
- * Determine the class for a cell within the hex grid.
- *
- * @param col
- * @param cellSpec
- */
-function hexGridCellClassName(col: number, cellSpec?: BaseCellSpec): string {
-  return classNames(
-    'hex-grid__cell',
-    `hex-grid__cell--${ col % 2 === 0 ? 'even' : 'odd' }`,
-    cellSpec?.modifier && `hex-grid__cell--${ cellSpec?.modifier?.replace(/\s/g, '-') }`,
-    cellSpec?.outOfBounds && 'hex-grid__cell--hidden',
-  )
 }
