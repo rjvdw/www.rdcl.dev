@@ -1,6 +1,6 @@
 import { Tile } from './types'
 
-export const CELL_CHAR_WIDTH = 3
+export const CELL_CHAR_WIDTH = 1
 export const CELL_MODIFIERS: Record<string, Tile> = {
   f: 'forest',
   p: 'pasture',
@@ -8,6 +8,6 @@ export const CELL_MODIFIERS: Record<string, Tile> = {
   h: 'hill',
   m: 'mountain',
   g: 'gold field',
-  o: 'ocean',
+  _: 'ocean',
   d: 'desert',
 }

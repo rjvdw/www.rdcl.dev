@@ -1,14 +1,16 @@
 import { range } from '../../lib/Range'
 import { RowSpec, Spec } from '../types'
 import { CELL_CHAR_WIDTH, CELL_MODIFIERS } from './constants'
-import { CatanCellSpec, Tile } from './types'
+import { CatanCellSpec } from './types'
+import { isResourceTile } from './util'
 
 /**
  * Parse the raw board specification.
  *
  * @param str
+ * @param values
  */
-export function catan([str]: TemplateStringsArray): Spec<CatanCellSpec> {
+export function catan([str]: TemplateStringsArray, values: number[]): Spec<CatanCellSpec> {
   const lines = splitLines(str)
   const offset = determineOffset(lines)
   const cellSpecs: Record<number, RowSpec<CatanCellSpec>> = {}
@@ -20,9 +22,10 @@ export function catan([str]: TemplateStringsArray): Spec<CatanCellSpec> {
 
   let maxX = 0
   let maxY = 0
+  const valuesIter = valuesToIter(values)
   for (const line of lines) {
     const row = maxY += 1
-    const cells = splitCells(line, isOffset(row))
+    const cells = splitCells(line, isOffset(row), valuesIter)
     const rowSpec = cellSpecs[row] = {
       bounds: range`1..=${ cells.length }`,
       cells: {} as Record<number, CatanCellSpec>,
@@ -35,6 +38,10 @@ export function catan([str]: TemplateStringsArray): Spec<CatanCellSpec> {
     for (const [col, cell] of withIndex(cells)) {
       rowSpec.cells[col] = cell
     }
+  }
+
+  if (!valuesIter.next().done) {
+    throw new InvalidCatanBoard('too many values provided')
   }
 
   for (let row = 1; row <= maxY; row += 1) {
@@ -55,6 +62,17 @@ export function catan([str]: TemplateStringsArray): Spec<CatanCellSpec> {
     },
     offset,
     cells: cellSpecs,
+  }
+}
+
+/**
+ * Returns an iterator that iterates over the provided values.
+ *
+ * @param values
+ */
+function* valuesToIter(values: number[]) {
+  for (let i = 0; i < values.length; i += 1) {
+    yield values[i]
   }
 }
 
@@ -93,8 +111,9 @@ function splitLines(board: string): string[] {
  *
  * @param line
  * @param isOffset Whether this line includes an offset
+ * @param values
  */
-function splitCells(line: string, isOffset: boolean): CatanCellSpec[] {
+function splitCells(line: string, isOffset: boolean, values: Generator<number>): CatanCellSpec[] {
   if (!line.startsWith('|') || !line.endsWith('|')) {
     throw new InvalidCatanBoard()
   }
@@ -102,28 +121,41 @@ function splitCells(line: string, isOffset: boolean): CatanCellSpec[] {
   const lineStart = 1 + (isOffset ? CELL_CHAR_WIDTH : 0)
   const lineEnd = line.length - 1
 
+  const parseCellSpec = (cell: string): CatanCellSpec => {
+    if (cell === '') {
+      return { outOfBounds: true }
+    }
+
+    const tile = CELL_MODIFIERS[cell]
+    if (!tile) {
+      throw new InvalidCatanBoard(`could not parse tile ${ cell }`)
+    }
+
+    if (isResourceTile(tile)) {
+      const value = values.next()
+      if (value.done) {
+        throw new InvalidCatanBoard('insufficient values provided')
+      }
+      return {
+        outOfBounds: false,
+        modifier: tile,
+        value: value.value,
+      }
+    }
+
+    return {
+      outOfBounds: false,
+      modifier: tile,
+    }
+  }
+
   const cells: CatanCellSpec[] = []
   for (let i = lineStart; i < lineEnd; i += 2 * CELL_CHAR_WIDTH) {
-    const value = line.substring(i, i + CELL_CHAR_WIDTH).trim()
-
-    cells.push(value === '' ? {
-      outOfBounds: true,
-    } : {
-      outOfBounds: false,
-      value: parseInt(value.substring(1)),
-      modifier: parseModifier(value[0]),
-    })
+    const cell = line.substring(i, i + CELL_CHAR_WIDTH).trim()
+    cells.push(parseCellSpec(cell))
   }
 
   return cells
-}
-
-function parseModifier(value: string): Tile {
-  const tile = CELL_MODIFIERS[value]
-  if (!tile) {
-    throw new InvalidCatanBoard(`could not parse tile ${ value }`)
-  }
-  return tile
 }
 
 /**
