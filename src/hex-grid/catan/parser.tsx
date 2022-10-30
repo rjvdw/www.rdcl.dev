@@ -1,3 +1,4 @@
+import React from 'react'
 import { range } from '../../lib/Range'
 import { RowSpec, Spec } from '../types'
 import { CELL_CHAR_WIDTH, CELL_MODIFIERS } from './constants'
@@ -140,6 +141,7 @@ function splitCells(line: string, isOffset: boolean, values: Generator<number>):
         outOfBounds: false,
         modifier: tile,
         value: value.value,
+        element: () => <div className="value-display">{ value.value }</div>,
       }
     }
 

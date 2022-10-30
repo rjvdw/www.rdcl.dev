@@ -1,4 +1,9 @@
+import React, { FunctionComponent } from 'react'
 import { Range } from '../lib/Range'
+
+export type BaseCellSpecElementProps = {
+  children?: React.ReactNode
+}
 
 export type BaseCellSpec = {
   /**
@@ -10,6 +15,11 @@ export type BaseCellSpec = {
    * If specified, an additional BEM-modifier is added (hex-grid__cell--${modifier}).
    */
   modifier?: string
+
+  /**
+   * What to render as the content of this cell.
+   */
+  element?: FunctionComponent<BaseCellSpecElementProps>
 }
 
 export type RowSpec<T extends BaseCellSpec = BaseCellSpec> = {

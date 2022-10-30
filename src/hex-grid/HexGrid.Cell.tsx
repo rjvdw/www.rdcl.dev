@@ -21,6 +21,15 @@ export const HexGridCell: FunctionComponent<HexGridCellProps> = (
     data-x={ col - Math.floor(row / 2) }
     data-y={ row }
   >
-    { debug ? `${ row },${ col }` : null }
+    { (() => {
+      const inner = debug ? <>`${ row },${ col }`</> : <>&nbsp;</>
+
+      if (cellSpec?.element) {
+        const Element = cellSpec.element
+        return <Element>{ inner }</Element>
+      }
+
+      return inner
+    })() }
   </div>
 )

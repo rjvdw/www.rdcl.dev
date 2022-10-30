@@ -1,3 +1,6 @@
+import { FunctionComponent } from 'react'
+import { BaseCellSpecElementProps } from '../types'
+
 export type ResourceTile =
   | 'forest'
   | 'pasture'
@@ -18,6 +21,7 @@ export type CatanCellSpec = {
   outOfBounds: false
   modifier: ResourceTile
   value: number
+  element: FunctionComponent<BaseCellSpecElementProps>
 } | {
   outOfBounds: false
   modifier: OtherTile
