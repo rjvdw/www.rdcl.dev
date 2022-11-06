@@ -1,4 +1,5 @@
 import { FunctionComponent, SVGProps } from 'react'
+import { ReactComponent as CopyToClipboard } from '../icons/copy-to-clipboard.svg'
 import { ReactComponent as Home } from '../icons/home.svg'
 import { ReactComponent as Tools } from '../icons/tools.svg'
 
@@ -15,4 +16,5 @@ type ReactSvgComponent = FunctionComponent<Props>
 export const Icon = {
   Home: Home as ReactSvgComponent,
   Tools: Tools as ReactSvgComponent,
+  CopyToClipboard: CopyToClipboard as ReactSvgComponent,
 }

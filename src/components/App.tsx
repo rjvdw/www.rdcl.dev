@@ -19,6 +19,7 @@ const DropRates = React.lazy(() => import('../tools/DropRates'))
 const Float = React.lazy(() => import('../tools/Float'))
 const MarkdownViewer = React.lazy(() => import('../tools/MarkdownViewer'))
 const Ratings = React.lazy(() => import('../tools/Ratings'))
+const Uuid = React.lazy(() => import('../tools/Uuid'))
 
 export const App: FunctionComponent = () => {
   const screenType = useSelector(selectScreenType)
@@ -52,6 +53,7 @@ export const App: FunctionComponent = () => {
                 <Route path="float" element={ <Float/> }/>
                 <Route path="markdown-viewer" element={ <MarkdownViewer/> }/>
                 <Route path="ratings" element={ <Ratings/> }/>
+                <Route path="uuid" element={ <Uuid/> }/>
               </Route>
               <Route path="*" element={ <NotFound/> }/>
             </Routes>

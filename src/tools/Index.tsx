@@ -31,5 +31,8 @@ export const Index = () => <>
     <ToolLink to="/tools/ratings" title="How to read a rating">
       Given how many reviews out of a total number of reviews are positive, computes a score.
     </ToolLink>
+    <ToolLink to="/tools/uuid" title="Generate a UUID">
+      Generate UUIDs.
+    </ToolLink>
   </rdcl-tools>
 </>

@@ -1,8 +1,14 @@
 @use "vars"
 
+$border-width: 1px
+$input-padding: .5rem
+$input-line-height: 1.2rem
+$box-spacing: calc(2*$input-padding + 2*$border-width)
+
 @mixin focusable-ui-component
   font-size: 1rem
-  padding: .5rem
+  padding: $input-padding
+  line-height: $input-line-height
   outline: none
 
   &:focus
@@ -28,7 +34,7 @@ input:not([type=range]):not([type=radio]):not([type=checkbox]), textarea
 button, input[type=button]
   @include focusable-ui-component
 
-  border: thin solid #333
+  border: $border-width solid #333
   background: #ccc
   color: #333
   cursor: pointer
@@ -37,3 +43,19 @@ button, input[type=button]
   &:disabled
     color: #666
     border-color: #666
+
+.icon-button
+  aspect-ratio: 1/1
+  display: inline-grid
+  place-items: center
+  padding: .25rem
+  height: calc($input-line-height + $box-spacing)
+
+  &.link
+    height: $input-line-height
+
+.selection-option
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 1ch

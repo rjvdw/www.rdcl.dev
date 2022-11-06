@@ -31,6 +31,16 @@ a
     color: vars.$base-link-color--hover
     text-decoration: underline
 
+button.link
+  border: none
+  background: transparent
+  padding: 0
+  margin: 0
+  display: inline
+  font: inherit
+
+  @extend a
+
 ol, ul
   margin-block-start: 0
   margin-block-end: .75rem
@@ -40,3 +50,6 @@ ol, ul
 
 li
   margin-bottom: .75rem
+
+.keep-together
+  white-space: nowrap

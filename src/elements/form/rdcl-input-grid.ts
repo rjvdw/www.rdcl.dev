@@ -3,15 +3,18 @@ import { CustomElementAttributes } from '../types/CustomElementAttributes'
 
 export class RdclInputGrid extends LitElement {
   suffix: boolean
+  nolabel: boolean
 
   constructor() {
     super()
     this.suffix = false
+    this.nolabel = false
   }
 
   static get properties() {
     return {
       suffix: { type: Boolean },
+      nolabel: { type: Boolean },
     }
   }
 
@@ -25,9 +28,17 @@ export class RdclInputGrid extends LitElement {
         grid-row-gap: .5rem;
         align-items: center;
       }
+      
+      :host([nolabel]) {
+        grid-template-columns: 1fr;
+      }
 
       :host([suffix]) {
         grid-template-columns: max-content 1fr max-content;
+      }
+      
+      :host([suffix][nolabel]) {
+        grid-template-columns: 1fr max-content;
       }
 
       ::slotted(hr) {
@@ -70,6 +81,7 @@ customElements.define('rdcl-input-grid', RdclInputGrid)
 
 interface RdclInputGridAttributes extends CustomElementAttributes<RdclInputGrid> {
   suffix?: boolean
+  nolabel?: boolean
 }
 
 declare global {
