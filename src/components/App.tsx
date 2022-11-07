@@ -7,6 +7,7 @@ import { Tools } from '../pages/Tools'
 import { selectScreenType } from '../slices/screen'
 import { Index } from '../tools/Index'
 import { ErrorBoundary } from './ErrorBoundary'
+import { Notifications } from './Notifications'
 import { PageHeader } from './PageHeader'
 import { SideMenu } from './SideMenu'
 
@@ -63,5 +64,7 @@ export const App: FunctionComponent = () => {
     </rdcl-grid>
 
     { screenType === 'mobile' && <SideMenu/> }
+
+    <Notifications/>
   </>
 }

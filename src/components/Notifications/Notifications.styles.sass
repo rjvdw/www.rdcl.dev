@@ -1,0 +1,34 @@
+$notification-spacing: .5rem
+
+.notifications
+  position: absolute
+  right: 0
+  bottom: 0
+  z-index: 100
+  display: flex
+  flex-direction: column-reverse
+
+  &__notification
+    border: 2px solid #333
+    cursor: pointer
+    padding: .5rem
+    margin: 0
+      bottom: $notification-spacing
+      right: $notification-spacing
+    width: 25rem
+    max-width: calc(100vw - 2*$notification-spacing)
+
+    &--info
+      border-color: #063
+      background: #ded
+      color: #063
+
+    &--warning
+      border-color: #640
+      background: #ffc
+      color: #640
+
+    &--error
+      border-color: #933
+      background: #fdd
+      color: #933
