@@ -14,6 +14,20 @@ to = "/.netlify/functions/:splat"
 status = 200
 force = true
 
+# Alias for Mastodon account
+[[redirects]]
+from = "/.well-known/webfinger"
+query = {resource = "acct:rj@rdcl.dev"}
+to = "https://mastodon.nl/.well-known/webfinger?resource=acct:rdcl@mastodon.nl"
+status = 200
+force = true
+
+[[redirects]]
+from = "/@rj"
+to = "https://mastodon.nl/@rdcl"
+status = 301
+force = true
+
 # All requests that could not be resolved are routed to the SPA
 [[redirects]]
 from = "/*"
