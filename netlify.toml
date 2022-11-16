@@ -3,9 +3,9 @@ command = "npm run build"
 publish = "build"
 functions = "api/functions"
 
-[functions]
-node_bundler = "esbuild"
-external_node_modules = ["express"]
+#[functions]
+#node_bundler = "esbuild"
+#external_node_modules = ["express"]
 
 # Let Netlify functions handle /api/-calls
 [[redirects]]
@@ -14,14 +14,14 @@ to = "/.netlify/functions/:splat"
 status = 200
 force = true
 
-# Alias for Mastodon account
+# Webfinger
 [[redirects]]
 from = "/.well-known/webfinger"
-query = {resource = "acct:rj@rdcl.dev"}
-to = "https://mastodon.nl/.well-known/webfinger?resource=acct:rdcl@mastodon.nl"
+to = "/.netlify/functions/webfinger"
 status = 200
 force = true
 
+# Mastodon
 [[redirects]]
 from = "/@rj"
 to = "https://mastodon.nl/@rdcl"
