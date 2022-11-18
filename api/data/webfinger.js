@@ -12,6 +12,9 @@ exports['acct:me@ruud.online'] = exports['acct:rj@rdcl.dev'] = yaml.load(`
     - acct:rdcl@mastodon.nl
     - https://mastodon.nl/@rdcl
     - https://mastodon.nl/users/rdcl
+    - acct:rdcl@pixelfed.de
+    - https://pixelfed.de/rdcl
+    - https://pixelfed.de/users/rdcl
     - mailto:rj@rdcl.dev
     - acct:me@ruud.online
   links:
@@ -29,4 +32,13 @@ exports['acct:me@ruud.online'] = exports['acct:rj@rdcl.dev'] = yaml.load(`
       type: application/activity+json
     - rel: http://ostatus.org/schema/1.0/subscribe
       template: https://mastodon.nl/authorize_interaction?uri={uri}
+    - rel: http://webfinger.net/rel/profile-page
+      href: https://pixelfed.de/rdcl
+      type: text/html
+    - rel: http://schemas.google.com/g/2010#updates-from
+      href: https://pixelfed.de/users/rdcl.atom
+      type: application/atom+xml
+    - rel: self
+      href: https://pixelfed.de/users/rdcl
+      type: application/activity+json
 `)
