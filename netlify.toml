@@ -61,3 +61,8 @@ Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
 for = "/aoc/*"
 [headers.values]
 Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+
+[[headers]]
+for = "/rock-paper-scissors/*"
+[headers.values]
+Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
