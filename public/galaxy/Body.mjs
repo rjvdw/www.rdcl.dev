@@ -1,8 +1,14 @@
 const G = 1
 
 export class Body {
+  /** @type string */
+  #name
+
   /** @type number */
   #mass
+
+  /** type number */
+  #diameter
 
   /** @type number */
   #x
@@ -19,19 +25,25 @@ export class Body {
   /** @type HTMLDivElement */
   #el
 
+  /** @type string */
+  #color
+
   /** @type boolean */
   #mounted
 
-  constructor(name, mass, x, y, vx, vy) {
+  constructor(name, mass, diameter, x, y, vx, vy, color) {
     this.#el = document.createElement('div')
     this.#el.classList.add('body', name)
     this.#el.title = name
 
+    this.#name = name
+    this.#diameter = diameter
     this.#mass = mass
     this.#x = x
     this.#y = y
     this.#vx = vx
     this.#vy = vy
+    this.#color = color
 
     this.#render()
   }
@@ -76,7 +88,42 @@ export class Body {
     this.#x += this.#vx
     this.#y += this.#vy
 
+    for (const body of bodies) {
+      if (body !== this && this.#collidesWith(body)) {
+        if (body.#mass > this.#mass) {
+          body.#absorb(this)
+          bodies.splice(bodies.indexOf(this), 1)
+          return
+        } else {
+          this.#absorb(body)
+          bodies.splice(bodies.indexOf(body), 1)
+        }
+      }
+    }
+
     this.#render()
+  }
+
+  /**
+   * @param {Body} other
+   */
+  #absorb(other) {
+    this.#name += ` & ${ other.#name }`
+    this.#x = (this.#x * this.#mass + other.#x * other.#mass) / (this.#mass + other.#mass)
+    this.#y = (this.#y * this.#mass + other.#y * other.#mass) / (this.#mass + other.#mass)
+    this.#vx = (this.#vx * this.#mass + other.#vx * other.#mass) / (this.#mass + other.#mass)
+    this.#vy = (this.#vy * this.#mass + other.#vy * other.#mass) / (this.#mass + other.#mass)
+    this.#diameter = Math.sqrt(this.#diameter ** 2 + other.#diameter ** 2)
+    this.#mass += other.#mass
+    other.#el.remove()
+  }
+
+  /**
+   * @param {Body} other
+   * @returns {boolean}
+   */
+  #collidesWith(other) {
+    return this.distance(other) <= (this.#diameter + other.#diameter) / 2
   }
 
   /**
@@ -99,6 +146,11 @@ export class Body {
   #render() {
     this.#el.style.left = `${ this.#x }px`
     this.#el.style.top = `${ this.#y }px`
+    this.#el.style.marginLeft = `-${ this.#diameter / 2 }px`
+    this.#el.style.marginTop = `-${ this.#diameter / 2 }px`
+    this.#el.style.width = `${ this.#diameter }px`
+    this.#el.style.height = `${ this.#diameter }px`
+    this.#el.style.background = `${ this.#color }`
 
     if (this.#x < -100 || this.#x > window.innerWidth + 100 || this.#y < -100 || this.#y > window.innerHeight + 100) {
       if (this.#mounted) {

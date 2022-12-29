@@ -8,10 +8,10 @@ function init() {
   const height = window.innerHeight
 
   const bodies = [
-    new Body('sun', 100, width / 2, height / 2, 0, 0),
-    new Body('venus', 1, width / 2 - 200, height / 2, 0, .5),
-    new Body('earth', 1, width / 2 - 275, height / 2, 0, .6),
-    new Body('moon', .1, width / 2 - 300, height / 2, 0, .78),
+    new Body('sun', 100, 42, width / 2, height / 2, 0, 0, '#ff0'),
+    new Body('venus', 1, 10, width / 2 - 200, height / 2, 0, -.5, '#ee3'),
+    new Body('earth', 1, 12, width / 2 - 275, height / 2, 0, .6, '#66f'),
+    new Body('moon', .1, 2, width / 2 - 300, height / 2, 0, .78, '#aaa'),
   ]
   anchor = bodies[0]
 
