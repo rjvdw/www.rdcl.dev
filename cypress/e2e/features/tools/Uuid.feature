@@ -20,3 +20,13 @@ Feature: tools/UUID
     When the user clicks the button to generate a new UUID and copy it to their clipboard
     Then uuid has a value
     And the uuid is copied to the clipboard
+
+  Scenario: User generates multiple UUIDs
+    When the user clicks the button to generate a new UUID 10 times
+    Then uuid has a value
+    And the previously generated UUIDs are now in the history
+
+  Scenario: User clicks on a UUID in the history to copy it to the clipboard
+    Given the user has generated 10 UUIDs
+    When the user clicks a copy button in the history
+    Then the uuid is copied to the clipboard

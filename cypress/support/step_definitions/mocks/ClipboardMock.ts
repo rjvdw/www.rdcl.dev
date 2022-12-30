@@ -9,6 +9,10 @@ export class ClipboardMock {
     return this._value
   }
 
+  reset() {
+    this._value = ''
+  }
+
   static apply(mock: ClipboardMock, win: Cypress.AUTWindow) {
     if (!win.navigator.clipboard) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

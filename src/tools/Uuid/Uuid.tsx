@@ -68,7 +68,7 @@ export const Uuid: FunctionComponent = () => {
         Previous entries
         { ' ' }<span className="keep-together">(<ClearHistory clearHistory={ clearHistory }/>)</span>
       </h2>
-      <ul>
+      <ul data-testid="uuid-history">
         { history.map(entry => (
           <li key={ entry }>
             <code onDoubleClick={ historyDoubleClickHandler }>
