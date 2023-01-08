@@ -19,3 +19,21 @@ export const badRequest = () => new ResponseBuilder()
  */
 export const notFound = () => new ResponseBuilder()
   .status(404)
+
+/**
+ * Return a 405 response.
+ */
+export const methodNotAllowed = () => new ResponseBuilder()
+  .status(405)
+
+/**
+ * Return a 415 response.
+ */
+export const unsupportedMediaType = () => new ResponseBuilder()
+  .status(415)
+
+/**
+ * Return a 502 response.
+ */
+export const badGateway = () => new ResponseBuilder()
+  .status(502)
