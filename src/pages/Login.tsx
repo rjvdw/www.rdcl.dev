@@ -1,7 +1,7 @@
 import React, { useId } from 'react'
 import { ActiveRoute } from '../components/ActiveRoute'
 import { Title } from '../components/Title'
-import { useLogin } from './Login.hooks'
+import { useLogin } from './authenticationHooks'
 
 export const Login = () => {
   const id = useId()

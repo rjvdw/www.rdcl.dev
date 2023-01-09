@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { ActiveRoute } from '../components/ActiveRoute'
 import { Title } from '../components/Title'
-import { useVerifyLogin } from './Login.hooks'
+import { useVerifyLogin } from './authenticationHooks'
 
 export const VerifyLogin = () => {
   const result = useVerifyLogin()

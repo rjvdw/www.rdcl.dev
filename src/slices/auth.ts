@@ -33,6 +33,9 @@ const { reducer, actions } = createSlice({
         verificationState: 'done',
       }
     },
+    logout() {
+      return INITIAL_STATE
+    },
   },
 })
 
@@ -44,6 +47,13 @@ export const selectJwt = createSelector(
   (state: StoreState) => state.auth.jwt,
   (jwt) => jwt === undefined ? undefined : new Jwt(jwt),
 )
+
+export const logout = (): StoreThunk =>
+  async (dispatch) => {
+    delete localStorage.jwt
+    delete localStorage.sessionToken
+    dispatch(actions.logout())
+  }
 
 export const verify = (sessionToken: string, verificationCode: string): StoreThunk =>
   async (dispatch, getState) => {

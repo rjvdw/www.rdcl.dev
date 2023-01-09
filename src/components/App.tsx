@@ -14,6 +14,7 @@ import { SideMenu } from './SideMenu'
 const HexGrid = React.lazy(() => import('../hex-grid'))
 const Login = React.lazy(() => import('../pages/Login'))
 const VerifyLogin = React.lazy(() => import('../pages/VerifyLogin'))
+const Logout = React.lazy(() => import('../pages/Logout'))
 
 const Ascii = React.lazy(() => import('../tools/Ascii'))
 const Bmi = React.lazy(() => import('../tools/Bmi'))
@@ -60,6 +61,7 @@ export const App: FunctionComponent = () => {
               </Route>
               <Route path="/login" element={ <Login/> }/>
               <Route path="/login/verify" element={ <VerifyLogin/> }/>
+              <Route path="/logout" element={ <Logout/> }/>
               <Route path="*" element={ <NotFound/> }/>
             </Routes>
           </Suspense>

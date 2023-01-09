@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useNotify } from '../components/Notifications'
-import { selectJwt, verify } from '../slices/auth'
+import { logout, selectJwt, verify } from '../slices/auth'
 import { StoreDispatch, StoreState } from '../store'
 
 type LoginForm = {
@@ -75,4 +75,16 @@ export const useVerifyLogin = (): VerificationResultType => {
   }, [authState.verificationState, setVerificationResult, notify, jwt])
 
   return verificationResult
+}
+
+export const useLogout = () => {
+  const navigate = useNavigate()
+  const notify = useNotify()
+  const dispatch = useDispatch<StoreDispatch>()
+
+  return () => {
+    dispatch(logout())
+    notify('Logged out successfully')
+    navigate('/')
+  }
 }
