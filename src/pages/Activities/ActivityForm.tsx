@@ -2,6 +2,7 @@ import { format, formatISO, parseISO } from 'date-fns'
 import React, { FunctionComponent, useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNotify } from '../../components/Notifications'
+import { TagInput } from '../../components/TagInput'
 import { Activity } from './types'
 
 type ActivityFormProps = {
@@ -47,6 +48,16 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = (
           required
           { ...register('title', {
             required: true,
+          }) }
+        />
+
+        <label htmlFor={ `${ id }:labels` }>Labels</label>
+        <TagInput
+          id={ `${ id }:labels` }
+          type="text"
+          tags={ activity?.labels ?? [] }
+          { ...register('labels', {
+            setValueAs: (value: string): string[] => value.split(/\s*,\s*/g).filter(Boolean),
           }) }
         />
 

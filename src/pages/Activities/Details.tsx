@@ -78,30 +78,37 @@ const View: FunctionComponent<ViewProps> = ({ activity }) => (
       <dt>Location</dt>
       <dd>{ activity.location }</dd>
 
-      { activity.url && (
-        <>
-          <dt>URL</dt>
-          <dd>
-            <a
-              href={ activity.url }
-              target="_blank"
-              rel="noreferrer noopener nofollow"
-            >
-              { formatUrl(activity.url) }
-            </a>
-          </dd>
-        </>
-      ) }
+      { activity.url && <>
+        <dt>URL</dt>
+        <dd>
+          <a
+            href={ activity.url }
+            target="_blank"
+            rel="noreferrer noopener nofollow"
+          >
+            { formatUrl(activity.url) }
+          </a>
+        </dd>
+      </> }
 
       <dt>Starts</dt>
       <dd><Dts activity={ activity } prop="starts"/></dd>
 
-      { activity.ends && (
-        <>
-          <dt>Ends</dt>
-          <dd><Dts activity={ activity } prop="ends"/></dd>
-        </>
-      ) }
+      { activity.ends && <>
+        <dt>Ends</dt>
+        <dd><Dts activity={ activity } prop="ends"/></dd>
+      </> }
+
+      { activity.labels.length > 0 && <>
+        <dt>Labels</dt>
+        <dd>
+          <ul className="activities__labels">
+            { activity.labels.map((label, i) => (
+              <li key={ i } className="label">{ label }</li>
+            )) }
+          </ul>
+        </dd>
+      </> }
     </dl>
 
     { activity.description && (

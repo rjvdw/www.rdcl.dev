@@ -8,4 +8,5 @@ export type Activity = {
   starts: string
   ends?: string
   allDay: boolean
+  labels: string[]
 }

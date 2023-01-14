@@ -57,7 +57,13 @@ async function callApi(method: string, id?: string | Activity, activity?: Activi
   if (activity) {
     const body = new URLSearchParams()
     Object.entries(activity).forEach(([key, value]) => {
-      body.set(key, `${ value }`)
+      if (key === 'labels') {
+        for (const label of (value as string[])) {
+          body.append(key, label)
+        }
+      } else {
+        body.set(key, `${ value }`)
+      }
     })
     headers['Content-Type'] = 'application/x-www-form-urlencoded'
     config.body = body.toString()

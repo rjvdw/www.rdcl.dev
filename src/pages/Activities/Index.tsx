@@ -60,9 +60,16 @@ const ActivityCard: FunctionComponent<ActivityCardProps> = (
   { activity },
 ) => (
   <div className="activities__overview-card">
-    <h2>
-      <Link to={ `/activities/${ activity.id }` }>{ activity.title }</Link>
-    </h2>
+    <h2><Link to={ `/activities/${ activity.id }` }>{ activity.title }</Link></h2>
+
+    { activity.labels.length > 0 && (
+      <ul className="activities__labels">
+        { activity.labels.map((label, i) => (
+          <li key={ i } className="label">{ label }</li>
+        )) }
+      </ul>
+    ) }
+
     { activity.ends ? (
       <p>
         Starts: <Dts activity={ activity } prop="starts"/><br/>
@@ -71,6 +78,7 @@ const ActivityCard: FunctionComponent<ActivityCardProps> = (
     ) : (
       <p><Dts activity={ activity } prop="starts"/></p>
     ) }
+
     <p>{ activity.location }</p>
   </div>
 )

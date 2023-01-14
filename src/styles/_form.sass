@@ -18,7 +18,7 @@ $box-spacing: calc(2*$input-padding + 2*$border-width)
   &:disabled
     cursor: not-allowed
 
-input:not([type=range]):not([type=radio]):not([type=checkbox]), textarea
+input:not([type=range]):not([type=radio]):not([type=checkbox]), textarea, .input
   @include focusable-ui-component
 
   background: #fff
@@ -66,3 +66,32 @@ button, input[type=button]
 label.required::after
   content: ' *'
   color: red
+
+.tag-input
+  @include focusable-ui-component
+
+  background: #fff
+  color: #333
+  border: thin solid #666
+  min-width: 2rem
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  gap: .5rem
+  cursor: text
+
+  &:focus-within
+    outline: vars.$focus-outline
+    outline-offset: vars.$focus-offset
+
+  & > input
+    border: none !important
+    background: transparent !important
+    line-height: 1.6rem !important
+    padding: 0 !important
+    margin: 0 !important
+    outline: none !important
+
+  &__actual
+    position: absolute
+    visibility: hidden
