@@ -41,11 +41,14 @@ const { reducer, actions } = createSlice({
 
 export const auth = reducer
 
-export const selectIsLoggedIn = (state: StoreState) => Boolean(state.auth.jwt)
-
 export const selectJwt = createSelector(
   (state: StoreState) => state.auth.jwt,
   (jwt) => jwt === undefined ? undefined : new Jwt(jwt),
+)
+
+export const selectIsLoggedIn = createSelector(
+  selectJwt,
+  (jwt) => !!jwt && !jwt.isExpired(),
 )
 
 export const logout = (): StoreThunk =>

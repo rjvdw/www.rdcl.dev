@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { ActiveRoute } from '../components/ActiveRoute'
+import { ActiveRoute } from '../../components/ActiveRoute'
 
 export const Tools = () => (
   <>
@@ -8,5 +8,3 @@ export const Tools = () => (
     <Outlet/>
   </>
 )
-
-export default Tools

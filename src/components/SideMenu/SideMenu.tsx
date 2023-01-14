@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { useSelector } from 'react-redux'
+import { selectIsLoggedIn } from '../../slices/auth'
 import { selectActiveRoute } from '../../slices/routes'
 import { selectScreenType } from '../../slices/screen'
 import { Icon } from '../Icon'
@@ -10,6 +11,7 @@ export const SideMenu: FunctionComponent = () => {
   const activeRoute = useSelector(selectActiveRoute)
   const screenType = useSelector(selectScreenType)
   const collapsed = useSelector(selectIsCollapsed)
+  const loggedIn = useSelector(selectIsLoggedIn)
 
   const ref = useSideMenuRef()
 
@@ -29,6 +31,13 @@ export const SideMenu: FunctionComponent = () => {
         <Icon.Tools slot="icon"/>
         Tools
       </rdcl-side-menu-item>
+
+      { loggedIn && (
+        <rdcl-side-menu-item href="/activities" active={ activeRoute === 'activities' }>
+          <Icon.Activities slot="icon"/>
+          Activities
+        </rdcl-side-menu-item>
+      ) }
     </rdcl-side-menu>
   )
 }
