@@ -94,6 +94,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(function Tag
         className="tag-input__actual"
         { ...inputProps }
         ref={ innerRef }
+        defaultValue={ tags.join(', ') }
         onFocus={ event => {
           focusHandler()
           inputProps.onFocus?.(event)
