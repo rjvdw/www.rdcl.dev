@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode'
 
 export class Jwt {
-  private jwt: {
+  private readonly jwt: {
     sub: string
     exp: number
     preferred_username: string
@@ -23,5 +23,9 @@ export class Jwt {
     return this.jwt.exp === undefined
       ? false
       : Date.now() > this.jwt.exp * 1000
+  }
+
+  get raw(): string {
+    return JSON.parse(JSON.stringify(this.jwt))
   }
 }
