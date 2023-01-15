@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { getActivity, getUpcomingActivities } from './api'
+import { useParams, useSearchParams } from 'react-router-dom'
+import { getActivity, getPastActivities, getUpcomingActivities } from './api'
 
 export const useActivities = () => {
-  const { data, loading, error } = useAsyncLoad(getUpcomingActivities)
+  const [params] = useSearchParams()
+  const past = params.has('past')
+  const { data, loading, error } = useAsyncLoad(past ? getPastActivities : getUpcomingActivities)
 
   return {
     activities: data || [],
+    past,
     loading,
     error,
   }

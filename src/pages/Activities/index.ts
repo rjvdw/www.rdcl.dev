@@ -1,11 +1,11 @@
 import { Activities as ActivitiesComponent } from './Activities'
 import { Details } from './Details'
-import { Index } from './Index'
 import { New } from './New'
+import { Overview } from './Overview'
 import './styles.sass'
 
 export const Activities = Object.assign(ActivitiesComponent, {
-  Index,
+  Overview,
   Details,
   New,
 })

@@ -9,6 +9,13 @@ export async function getUpcomingActivities(): Promise<Activity[]> {
   return body.activities
 }
 
+export async function getPastActivities(): Promise<Activity[]> {
+  const response = await callApi('GET', true)
+  const body = await response.json()
+
+  return body.activities
+}
+
 export async function getActivity(id: string): Promise<Activity> {
   const response = await callApi('GET', id)
   return response.json()
@@ -29,19 +36,19 @@ export async function deleteActivity(id: string): Promise<void> {
 }
 
 async function callApi(method: string): Promise<Response>;
+async function callApi(method: string, past: true): Promise<Response>;
 async function callApi(method: string, id: string): Promise<Response>;
 async function callApi(method: string, activity: Activity): Promise<Response>
 async function callApi(method: string, id: string, activity: Activity): Promise<Response>
-async function callApi(method: string, id?: string | Activity, activity?: Activity): Promise<Response> {
+async function callApi(method: string, id?: true | string | Activity, activity?: Activity): Promise<Response> {
   // process arguments
   let url
   if (id && typeof id === 'string') {
     url = `${ ENDPOINT }/${ id }`
+  } else if (id === true) {
+    url = `${ ENDPOINT }?past=true`
   } else {
     url = ENDPOINT
-  }
-
-  if (id && typeof id !== 'string') {
     activity = id as Activity
   }
 

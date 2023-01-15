@@ -55,7 +55,7 @@ export const App: FunctionComponent = () => {
                 <Route path="uuid" element={ <Tools.UUID/> }/>
               </Route>
               <Route path="/activities" element={ <Activities/> }>
-                <Route index element={ <Activities.Index/> }/>
+                <Route index element={ <Activities.Overview/> }/>
                 <Route path=":activityId" element={ <Activities.Details/> }/>
                 <Route path="new" element={ <Activities.New/> }/>
               </Route>

@@ -6,35 +6,44 @@ import { Dts } from './Dts'
 import { useActivities } from './hooks'
 import { Activity } from './types'
 
-export const Index = () => {
-  const { activities, loading, error } = useActivities()
+export const Overview = () => {
+  const { activities, past, loading, error } = useActivities()
 
   return <>
     <h1>Activities</h1>
 
     <ActivitiesOverview
       activities={ activities }
+      past={ past }
       loading={ loading }
       error={ error }
     />
 
-    <p>
-      <Link to="/activities/new">Add activity</Link>
-    </p>
+    { past ? (
+      <p>
+        <Link to="/activities">Back to current activities</Link>
+      </p>
+    ) : (
+      <p>
+        <Link to="/activities/new">Add activity</Link><br/>
+        <Link to="/activities?past">Show past activities</Link>
+      </p>
+    ) }
   </>
 }
 
 type ActivitiesOverviewProps = {
   activities: Activity[],
+  past: boolean,
   loading: boolean,
   error?: string,
 }
 
 const ActivitiesOverview: FunctionComponent<ActivitiesOverviewProps> = (
-  { activities, loading, error },
+  { activities, past, loading, error },
 ) => {
   if (loading) {
-    return <p>Loading activities...</p>
+    return past ? <p>Loading past activities...</p> : <p>Loading activities...</p>
   }
 
   if (error) {
@@ -42,7 +51,7 @@ const ActivitiesOverview: FunctionComponent<ActivitiesOverviewProps> = (
   }
 
   if (activities.length === 0) {
-    return <p>No activities yet</p>
+    return past ? <p>No past activities</p> : <p>No activities yet</p>
   }
 
   return (
