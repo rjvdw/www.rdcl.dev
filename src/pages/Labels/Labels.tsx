@@ -2,11 +2,11 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ActiveRoute } from '../../components/ActiveRoute'
 import { Label } from '../../components/Label'
-import { useLabelState } from '../../components/Label/hooks'
 import { RequireLogin } from '../../components/RequireLogin'
 import { Title } from '../../components/Title'
 import { initializeLabels, LabelConfig, selectLabelsState } from '../../slices/labels'
 import { StoreDispatch } from '../../store'
+import { useLabelState } from './hooks'
 
 export const Labels = () => {
   const dispatch = useDispatch<StoreDispatch>()

@@ -1,8 +1,10 @@
 import { format, formatISO, parseISO } from 'date-fns'
 import React, { FunctionComponent, useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 import { useNotify } from '../../components/Notifications'
 import { TagInput } from '../../components/TagInput'
+import { selectLabels } from '../../slices/labels'
 import { Activity } from './types'
 
 type ActivityFormProps = {
@@ -18,6 +20,7 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = (
   const [endIsKnown, setEndIsKnown] = useState<boolean>(!activity || Boolean(activity.ends))
   const [error, setError] = useState<string>()
   const notify = useNotify()
+  const labels = useSelector(selectLabels)
 
   const toggleEndIsKnown = () => setEndIsKnown(v => !v)
   const allDay = watch('allDay', activity?.allDay ?? false)
@@ -56,6 +59,7 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = (
           id={ `${ id }:labels` }
           type="text"
           tags={ activity?.labels ?? [] }
+          suggested={ Object.keys(labels) }
           { ...register('labels', {
             setValueAs: (value: string): string[] => value.split(/\s*,\s*/g).filter(Boolean),
           }) }

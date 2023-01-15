@@ -4,7 +4,8 @@ import React, {
   forwardRef,
   InputHTMLAttributes,
   KeyboardEventHandler,
-  useImperativeHandle,
+  useId,
+  useImperativeHandle, useMemo,
   useRef,
   useState,
 } from 'react'
@@ -12,12 +13,14 @@ import { Label } from './Label'
 
 type TagInputProps = {
   tags: string[]
+  suggested?: string[]
 } & InputHTMLAttributes<HTMLInputElement>
 
 export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(function TagInput(
-  { tags: initial, ...inputProps },
+  { tags: initial, suggested = [], ...inputProps },
   forwardedRef,
 ) {
+  const id = useId()
   const innerRef = useRef<HTMLInputElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState<string>('')
@@ -25,6 +28,11 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(function Tag
 
   type RefType = typeof innerRef.current
   useImperativeHandle<RefType, RefType>(forwardedRef, () => innerRef.current)
+
+  const suggestions = useMemo(
+    () => suggested.filter(v => tags.indexOf(v) === -1),
+    [suggested, tags],
+  )
 
   const focusHandler = () => {
     inputRef.current?.focus()
@@ -91,6 +99,10 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(function Tag
       onFocus={ focusHandler }
       tabIndex={ 0 }
     >
+      <datalist id={ `${ id }:suggested-tags` }>
+        { suggestions.map(label => <option key={ label } value={ label }/>) }
+      </datalist>
+
       <input
         className="tag-input__actual"
         { ...inputProps }
@@ -111,6 +123,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(function Tag
         className="tag-input__input"
         type="text"
         value={ value }
+        list={ `${ id }:suggested-tags` }
         onChange={ handleInputChange }
         onKeyDown={ handleInputKeyDown }
         onBlur={ handleInputBlur }
