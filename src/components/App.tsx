@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Activities } from '../pages/Activities'
 import { Home } from '../pages/Home'
+import { Labels } from '../pages/Labels'
 import { NotFound } from '../pages/NotFound'
 import { Session } from '../pages/Session'
 import { Tools } from '../pages/Tools'
@@ -41,6 +42,7 @@ export const App: FunctionComponent = () => {
             <Routes>
               <Route path="/" element={ <Home/> }/>
               <Route path="/session" element={ <Session/> }/>
+              <Route path="/labels" element={ <Labels/> }/>
               <Route path="/tools" element={ <Tools/> }>
                 <Route index element={ <Tools.Index/> }/>
                 <Route path="ascii" element={ <Tools.Ascii/> }/>

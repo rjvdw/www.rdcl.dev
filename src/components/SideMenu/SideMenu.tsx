@@ -33,10 +33,17 @@ export const SideMenu: FunctionComponent = () => {
       </rdcl-side-menu-item>
 
       { loggedIn && (
-        <rdcl-side-menu-item href="/activities" active={ activeRoute === 'activities' }>
-          <Icon.Activities slot="icon"/>
-          Activities
-        </rdcl-side-menu-item>
+        <>
+          <rdcl-side-menu-item href="/activities" active={ activeRoute === 'activities' }>
+            <Icon.Activities slot="icon"/>
+            Activities
+          </rdcl-side-menu-item>
+
+          <rdcl-side-menu-item href="/labels" active={ activeRoute === 'labels' }>
+            <Icon.Labels slot="icon"/>
+            Labels
+          </rdcl-side-menu-item>
+        </>
       ) }
     </rdcl-side-menu>
   )

@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
+import { Label } from '../../components/Label'
+import { LabelList } from '../../components/LabelList'
 import { Dts } from './Dts'
 import { useActivities } from './hooks'
 import { Activity } from './types'
@@ -63,11 +65,11 @@ const ActivityCard: FunctionComponent<ActivityCardProps> = (
     <h2><Link to={ `/activities/${ activity.id }` }>{ activity.title }</Link></h2>
 
     { activity.labels.length > 0 && (
-      <ul className="activities__labels">
+      <LabelList>
         { activity.labels.map((label, i) => (
-          <li key={ i } className="label">{ label }</li>
+          <Label key={ i }>{ label }</Label>
         )) }
-      </ul>
+      </LabelList>
     ) }
 
     { activity.ends ? (

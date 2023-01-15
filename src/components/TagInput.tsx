@@ -8,6 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
+import { Label } from './Label'
 
 type TagInputProps = {
   tags: string[]
@@ -102,12 +103,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(function Tag
       />
 
       { tags.map((tag, i) => (
-        <span
-          key={ `${ i }:${ tag }` }
-          className="label"
-        >
-          { tag }
-        </span>
+        <Label key={ `${ i }:${ tag }` }>{ tag }</Label>
       )) }
 
       <input

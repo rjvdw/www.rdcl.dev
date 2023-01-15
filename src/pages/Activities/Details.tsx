@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Label } from '../../components/Label'
+import { LabelList } from '../../components/LabelList'
 import { useNotify } from '../../components/Notifications'
 import { ActivityForm } from './ActivityForm'
 import { Dts } from './Dts'
@@ -102,11 +104,11 @@ const View: FunctionComponent<ViewProps> = ({ activity }) => (
       { activity.labels.length > 0 && <>
         <dt>Labels</dt>
         <dd>
-          <ul className="activities__labels">
+          <LabelList>
             { activity.labels.map((label, i) => (
-              <li key={ i } className="label">{ label }</li>
+              <Label key={ i }>{ label }</Label>
             )) }
-          </ul>
+          </LabelList>
         </dd>
       </> }
     </dl>
