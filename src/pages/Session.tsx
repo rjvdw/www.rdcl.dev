@@ -6,13 +6,16 @@ import { Title } from '../components/Title'
 import { selectJwt } from '../slices/auth'
 import { Jwt } from '../util/Jwt'
 
-const JWT_KEYS: Record<string, string> = {
+const JWT_CLAIMS: Record<string, string> = {
   iss: 'Issuer',
   sub: 'Subject',
-  upn: 'User Principal Name',
-  iat: 'Issued at',
+  aud: 'Audience',
   exp: 'Expiry',
+  nbf: 'Not Before',
+  iat: 'Issued At',
   jti: 'JWT ID',
+  azp: 'Authorized Party',
+  upn: 'User Principal Name',
 }
 
 export const Session = () => {
@@ -34,10 +37,10 @@ const RenderJwt: FunctionComponent<{ jwt: Jwt }> = ({ jwt }) => {
   return <>
     <table>
       <tbody>
-        { Object.entries(jwt.raw).map(([key, value]) => (
-          <tr key={ key }>
-            <JwtKey>{ key }</JwtKey>
-            <JwtValue jwtKey={ key }>{ value }</JwtValue>
+        { Object.entries(jwt.raw).map(([claim, value]) => (
+          <tr key={ claim }>
+            <JwtClaim>{ claim }</JwtClaim>
+            <JwtValue claim={ claim }>{ value }</JwtValue>
           </tr>
         )) }
       </tbody>
@@ -48,14 +51,14 @@ const RenderJwt: FunctionComponent<{ jwt: Jwt }> = ({ jwt }) => {
   </>
 }
 
-const JwtKey: FunctionComponent<{ children: string }> = ({ children }) => (
-  <th>{ JWT_KEYS[children] ? <abbr title={ JWT_KEYS[children] }>{ children }</abbr> : children }</th>
+const JwtClaim: FunctionComponent<{ children: string }> = ({ children: claim }) => (
+  <th>{ JWT_CLAIMS[claim] ? <abbr title={ JWT_CLAIMS[claim] }>{ claim }</abbr> : claim }</th>
 )
 
-const JwtValue: FunctionComponent<{ jwtKey: string, children: unknown }> = ({ jwtKey, children }) => {
-  if (jwtKey === 'iat' || jwtKey === 'exp') {
-    if (typeof children === 'number') {
-      const date = new Date(1000 * children)
+const JwtValue: FunctionComponent<{ claim: string, children: unknown }> = ({ claim, children: value }) => {
+  if (claim === 'iat' || claim === 'exp') {
+    if (typeof value === 'number') {
+      const date = new Date(1000 * value)
       return <td>
         <time dateTime={ formatISO(date) }>
           { Intl.DateTimeFormat('en-US', {
@@ -68,19 +71,19 @@ const JwtValue: FunctionComponent<{ jwtKey: string, children: unknown }> = ({ jw
     }
   }
 
-  if (jwtKey === 'groups') {
-    if (Array.isArray(children)) {
-      return <td>{ children.join(', ') }</td>
+  if (claim === 'groups') {
+    if (Array.isArray(value)) {
+      return <td>{ value.join(', ') }</td>
     }
   }
 
-  if (typeof children === 'string' || children === null || children === undefined) {
-    return <td>{ children }</td>
+  if (typeof value === 'string' || value === null || value === undefined) {
+    return <td>{ value }</td>
   }
 
-  if (Array.isArray(children)) {
-    return <td><code>{ JSON.stringify(children) }</code></td>
+  if (Array.isArray(value)) {
+    return <td><code>{ JSON.stringify(value) }</code></td>
   }
 
-  return <td>{ `${ children }` }</td>
+  return <td>{ `${ value }` }</td>
 }
