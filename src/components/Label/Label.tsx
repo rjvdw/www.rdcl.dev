@@ -1,6 +1,10 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { initializeLabels, LabelConfig, selectLabels } from '../../slices/labels'
+import {
+  initializeLabels,
+  LabelConfig,
+  selectLabels,
+} from '../../slices/labels'
 import { StoreDispatch } from '../../store'
 
 type LabelProps = {
@@ -9,9 +13,11 @@ type LabelProps = {
   labels?: Record<string, LabelConfig>
 }
 
-export const Label: FunctionComponent<LabelProps> = (
-  { as, children: label, labels: providedLabels },
-) => {
+export const Label: FunctionComponent<LabelProps> = ({
+  as,
+  children: label,
+  labels: providedLabels,
+}) => {
   const dispatch = useDispatch<StoreDispatch>()
   const labelsFromState = useSelector(selectLabels)
 
@@ -21,7 +27,7 @@ export const Label: FunctionComponent<LabelProps> = (
 
   const labels = useMemo(
     () => providedLabels ?? labelsFromState,
-    [providedLabels, labelsFromState],
+    [providedLabels, labelsFromState]
   )
 
   const attrs = useMemo(
@@ -32,12 +38,12 @@ export const Label: FunctionComponent<LabelProps> = (
         color: labels[label]?.textColor ?? '#000',
       },
     }),
-    [labels, label],
+    [labels, label]
   )
 
   if (as === 'li') {
-    return <li { ...attrs }>{ label }</li>
+    return <li {...attrs}>{label}</li>
   }
 
-  return <span { ...attrs }>{ label }</span>
+  return <span {...attrs}>{label}</span>
 }

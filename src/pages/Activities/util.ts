@@ -17,7 +17,10 @@ const DATE_FORMATTER = Intl.DateTimeFormat(LOCALE, {
   weekday: 'short',
 })
 
-export function formatDateTime(activity: Activity, key: 'starts' | 'ends'): string {
+export function formatDateTime(
+  activity: Activity,
+  key: 'starts' | 'ends'
+): string {
   const value = activity[key]
   if (value) {
     const date = new Date(Date.parse(value))

@@ -1,4 +1,9 @@
-import { AnyAction, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit'
+import {
+  AnyAction,
+  combineReducers,
+  configureStore,
+  ThunkAction,
+} from '@reduxjs/toolkit'
 import { auth as authReducer } from './slices/auth'
 import { labels as labelsReducer } from './slices/labels'
 import { notifications as notificationsReducer } from './slices/notifications'
@@ -22,4 +27,9 @@ export const store = configureStore({
 export type StoreDispatch = typeof store.dispatch
 export type StoreGetState = typeof store.getState
 export type StoreState = ReturnType<typeof reducer>
-export type StoreThunk<ReturnType = Promise<void>> = ThunkAction<ReturnType, StoreState, unknown, AnyAction>
+export type StoreThunk<ReturnType = Promise<void>> = ThunkAction<
+  ReturnType,
+  StoreState,
+  unknown,
+  AnyAction
+>

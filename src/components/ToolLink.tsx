@@ -14,13 +14,17 @@ export const ToolLink: FunctionComponent<ToolLinkProps> = (props) => {
 
   return (
     <rdcl-tool-link>
-      { isHrefLink(props) && (
-        <a slot="link" href={ props.href } data-no-history>{ title }</a>
-      ) }
-      { isToLink(props) && (
-        <Link slot="link" to={ props.to }>{ title }</Link>
-      ) }
-      { children }
+      {isHrefLink(props) && (
+        <a slot="link" href={props.href} data-no-history>
+          {title}
+        </a>
+      )}
+      {isToLink(props) && (
+        <Link slot="link" to={props.to}>
+          {title}
+        </Link>
+      )}
+      {children}
     </rdcl-tool-link>
   )
 }

@@ -2,18 +2,16 @@ import { FunctionComponent, useContext, useEffect } from 'react'
 import context from './Title.context'
 
 type TitleProps = {
-  children?: string,
-  prefix?: string[] | string,
-  separator?: string,
+  children?: string
+  prefix?: string[] | string
+  separator?: string
 }
 
-export const Title: FunctionComponent<TitleProps> = (
-  {
-    children = '',
-    prefix,
-    separator = ' | ',
-  },
-) => {
+export const Title: FunctionComponent<TitleProps> = ({
+  children = '',
+  prefix,
+  separator = ' | ',
+}) => {
   const baseTitle = useContext(context)
   useEffect(() => {
     let parts = [children]

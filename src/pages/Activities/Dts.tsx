@@ -7,8 +7,6 @@ type DtsProps = {
   prop: 'starts' | 'ends'
 }
 
-export const Dts: FunctionComponent<DtsProps> = (
-  { activity, prop },
-) => (
-  <time dateTime={ activity[prop] }>{ formatDateTime(activity, prop) }</time>
+export const Dts: FunctionComponent<DtsProps> = ({ activity, prop }) => (
+  <time dateTime={activity[prop]}>{formatDateTime(activity, prop)}</time>
 )

@@ -9,20 +9,21 @@ export type ResourceTile =
   | 'mountain'
   | 'gold field'
 
-export type OtherTile =
-  | 'ocean'
-  | 'desert'
+export type OtherTile = 'ocean' | 'desert'
 
 export type Tile = ResourceTile | OtherTile
 
-export type CatanCellSpec = {
-  outOfBounds: true
-} | {
-  outOfBounds: false
-  modifier: ResourceTile
-  value: number
-  element: FunctionComponent<BaseCellSpecElementProps>
-} | {
-  outOfBounds: false
-  modifier: OtherTile
-}
+export type CatanCellSpec =
+  | {
+      outOfBounds: true
+    }
+  | {
+      outOfBounds: false
+      modifier: ResourceTile
+      value: number
+      element: FunctionComponent<BaseCellSpecElementProps>
+    }
+  | {
+      outOfBounds: false
+      modifier: OtherTile
+    }

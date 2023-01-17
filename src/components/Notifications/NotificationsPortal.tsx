@@ -20,9 +20,6 @@ export class NotificationsPortal extends React.Component {
   }
 
   render() {
-    return createPortal(
-      <NotificationsBody/>,
-      this.#el,
-    )
+    return createPortal(<NotificationsBody />, this.#el)
   }
 }

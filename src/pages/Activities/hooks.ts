@@ -5,7 +5,9 @@ import { getActivity, getPastActivities, getUpcomingActivities } from './api'
 export const useActivities = () => {
   const [params] = useSearchParams()
   const past = params.has('past')
-  const { data, loading, error } = useAsyncLoad(past ? getPastActivities : getUpcomingActivities)
+  const { data, loading, error } = useAsyncLoad(
+    past ? getPastActivities : getUpcomingActivities
+  )
 
   return {
     activities: data || [],
@@ -17,16 +19,13 @@ export const useActivities = () => {
 
 export const useActivity = () => {
   const { activityId } = useParams()
-  const action = useCallback(
-    () => {
-      if (!activityId) {
-        throw new Error('no activity id provided')
-      }
+  const action = useCallback(() => {
+    if (!activityId) {
+      throw new Error('no activity id provided')
+    }
 
-      return getActivity(activityId)
-    },
-    [activityId],
-  )
+    return getActivity(activityId)
+  }, [activityId])
 
   const { data, setData, loading, error } = useAsyncLoad(action)
 
@@ -51,7 +50,7 @@ const useAsyncLoad = <T>(action: () => Promise<T>): AsyncLoadResult<T> => {
   const [error, setError] = useState<string>()
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       try {
         setLoading(true)
         setData(await action())
@@ -61,7 +60,7 @@ const useAsyncLoad = <T>(action: () => Promise<T>): AsyncLoadResult<T> => {
         if (err instanceof Error) {
           setError(err.message)
         } else {
-          setError(`${ err }`)
+          setError(`${err}`)
         }
       } finally {
         setLoading(false)

@@ -1,14 +1,18 @@
 import { ChangeEvent, useState } from 'react'
 
 type StateType = {
-  text: string,
-  ascii: string,
-  radix: 2 | 10 | 16,
-  error?: Error,
+  text: string
+  ascii: string
+  radix: 2 | 10 | 16
+  error?: Error
 }
 
 export const useAscii = () => {
-  const [{ text, ascii, radix, error }, setState] = useState<StateType>({ text: '', ascii: '', radix: 2 })
+  const [{ text, ascii, radix, error }, setState] = useState<StateType>({
+    text: '',
+    ascii: '',
+    radix: 2,
+  })
 
   const setText = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const text = event.target.value
@@ -54,9 +58,12 @@ export const useAscii = () => {
   }
 
   return {
-    text, setText,
-    ascii, setAscii,
-    radix, setRadix,
+    text,
+    setText,
+    ascii,
+    setAscii,
+    radix,
+    setRadix,
     error,
   }
 }
@@ -64,9 +71,9 @@ export const useAscii = () => {
 function toAscii(text: string, radix: 2 | 10 | 16): string {
   return text
     .split('')
-    .map(x => x.codePointAt(0))
-    .map(x => x?.toString(radix) || '')
-    .map(x => x.padStart(getPaddingForRadix(radix), '0'))
+    .map((x) => x.codePointAt(0))
+    .map((x) => x?.toString(radix) || '')
+    .map((x) => x.padStart(getPaddingForRadix(radix), '0'))
     .join(' ')
 }
 
@@ -84,8 +91,8 @@ function getPaddingForRadix(radix: 2 | 10 | 16): number {
 function fromAscii(ascii: string, radix: 2 | 10 | 16): string {
   return ascii
     .split(' ')
-    .filter(x => x !== '')
-    .map(x => parseInt(x, radix))
-    .map(x => String.fromCodePoint(x))
+    .filter((x) => x !== '')
+    .map((x) => parseInt(x, radix))
+    .map((x) => String.fromCodePoint(x))
     .join('')
 }

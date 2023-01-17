@@ -43,22 +43,22 @@ export const auth = reducer
 
 export const selectJwt = createSelector(
   (state: StoreState) => state.auth.jwt,
-  (jwt) => jwt === undefined ? undefined : new Jwt(jwt),
+  (jwt) => (jwt === undefined ? undefined : new Jwt(jwt))
 )
 
 export const selectIsLoggedIn = createSelector(
   selectJwt,
-  (jwt) => !!jwt && !jwt.isExpired(),
+  (jwt) => !!jwt && !jwt.isExpired()
 )
 
-export const logout = (): StoreThunk =>
-  async (dispatch) => {
-    delete localStorage.jwt
-    delete localStorage.sessionToken
-    dispatch(actions.logout())
-  }
+export const logout = (): StoreThunk => async (dispatch) => {
+  delete localStorage.jwt
+  delete localStorage.sessionToken
+  dispatch(actions.logout())
+}
 
-export const verify = (sessionToken: string, verificationCode: string): StoreThunk =>
+export const verify =
+  (sessionToken: string, verificationCode: string): StoreThunk =>
   async (dispatch, getState) => {
     try {
       const auth = getState().auth

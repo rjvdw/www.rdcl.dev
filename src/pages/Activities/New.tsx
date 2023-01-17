@@ -10,10 +10,10 @@ export const New = () => {
     <>
       <h1>New Activity</h1>
       <ActivityForm
-        onSubmit={ async activity => {
+        onSubmit={async (activity) => {
           await createActivity(activity)
           navigate('/activities')
-        } }
+        }}
       />
     </>
   )

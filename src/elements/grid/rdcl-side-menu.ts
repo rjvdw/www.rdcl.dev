@@ -31,7 +31,7 @@ export class RdclSideMenu extends LitElement {
         transition: width 400ms ease-in-out;
         overflow-x: hidden;
 
-        --active-border-width: .35rem;
+        --active-border-width: 0.35rem;
         --base-size: 3rem;
         --icon-size: 2.5rem;
       }
@@ -40,11 +40,11 @@ export class RdclSideMenu extends LitElement {
         overflow: auto;
       }
 
-      :host([collapsed]:not([collapsed="false"])) {
+      :host([collapsed]:not([collapsed='false'])) {
         width: var(--base-size);
       }
 
-      :host([screentype="mobile"]) {
+      :host([screentype='mobile']) {
         display: flex;
         flex-direction: column;
         position: fixed;
@@ -54,18 +54,18 @@ export class RdclSideMenu extends LitElement {
         width: 100vw;
         background: var(--menu-overlay-background-color);
         color: var(--menu-overlay-foreground-color);
-        padding: 4rem .5rem .5rem;
+        padding: 4rem 0.5rem 0.5rem;
         transition: left 600ms ease;
       }
 
-      :host([screentype="mobile"][collapsed]:not([collapsed="false"])) {
+      :host([screentype='mobile'][collapsed]:not([collapsed='false'])) {
         left: calc(-100vw - 1rem);
       }
 
-      :host([screentype="mobile"]) .close {
+      :host([screentype='mobile']) .close {
         position: absolute;
-        top: .5rem;
-        right: .5rem;
+        top: 0.5rem;
+        right: 0.5rem;
         background: transparent;
         color: inherit;
         font-size: inherit;
@@ -76,10 +76,10 @@ export class RdclSideMenu extends LitElement {
         cursor: pointer;
       }
 
-      :host([screentype="mobile"]) .close > span {
+      :host([screentype='mobile']) .close > span {
         display: inline-block;
         margin: auto;
-        background-image: url('${ unsafeCSS(closeIcon) }');
+        background-image: url('${unsafeCSS(closeIcon)}');
         background-repeat: no-repeat;
         background-position: center center;
         width: 2rem;
@@ -95,7 +95,7 @@ export class RdclSideMenu extends LitElement {
         border: none;
         border-top: var(--grid-border);
         margin: auto 0 0;
-        padding: .5rem;
+        padding: 0.5rem;
         cursor: pointer;
         outline: none;
         overflow: hidden;
@@ -110,14 +110,14 @@ export class RdclSideMenu extends LitElement {
         display: inline-block;
         margin: auto;
         transition: transform 400ms linear;
-        background-image: url('${ unsafeCSS(toggleIcon) }');
+        background-image: url('${unsafeCSS(toggleIcon)}');
         background-repeat: no-repeat;
         background-position: center center;
         width: 2rem;
         height: 2rem;
       }
 
-      :host([collapsed]:not([collapsed="false"])) .toggle > span {
+      :host([collapsed]:not([collapsed='false'])) .toggle > span {
         transform: rotate(180deg);
       }
 
@@ -136,15 +136,15 @@ export class RdclSideMenu extends LitElement {
         background: var(--grid-side-menu-item-background-active);
       }
 
-      :host([screentype="mobile"]) ::slotted(*) {
+      :host([screentype='mobile']) ::slotted(*) {
         background: var(--base-background-color);
         color: var(--base-foreground-color);
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
         border: thin solid #999;
         transition: border-color 200ms ease-in-out;
       }
 
-      :host([screentype="mobile"]) ::slotted(*:hover) {
+      :host([screentype='mobile']) ::slotted(*:hover) {
         border-color: #333;
       }
     `
@@ -156,32 +156,38 @@ export class RdclSideMenu extends LitElement {
         <slot></slot>
       </div>
 
-      ${ this.screentype === 'mobile' ? html`
-        <button class="close" @click="${ this.close }" role="presentation">
-          <span></span>
-        </button>
-      ` : html`
-        <button class="toggle" @click="${ this.toggle }" role="presentation">
-          <span></span>
-        </button>
-      ` }
+      ${this.screentype === 'mobile'
+        ? html`
+            <button class="close" @click="${this.close}" role="presentation">
+              <span></span>
+            </button>
+          `
+        : html`
+            <button class="toggle" @click="${this.toggle}" role="presentation">
+              <span></span>
+            </button>
+          `}
     `
   }
 
   toggle() {
-    this.dispatchEvent(new CustomEvent('side-menu-toggle', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-    }))
+    this.dispatchEvent(
+      new CustomEvent('side-menu-toggle', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      })
+    )
   }
 
   close() {
-    this.dispatchEvent(new CustomEvent('side-menu-close', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-    }))
+    this.dispatchEvent(
+      new CustomEvent('side-menu-close', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      })
+    )
   }
 }
 
@@ -197,7 +203,6 @@ declare global {
     'rdcl-side-menu': RdclSideMenu
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'rdcl-side-menu': RdclSideMenuAttributes

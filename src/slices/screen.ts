@@ -7,7 +7,7 @@ export type ScreenType = 'mobile' | 'desktop'
 const MOBILE_THRESHOLD = 640
 
 type ScreenState = {
-  type: ScreenType,
+  type: ScreenType
 }
 
 const INITIAL_STATE: ScreenState = {
@@ -45,9 +45,7 @@ export function updateScreenType() {
 }
 
 function checkScreenType(): ScreenType {
-  return window.innerWidth < MOBILE_THRESHOLD
-    ? 'mobile'
-    : 'desktop'
+  return window.innerWidth < MOBILE_THRESHOLD ? 'mobile' : 'desktop'
 }
 
 export const selectScreenType = (state: StoreState) => state.screen.type

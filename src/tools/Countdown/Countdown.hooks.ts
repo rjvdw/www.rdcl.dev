@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form'
 
 type Operation = (n1: number, n2: number) => number | null
 type AllOperations = {
-  add: Operation,
-  multiply: Operation,
-  subtract: Operation,
-  divide: Operation,
+  add: Operation
+  multiply: Operation
+  subtract: Operation
+  divide: Operation
 }
 const OPERATIONS: AllOperations = {
   add(n1, n2) {
@@ -16,7 +16,7 @@ const OPERATIONS: AllOperations = {
     return n1 * n2
   },
   subtract(n1, n2) {
-    return (n1 > n2) ? (n1 - n2) : (n2 - n1)
+    return n1 > n2 ? n1 - n2 : n2 - n1
   },
   divide(n1, n2) {
     if (n1 > 0 && n2 % n1 === 0) return n2 / n1
@@ -27,7 +27,12 @@ const OPERATIONS: AllOperations = {
 type OperationType = keyof typeof OPERATIONS
 type Answer = [OperationType, number, number, number]
 
-const ALL_OPERATIONS: OperationType[] = ['add', 'multiply', 'subtract', 'divide']
+const ALL_OPERATIONS: OperationType[] = [
+  'add',
+  'multiply',
+  'subtract',
+  'divide',
+]
 
 export type CountdownForm = {
   numbers: [number, number, number, number, number, number]
@@ -53,8 +58,9 @@ export const useCountdown = () => {
 }
 
 function solve(target: number, numbers: number[]): Promise<Answer[] | null> {
-  return new Promise(resolve => {
-    setTimeout(() => { // timeout to allow UI to update
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // timeout to allow UI to update
       resolve(_solve(target, numbers))
     }, 1)
   })
@@ -86,9 +92,10 @@ function _solve(target: number, numbers: number[]): Answer[] | null {
           continue
         }
 
-        const answer: Answer = (key === 'subtract' || key === 'divide') && n2 > n1
-          ? [key, n2, n1, result]
-          : [key, n1, n2, result]
+        const answer: Answer =
+          (key === 'subtract' || key === 'divide') && n2 > n1
+            ? [key, n2, n1, result]
+            : [key, n1, n2, result]
 
         if (result === target) {
           return [answer]
@@ -111,12 +118,12 @@ function _solve(target: number, numbers: number[]): Answer[] | null {
 function formatLine([operation, op1, op2, result]: Answer): string {
   switch (operation) {
     case 'add':
-      return `${ op1 } + ${ op2 } = ${ result }`
+      return `${op1} + ${op2} = ${result}`
     case 'multiply':
-      return `${ op1 } * ${ op2 } = ${ result }`
+      return `${op1} * ${op2} = ${result}`
     case 'subtract':
-      return `${ op1 } - ${ op2 } = ${ result }`
+      return `${op1} - ${op2} = ${result}`
     case 'divide':
-      return `${ op1 } / ${ op2 } = ${ result }`
+      return `${op1} / ${op2} = ${result}`
   }
 }

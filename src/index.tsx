@@ -8,22 +8,25 @@ import './styles/main.sass'
 import { updateScreenType } from './slices/screen'
 import { store } from './store'
 
-// eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
 const container = document.getElementById('root')!
 const root = createRoot(container)
 
 root.render(
   <React.StrictMode>
-    <Provider store={ store }>
+    <Provider store={store}>
       <BrowserRouter>
-        <App/>
+        <App />
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
 
-window.addEventListener('resize', () => {
-  store.dispatch(updateScreenType())
-}, {
-  passive: true,
-})
+window.addEventListener(
+  'resize',
+  () => {
+    store.dispatch(updateScreenType())
+  },
+  {
+    passive: true,
+  }
+)

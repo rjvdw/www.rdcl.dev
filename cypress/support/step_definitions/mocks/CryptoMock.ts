@@ -1,9 +1,9 @@
 export class CryptoMock {
   private _generatedUuids: string[] = []
-  private _counter: number = 0
+  private _counter = 0
 
   randomUUID() {
-    const uuid = `uuid-${ this._counter }`
+    const uuid = `uuid-${this._counter}`
     this._counter += 1
     this._generatedUuids.push(uuid)
     return uuid

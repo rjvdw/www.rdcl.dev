@@ -1,4 +1,8 @@
-import { defineParameterType, Then, When } from '@badeball/cypress-cucumber-preprocessor'
+import {
+  defineParameterType,
+  Then,
+  When,
+} from '@badeball/cypress-cucumber-preprocessor'
 
 defineParameterType({
   name: 'radix',
@@ -10,13 +14,12 @@ When('the user enters {string}', (value: string) => {
   cy.get('[data-testid="ascii-converter-plain-text"]').clear().type(value)
 })
 
-When('the user chooses to convert to {radix}', (radix: 2|10|16) => {
-  cy.get(`[data-testid="ascii-converter-radix-${ radix }"]`).click()
+When('the user chooses to convert to {radix}', (radix: 2 | 10 | 16) => {
+  cy.get(`[data-testid="ascii-converter-radix-${radix}"]`).click()
 })
 
 Then('the result is {string}', (result: string) => {
-  cy.get('[data-testid="ascii-converter-ascii"]')
-    .should('have.value', result)
+  cy.get('[data-testid="ascii-converter-ascii"]').should('have.value', result)
 })
 
 function parseRadix(radix: string): 2 | 10 | 16 {
@@ -28,6 +31,6 @@ function parseRadix(radix: string): 2 | 10 | 16 {
     case 'hex':
       return 16
     default:
-      throw new Error(`Invalid radix: ${ radix }`)
+      throw new Error(`Invalid radix: ${radix}`)
   }
 }

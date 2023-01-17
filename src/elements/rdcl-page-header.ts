@@ -31,7 +31,7 @@ export class RdclPageHeader extends LitElement {
         position: relative;
       }
 
-      :host([screentype="mobile"]) {
+      :host([screentype='mobile']) {
         padding-left: 0;
         height: 3rem;
         justify-content: center;
@@ -46,7 +46,7 @@ export class RdclPageHeader extends LitElement {
         position: absolute;
         top: 0;
         bottom: 0;
-        left: .5rem;
+        left: 0.5rem;
         fill: #fff;
         width: 2rem;
         background-color: transparent;
@@ -58,33 +58,41 @@ export class RdclPageHeader extends LitElement {
     return html`
       <slot></slot>
 
-      ${ this.screentype === 'mobile' ? html`
-        <svg
-          @click=${ this.openMobileMenu }
-          class="mobile-menu"
-          role="button"
-          tabindex="0"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-        >
-          <path id="menu" d="M17,4V5a1,1,0,0,1-1,1H4A1,1,0,0,1,3,5V4A1,1,0,0,1,4,3H16A1,1,0,0,1,17,4ZM16,8H4A1,1,0,0,0,3,9v1a1,1,0,0,0,1,1H16a1,1,0,0,0,1-1V9A1,1,0,0,0,16,8Zm0,5H4a1,1,0,0,0-1,1v1a1,1,0,0,0,1,1H16a1,1,0,0,0,1-1V14A1,1,0,0,0,16,13Z"/>
-        </svg>
-      ` : '' }
+      ${this.screentype === 'mobile'
+        ? html`
+            <svg
+              @click=${this.openMobileMenu}
+              class="mobile-menu"
+              role="button"
+              tabindex="0"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path
+                id="menu"
+                d="M17,4V5a1,1,0,0,1-1,1H4A1,1,0,0,1,3,5V4A1,1,0,0,1,4,3H16A1,1,0,0,1,17,4ZM16,8H4A1,1,0,0,0,3,9v1a1,1,0,0,0,1,1H16a1,1,0,0,0,1-1V9A1,1,0,0,0,16,8Zm0,5H4a1,1,0,0,0-1,1v1a1,1,0,0,0,1,1H16a1,1,0,0,0,1-1V14A1,1,0,0,0,16,13Z"
+              />
+            </svg>
+          `
+        : ''}
     `
   }
 
   openMobileMenu() {
-    this.dispatchEvent(new CustomEvent('mobile-menu-open', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-    }))
+    this.dispatchEvent(
+      new CustomEvent('mobile-menu-open', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      })
+    )
   }
 }
 
 customElements.define('rdcl-page-header', RdclPageHeader)
 
-interface RdclPageHeaderAttributes extends CustomElementAttributes<RdclPageHeader> {
+interface RdclPageHeaderAttributes
+  extends CustomElementAttributes<RdclPageHeader> {
   screentype: ScreenType
 }
 
@@ -93,7 +101,6 @@ declare global {
     'rdcl-page-header': RdclPageHeader
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'rdcl-page-header': RdclPageHeaderAttributes

@@ -20,9 +20,7 @@ export class Jwt {
   }
 
   isExpired() {
-    return this.jwt.exp === undefined
-      ? false
-      : Date.now() > this.jwt.exp * 1000
+    return this.jwt.exp === undefined ? false : Date.now() > this.jwt.exp * 1000
   }
 
   get raw(): string {

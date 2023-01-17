@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { StoreState } from '../store'
 
 type RoutesState = {
-  activeRoute: string,
+  activeRoute: string
 }
 
 const INITIAL_STATE: RoutesState = {

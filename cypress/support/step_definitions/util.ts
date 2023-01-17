@@ -8,7 +8,5 @@ export function html(strs: TemplateStringsArray, ...vars: unknown[]): string {
 }
 
 export function normalizeHtml(html: string): string {
-  return html
-    .trim()
-    .replace(/\s+/g, '') // FIXME: Find a better way of normalizing HTML....
+  return html.trim().replace(/\s+/g, '') // FIXME: Find a better way of normalizing HTML....
 }

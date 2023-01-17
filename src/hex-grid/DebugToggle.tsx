@@ -6,19 +6,20 @@ export type DebugToggleProps = {
   toggle: (value: boolean) => void
 }
 
-export const DebugToggle: FunctionComponent<DebugToggleProps> = (
-  { debug, toggle },
-) => (
+export const DebugToggle: FunctionComponent<DebugToggleProps> = ({
+  debug,
+  toggle,
+}) => (
   <label
-    className={ classNames(
+    className={classNames(
       'debug-toggle',
-      `debug-toggle--${ debug ? 'on' : 'off' }`,
-    ) }
+      `debug-toggle--${debug ? 'on' : 'off'}`
+    )}
   >
     <input
       type="checkbox"
-      checked={ debug }
-      onChange={ event => toggle((event.target as HTMLInputElement).checked) }
+      checked={debug}
+      onChange={(event) => toggle((event.target as HTMLInputElement).checked)}
     />
     debug
   </label>

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { LabelConfig, saveLabels } from '../../slices/labels'
 import { StoreDispatch } from '../../store'
 
-type LabelState = Array<[string, { label: string, config: LabelConfig }]>
+type LabelState = Array<[string, { label: string; config: LabelConfig }]>
 
 type ResetAction = {
   type: 'reset'
@@ -48,20 +48,21 @@ export const useLabelState = (initialLabels: Record<string, LabelConfig>) => {
   const [error, setError] = useState<string>()
   const reduxDispatch = useDispatch<StoreDispatch>()
 
-  const initialState: LabelState = useMemo(
-    () => {
-      const entries = Object.entries(initialLabels)
-        .map(([label, config]): [string, { label: string, config: LabelConfig }] => [String(++GLOBAL_INDEX), {
+  const initialState: LabelState = useMemo(() => {
+    const entries = Object.entries(initialLabels).map(
+      ([label, config]): [string, { label: string; config: LabelConfig }] => [
+        String(++GLOBAL_INDEX),
+        {
           label,
           config,
-        }])
+        },
+      ]
+    )
 
-      entries.sort((a, b) => a[1].label.localeCompare(b[1].label))
+    entries.sort((a, b) => a[1].label.localeCompare(b[1].label))
 
-      return entries
-    },
-    [initialLabels],
-  )
+    return entries
+  }, [initialLabels])
 
   const reducer = (state: LabelState, action: ActionType): LabelState => {
     switch (action.type) {
@@ -74,28 +75,30 @@ export const useLabelState = (initialLabels: Record<string, LabelConfig>) => {
           [String(++GLOBAL_INDEX), { label: '', config: {} }],
         ])
       case 'update-label':
-        return state
-          .map(([key, value]) => {
-            if (key === action.payload.key) {
-              return [key, { label: action.payload.label, config: value.config }]
-            } else {
-              return [key, value]
-            }
-          })
+        return state.map(([key, value]) => {
+          if (key === action.payload.key) {
+            return [key, { label: action.payload.label, config: value.config }]
+          } else {
+            return [key, value]
+          }
+        })
       case 'update-field':
-        return state
-          .map(([key, value]) => {
-            if (key === action.payload.key) {
-              return [key, {
-                label: value.label, config: {
+        return state.map(([key, value]) => {
+          if (key === action.payload.key) {
+            return [
+              key,
+              {
+                label: value.label,
+                config: {
                   ...value.config,
                   [action.payload.field]: action.payload.value,
                 },
-              }]
-            } else {
-              return [key, value]
-            }
-          })
+              },
+            ]
+          } else {
+            return [key, value]
+          }
+        })
     }
 
     return state
@@ -104,15 +107,19 @@ export const useLabelState = (initialLabels: Record<string, LabelConfig>) => {
   const [labels, dispatch] = useReducer(reducer, initialState)
 
   const labelsMap = useMemo(
-    (): Record<string, LabelConfig> => Object.fromEntries(
-      labels.map(([, { label, config }]) => [label, {
-        // ensure all keys are present, even if not defined
-        color: undefined,
-        textColor: undefined,
-        ...config,
-      }]),
-    ),
-    [labels],
+    (): Record<string, LabelConfig> =>
+      Object.fromEntries(
+        labels.map(([, { label, config }]) => [
+          label,
+          {
+            // ensure all keys are present, even if not defined
+            color: undefined,
+            textColor: undefined,
+            ...config,
+          },
+        ])
+      ),
+    [labels]
   )
 
   return {

@@ -1,4 +1,9 @@
-import { DataTable, Given, Then, When } from '@badeball/cypress-cucumber-preprocessor'
+import {
+  DataTable,
+  Given,
+  Then,
+  When,
+} from '@badeball/cypress-cucumber-preprocessor'
 import { normalizeHtml } from './util'
 
 Given('the current page is {}', (path: string) => {
@@ -36,25 +41,21 @@ Then('the page title is {string}', (title: string) => {
 })
 
 Then('{string} has value {string}', (selector: string, value: string) => {
-  cy.get(selector)
-    .should('have.value', value)
+  cy.get(selector).should('have.value', value)
 })
 
 Then('{string} has value:', (selector: string, value: string) => {
-  cy.get(selector)
-    .should('have.value', value)
+  cy.get(selector).should('have.value', value)
 })
 
 Then('{string} matches:', (selector: string, body: string) => {
-  cy.get(selector)
-    .then(($el: JQuery<HTMLElement>) => {
-      expect(normalizeHtml($el.html())).to.equal(normalizeHtml(body))
-    })
+  cy.get(selector).then(($el: JQuery<HTMLElement>) => {
+    expect(normalizeHtml($el.html())).to.equal(normalizeHtml(body))
+  })
 })
 
 Then('{string} matches {string}', (selector: string, body: string) => {
-  cy.get(selector)
-    .then(($el: JQuery<HTMLElement>) => {
-      expect(normalizeHtml($el.html())).to.equal(normalizeHtml(body))
-    })
+  cy.get(selector).then(($el: JQuery<HTMLElement>) => {
+    expect(normalizeHtml($el.html())).to.equal(normalizeHtml(body))
+  })
 })

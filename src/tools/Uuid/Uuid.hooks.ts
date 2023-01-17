@@ -16,7 +16,7 @@ export const useUuid = () => {
       return next
     } catch (err) {
       console.error(err)
-      notify.error(`Failed to generate UUID: ${ errorMessage(err) }`)
+      notify.error(`Failed to generate UUID: ${errorMessage(err)}`)
       return ''
     }
   }
@@ -32,7 +32,7 @@ export const useUuid = () => {
       notify('UUID copied to clipboard')
     } catch (err) {
       console.error(err)
-      notify.error(`Failed to copy UUID to clipboard: ${ errorMessage(err) }`)
+      notify.error(`Failed to copy UUID to clipboard: ${errorMessage(err)}`)
     }
   }
 

@@ -28,9 +28,11 @@ export class RdclSideMenuItem extends LitElement {
         text-decoration: none;
         height: var(--base-size);
         display: grid;
-        grid-template-areas: "icon content";
-        grid-template-columns: calc(var(--base-size) - var(--active-border-width)) 1fr;
-        grid-column-gap: .5rem;
+        grid-template-areas: 'icon content';
+        grid-template-columns:
+          calc(var(--base-size) - var(--active-border-width))
+          1fr;
+        grid-column-gap: 0.5rem;
         white-space: nowrap;
         overflow: hidden;
         outline: none;
@@ -46,14 +48,14 @@ export class RdclSideMenuItem extends LitElement {
         outline-offset: var(--focus-offset);
       }
 
-      [name="icon"]::slotted(*) {
+      [name='icon']::slotted(*) {
         display: block;
         margin: auto;
         width: var(--icon-size);
         height: var(--icon-size);
       }
 
-      :host([active]:not([active="false"])) .link {
+      :host([active]:not([active='false'])) .link {
         border-left-color: var(--theme-color);
       }
 
@@ -69,7 +71,7 @@ export class RdclSideMenuItem extends LitElement {
 
   render() {
     return html`
-      <a class="link" .href="${ this.href }">
+      <a class="link" .href="${this.href}">
         <slot name="icon"></slot>
         <span class="content"><slot></slot></span>
       </a>
@@ -79,7 +81,8 @@ export class RdclSideMenuItem extends LitElement {
 
 customElements.define('rdcl-side-menu-item', RdclSideMenuItem)
 
-interface RdclSideMenuItemAttributes extends CustomElementAttributes<RdclSideMenuItem> {
+interface RdclSideMenuItemAttributes
+  extends CustomElementAttributes<RdclSideMenuItem> {
   href: string
   active: boolean
 }
@@ -89,7 +92,6 @@ declare global {
     'rdcl-side-menu-item': RdclSideMenuItem
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'rdcl-side-menu-item': RdclSideMenuItemAttributes

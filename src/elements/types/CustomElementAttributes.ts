@@ -1,6 +1,7 @@
 import { HTMLAttributes, RefObject } from 'react'
 
-export interface CustomElementAttributes<E extends HTMLElement = HTMLElement> extends HTMLAttributes<E> {
+export interface CustomElementAttributes<E extends HTMLElement = HTMLElement>
+  extends HTMLAttributes<E> {
   ref?: RefObject<E>
   key?: string
 }

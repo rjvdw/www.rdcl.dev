@@ -9,7 +9,7 @@ function init() {
   const entities = []
   const scoreboard = new Scoreboard()
 
-  const n = Math.round(width * height / 5000)
+  const n = Math.round((width * height) / 5000)
   for (let i = 0; i < n; i += 1) {
     const e = Entity.random(width, height)
     entities.push(e)

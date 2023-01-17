@@ -7,18 +7,22 @@ import { useVerifyLogin } from './authenticationHooks'
 export const VerifyLogin = () => {
   const result = useVerifyLogin()
 
-  return <>
-    <Title>log in</Title>
-    <ActiveRoute/>
-    <h1>Log in</h1>
+  return (
+    <>
+      <Title>log in</Title>
+      <ActiveRoute />
+      <h1>Log in</h1>
 
-    { result === 'pending' ? (
-      <p>Logging you in...</p>
-    ) : result === 'success' ? (
-      <Navigate to="/"/>
-    ) : (
-      <p className="error-message">Login failed. <Link to="/login">Try again.</Link></p>
-    ) }
-  </>
+      {result === 'pending' ? (
+        <p>Logging you in...</p>
+      ) : result === 'success' ? (
+        <Navigate to="/" />
+      ) : (
+        <p className="error-message">
+          Login failed. <Link to="/login">Try again.</Link>
+        </p>
+      )}
+    </>
+  )
 }
 export default VerifyLogin

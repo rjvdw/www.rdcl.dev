@@ -4,10 +4,12 @@ import { setActiveRoute } from '../slices/routes'
 import { StoreDispatch } from '../store'
 
 type ActiveRouteProps = {
-  children?: string,
+  children?: string
 }
 
-export const ActiveRoute: FunctionComponent<ActiveRouteProps> = ({ children: route = '' }) => {
+export const ActiveRoute: FunctionComponent<ActiveRouteProps> = ({
+  children: route = '',
+}) => {
   const dispatch = useDispatch<StoreDispatch>()
   useEffect(() => {
     dispatch(setActiveRoute(route))

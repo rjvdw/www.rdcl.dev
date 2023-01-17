@@ -25,19 +25,25 @@ When('the user clicks the button to generate a new UUID', () => {
   cy.get('[data-testid="generate-uuid"]').click()
 })
 
-When('the user clicks the button to generate a new UUID {int} times', (n: number) => {
-  for (let i = 0; i < n; i += 1) {
-    cy.get('[data-testid="generate-uuid"]').click()
+When(
+  'the user clicks the button to generate a new UUID {int} times',
+  (n: number) => {
+    for (let i = 0; i < n; i += 1) {
+      cy.get('[data-testid="generate-uuid"]').click()
+    }
   }
-})
+)
 
 When('the user clicks the button to copy the UUID to their clipboard', () => {
   cy.get('[data-testid="copy-uuid"]').click()
 })
 
-When('the user clicks the button to generate a new UUID and copy it to their clipboard', () => {
-  cy.get('[data-testid="generate-and-copy-uuid"]').click()
-})
+When(
+  'the user clicks the button to generate a new UUID and copy it to their clipboard',
+  () => {
+    cy.get('[data-testid="generate-and-copy-uuid"]').click()
+  }
+)
 
 When('the user clicks a copy button in the history', () => {
   cy.get('[data-testid="uuid-history"] li:first button').click()
@@ -67,5 +73,7 @@ Then('the previously generated UUIDs are now in the history', () => {
 })
 
 Then('the uuid is copied to the clipboard', () => {
-  expect(clipboardMock.readText()).to.equal(cryptoMock.generatedUuid(copiedUuid || -1))
+  expect(clipboardMock.readText()).to.equal(
+    cryptoMock.generatedUuid(copiedUuid || -1)
+  )
 })

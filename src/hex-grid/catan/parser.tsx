@@ -11,26 +11,27 @@ import { isResourceTile } from './util'
  * @param str
  * @param values
  */
-export function catan([str]: TemplateStringsArray, values: number[]): Spec<CatanCellSpec> {
+export function catan(
+  [str]: TemplateStringsArray,
+  values: number[]
+): Spec<CatanCellSpec> {
   const lines = splitLines(str)
   const offset = determineOffset(lines)
   const cellSpecs: Record<number, RowSpec<CatanCellSpec>> = {}
 
   const isOffset = (row: number) =>
-    row % 2 === 0
-      ? offset === 'even'
-      : offset === 'odd'
+    row % 2 === 0 ? offset === 'even' : offset === 'odd'
 
   let maxX = 0
   let maxY = 0
   const valuesIter = valuesToIter(values)
   for (const line of lines) {
-    const row = maxY += 1
+    const row = (maxY += 1)
     const cells = splitCells(line, isOffset(row), valuesIter)
-    const rowSpec = cellSpecs[row] = {
-      bounds: range`1..=${ cells.length }`,
+    const rowSpec = (cellSpecs[row] = {
+      bounds: range`1..=${cells.length}`,
       cells: {} as Record<number, CatanCellSpec>,
-    }
+    })
 
     if (maxX < cells.length) {
       maxX = cells.length
@@ -48,7 +49,6 @@ export function catan([str]: TemplateStringsArray, values: number[]): Spec<Catan
   for (let row = 1; row <= maxY; row += 1) {
     for (let col = 1; col <= maxX; col += 1) {
       if (!cellSpecs[row].cells?.[col]) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         cellSpecs[row].cells![col] = {
           outOfBounds: true,
         }
@@ -58,8 +58,8 @@ export function catan([str]: TemplateStringsArray, values: number[]): Spec<Catan
 
   return {
     bounds: {
-      x: range`1..=${ maxX }`,
-      y: range`1..=${ maxY }`,
+      x: range`1..=${maxX}`,
+      y: range`1..=${maxY}`,
     },
     offset,
     cells: cellSpecs,
@@ -86,9 +86,7 @@ function determineOffset(lines: string[]): 'odd' | 'even' {
   for (let i = 0; i < lines.length; i += 1) {
     if (!lines[i].startsWith('| ')) {
       // since this line does not start with a space, it should _not_ get an offset
-      return (i + 1) % 2 === 0
-        ? 'odd'
-        : 'even'
+      return (i + 1) % 2 === 0 ? 'odd' : 'even'
     }
   }
 
@@ -103,7 +101,7 @@ function determineOffset(lines: string[]): 'odd' | 'even' {
 function splitLines(board: string): string[] {
   return board
     .split('\n') // split into lines
-    .map(l => l.trim()) // get rid of leading and trailing whitespace
+    .map((l) => l.trim()) // get rid of leading and trailing whitespace
     .filter(Boolean) // get rid of any empty lines
 }
 
@@ -114,7 +112,11 @@ function splitLines(board: string): string[] {
  * @param isOffset Whether this line includes an offset
  * @param values
  */
-function splitCells(line: string, isOffset: boolean, values: Generator<number>): CatanCellSpec[] {
+function splitCells(
+  line: string,
+  isOffset: boolean,
+  values: Generator<number>
+): CatanCellSpec[] {
   if (!line.startsWith('|') || !line.endsWith('|')) {
     throw new InvalidCatanBoard()
   }
@@ -129,7 +131,7 @@ function splitCells(line: string, isOffset: boolean, values: Generator<number>):
 
     const tile = CELL_MODIFIERS[cell]
     if (!tile) {
-      throw new InvalidCatanBoard(`could not parse tile ${ cell }`)
+      throw new InvalidCatanBoard(`could not parse tile ${cell}`)
     }
 
     if (isResourceTile(tile)) {
@@ -141,7 +143,7 @@ function splitCells(line: string, isOffset: boolean, values: Generator<number>):
         outOfBounds: false,
         modifier: tile,
         value: value.value,
-        element: () => <div className="value-display">{ value.value }</div>,
+        element: () => <div className="value-display">{value.value}</div>,
       }
     }
 
@@ -175,6 +177,6 @@ function withIndex<T>(list: T[], offset = 0): Array<[number, T]> {
  */
 class InvalidCatanBoard extends Error {
   constructor(reason = '') {
-    super('Invalid Catan board' + (reason && `: ${ reason }`))
+    super('Invalid Catan board' + (reason && `: ${reason}`))
   }
 }

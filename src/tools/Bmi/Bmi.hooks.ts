@@ -5,11 +5,11 @@ import { isValid, rounded } from '../../util/number'
 export type BmiForm = {
   weight?: number
   height?: number
-  bmi?: number,
+  bmi?: number
 }
 
 export type TargetBmiForm = {
-  bmi?: number,
+  bmi?: number
 }
 
 export const useBmi = () => {
@@ -63,7 +63,10 @@ const useTargetBmi = (bmiForm: UseFormReturn<BmiForm>) => {
         if (!isValid(targetBmi)) {
           throw new Error('invalid target bmi')
         }
-        bmiForm.setValue('weight', rounded(computeTargetWeight(height, targetBmi), 2))
+        bmiForm.setValue(
+          'weight',
+          rounded(computeTargetWeight(height, targetBmi), 2)
+        )
         setTargetBmiIsShown(false)
         reset()
       }),
@@ -75,7 +78,7 @@ const useTargetBmi = (bmiForm: UseFormReturn<BmiForm>) => {
 }
 
 function initial(key: string, defaultValue: number): number {
-  return (key in localStorage) ? Number(localStorage[key]) : defaultValue
+  return key in localStorage ? Number(localStorage[key]) : defaultValue
 }
 
 function correctedHeight(height: number): number {

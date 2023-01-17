@@ -9,7 +9,7 @@ export class RdclSpinner extends LitElement {
         display: grid;
         grid-template-columns: 2rem 2rem 2rem;
         grid-template-rows: 2rem 2rem 2rem;
-        grid-gap: .5rem;
+        grid-gap: 0.5rem;
         margin: 2rem;
         justify-content: center;
       }
@@ -24,15 +24,15 @@ export class RdclSpinner extends LitElement {
       }
 
       div:nth-child(3) {
-        animation: 2s .25s infinite pulse;
+        animation: 2s 0.25s infinite pulse;
       }
 
       div:nth-child(5) {
-        animation: 2s .5s infinite pulse;
+        animation: 2s 0.5s infinite pulse;
       }
 
       div:nth-child(7) {
-        animation: 2s .75s infinite pulse;
+        animation: 2s 0.75s infinite pulse;
       }
 
       div:nth-child(9) {
@@ -72,15 +72,13 @@ export class RdclSpinner extends LitElement {
 
 customElements.define('rdcl-spinner', RdclSpinner)
 
-interface RdclSpinnerAttributes extends CustomElementAttributes<RdclSpinner> {
-}
+interface RdclSpinnerAttributes extends CustomElementAttributes<RdclSpinner> {}
 
 declare global {
   interface HTMLElementTagNameMap {
     'rdcl-spinner': RdclSpinner
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'rdcl-spinner': RdclSpinnerAttributes

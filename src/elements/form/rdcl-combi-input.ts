@@ -18,35 +18,34 @@ export class RdclCombiInput extends LitElement {
       :host {
         display: grid;
         grid-template-columns: auto auto;
-        grid-column-gap: .5rem;
+        grid-column-gap: 0.5rem;
         max-width: 100%;
         overflow: auto;
       }
 
-      :host([mode="balanced"]) {
+      :host([mode='balanced']) {
         grid-template-columns: 1fr 1fr;
       }
 
-      :host([mode="maximize first"]) {
+      :host([mode='maximize first']) {
         grid-template-columns: 1fr min-content;
       }
 
-      :host([mode="maximize last"]) {
+      :host([mode='maximize last']) {
         grid-template-columns: min-content 1fr;
       }
     `
   }
 
   render() {
-    return html`
-      <slot></slot>
-    `
+    return html` <slot></slot> `
   }
 }
 
 customElements.define('rdcl-combi-input', RdclCombiInput)
 
-interface RdclCombiInputAttributes extends CustomElementAttributes<RdclCombiInput> {
+interface RdclCombiInputAttributes
+  extends CustomElementAttributes<RdclCombiInput> {
   mode?: ModeType
 }
 
@@ -55,7 +54,6 @@ declare global {
     'rdcl-combi-input': RdclCombiInput
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'rdcl-combi-input': RdclCombiInputAttributes

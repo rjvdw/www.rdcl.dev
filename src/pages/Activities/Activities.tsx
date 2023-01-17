@@ -6,9 +6,9 @@ import { Title } from '../../components/Title'
 
 export const Activities = () => (
   <>
-    <RequireLogin/>
+    <RequireLogin />
     <Title>activities</Title>
     <ActiveRoute>activities</ActiveRoute>
-    <Outlet/>
+    <Outlet />
   </>
 )

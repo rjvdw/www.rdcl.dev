@@ -5,6 +5,6 @@ import { ActiveRoute } from '../../components/ActiveRoute'
 export const Tools = () => (
   <>
     <ActiveRoute>tools</ActiveRoute>
-    <Outlet/>
+    <Outlet />
   </>
 )

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { StoreState } from '../store'
 
 export type Notification = {
-  id: number,
+  id: number
   type: 'info' | 'warning' | 'error'
   message: string
 }
@@ -26,7 +26,7 @@ const { actions, reducer } = createSlice({
     },
     dismiss(state, { payload: id }: PayloadAction<number>) {
       return {
-        notifications: state.notifications.filter(n => n.id !== id),
+        notifications: state.notifications.filter((n) => n.id !== id),
       }
     },
   },
@@ -35,4 +35,5 @@ const { actions, reducer } = createSlice({
 export const notifications = reducer
 export const { notify, dismiss } = actions
 
-export const selectNotifications = (state: StoreState) => state.notifications.notifications
+export const selectNotifications = (state: StoreState) =>
+  state.notifications.notifications

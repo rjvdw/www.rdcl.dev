@@ -23,54 +23,61 @@ export const App: FunctionComponent = () => {
   const location = useLocation()
 
   if (location.pathname.startsWith('/hex-grid')) {
-    return <>
-      <Suspense fallback={ <rdcl-spinner/> }>
-        <HexGrid/>
-      </Suspense>
-    </>
+    return (
+      <>
+        <Suspense fallback={<rdcl-spinner />}>
+          <HexGrid />
+        </Suspense>
+      </>
+    )
   }
 
-  return <>
-    <rdcl-grid screentype={ screenType }>
-      <PageHeader/>
+  return (
+    <>
+      <rdcl-grid screentype={screenType}>
+        <PageHeader />
 
-      { screenType !== 'mobile' && <SideMenu/> }
+        {screenType !== 'mobile' && <SideMenu />}
 
-      <main>
-        <ErrorBoundary>
-          <Suspense fallback={ <rdcl-spinner/> }>
-            <Routes>
-              <Route path="/" element={ <Home/> }/>
-              <Route path="/session" element={ <Session/> }/>
-              <Route path="/labels" element={ <Labels/> }/>
-              <Route path="/tools" element={ <Tools/> }>
-                <Route index element={ <Tools.Index/> }/>
-                <Route path="ascii" element={ <Tools.Ascii/> }/>
-                <Route path="bmi" element={ <Tools.Bmi/> }/>
-                <Route path="countdown" element={ <Tools.Countdown/> }/>
-                <Route path="drop-rates" element={ <Tools.DropRates/> }/>
-                <Route path="float" element={ <Tools.Float/> }/>
-                <Route path="markdown-viewer" element={ <Tools.MarkdownViewer/> }/>
-                <Route path="ratings" element={ <Tools.Ratings/> }/>
-                <Route path="uuid" element={ <Tools.UUID/> }/>
-              </Route>
-              <Route path="/activities" element={ <Activities/> }>
-                <Route index element={ <Activities.Overview/> }/>
-                <Route path=":activityId" element={ <Activities.Details/> }/>
-                <Route path="new" element={ <Activities.New/> }/>
-              </Route>
-              <Route path="/login" element={ <Login/> }/>
-              <Route path="/login/verify" element={ <VerifyLogin/> }/>
-              <Route path="/logout" element={ <Logout/> }/>
-              <Route path="*" element={ <NotFound/> }/>
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
-      </main>
-    </rdcl-grid>
+        <main>
+          <ErrorBoundary>
+            <Suspense fallback={<rdcl-spinner />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/session" element={<Session />} />
+                <Route path="/labels" element={<Labels />} />
+                <Route path="/tools" element={<Tools />}>
+                  <Route index element={<Tools.Index />} />
+                  <Route path="ascii" element={<Tools.Ascii />} />
+                  <Route path="bmi" element={<Tools.Bmi />} />
+                  <Route path="countdown" element={<Tools.Countdown />} />
+                  <Route path="drop-rates" element={<Tools.DropRates />} />
+                  <Route path="float" element={<Tools.Float />} />
+                  <Route
+                    path="markdown-viewer"
+                    element={<Tools.MarkdownViewer />}
+                  />
+                  <Route path="ratings" element={<Tools.Ratings />} />
+                  <Route path="uuid" element={<Tools.UUID />} />
+                </Route>
+                <Route path="/activities" element={<Activities />}>
+                  <Route index element={<Activities.Overview />} />
+                  <Route path=":activityId" element={<Activities.Details />} />
+                  <Route path="new" element={<Activities.New />} />
+                </Route>
+                <Route path="/login" element={<Login />} />
+                <Route path="/login/verify" element={<VerifyLogin />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
+        </main>
+      </rdcl-grid>
 
-    { screenType === 'mobile' && <SideMenu/> }
+      {screenType === 'mobile' && <SideMenu />}
 
-    <Notifications/>
-  </>
+      <Notifications />
+    </>
+  )
 }

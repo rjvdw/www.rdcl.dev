@@ -2,14 +2,14 @@ import yaml from 'js-yaml'
 import { JRD } from './types'
 
 export type Account = {
-  type: 'account',
-  base: JRD,
-  mastodon?: string,
+  type: 'account'
+  base: JRD
+  mastodon?: string
 }
 
 export type AccountAlias = {
-  type: 'alias',
-  alias: string,
+  type: 'alias'
+  alias: string
 }
 
 export type AccountRecord = Account | AccountAlias

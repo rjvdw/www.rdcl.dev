@@ -7,9 +7,11 @@ export const RequireLogin = () => {
   const loggedIn = useSelector(selectIsLoggedIn)
 
   if (!loggedIn) {
-    return <>
-      <Navigate to="/"/>
-    </>
+    return (
+      <>
+        <Navigate to="/" />
+      </>
+    )
   }
 
   return null

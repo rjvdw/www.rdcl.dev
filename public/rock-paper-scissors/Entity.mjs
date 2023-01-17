@@ -61,13 +61,13 @@ export class Entity {
       height,
       rand(width - 20),
       rand(height - 20),
-      randSign() * (rand(5) + 2) / 4,
-      randSign() * (rand(5) + 2) / 4,
+      (randSign() * (rand(5) + 2)) / 4,
+      (randSign() * (rand(5) + 2)) / 4,
       {
         0: ROCK,
         1: PAPER,
         2: SCISSORS,
-      }[rand(3)],
+      }[rand(3)]
     )
   }
 
@@ -115,15 +115,18 @@ export class Entity {
 
   render() {
     this.#el.innerHTML = this.#type
-    this.#el.style.top = `${ this.#y }px`
-    this.#el.style.left = `${ this.#x }px`
+    this.#el.style.top = `${this.#y}px`
+    this.#el.style.left = `${this.#x}px`
   }
 
   /**
    * @param {Entity} other
    */
   detectCollision(other) {
-    if (Math.abs(this.#x - other.#x) <= 20 && Math.abs(this.#y - other.#y) <= 20) {
+    if (
+      Math.abs(this.#x - other.#x) <= 20 &&
+      Math.abs(this.#y - other.#y) <= 20
+    ) {
       if (this.#type === ROCK && other.#type === PAPER) {
         this.#type = PAPER
       } else if (this.#type === PAPER && other.#type === SCISSORS) {

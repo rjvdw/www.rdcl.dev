@@ -5,12 +5,12 @@ export type JRD = {
   /**
    * URI identifying the entity described by this JRD.
    */
-  subject: string,
+  subject: string
 
   /**
    * List of URI strings that identify the same entity as the `subject` URI.
    */
-  aliases?: string[],
+  aliases?: string[]
 
   /**
    * Additional information about the subject in the form of name/value pairs.
@@ -18,12 +18,12 @@ export type JRD = {
    * The names (aka "property identifiers") are URIs.
    * The values are strings or null.
    */
-  properties?: Record<string, string>,
+  properties?: Record<string, string>
 
   /**
    * Links relating to the subject.
    */
-  links?: Link[],
+  links?: Link[]
 }
 
 /**
@@ -33,17 +33,17 @@ export type Link = {
   /**
    * The relation type.
    */
-  rel: string,
+  rel: string
 
   /**
    * The target URI.
    */
-  href?: string,
+  href?: string
 
   /**
    * The media type of the target resource.
    */
-  type?: string,
+  type?: string
 
   /**
    * Human-readable texts describing the link relation in the form of name/value pairs.
@@ -51,7 +51,7 @@ export type Link = {
    * The names are either language tags or undefined (`"und"`).
    * The values contain text in the specified language.
    */
-  titles?: Record<string, string>,
+  titles?: Record<string, string>
 
   /**
    * Additional information about the link in the form of name/value pairs.
@@ -59,5 +59,5 @@ export type Link = {
    * The names (aka "property identifiers") are URIs.
    * The values are strings or null.
    */
-  properties: Record<string, string>,
+  properties: Record<string, string>
 }

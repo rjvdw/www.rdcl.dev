@@ -6,34 +6,33 @@ import { useDismissNotification, useNotifications } from './Notifications.hooks'
 export const NotificationsBody: FunctionComponent = () => {
   const notifications = useNotifications()
 
-  return <>
-    { notifications.map(notification => (
-      <NotificationEntry
-        key={ notification.id }
-        notification={ notification }
-      />
-    )) }
-  </>
+  return (
+    <>
+      {notifications.map((notification) => (
+        <NotificationEntry key={notification.id} notification={notification} />
+      ))}
+    </>
+  )
 }
 
 type NotificationEntryProps = {
-  notification: Notification,
+  notification: Notification
 }
 
-const NotificationEntry: FunctionComponent<NotificationEntryProps> = (
-  { notification },
-) => {
+const NotificationEntry: FunctionComponent<NotificationEntryProps> = ({
+  notification,
+}) => {
   const dismiss = useDismissNotification(notification)
 
   return (
     <div
-      className={ classNames(
+      className={classNames(
         'notifications__notification',
-        `notifications__notification--${ notification.type }`,
-      ) }
-      onClick={ dismiss }
+        `notifications__notification--${notification.type}`
+      )}
+      onClick={dismiss}
     >
-      { notification.message }
+      {notification.message}
     </div>
   )
 }

@@ -76,9 +76,9 @@ export class Body {
     for (const body of bodies) {
       if (body !== this) {
         let d = this.distance(body)
-        const a = G * body.#mass / d ** 2
-        const ax = a / d * (body.#x - this.#x)
-        const ay = a / d * (body.#y - this.#y)
+        const a = (G * body.#mass) / d ** 2
+        const ax = (a / d) * (body.#x - this.#x)
+        const ay = (a / d) * (body.#y - this.#y)
 
         this.#vx += ax
         this.#vy += ay
@@ -108,11 +108,19 @@ export class Body {
    * @param {Body} other
    */
   #absorb(other) {
-    this.#name += ` & ${ other.#name }`
-    this.#x = (this.#x * this.#mass + other.#x * other.#mass) / (this.#mass + other.#mass)
-    this.#y = (this.#y * this.#mass + other.#y * other.#mass) / (this.#mass + other.#mass)
-    this.#vx = (this.#vx * this.#mass + other.#vx * other.#mass) / (this.#mass + other.#mass)
-    this.#vy = (this.#vy * this.#mass + other.#vy * other.#mass) / (this.#mass + other.#mass)
+    this.#name += ` & ${other.#name}`
+    this.#x =
+      (this.#x * this.#mass + other.#x * other.#mass) /
+      (this.#mass + other.#mass)
+    this.#y =
+      (this.#y * this.#mass + other.#y * other.#mass) /
+      (this.#mass + other.#mass)
+    this.#vx =
+      (this.#vx * this.#mass + other.#vx * other.#mass) /
+      (this.#mass + other.#mass)
+    this.#vy =
+      (this.#vy * this.#mass + other.#vy * other.#mass) /
+      (this.#mass + other.#mass)
     this.#diameter = Math.sqrt(this.#diameter ** 2 + other.#diameter ** 2)
     this.#mass += other.#mass
     other.#el.remove()
@@ -144,15 +152,20 @@ export class Body {
   }
 
   #render() {
-    this.#el.style.left = `${ this.#x }px`
-    this.#el.style.top = `${ this.#y }px`
-    this.#el.style.marginLeft = `-${ this.#diameter / 2 }px`
-    this.#el.style.marginTop = `-${ this.#diameter / 2 }px`
-    this.#el.style.width = `${ this.#diameter }px`
-    this.#el.style.height = `${ this.#diameter }px`
-    this.#el.style.background = `${ this.#color }`
+    this.#el.style.left = `${this.#x}px`
+    this.#el.style.top = `${this.#y}px`
+    this.#el.style.marginLeft = `-${this.#diameter / 2}px`
+    this.#el.style.marginTop = `-${this.#diameter / 2}px`
+    this.#el.style.width = `${this.#diameter}px`
+    this.#el.style.height = `${this.#diameter}px`
+    this.#el.style.background = `${this.#color}`
 
-    if (this.#x < -100 || this.#x > window.innerWidth + 100 || this.#y < -100 || this.#y > window.innerHeight + 100) {
+    if (
+      this.#x < -100 ||
+      this.#x > window.innerWidth + 100 ||
+      this.#y < -100 ||
+      this.#y > window.innerHeight + 100
+    ) {
       if (this.#mounted) {
         this.#el.remove()
         this.#mounted = false

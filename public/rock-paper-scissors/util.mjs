@@ -10,5 +10,5 @@ export function rand(max) {
  * @returns {number}
  */
 export function randSign() {
-  return Math.random() > .5 ? -1 : 1
+  return Math.random() > 0.5 ? -1 : 1
 }

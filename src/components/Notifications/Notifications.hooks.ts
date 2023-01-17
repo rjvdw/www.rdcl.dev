@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { dismiss, Notification, notify, selectNotifications } from '../../slices/notifications'
+import {
+  dismiss,
+  Notification,
+  notify,
+  selectNotifications,
+} from '../../slices/notifications'
 import { StoreDispatch } from '../../store'
 
 const MAX_VISIBLE_NOTIFICATIONS = 10
@@ -20,10 +25,7 @@ export function useDismissNotification(notification: Notification) {
   }, [dispatch, notification])
 
   useEffect(() => {
-    const timeout = setTimeout(
-      dismissNotification,
-      NOTIFICATION_DURATION,
-    )
+    const timeout = setTimeout(dismissNotification, NOTIFICATION_DURATION)
 
     return () => {
       clearTimeout(timeout)
@@ -37,20 +39,26 @@ let notificationIdCounter = 0
 export const useNotify = () => {
   const dispatch = useDispatch<StoreDispatch>()
 
-  const dispatcher = useCallback((type: Notification['type']) => (message: string) => {
-    dispatch(notify({
-      id: notificationIdCounter++,
-      type,
-      message,
-    }))
-  }, [dispatch])
-
-  return useMemo(() => Object.assign(
-    dispatcher('info'),
-    {
-      info: dispatcher('info'),
-      warning: dispatcher('warning'),
-      error: dispatcher('error'),
+  const dispatcher = useCallback(
+    (type: Notification['type']) => (message: string) => {
+      dispatch(
+        notify({
+          id: notificationIdCounter++,
+          type,
+          message,
+        })
+      )
     },
-  ), [dispatcher])
+    [dispatch]
+  )
+
+  return useMemo(
+    () =>
+      Object.assign(dispatcher('info'), {
+        info: dispatcher('info'),
+        warning: dispatcher('warning'),
+        error: dispatcher('error'),
+      }),
+    [dispatcher]
+  )
 }

@@ -9,7 +9,5 @@ export const selectIsCollapsed = createSelector(
   selectScreenType,
   selectIsSideMenuCollapsed,
   selectIsSideMenuOpen,
-  (screenType, collapsed, open) => screenType === 'mobile'
-    ? !open
-    : collapsed,
+  (screenType, collapsed, open) => (screenType === 'mobile' ? !open : collapsed)
 )

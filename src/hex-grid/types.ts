@@ -40,9 +40,9 @@ export type Spec<T extends BaseCellSpec = BaseCellSpec> = {
    * Not all coordinates within these bounds are necessarily valid, but if a coordinate is outside these bounds it's definitely not valid.
    */
   bounds: {
-    x: Range,
-    y: Range,
-  },
+    x: Range
+    y: Range
+  }
 
   /**
    * In a hex grid, every other row must be offset.

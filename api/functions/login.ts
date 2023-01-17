@@ -1,6 +1,13 @@
 import { type Handler } from '@netlify/functions'
 import axios from 'axios'
-import { badGateway, badRequest, methodNotAllowed, ok, ResponseBuilder, unsupportedMediaType } from '../http'
+import {
+  badGateway,
+  badRequest,
+  methodNotAllowed,
+  ok,
+  ResponseBuilder,
+  unsupportedMediaType,
+} from '../http'
 
 export const handler: Handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -21,18 +28,16 @@ export const handler: Handler = async (event) => {
 
   try {
     const response = await axios.post(
-      `${ process.env.API_URL }/auth/login`,
-      `email=${ username }&callback=${ process.env.URL }/login/verify`,
+      `${process.env.API_URL}/auth/login`,
+      `email=${username}&callback=${process.env.URL}/login/verify`,
       {
         validateStatus: () => true,
-      },
+      }
     )
 
     if (response.status !== 200) {
       console.error(response.data)
-      return new ResponseBuilder()
-        .status(response.status)
-        .build()
+      return new ResponseBuilder().status(response.status).build()
     }
 
     return ok()

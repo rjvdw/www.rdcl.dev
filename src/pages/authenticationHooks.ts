@@ -42,7 +42,8 @@ type VerificationResultType = 'pending' | 'success' | 'error' | 'invalid'
 
 export const useVerifyLogin = (): VerificationResultType => {
   const notify = useNotify()
-  const [verificationResult, setVerificationResult] = useState<VerificationResultType>('pending')
+  const [verificationResult, setVerificationResult] =
+    useState<VerificationResultType>('pending')
   const { sessionToken } = localStorage
   const [searchParams] = useSearchParams()
   const verificationCode = searchParams.get('verification-code')
@@ -69,7 +70,7 @@ export const useVerifyLogin = (): VerificationResultType => {
         break
       case 'done':
         setVerificationResult('success')
-        notify(`Login successful, welcome ${ jwt?.username }!`)
+        notify(`Login successful, welcome ${jwt?.username}!`)
         break
     }
   }, [authState.verificationState, setVerificationResult, notify, jwt])

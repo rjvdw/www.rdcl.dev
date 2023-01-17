@@ -18,33 +18,36 @@ export const SideMenu: FunctionComponent = () => {
   return (
     <rdcl-side-menu
       slot="side-menu"
-      screentype={ screenType }
-      ref={ ref }
-      collapsed={ collapsed }
+      screentype={screenType}
+      ref={ref}
+      collapsed={collapsed}
     >
-      <rdcl-side-menu-item href="/" active={ activeRoute === 'home' }>
-        <Icon.Home slot="icon"/>
+      <rdcl-side-menu-item href="/" active={activeRoute === 'home'}>
+        <Icon.Home slot="icon" />
         Home
       </rdcl-side-menu-item>
 
-      <rdcl-side-menu-item href="/tools" active={ activeRoute === 'tools' }>
-        <Icon.Tools slot="icon"/>
+      <rdcl-side-menu-item href="/tools" active={activeRoute === 'tools'}>
+        <Icon.Tools slot="icon" />
         Tools
       </rdcl-side-menu-item>
 
-      { loggedIn && (
+      {loggedIn && (
         <>
-          <rdcl-side-menu-item href="/activities" active={ activeRoute === 'activities' }>
-            <Icon.Activities slot="icon"/>
+          <rdcl-side-menu-item
+            href="/activities"
+            active={activeRoute === 'activities'}
+          >
+            <Icon.Activities slot="icon" />
             Activities
           </rdcl-side-menu-item>
 
-          <rdcl-side-menu-item href="/labels" active={ activeRoute === 'labels' }>
-            <Icon.Labels slot="icon"/>
+          <rdcl-side-menu-item href="/labels" active={activeRoute === 'labels'}>
+            <Icon.Labels slot="icon" />
             Labels
           </rdcl-side-menu-item>
         </>
-      ) }
+      )}
     </rdcl-side-menu>
   )
 }

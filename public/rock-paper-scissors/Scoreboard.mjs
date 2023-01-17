@@ -38,9 +38,9 @@ export class Scoreboard {
     }
 
     this.#el.innerHTML = `
-      ${ ROCK } - ${ rock }<br>
-      ${ PAPER } - ${ paper }<br>
-      ${ SCISSORS } - ${ scissors }<br>
+      ${ROCK} - ${rock}<br>
+      ${PAPER} - ${paper}<br>
+      ${SCISSORS} - ${scissors}<br>
     `
   }
 }

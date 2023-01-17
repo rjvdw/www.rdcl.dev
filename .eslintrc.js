@@ -9,8 +9,8 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:editorconfig/all',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   settings: {
     react: {
@@ -25,35 +25,25 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    'react-hooks',
-    'editorconfig',
-    '@typescript-eslint',
-    'import',
-  ],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'import'],
   rules: {
-    'comma-dangle': ['warn', 'always-multiline'],
-    'object-curly-spacing': ['warn', 'always'],
-    'quotes': ['error', 'single'],
-    'semi': ['error', 'never'],
-    'editorconfig/indent': ['error', {
-      SwitchCase: 1,
-    }],
-    'import/order': ['error', {
-      alphabetize: { order: 'asc' },
-    }],
-    'react/jsx-curly-spacing': ['warn', {
-      when: 'always',
-      children: { when: 'always' },
-      attributes: { when: 'always' },
-    }],
-    'react/jsx-tag-spacing': ['warn', {
-      beforeSelfClosing: 'never',
-    }],
-    '@typescript-eslint/no-inferrable-types': 'off',
-    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-non-null-assertion': 0,
+    'import/order': [
+      'error',
+      {
+        alphabetize: { order: 'asc' },
+      },
+    ],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
   },
+  overrides: [
+    {
+      files: ['src/elements/**/*.ts'],
+      rules: {
+        '@typescript-eslint/no-empty-interface': 0,
+        '@typescript-eslint/no-namespace': 0,
+      },
+    },
+  ],
 }

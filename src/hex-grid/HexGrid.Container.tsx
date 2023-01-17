@@ -5,15 +5,11 @@ type HexGridContainerProps = {
   children: React.ReactNode
   offset: 'odd' | 'even'
 }
-export const HexGridContainer: FunctionComponent<HexGridContainerProps> = (
-  { children, offset },
-) => (
-  <div
-    className={ classNames(
-      'hex-grid',
-      `hex-grid--offset-${ offset }`,
-    ) }
-  >
-    { children }
+export const HexGridContainer: FunctionComponent<HexGridContainerProps> = ({
+  children,
+  offset,
+}) => (
+  <div className={classNames('hex-grid', `hex-grid--offset-${offset}`)}>
+    {children}
   </div>
 )

@@ -1,5 +1,5 @@
 export class ClipboardMock {
-  private _value: string = ''
+  private _value = ''
 
   writeText(value: string) {
     this._value = value
@@ -15,10 +15,10 @@ export class ClipboardMock {
 
   static apply(mock: ClipboardMock, win: Cypress.AUTWindow) {
     if (!win.navigator.clipboard) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (win.navigator as any).clipboard = {}
+      ;(win.navigator as unknown as { clipboard: object }).clipboard = {}
     }
-    win.navigator.clipboard.writeText = async (value: string) => mock.writeText(value)
+    win.navigator.clipboard.writeText = async (value: string) =>
+      mock.writeText(value)
     win.navigator.clipboard.readText = async () => mock.readText()
   }
 }

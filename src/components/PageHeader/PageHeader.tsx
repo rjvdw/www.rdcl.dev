@@ -8,10 +8,8 @@ export const PageHeader: FunctionComponent = () => {
   const ref = usePageHeaderRef()
 
   return (
-    <rdcl-page-header
-      slot="header"
-      screentype={ screenType }
-      ref={ ref }
-    >rdcl.dev</rdcl-page-header>
+    <rdcl-page-header slot="header" screentype={screenType} ref={ref}>
+      rdcl.dev
+    </rdcl-page-header>
   )
 }

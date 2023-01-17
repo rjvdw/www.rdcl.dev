@@ -1,13 +1,16 @@
 import React from 'react'
 
 type ErrorBoundaryProps = {
-  children?: React.ReactNode,
+  children?: React.ReactNode
 }
 type ErrorBoundaryState = {
-  hasError: boolean,
+  hasError: boolean
 }
 
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props)
     this.state = { hasError: false }
@@ -23,11 +26,13 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   render() {
     if (this.state.hasError) {
-      return <>
-        <h1>Oops... Something went wrong</h1>
+      return (
+        <>
+          <h1>Oops... Something went wrong</h1>
 
-        <p>For some reason, this page failed to load.</p>
-      </>
+          <p>For some reason, this page failed to load.</p>
+        </>
+      )
     }
 
     return this.props.children

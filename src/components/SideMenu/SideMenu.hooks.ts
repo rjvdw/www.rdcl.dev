@@ -7,26 +7,17 @@ import { StoreDispatch } from '../../store'
 
 export const useClose = () => {
   const dispatch = useDispatch<StoreDispatch>()
-  return useCallback(
-    () => dispatch(close()),
-    [dispatch],
-  )
+  return useCallback(() => dispatch(close()), [dispatch])
 }
 
 export const useOpen = () => {
   const dispatch = useDispatch<StoreDispatch>()
-  return useCallback(
-    () => dispatch(open()),
-    [dispatch],
-  )
+  return useCallback(() => dispatch(open()), [dispatch])
 }
 
 export const useToggle = () => {
   const dispatch = useDispatch<StoreDispatch>()
-  return useCallback(
-    () => dispatch(toggle()),
-    [dispatch],
-  )
+  return useCallback(() => dispatch(toggle()), [dispatch])
 }
 
 export const useSideMenuRef = () => {
@@ -61,18 +52,29 @@ const useHandleClick = () => {
         return
       }
 
-      if (event.ctrlKey || event.shiftKey || event.metaKey || event.button === 1) {
+      if (
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.metaKey ||
+        event.button === 1
+      ) {
         // user is trying to open a new tab, don't interfere
         return
       }
 
-      const element = event.composedPath().find(el => (el as HTMLAnchorElement).href) as HTMLAnchorElement
-      if (element && !element.dataset.noHistory && element.origin === window.location.origin) {
+      const element = event
+        .composedPath()
+        .find((el) => (el as HTMLAnchorElement).href) as HTMLAnchorElement
+      if (
+        element &&
+        !element.dataset.noHistory &&
+        element.origin === window.location.origin
+      ) {
         event.preventDefault()
         navigate(element.pathname)
         close()
       }
     },
-    [navigate, close],
+    [navigate, close]
   )
 }

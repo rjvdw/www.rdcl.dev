@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { StoreDispatch, StoreGetState, StoreState } from '../store'
 
 type SideMenuState = {
-  collapsed: boolean,
-  open: boolean,
+  collapsed: boolean
+  open: boolean
 }
 
 const INITIAL_STATE: SideMenuState = {

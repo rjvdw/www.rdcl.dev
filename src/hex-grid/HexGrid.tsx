@@ -17,8 +17,10 @@ type HexGridState = {
   debug: boolean
 }
 
-export class HexGrid<T extends BaseCellSpec> extends React.Component<HexGridProps<T>, HexGridState> {
-
+export class HexGrid<T extends BaseCellSpec> extends React.Component<
+  HexGridProps<T>,
+  HexGridState
+> {
   constructor(props: HexGridProps<T>) {
     super(props)
     const debug = props.debug ?? false
@@ -28,7 +30,10 @@ export class HexGrid<T extends BaseCellSpec> extends React.Component<HexGridProp
     }
   }
 
-  static getDerivedStateFromProps<T extends BaseCellSpec>(props: HexGridProps<T>, state: HexGridState): HexGridState {
+  static getDerivedStateFromProps<T extends BaseCellSpec>(
+    props: HexGridProps<T>,
+    state: HexGridState
+  ): HexGridState {
     const debug = props.debug ?? false
     if (debug !== state.debugFromProps) {
       return {
@@ -46,27 +51,29 @@ export class HexGrid<T extends BaseCellSpec> extends React.Component<HexGridProp
     const boundY = Array.from(spec.bounds.y)
 
     const toggleDebug = (v: boolean) => this.setState({ debug: v })
-    const getBoundX = (row: number) => Array.from(spec.cells?.[row]?.bounds ?? spec.bounds.x)
-    const getCellSpec = (row: number, col: number) => spec.cells?.[row]?.cells?.[col]
+    const getBoundX = (row: number) =>
+      Array.from(spec.cells?.[row]?.bounds ?? spec.bounds.x)
+    const getCellSpec = (row: number, col: number) =>
+      spec.cells?.[row]?.cells?.[col]
 
     return (
       <div className="hex-grid-wrapper">
-        <DebugToggle debug={ debug } toggle={ toggleDebug }/>
+        <DebugToggle debug={debug} toggle={toggleDebug} />
 
-        <HexGridContainer offset={ spec.offset ?? DEFAULT_OFFSET }>
-          { boundY.map(row => (
-            <HexGridRow key={ row } row={ row }>
-              { getBoundX(row).map(col => (
+        <HexGridContainer offset={spec.offset ?? DEFAULT_OFFSET}>
+          {boundY.map((row) => (
+            <HexGridRow key={row} row={row}>
+              {getBoundX(row).map((col) => (
                 <HexGridCell
-                  key={ col }
-                  row={ row }
-                  col={ col }
-                  debug={ debug }
-                  cellSpec={ getCellSpec(row, col) }
+                  key={col}
+                  row={row}
+                  col={col}
+                  debug={debug}
+                  cellSpec={getCellSpec(row, col)}
                 />
-              )) }
+              ))}
             </HexGridRow>
-          )) }
+          ))}
         </HexGridContainer>
       </div>
     )

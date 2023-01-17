@@ -21,19 +21,20 @@ export class RdclGrid extends LitElement {
     return css`
       :host {
         display: grid;
-        grid-template-areas: "header          header"
-                             "side-menu       main";
+        grid-template-areas:
+          'header          header'
+          'side-menu       main';
         grid-template-columns: auto 1fr;
         grid-template-rows: auto 1fr;
       }
 
-      [name="header"]::slotted(*) {
+      [name='header']::slotted(*) {
         grid-area: header;
         background: var(--theme-color);
         border-bottom: var(--grid-border);
       }
 
-      [name="side-menu"]::slotted(*) {
+      [name='side-menu']::slotted(*) {
         grid-area: side-menu;
         border-right: var(--grid-border);
         background: var(--grid-side-menu-background);
@@ -44,9 +45,10 @@ export class RdclGrid extends LitElement {
         padding: 1rem;
       }
 
-      :host([screentype="mobile"]) {
-        grid-template-areas: "header"
-                             "main";
+      :host([screentype='mobile']) {
+        grid-template-areas:
+          'header'
+          'main';
         grid-template-columns: 1fr;
       }
     `
@@ -72,7 +74,6 @@ declare global {
     'rdcl-grid': RdclGrid
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'rdcl-grid': RdclGridAttributes

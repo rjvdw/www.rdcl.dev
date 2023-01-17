@@ -1,6 +1,6 @@
 name: CI/CD
 
-on: [ push ]
+on: [push]
 
 jobs:
   Verify:
@@ -24,8 +24,8 @@ jobs:
         with:
           browser: chrome
           start: npm run start
-# Publishing to cypress has been disabled for now.
-#          record: true
+          # Publishing to cypress has been disabled for now.
+          #record: true
           spec: cypress/e2e/**/*.feature
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

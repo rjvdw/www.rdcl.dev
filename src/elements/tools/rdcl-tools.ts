@@ -9,7 +9,7 @@ export class RdclTools extends LitElement {
         display: block;
         list-style-type: disc;
         margin-block-start: 0;
-        margin-block-end: .75rem;
+        margin-block-end: 0.75rem;
         margin-inline-start: 0;
         margin-inline-end: 0;
         padding-inline-start: 2.5rem;
@@ -18,23 +18,19 @@ export class RdclTools extends LitElement {
   }
 
   render() {
-    return html`
-      <slot></slot>
-    `
+    return html` <slot></slot> `
   }
 }
 
 customElements.define('rdcl-tools', RdclTools)
 
-interface RdclToolsAttributes extends CustomElementAttributes<RdclTools> {
-}
+interface RdclToolsAttributes extends CustomElementAttributes<RdclTools> {}
 
 declare global {
   interface HTMLElementTagNameMap {
     'rdcl-tools': RdclTools
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'rdcl-tools': RdclToolsAttributes

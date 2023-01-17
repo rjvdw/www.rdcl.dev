@@ -99,7 +99,10 @@ export class RangeInclusive implements Range {
  * @param strings
  * @param args
  */
-export function range(strings: TemplateStringsArray, ...args: unknown[]): Range {
+export function range(
+  strings: TemplateStringsArray,
+  ...args: unknown[]
+): Range {
   let str = strings[0]
   for (let i = 0; i < args.length; i += 1) {
     str += args[i] + strings[i + 1]
@@ -107,17 +110,15 @@ export function range(strings: TemplateStringsArray, ...args: unknown[]): Range 
 
   const matchInclusive = str.match(/^(?<start>.*)\.\.=(?<end>.*)$/)
   if (matchInclusive) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const { start, end } = matchInclusive.groups!
     return new RangeInclusive(parseInt(start), parseInt(end))
   }
 
   const matchExclusive = str.match(/^(?<start>.*)\.\.(?<end>.*)$/)
   if (matchExclusive) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const { start, end } = matchExclusive.groups!
     return new RangeExclusive(parseInt(start), parseInt(end))
   }
 
-  throw new Error(`Invalid range specification: ${ str }`)
+  throw new Error(`Invalid range specification: ${str}`)
 }

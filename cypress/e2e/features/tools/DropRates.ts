@@ -1,4 +1,9 @@
-import { DataTable, defineParameterType, Then, When } from '@badeball/cypress-cucumber-preprocessor'
+import {
+  DataTable,
+  defineParameterType,
+  Then,
+  When,
+} from '@badeball/cypress-cucumber-preprocessor'
 
 defineParameterType({
   name: 'field',
@@ -18,8 +23,7 @@ When('the user enters:', (data: DataTable) => {
 })
 
 Then('the {field} is {string}', (selector: string, value: string) => {
-  cy.get(selector)
-    .should('have.value', value === '""' ? '' : value)
+  cy.get(selector).should('have.value', value === '""' ? '' : value)
 })
 
 function getSelector(field: string): string {
@@ -35,6 +39,6 @@ function getSelector(field: string): string {
     case '99th percentile':
       return '[data-testid="perc99"]'
     default:
-      throw new Error(`Invalid field: ${ field }`)
+      throw new Error(`Invalid field: ${field}`)
   }
 }

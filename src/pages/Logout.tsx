@@ -6,12 +6,14 @@ import { useLogout } from './authenticationHooks'
 export const Logout = () => {
   const logout = useLogout()
 
-  return <>
-    <Title>log out</Title>
-    <ActiveRoute/>
-    <h1>Log out</h1>
+  return (
+    <>
+      <Title>log out</Title>
+      <ActiveRoute />
+      <h1>Log out</h1>
 
-    <button onClick={ () => logout() }>Click here to log out</button>
-  </>
+      <button onClick={() => logout()}>Click here to log out</button>
+    </>
+  )
 }
 export default Logout
