@@ -149,7 +149,8 @@ function useEditing(): [boolean, (value: boolean) => void] {
 
   const editing = useMemo(() => searchParams.has('editing'), [searchParams])
 
-  const setEditing = (value: boolean) => setSearchParams(value ? 'editing' : '')
+  const setEditing = (value: boolean) =>
+    setSearchParams(value ? 'editing' : '', { replace: true })
 
   return [editing, setEditing]
 }
