@@ -45,6 +45,12 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = ({
 
   return (
     <form onSubmit={submitHandler}>
+      <input
+        type="hidden"
+        value={activity?.timezone ?? 'Europe/Amsterdam'}
+        {...register('timezone')}
+      />
+
       <rdcl-input-grid>
         <label htmlFor={`${id}:title`} className="required">
           Title

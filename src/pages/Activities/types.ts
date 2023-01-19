@@ -5,6 +5,7 @@ export type Activity = {
   notes?: string
   url?: string
   location: string
+  timezone: string
   starts: string
   ends?: string
   allDay: boolean
