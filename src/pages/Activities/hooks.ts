@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
+import { useAsyncLoad } from '../../util/useAsyncLoad'
 import { getActivity, getPastActivities, getUpcomingActivities } from './api'
 
 export const useActivities = () => {
@@ -32,45 +33,6 @@ export const useActivity = () => {
   return {
     activity: data,
     setActivity: setData,
-    loading,
-    error,
-  }
-}
-
-type AsyncLoadResult<T> = {
-  data?: T
-  setData: (value: T) => void
-  loading: boolean
-  error?: string
-}
-
-const useAsyncLoad = <T>(action: () => Promise<T>): AsyncLoadResult<T> => {
-  const [data, setData] = useState<T>()
-  const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string>()
-
-  useEffect(() => {
-    ;(async () => {
-      try {
-        setLoading(true)
-        setData(await action())
-        setError(undefined)
-      } catch (err) {
-        console.error(err)
-        if (err instanceof Error) {
-          setError(err.message)
-        } else {
-          setError(`${err}`)
-        }
-      } finally {
-        setLoading(false)
-      }
-    })()
-  }, [action])
-
-  return {
-    data,
-    setData,
     loading,
     error,
   }

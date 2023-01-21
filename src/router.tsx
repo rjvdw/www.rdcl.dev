@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import { App } from './components/App'
 import Activities from './pages/Activities'
+import { Health } from './pages/Health'
 import { Home } from './pages/Home'
 import { Labels } from './pages/Labels'
 import { NotFound } from './pages/NotFound'
@@ -38,6 +39,7 @@ export const router = createBrowserRouter(
         <Route path=":activityId" element={<Activities.Details />} />
         <Route path="new" element={<Activities.New />} />
       </Route>
+      <Route path="/health" element={<Health />} />
       <Route path="/login" element={<Login />} />
       <Route path="/login/verify" element={<VerifyLogin />} />
       <Route path="/logout" element={<Logout />} />
