@@ -1,5 +1,5 @@
 import { format, formatISO, parseISO } from 'date-fns'
-import React, { FunctionComponent, useId, useState } from 'react'
+import React, { FunctionComponent, useEffect, useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { useNotify } from '../../components/Notifications'
@@ -17,13 +17,19 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = ({
   activity,
 }) => {
   const id = useId()
-  const { register, handleSubmit, watch } = useForm<Activity>()
+  const { register, handleSubmit, watch, setValue } = useForm<Activity>()
   const [endIsKnown, setEndIsKnown] = useState<boolean>(
     !activity || Boolean(activity.ends)
   )
   const [error, setError] = useState<string>()
   const notify = useNotify()
   const labels = useSelector(selectLabels)
+
+  useEffect(() => {
+    if (!endIsKnown) {
+      setValue('ends', '')
+    }
+  }, [endIsKnown, setValue])
 
   const toggleEndIsKnown = () => setEndIsKnown((v) => !v)
   const allDay = watch('allDay', activity?.allDay ?? false)
