@@ -46,8 +46,16 @@ export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
         {records.map((record) => (
           <tr key={record.date}>
             <td>{record.date}</td>
-            <td>{record.data.weight?.toLocaleString()} kg</td>
-            <td>{record.data.bodyFat?.toLocaleString()}%</td>
+            <td>
+              {record.data.weight
+                ? `${record.data.weight?.toLocaleString()}kg`
+                : ''}
+            </td>
+            <td>
+              {record.data.bodyFat
+                ? `${record.data.bodyFat.toLocaleString()}%`
+                : ''}
+            </td>
             <td>
               <button onClick={() => deleteRecord(record)}>Delete</button>
             </td>
