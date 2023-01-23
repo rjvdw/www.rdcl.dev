@@ -32,6 +32,10 @@ export function formatDateTime(
   }
 }
 
+export function formatDate(date: Date) {
+  return DATE_FORMATTER.format(date)
+}
+
 export function formatUrl(url: string): string {
   return new URL(url).host
 }

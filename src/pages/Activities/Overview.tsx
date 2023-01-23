@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import { Label } from '../../components/Label'
 import { LabelList } from '../../components/LabelList'
+import { DateFuzzer } from './DateFuzzer'
 import { Dts } from './Dts'
 import { useActivities } from './hooks'
 import { Activity } from './types'
@@ -82,6 +83,8 @@ const ActivityCard: FunctionComponent<ActivityCardProps> = ({ activity }) => (
     <h2>
       <Link to={`/activities/${activity.id}`}>{activity.title}</Link>
     </h2>
+
+    <DateFuzzer activity={activity} />
 
     {activity.labels.length > 0 && (
       <LabelList>
