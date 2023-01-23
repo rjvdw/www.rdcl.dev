@@ -67,68 +67,70 @@ export const Float = () => {
 
           return (
             <>
-              <table
-                className="simple-table float-analysis"
-                data-testid="float-analysis"
-              >
-                <tbody>
-                  <tr>
-                    <th>Input</th>
-                    <td>{number}</td>
-                  </tr>
+              <div className="responsive-table-wrapper">
+                <table
+                  className="simple-table float-analysis"
+                  data-testid="float-analysis"
+                >
+                  <tbody>
+                    <tr>
+                      <th>Input</th>
+                      <td>{number}</td>
+                    </tr>
 
-                  <tr>
-                    <th>Binary representation</th>
-                    <td>{binaryRepresentation(bytes)}</td>
-                  </tr>
+                    <tr>
+                      <th>Binary representation</th>
+                      <td>{binaryRepresentation(bytes)}</td>
+                    </tr>
 
-                  <tr>
-                    <th>Deconstructed</th>
-                    <td>
-                      <span className="sign">{sign}</span>
-                      <span className="exponent">
-                        {groupDigits(exponent, 8, sign.length)}
-                      </span>
-                      <span className="mantissa">
-                        {groupDigits(
-                          mantissa,
-                          8,
-                          sign.length + exponent.length
-                        )}
-                      </span>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th>Hex representation</th>
-                    <td>{hexRepresentation(bytes)}</td>
-                  </tr>
-
-                  <tr>
-                    <th>Scientific notation</th>
-                    <td>
-                      {conditionally(
-                        isMaxExponent(exponent),
-                        '-',
-                        <>
-                          {sign === '0' ? '' : '-'}
-                          {conditionally(
-                            isZeroExponent(exponent),
-                            <>
-                              {parseSubnormalMantissa(mantissa)}&times;2
-                              <sup>{parsedExponent + 1}</sup>
-                            </>,
-                            <>
-                              {parseNormalMantissa(mantissa)}&times;2
-                              <sup>{parsedExponent}</sup>
-                            </>
+                    <tr>
+                      <th>Deconstructed</th>
+                      <td>
+                        <span className="sign">{sign}</span>
+                        <span className="exponent">
+                          {groupDigits(exponent, 8, sign.length)}
+                        </span>
+                        <span className="mantissa">
+                          {groupDigits(
+                            mantissa,
+                            8,
+                            sign.length + exponent.length
                           )}
-                        </>
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        </span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th>Hex representation</th>
+                      <td>{hexRepresentation(bytes)}</td>
+                    </tr>
+
+                    <tr>
+                      <th>Scientific notation</th>
+                      <td>
+                        {conditionally(
+                          isMaxExponent(exponent),
+                          '-',
+                          <>
+                            {sign === '0' ? '' : '-'}
+                            {conditionally(
+                              isZeroExponent(exponent),
+                              <>
+                                {parseSubnormalMantissa(mantissa)}&times;2
+                                <sup>{parsedExponent + 1}</sup>
+                              </>,
+                              <>
+                                {parseNormalMantissa(mantissa)}&times;2
+                                <sup>{parsedExponent}</sup>
+                              </>
+                            )}
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
               <h2>Explanation</h2>
               <p>

@@ -32,36 +32,38 @@ export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
   }
 
   return (
-    <table className="health__overview">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Weight</th>
-          <th>Body Fat %</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {records.map((record) => (
-          <tr key={record.date}>
-            <td>{record.date}</td>
-            <td>
-              {record.data.weight
-                ? `${record.data.weight?.toLocaleString()}kg`
-                : ''}
-            </td>
-            <td>
-              {record.data.bodyFat
-                ? `${record.data.bodyFat.toLocaleString()}%`
-                : ''}
-            </td>
-            <td>
-              <button onClick={() => deleteRecord(record)}>Delete</button>
-            </td>
+    <div className="responsive-table-wrapper health__overview">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Weight</th>
+            <th>Body Fat %</th>
+            <th>Actions</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          {records.map((record) => (
+            <tr key={record.date}>
+              <td>{record.date}</td>
+              <td>
+                {record.data.weight
+                  ? `${record.data.weight?.toLocaleString()}kg`
+                  : ''}
+              </td>
+              <td>
+                {record.data.bodyFat
+                  ? `${record.data.bodyFat.toLocaleString()}%`
+                  : ''}
+              </td>
+              <td>
+                <button onClick={() => deleteRecord(record)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }

@@ -97,30 +97,32 @@ export const Ascii = () => {
 
       <h2>ASCII Table</h2>
 
-      <table className="ascii-table">
-        <thead>
-          <tr>
-            <th>
-              <abbr title="Decimal">Dec</abbr>
-            </th>
-            <th>Binary</th>
-            <th>Hex</th>
-            <th>
-              <abbr title="Character">Char</abbr>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {ASCII_TABLE.map((row) => (
-            <tr key={row.decimal}>
-              <td>{row.decimal}</td>
-              <td>{row.binary}</td>
-              <td>{row.hex}</td>
-              <td>{row.character}</td>
+      <div className="responsive-table-wrapper">
+        <table className="ascii-table">
+          <thead>
+            <tr>
+              <th>
+                <abbr title="Decimal">Dec</abbr>
+              </th>
+              <th>Binary</th>
+              <th>Hex</th>
+              <th>
+                <abbr title="Character">Char</abbr>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {ASCII_TABLE.map((row) => (
+              <tr key={row.decimal}>
+                <td>{row.decimal}</td>
+                <td>{row.binary}</td>
+                <td>{row.hex}</td>
+                <td>{row.character}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }

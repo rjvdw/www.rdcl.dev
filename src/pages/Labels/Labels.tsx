@@ -66,62 +66,64 @@ const Editor: FunctionComponent<{ labels: Record<string, LabelConfig> }> = ({
       {labels.length === 0 ? (
         <p>No labels configured</p>
       ) : (
-        <table className="labels__overview">
-          <thead>
-            <tr>
-              <th>Label</th>
-              <th>Color</th>
-              <th>Text</th>
-              <th>Preview</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {labels.map(([key, { label, config }]) => (
-              <tr key={key}>
-                <td>
-                  <input
-                    type="text"
-                    value={label}
-                    required
-                    onChange={(event) => updateLabel(key, event.target.value)}
-                  />
-                </td>
-                <td>
-                  <div className="labels__color-input">
-                    <input
-                      type="text"
-                      value={config.color ?? ''}
-                      onChange={(event) =>
-                        updateField(key, 'color', event.target.value)
-                      }
-                    />
-                    <ColorPreview color={config.color} />
-                  </div>
-                </td>
-                <td>
-                  <div className="labels__color-input">
-                    <input
-                      type="text"
-                      value={config.textColor ?? ''}
-                      onChange={(event) =>
-                        updateField(key, 'textColor', event.target.value)
-                      }
-                    />
-                    <ColorPreview color={config.textColor} />
-                  </div>
-                </td>
-                <td>
-                  <Label labels={labelsMap}>{label}</Label>
-                </td>
-                <td>
-                  <button onClick={() => deleteLabel(key)}>Delete</button>
-                </td>
+        <div className="responsive-table-wrapper labels__overview">
+          <table>
+            <thead>
+              <tr>
+                <th>Label</th>
+                <th>Color</th>
+                <th>Text</th>
+                <th>Preview</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {labels.map(([key, { label, config }]) => (
+                <tr key={key}>
+                  <td>
+                    <input
+                      type="text"
+                      value={label}
+                      required
+                      onChange={(event) => updateLabel(key, event.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <div className="labels__color-input">
+                      <input
+                        type="text"
+                        value={config.color ?? ''}
+                        onChange={(event) =>
+                          updateField(key, 'color', event.target.value)
+                        }
+                      />
+                      <ColorPreview color={config.color} />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="labels__color-input">
+                      <input
+                        type="text"
+                        value={config.textColor ?? ''}
+                        onChange={(event) =>
+                          updateField(key, 'textColor', event.target.value)
+                        }
+                      />
+                      <ColorPreview color={config.textColor} />
+                    </div>
+                  </td>
+                  <td>
+                    <Label labels={labelsMap}>{label}</Label>
+                  </td>
+                  <td>
+                    <button onClick={() => deleteLabel(key)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <div className="labels__controls">

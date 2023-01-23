@@ -34,16 +34,18 @@ export const Session = () => {
 const RenderJwt: FunctionComponent<{ jwt: Jwt }> = ({ jwt }) => {
   return (
     <>
-      <table>
-        <tbody>
-          {Object.entries(jwt.raw).map(([claim, value]) => (
-            <tr key={claim}>
-              <JwtClaim>{claim}</JwtClaim>
-              <JwtValue claim={claim}>{value}</JwtValue>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="responsive-table-wrapper">
+        <table>
+          <tbody>
+            {Object.entries(jwt.raw).map(([claim, value]) => (
+              <tr key={claim}>
+                <JwtClaim>{claim}</JwtClaim>
+                <JwtValue claim={claim}>{value}</JwtValue>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <h2>Raw</h2>
       <pre>{JSON.stringify(jwt.raw, null, 2)}</pre>
