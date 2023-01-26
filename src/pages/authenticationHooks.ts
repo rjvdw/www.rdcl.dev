@@ -8,15 +8,27 @@ import { StoreDispatch, StoreState } from '../store'
 
 type LoginForm = {
   username: string
+  rememberMe: boolean
 }
 
 type LoginState = 'initial' | 'pending' | 'success' | 'error'
 
 export const useLogin = () => {
   const [state, setState] = useState<LoginState>('initial')
-  const { register, handleSubmit } = useForm<LoginForm>()
+  const { username } = localStorage
+  const { register, handleSubmit } = useForm<LoginForm>({
+    defaultValues: {
+      username,
+      rememberMe: Boolean(username),
+    },
+  })
 
   const onSubmit = async (data: LoginForm) => {
+    if (data.rememberMe) {
+      localStorage.username = data.username
+    } else {
+      delete localStorage.username
+    }
     setState('pending')
     const response = await fetch('/api/login', {
       method: 'POST',

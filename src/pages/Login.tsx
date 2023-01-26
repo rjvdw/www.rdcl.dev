@@ -22,13 +22,26 @@ export const Login = () => {
             <input
               id={id}
               type="text"
+              autoCapitalize="off"
               disabled={state === 'pending'}
-              {...register('username')}
+              required
+              {...register('username', {
+                required: true,
+              })}
             />
 
             <button data-start={2} disabled={state === 'pending'}>
               Log in
             </button>
+
+            <label data-start={2}>
+              <input
+                type="checkbox"
+                disabled={state === 'pending'}
+                {...register('rememberMe')}
+              />{' '}
+              Remember me
+            </label>
 
             {state === 'error' && (
               <p className="error-message" data-start={2}>
