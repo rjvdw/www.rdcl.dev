@@ -34,7 +34,7 @@ const { reducer, actions } = createSlice({
       }
     },
     logout() {
-      return INITIAL_STATE
+      return {}
     },
   },
 })

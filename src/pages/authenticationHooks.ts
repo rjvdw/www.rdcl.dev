@@ -85,6 +85,7 @@ export const useVerifyLogin = (): VerificationResultType => {
         setVerificationResult('success')
         notify(`Login successful, welcome ${jwt?.username}!`)
         navigate(redirectAfterLogin)
+        delete localStorage.redirectAfterLogin
         break
     }
   }, [
