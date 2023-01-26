@@ -9,7 +9,7 @@ export const RequireLogin = () => {
   if (!loggedIn) {
     return (
       <>
-        <Navigate to="/" />
+        <Navigate to="/login" />
       </>
     )
   }
