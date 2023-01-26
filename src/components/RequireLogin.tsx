@@ -1,18 +1,19 @@
-import React from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { selectIsLoggedIn } from '../slices/auth'
 
 export const RequireLogin = () => {
   const loggedIn = useSelector(selectIsLoggedIn)
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  if (!loggedIn) {
-    return (
-      <>
-        <Navigate to="/login" />
-      </>
-    )
-  }
+  useEffect(() => {
+    if (!loggedIn) {
+      localStorage.redirectAfterLogin = location.pathname
+      navigate('/login')
+    }
+  }, [loggedIn, location, navigate])
 
   return null
 }

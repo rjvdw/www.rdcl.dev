@@ -56,7 +56,8 @@ export const useVerifyLogin = (): VerificationResultType => {
   const notify = useNotify()
   const [verificationResult, setVerificationResult] =
     useState<VerificationResultType>('pending')
-  const { sessionToken } = localStorage
+  const { sessionToken, redirectAfterLogin = '/' } = localStorage
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const verificationCode = searchParams.get('verification-code')
   const dispatch = useDispatch<StoreDispatch>()
@@ -83,9 +84,17 @@ export const useVerifyLogin = (): VerificationResultType => {
       case 'done':
         setVerificationResult('success')
         notify(`Login successful, welcome ${jwt?.username}!`)
+        navigate(redirectAfterLogin)
         break
     }
-  }, [authState.verificationState, setVerificationResult, notify, jwt])
+  }, [
+    authState.verificationState,
+    setVerificationResult,
+    notify,
+    jwt,
+    redirectAfterLogin,
+    navigate,
+  ])
 
   return verificationResult
 }
