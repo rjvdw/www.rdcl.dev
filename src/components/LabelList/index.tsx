@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactElement } from 'react'
 import { Label } from '../Label'
+import './styles.sass'
 
 export type LabelListProps = {
   children?: React.ReactNode

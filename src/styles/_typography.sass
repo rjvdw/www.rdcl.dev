@@ -23,13 +23,7 @@ p
     margin-bottom: 0
 
 a
-  color: vars.$base-link-color
-  text-decoration: none
-
-  &:hover,
-  &:focus
-    color: vars.$base-link-color--hover
-    text-decoration: underline
+  @extend %link
 
 button.link
   border: none
@@ -39,7 +33,7 @@ button.link
   display: inline
   font: inherit
 
-  @extend a
+  @extend %link
 
 ol, ul
   margin-block-start: 0
