@@ -7,19 +7,22 @@ type ListResponseBody = {
     date: string
     data: string
   }>
+  count: number
 }
 
 export async function list(
   from?: string,
   to?: string
-): Promise<HealthRecord[]> {
+): Promise<{ records: HealthRecord[]; count: number }> {
   const response = await callApi('GET', from, to)
   const body = (await response.json()) as ListResponseBody
 
-  return body.health.map((record) => ({
+  const records = body.health.map((record) => ({
     date: record.date,
     data: JSON.parse(record.data) as HealthData,
   }))
+
+  return { records, count: body.count }
 }
 
 export async function save(date: string, data: HealthData) {

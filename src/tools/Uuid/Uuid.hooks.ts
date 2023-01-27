@@ -1,5 +1,6 @@
 import { FormEventHandler, useState } from 'react'
 import { useNotify } from '../../components/Notifications'
+import { errorAsString } from '../../util/errors'
 
 export const useUuid = () => {
   const notify = useNotify()
@@ -16,7 +17,7 @@ export const useUuid = () => {
       return next
     } catch (err) {
       console.error(err)
-      notify.error(`Failed to generate UUID: ${errorMessage(err)}`)
+      notify.error(`Failed to generate UUID: ${errorAsString(err)}`)
       return ''
     }
   }
@@ -32,7 +33,7 @@ export const useUuid = () => {
       notify('UUID copied to clipboard')
     } catch (err) {
       console.error(err)
-      notify.error(`Failed to copy UUID to clipboard: ${errorMessage(err)}`)
+      notify.error(`Failed to copy UUID to clipboard: ${errorAsString(err)}`)
     }
   }
 
@@ -49,12 +50,4 @@ export const useUuid = () => {
       await copy(generate())
     },
   }
-}
-
-function errorMessage(err: unknown): string {
-  if (err instanceof Error) {
-    return err.message
-  }
-
-  return String(err)
 }

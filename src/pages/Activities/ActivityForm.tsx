@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { useNotify } from '../../components/Notifications'
 import { TagInput } from '../../components/TagInput'
 import { selectLabels } from '../../slices/labels'
+import { errorAsString } from '../../util/errors'
 import { Activity } from './types'
 
 type ActivityFormProps = {
@@ -40,12 +41,7 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = ({
       await onSubmit(activity)
       notify(`Activity "${activity.title}" was successfully saved`)
     } catch (err) {
-      console.error(err)
-      if (err instanceof Error) {
-        setError(err.message)
-      } else {
-        setError(`${err}`)
-      }
+      setError(errorAsString(err))
     }
   })
 

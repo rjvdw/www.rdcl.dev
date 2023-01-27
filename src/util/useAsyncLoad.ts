@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { errorAsString } from './errors'
 
 export type AsyncLoadResult<T> = {
   data?: T
@@ -21,12 +22,7 @@ export const useAsyncLoad = <T>(
       setData(await action())
       setError(undefined)
     } catch (err) {
-      console.error(err)
-      if (err instanceof Error) {
-        setError(err.message)
-      } else {
-        setError(`${err}`)
-      }
+      setError(errorAsString(err))
     } finally {
       setLoading(false)
     }

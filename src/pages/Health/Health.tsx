@@ -10,7 +10,8 @@ import { useHealthRecords } from './hooks'
 
 export const Health = () => {
   const [{ from, to }, setSearch] = useHistoryState<SearchState>({})
-  const { records, loading, error, refresh } = useHealthRecords(from, to)
+  const { records, count, loading, error, refresh, loadMore } =
+    useHealthRecords(from, to)
 
   return (
     <>
@@ -27,9 +28,11 @@ export const Health = () => {
 
       <HealthRecords
         records={records}
+        count={count}
         loading={loading}
         error={error}
         refresh={refresh}
+        loadMore={loadMore}
       />
     </>
   )

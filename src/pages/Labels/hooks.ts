@@ -2,6 +2,7 @@ import { useMemo, useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { LabelConfig, saveLabels } from '../../slices/labels'
 import { StoreDispatch } from '../../store'
+import { errorAsString } from '../../util/errors'
 
 type LabelState = Array<[string, { label: string; config: LabelConfig }]>
 
@@ -143,11 +144,7 @@ export const useLabelState = (initialLabels: Record<string, LabelConfig>) => {
         await reduxDispatch(saveLabels(labelsMap))
         dispatch({ type: 'reset' })
       } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message)
-        } else {
-          setError(String(err))
-        }
+        setError(errorAsString(err))
       }
     },
     reset() {

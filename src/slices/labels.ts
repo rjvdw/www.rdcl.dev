@@ -1,5 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { StoreState, StoreThunk } from '../store'
+import { errorAsString } from '../util/errors'
 
 export type LabelConfig = {
   color?: string
@@ -94,13 +95,7 @@ export const loadLabels = (): StoreThunk => async (dispatch) => {
 
     dispatch(actions.setLoaded(labels))
   } catch (err) {
-    let message: string
-    if (err instanceof Error) {
-      message = err.message
-    } else {
-      message = String(err)
-    }
-    dispatch(actions.setError(message))
+    dispatch(actions.setError(errorAsString(err)))
   }
 }
 
