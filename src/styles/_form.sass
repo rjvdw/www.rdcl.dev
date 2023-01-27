@@ -18,6 +18,11 @@ $box-spacing: calc(2*$input-padding + 2*$border-width)
   &:disabled
     cursor: not-allowed
 
+input[type="date"], input[type="datetime-local"]
+  -webkit-appearance: none
+  height: $input-line-height
+  box-sizing: content-box
+
 input:not([type=range]):not([type=radio]):not([type=checkbox]), textarea, .input
   @include focusable-ui-component
 
