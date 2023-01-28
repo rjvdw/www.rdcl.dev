@@ -5,6 +5,7 @@ import { ReactComponent as Health } from '../icons/health.svg'
 import { ReactComponent as Home } from '../icons/home.svg'
 import { ReactComponent as Labels } from '../icons/labels.svg'
 import { ReactComponent as Logout } from '../icons/logout.svg'
+import { ReactComponent as Profile } from '../icons/profile.svg'
 import { ReactComponent as Tools } from '../icons/tools.svg'
 
 /**
@@ -18,6 +19,7 @@ interface Props extends SVGProps<SVGSVGElement> {
 type ReactSvgComponent = FunctionComponent<Props>
 
 export const Icon = {
+  Profile: Profile as ReactSvgComponent,
   Home: Home as ReactSvgComponent,
   Tools: Tools as ReactSvgComponent,
   Health: Health as ReactSvgComponent,

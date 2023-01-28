@@ -9,6 +9,7 @@ import Activities from './pages/Activities'
 import { Health } from './pages/Health'
 import { Home } from './pages/Home'
 import { Labels } from './pages/Labels'
+import { Me } from './pages/Me'
 import { NotFound } from './pages/NotFound'
 import { Session } from './pages/Session'
 import Tools from './pages/Tools'
@@ -21,6 +22,7 @@ export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/" element={<Home />} />
+      <Route path="/me" element={<Me />} />
       <Route path="/session" element={<Session />} />
       <Route path="/labels" element={<Labels />} />
       <Route path="/tools" element={<Tools />}>
