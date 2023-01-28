@@ -6,6 +6,7 @@ import { useNotify } from '../../components/Notifications'
 import { TagInput } from '../../components/TagInput'
 import { selectLabels } from '../../slices/labels'
 import { errorAsString } from '../../util/errors'
+import { htmlToMarkdownPasteHandler } from '../../util/htmlToMarkdown'
 import { Activity } from './types'
 
 type ActivityFormProps = {
@@ -83,6 +84,7 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = ({
         <textarea
           id={`${id}:description`}
           rows={5}
+          onPaste={htmlToMarkdownPasteHandler}
           defaultValue={activity?.description}
           {...register('description')}
         />
@@ -91,6 +93,7 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = ({
         <textarea
           id={`${id}:notes`}
           rows={5}
+          onPaste={htmlToMarkdownPasteHandler}
           defaultValue={activity?.notes}
           {...register('notes')}
         />
