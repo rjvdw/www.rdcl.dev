@@ -9,7 +9,7 @@ export const Logout = () => {
   return (
     <>
       <Title>log out</Title>
-      <ActiveRoute />
+      <ActiveRoute>logout</ActiveRoute>
       <h1>Log out</h1>
 
       <button onClick={() => logout()}>Click here to log out</button>

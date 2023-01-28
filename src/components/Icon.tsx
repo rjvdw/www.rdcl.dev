@@ -4,6 +4,7 @@ import { ReactComponent as CopyToClipboard } from '../icons/copy-to-clipboard.sv
 import { ReactComponent as Health } from '../icons/health.svg'
 import { ReactComponent as Home } from '../icons/home.svg'
 import { ReactComponent as Labels } from '../icons/labels.svg'
+import { ReactComponent as Logout } from '../icons/logout.svg'
 import { ReactComponent as Tools } from '../icons/tools.svg'
 
 /**
@@ -22,5 +23,6 @@ export const Icon = {
   Health: Health as ReactSvgComponent,
   Activities: Activities as ReactSvgComponent,
   Labels: Labels as ReactSvgComponent,
+  Logout: Logout as ReactSvgComponent,
   CopyToClipboard: CopyToClipboard as ReactSvgComponent,
 }

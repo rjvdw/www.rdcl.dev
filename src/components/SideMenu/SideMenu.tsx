@@ -51,6 +51,11 @@ export const SideMenu: FunctionComponent = () => {
             <Icon.Labels slot="icon" />
             Labels
           </rdcl-side-menu-item>
+
+          <rdcl-side-menu-item href="/logout" active={activeRoute === 'logout'}>
+            <Icon.Logout slot="icon" />
+            Logout
+          </rdcl-side-menu-item>
         </>
       )}
     </rdcl-side-menu>
