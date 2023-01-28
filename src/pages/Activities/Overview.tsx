@@ -2,10 +2,10 @@ import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import { Label } from '../../components/Label'
 import { LabelList } from '../../components/LabelList'
-import { DateFuzzer } from './DateFuzzer'
 import { Dts } from './Dts'
 import { useActivities } from './hooks'
 import { Activity } from './types'
+import { dateFuzzer, formatDate } from './util'
 
 export const Overview = () => {
   const { activities, past, loading, error } = useActivities()
@@ -78,34 +78,42 @@ type ActivityCardProps = {
   activity: Activity
 }
 
-const ActivityCard: FunctionComponent<ActivityCardProps> = ({ activity }) => (
-  <div className="activities__overview-card">
-    <h2>
-      <Link to={`/activities/${activity.id}`}>{activity.title}</Link>
-    </h2>
+const ActivityCard: FunctionComponent<ActivityCardProps> = ({ activity }) => {
+  const fuzzed = dateFuzzer(activity)
 
-    <DateFuzzer activity={activity} />
+  return (
+    <div className="activities__overview-card">
+      <h2>
+        <Link to={`/activities/${activity.id}`}>{activity.title}</Link>
+      </h2>
 
-    {activity.labels.length > 0 && (
-      <LabelList>
-        {activity.labels.map((label, i) => (
-          <Label key={i}>{label}</Label>
-        ))}
-      </LabelList>
-    )}
+      {fuzzed && (
+        <p className="activities__date-fuzzer">
+          <time dateTime={formatDate(activity.starts)}>{fuzzed}</time>
+        </p>
+      )}
 
-    {activity.ends ? (
-      <p>
-        Starts: <Dts activity={activity} prop="starts" />
-        <br />
-        Ends: <Dts activity={activity} prop="ends" />
-      </p>
-    ) : (
-      <p>
-        <Dts activity={activity} prop="starts" />
-      </p>
-    )}
+      {activity.labels.length > 0 && (
+        <LabelList>
+          {activity.labels.map((label, i) => (
+            <Label key={i}>{label}</Label>
+          ))}
+        </LabelList>
+      )}
 
-    <p>{activity.location}</p>
-  </div>
-)
+      {activity.ends ? (
+        <p>
+          Starts: <Dts activity={activity} prop="starts" />
+          <br />
+          Ends: <Dts activity={activity} prop="ends" />
+        </p>
+      ) : (
+        <p>
+          <Dts activity={activity} prop="starts" />
+        </p>
+      )}
+
+      <p>{activity.location}</p>
+    </div>
+  )
+}
