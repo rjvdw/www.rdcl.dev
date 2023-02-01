@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { ActiveRoute } from '../../components/ActiveRoute'
 import { RequireLogin } from '../../components/RequireLogin'
 import { Title } from '../../components/Title'
+import { useApi } from '../../util/http'
 import { useAsyncLoad } from '../../util/useAsyncLoad'
 import './styles.sass'
 
@@ -40,23 +41,12 @@ export const Me = () => {
 }
 
 function useProfile() {
-  const { data: profile, loading, error } = useAsyncLoad(callApi)
+  const api = useApi()
+  const action = useCallback(async (): Promise<Profile> => {
+    const response = await api.get('/auth/me')
+    return response.json()
+  }, [api])
+  const { data: profile, loading, error } = useAsyncLoad(action)
 
   return { profile, loading, error }
-}
-
-async function callApi(): Promise<Profile> {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/me`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.jwt}`,
-    },
-  })
-
-  if (!response.ok) {
-    throw new Error(
-      `Call to API failed with error: ${response.status} ${response.statusText}`
-    )
-  }
-
-  return response.json()
 }

@@ -1,6 +1,8 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { StoreState, StoreThunk } from '../store'
 import { errorAsString } from '../util/errors'
+import { api, UnauthorizedError } from '../util/http'
+import { unauthorized } from './auth'
 
 export type LabelConfig = {
   color?: string
@@ -56,8 +58,6 @@ const { reducer, actions } = createSlice({
 
 export const labels = reducer
 
-const ENDPOINT = `${process.env.REACT_APP_API_URL}/label`
-
 type LabelsResponse = {
   labels: Record<string, LabelConfig>
 }
@@ -75,26 +75,15 @@ export const loadLabels = (): StoreThunk => async (dispatch) => {
   dispatch(actions.setLoading())
 
   try {
-    const response = await fetch(ENDPOINT, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.jwt}`,
-      },
-    })
-
-    if (!response.ok) {
-      dispatch(
-        actions.setError(
-          `Labels could not be loaded: ${response.status} ${response.statusText}`
-        )
-      )
-      return
-    }
-
+    const response = await api.get('/label')
     const { labels } = (await response.json()) as LabelsResponse
 
     dispatch(actions.setLoaded(labels))
   } catch (err) {
+    if (err instanceof UnauthorizedError) {
+      dispatch(unauthorized())
+    }
+
     dispatch(actions.setError(errorAsString(err)))
   }
 }
@@ -102,25 +91,24 @@ export const loadLabels = (): StoreThunk => async (dispatch) => {
 export const saveLabels =
   (labels: Record<string, LabelConfig>): StoreThunk =>
   async (dispatch) => {
-    const response = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.jwt}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(labels, (key, value) => {
-        // ensure undefined values do end up in the request
-        return value === undefined ? null : value
-      }),
-    })
+    try {
+      await api.post('/label', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(labels, (key, value) => {
+          // ensure undefined values do end up in the request
+          return value === undefined ? null : value
+        }),
+      })
 
-    if (!response.ok) {
-      throw new Error(
-        `Saving labels failed: ${response.status} ${response.statusText}`
-      )
+      await dispatch(loadLabels())
+    } catch (err) {
+      if (err instanceof UnauthorizedError) {
+        dispatch(unauthorized())
+      }
+      dispatch(actions.setError(errorAsString(err)))
     }
-
-    await dispatch(loadLabels())
   }
 
 export const selectLabelsState = (state: StoreState) => state.labels

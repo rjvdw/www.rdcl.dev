@@ -2,11 +2,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNotify } from '../../components/Notifications'
 import { errorAsString } from '../../util/errors'
 import { useAsyncLoad } from '../../util/useAsyncLoad'
-import { list, remove } from './api'
+import { useHealthApi } from './api'
 import { HealthRecord } from './types'
 
 export const useHealthRecords = (from?: string, to?: string) => {
-  const action = useCallback(() => list(from, to), [from, to])
+  const api = useHealthApi()
+  const action = useCallback(() => api.list(from, to), [api, from, to])
   const {
     data,
     loading: loadingInitial,
@@ -46,6 +47,7 @@ export const useHealthRecords = (from?: string, to?: string) => {
 }
 
 const useLoadMore = (records?: HealthRecord[], from?: string) => {
+  const api = useHealthApi()
   const [loadingMore, setLoadingMore] = useState<boolean>(false)
   const [errorLoadingMore, setErrorLoadingMore] = useState<string>()
   const [moreRecords, setMoreRecords] = useState<HealthRecord[]>(records ?? [])
@@ -64,7 +66,7 @@ const useLoadMore = (records?: HealthRecord[], from?: string) => {
       setLoadingMore(true)
 
       const to = getNextTo(moreRecords)
-      const response = await list(from, to)
+      const response = await api.list(from, to)
       setMoreRecords((current) => current.concat(response.records))
 
       setErrorLoadingMore(undefined)
@@ -73,7 +75,7 @@ const useLoadMore = (records?: HealthRecord[], from?: string) => {
     } finally {
       setLoadingMore(false)
     }
-  }, [from, moreRecords])
+  }, [api, from, moreRecords])
 
   return {
     loadingMore,
@@ -84,11 +86,12 @@ const useLoadMore = (records?: HealthRecord[], from?: string) => {
 }
 
 export const useDeleteRecord = (refresh: () => void) => {
+  const api = useHealthApi()
   const notify = useNotify()
 
   return async (record: HealthRecord) => {
     try {
-      await remove(record.date)
+      await api.delete(record.date)
       await refresh()
     } catch (err) {
       notify.error(`Deleting record for ${record.date} failed: ${err}`)

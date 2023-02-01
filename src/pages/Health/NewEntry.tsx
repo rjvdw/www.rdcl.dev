@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { save } from './api'
+import { useHealthApi } from './api'
 import { HealthRecord } from './types'
 
 type NewEntryProps = {
@@ -8,6 +8,7 @@ type NewEntryProps = {
 }
 
 export const NewEntry: FunctionComponent<NewEntryProps> = ({ onSave }) => {
+  const api = useHealthApi()
   const id = useId()
   const { register, handleSubmit, reset } = useForm<HealthRecord>()
   const [saving, setSaving] = useState<boolean>(false)
@@ -15,7 +16,7 @@ export const NewEntry: FunctionComponent<NewEntryProps> = ({ onSave }) => {
   const submitHandler = handleSubmit(async (record) => {
     setSaving(true)
     try {
-      await save(record.date, record.data)
+      await api.save(record.date, record.data)
       reset()
       await onSave()
     } finally {

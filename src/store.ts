@@ -27,7 +27,7 @@ export const store = configureStore({
 export type StoreDispatch = typeof store.dispatch
 export type StoreGetState = typeof store.getState
 export type StoreState = ReturnType<typeof reducer>
-export type StoreThunk<ReturnType = Promise<void>> = ThunkAction<
+export type StoreThunk<ReturnType = Promise<void> | void> = ThunkAction<
   ReturnType,
   StoreState,
   unknown,

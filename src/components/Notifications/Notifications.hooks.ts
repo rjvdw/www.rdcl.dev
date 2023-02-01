@@ -35,19 +35,12 @@ export function useDismissNotification(notification: Notification) {
   return dismissNotification
 }
 
-let notificationIdCounter = 0
 export const useNotify = () => {
   const dispatch = useDispatch<StoreDispatch>()
 
   const dispatcher = useCallback(
     (type: Notification['type']) => (message: string) => {
-      dispatch(
-        notify({
-          id: notificationIdCounter++,
-          type,
-          message,
-        })
-      )
+      dispatch(notify(type, message))
     },
     [dispatch]
   )

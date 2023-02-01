@@ -6,12 +6,13 @@ import { LabelList } from '../../components/LabelList'
 import { useNotify } from '../../components/Notifications'
 import { ActivityForm } from './ActivityForm'
 import { Dts } from './Dts'
-import { deleteActivity, updateActivity } from './api'
+import { useActivitiesApi } from './api'
 import { useActivity } from './hooks'
 import { Activity } from './types'
 import { formatUrl } from './util'
 
 export const Details = () => {
+  const api = useActivitiesApi()
   const { activity, setActivity, loading, error } = useActivity()
   const [editing, setEditing] = useEditing()
   const navigate = useNavigate()
@@ -19,7 +20,7 @@ export const Details = () => {
 
   const deleteClickHandler = async () => {
     if (activity && window.confirm('Are you sure?')) {
-      await deleteActivity(activity.id)
+      await api.delete(activity.id)
       notify(`Activity "${activity.title}" was deleted successfully`)
       navigate('/activities')
     }
@@ -51,7 +52,7 @@ export const Details = () => {
         <ActivityForm
           activity={activity}
           onSubmit={async (updated) => {
-            const result = await updateActivity(activity.id, updated)
+            const result = await api.update(activity.id, updated)
             setEditing(false)
             setActivity(result)
           }}

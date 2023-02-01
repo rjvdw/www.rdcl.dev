@@ -1,6 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { StoreState, StoreThunk } from '../store'
 import { Jwt } from '../util/Jwt'
+import { notify } from './notifications'
 
 type AuthState = {
   verificationState?: 'pending' | 'failed' | 'done'
@@ -51,10 +52,15 @@ export const selectIsLoggedIn = createSelector(
   (jwt) => !!jwt && !jwt.isExpired()
 )
 
-export const logout = (): StoreThunk => async (dispatch) => {
+export const logout = (): StoreThunk => (dispatch) => {
   delete localStorage.jwt
   delete localStorage.sessionToken
   dispatch(actions.logout())
+}
+
+export const unauthorized = (): StoreThunk => (dispatch) => {
+  dispatch(logout())
+  dispatch(notify('error', 'Your session is invalid. Please log in again.'))
 }
 
 export const verify =

@@ -1,13 +1,14 @@
 import { useCallback } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useAsyncLoad } from '../../util/useAsyncLoad'
-import { getActivity, getPastActivities, getUpcomingActivities } from './api'
+import { useActivitiesApi } from './api'
 
 export const useActivities = () => {
+  const api = useActivitiesApi()
   const [params] = useSearchParams()
   const past = params.has('past')
   const { data, loading, error } = useAsyncLoad(
-    past ? getPastActivities : getUpcomingActivities
+    past ? api.getPast : api.getUpcoming
   )
 
   return {
@@ -19,14 +20,15 @@ export const useActivities = () => {
 }
 
 export const useActivity = () => {
+  const api = useActivitiesApi()
   const { activityId } = useParams()
   const action = useCallback(() => {
     if (!activityId) {
       throw new Error('no activity id provided')
     }
 
-    return getActivity(activityId)
-  }, [activityId])
+    return api.get(activityId)
+  }, [activityId, api])
 
   const { data, setData, loading, error } = useAsyncLoad(action)
 
