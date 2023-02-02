@@ -35,8 +35,8 @@ export const Label: FunctionComponent<LabelProps> = ({
     () => ({
       className: 'label',
       style: {
-        backgroundColor: labels[label]?.color ?? '#ddd',
-        color: labels[label]?.textColor ?? '#000',
+        backgroundColor: labels[label]?.['background-color'] ?? '#ddd',
+        color: labels[label]?.color ?? '#000',
       },
     }),
     [labels, label]

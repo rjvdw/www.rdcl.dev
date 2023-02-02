@@ -93,24 +93,28 @@ const Editor: FunctionComponent<{ labels: Record<string, LabelConfig> }> = ({
                     <div className="labels__color-input">
                       <input
                         type="text"
-                        value={config.color ?? ''}
+                        value={config['background-color'] ?? ''}
                         onChange={(event) =>
-                          updateField(key, 'color', event.target.value)
+                          updateField(
+                            key,
+                            'background-color',
+                            event.target.value
+                          )
                         }
                       />
-                      <ColorPreview color={config.color} />
+                      <ColorPreview color={config['background-color']} />
                     </div>
                   </td>
                   <td>
                     <div className="labels__color-input">
                       <input
                         type="text"
-                        value={config.textColor ?? ''}
+                        value={config.color ?? ''}
                         onChange={(event) =>
-                          updateField(key, 'textColor', event.target.value)
+                          updateField(key, 'color', event.target.value)
                         }
                       />
-                      <ColorPreview color={config.textColor} />
+                      <ColorPreview color={config.color} />
                     </div>
                   </td>
                   <td>

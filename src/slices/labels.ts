@@ -5,8 +5,8 @@ import { api, UnauthorizedError } from '../util/http'
 import { unauthorized } from './auth'
 
 export type LabelConfig = {
+  'background-color'?: string
   color?: string
-  textColor?: string
 }
 
 type LabelsInitialState = {
@@ -59,7 +59,7 @@ const { reducer, actions } = createSlice({
 export const labels = reducer
 
 type LabelsResponse = {
-  labels: Record<string, LabelConfig>
+  labels: Record<string, string>
 }
 
 export const initializeLabels =
@@ -76,7 +76,13 @@ export const loadLabels = (): StoreThunk => async (dispatch) => {
 
   try {
     const response = await api.get('/label')
-    const { labels } = (await response.json()) as LabelsResponse
+    const { labels: labelsResponse } = (await response.json()) as LabelsResponse
+    const labels = Object.fromEntries(
+      Object.entries(labelsResponse).map(([key, value]) => [
+        key,
+        JSON.parse(value),
+      ])
+    )
 
     dispatch(actions.setLoaded(labels))
   } catch (err) {
@@ -96,10 +102,14 @@ export const saveLabels =
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(labels, (key, value) => {
-          // ensure undefined values do end up in the request
-          return value === undefined ? null : value
-        }),
+        body: JSON.stringify(
+          Object.fromEntries(
+            Object.entries(labels).map(([key, value]) => [
+              key,
+              JSON.stringify(value),
+            ])
+          )
+        ),
       })
 
       await dispatch(loadLabels())
