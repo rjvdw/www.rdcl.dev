@@ -85,7 +85,7 @@ function correctedHeight(height: number): number {
   return (height / 100) ** 2
 }
 
-function computeBmi(height: number, weight: number): number {
+export function computeBmi(height: number, weight: number): number {
   return weight / correctedHeight(height)
 }
 

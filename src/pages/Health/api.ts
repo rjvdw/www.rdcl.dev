@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useApi } from '../../util/http'
-import { HealthData, HealthRecord } from './types'
+import { HealthData, HealthRecord, HealthSettings } from './types'
 
 type ListResponseBody = {
   health: Array<{
@@ -15,6 +15,15 @@ export function useHealthApi() {
 
   return useMemo(
     () => ({
+      async getSettings(): Promise<HealthSettings> {
+        const response = await api.get('/health/settings')
+        return response.json()
+      },
+
+      async saveSettings(settings: HealthSettings): Promise<void> {
+        await api.post('/health/settings', settings, 'json')
+      },
+
       async list(
         from?: string,
         to?: string

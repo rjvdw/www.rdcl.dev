@@ -5,6 +5,14 @@ import { useAsyncLoad } from '../../util/useAsyncLoad'
 import { useHealthApi } from './api'
 import { HealthRecord } from './types'
 
+export const useHealthSettings = () => {
+  const api = useHealthApi()
+  const action = useCallback(() => api.getSettings(), [api])
+  const { data, loading, error, refresh } = useAsyncLoad(action)
+
+  return { settings: data, loading, error, refresh }
+}
+
 export const useHealthRecords = (from?: string, to?: string) => {
   const api = useHealthApi()
   const action = useCallback(() => api.list(from, to), [api, from, to])

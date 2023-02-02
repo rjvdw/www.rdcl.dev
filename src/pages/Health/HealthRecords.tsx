@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from 'react'
+import { computeBmi } from '../../tools/Bmi'
 import { useDeleteRecord } from './hooks'
-import { HealthRecord } from './types'
+import { HealthRecord, HealthSettings } from './types'
 
 type HealthRecordsProps = {
+  settings?: HealthSettings
   records: HealthRecord[]
   count?: number
   loading: boolean
@@ -12,6 +14,7 @@ type HealthRecordsProps = {
 }
 
 export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
+  settings,
   records,
   count,
   loading,
@@ -52,6 +55,7 @@ export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
             <th>Date</th>
             <th>Weight</th>
             <th>Body Fat %</th>
+            {settings?.height ? <th>BMI</th> : null}
             <th>Actions</th>
           </tr>
         </thead>
@@ -70,6 +74,13 @@ export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
                   ? `${record.data.bodyFat.toLocaleString()}%`
                   : ''}
               </td>
+              {settings?.height ? (
+                <td>
+                  {record.data.weight
+                    ? computeBmi(settings.height, record.data.weight).toFixed(1)
+                    : ''}
+                </td>
+              ) : null}
               <td>
                 <button onClick={() => deleteRecord(record)}>Delete</button>
               </td>
