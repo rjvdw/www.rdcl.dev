@@ -16,7 +16,7 @@ interface Props extends SVGProps<SVGSVGElement> {
   slot?: string
 }
 
-type ReactSvgComponent = FunctionComponent<Props>
+export type ReactSvgComponent = FunctionComponent<Props>
 
 export const Icon = {
   Profile: Profile as ReactSvgComponent,
