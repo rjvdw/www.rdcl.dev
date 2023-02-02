@@ -36,18 +36,20 @@ When(
 
 When('the user clicks the button to copy the UUID to their clipboard', () => {
   cy.get('[data-testid="copy-uuid"]').click()
+  copiedUuid = -2
 })
 
 When(
   'the user clicks the button to generate a new UUID and copy it to their clipboard',
   () => {
     cy.get('[data-testid="generate-and-copy-uuid"]').click()
+    copiedUuid = -2
   }
 )
 
 When('the user clicks a copy button in the history', () => {
   cy.get('[data-testid="uuid-history"] li:first button').click()
-  copiedUuid = -2
+  copiedUuid = -3
 })
 
 Then('uuid has no value', () => {
@@ -55,7 +57,10 @@ Then('uuid has no value', () => {
 })
 
 Then('uuid has a value', () => {
-  cy.get('[data-testid="uuid"]').should('have.value', cryptoMock.lastUuid())
+  cy.get('[data-testid="uuid"]').should(
+    'have.value',
+    cryptoMock.generatedUuid(copiedUuid || -1)
+  )
 })
 
 Then('the previously generated UUIDs are now in the history', () => {
