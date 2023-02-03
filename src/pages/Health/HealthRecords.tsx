@@ -1,5 +1,6 @@
-import React, { FunctionComponent } from 'react'
-import { computeBmi } from '../../tools/Bmi'
+import React, { FunctionComponent, useState } from 'react'
+import { Graph } from './Graph'
+import { Table } from './Table'
 import { useDeleteRecord } from './hooks'
 import { HealthRecord, HealthSettings } from './types'
 
@@ -23,6 +24,7 @@ export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
   loadMore,
 }) => {
   const deleteRecord = useDeleteRecord(refresh)
+  const [mode, setMode] = useState<'table' | 'graph'>('table')
 
   if (error) {
     return (
@@ -46,48 +48,28 @@ export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
   return (
     <div className="responsive-table-wrapper health__overview">
       <p>
-        Showing {records.length} out of {count} matching records.
+        Showing {records.length} out of {count} matching records.{' '}
+        {mode === 'table' && (
+          <button className="link" onClick={() => setMode('graph')}>
+            Switch to graph view.
+          </button>
+        )}
+        {mode === 'graph' && (
+          <button className="link" onClick={() => setMode('table')}>
+            Switch to table view.
+          </button>
+        )}
       </p>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Weight</th>
-            <th>Body Fat %</th>
-            {settings?.height ? <th>BMI</th> : null}
-            <th>Actions</th>
-          </tr>
-        </thead>
+      {mode === 'table' && (
+        <Table
+          settings={settings}
+          records={records}
+          deleteRecord={deleteRecord}
+        />
+      )}
 
-        <tbody>
-          {records.map((record) => (
-            <tr key={record.date}>
-              <td>{record.date}</td>
-              <td>
-                {record.data.weight
-                  ? `${record.data.weight?.toLocaleString()}kg`
-                  : ''}
-              </td>
-              <td>
-                {record.data.bodyFat
-                  ? `${record.data.bodyFat.toLocaleString()}%`
-                  : ''}
-              </td>
-              {settings?.height ? (
-                <td>
-                  {record.data.weight
-                    ? computeBmi(settings.height, record.data.weight).toFixed(1)
-                    : ''}
-                </td>
-              ) : null}
-              <td>
-                <button onClick={() => deleteRecord(record)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {mode === 'graph' && <Graph settings={settings} records={records} />}
 
       {records.length < count && (
         <button disabled={loading} onClick={loadMore}>

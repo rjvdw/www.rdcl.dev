@@ -2,11 +2,12 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { RouterProvider } from 'react-router-dom'
-import './elements'
-import './styles/main.sass'
 import { router } from './router'
 import { updateScreenType } from './slices/screen'
 import { store } from './store'
+import './elements'
+import './init-charts'
+import './styles/main.sass'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)
