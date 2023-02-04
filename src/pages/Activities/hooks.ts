@@ -1,7 +1,8 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useAsyncLoad } from '../../util/useAsyncLoad'
 import { useActivitiesApi } from './api'
+import { Activity } from './types'
 
 export const useActivities = () => {
   const api = useActivitiesApi()
@@ -11,12 +12,47 @@ export const useActivities = () => {
     past ? api.getPast : api.getUpcoming
   )
 
+  const activities = useMemo(() => data || [], [data])
+
+  const overlappingActivities = useFindOverlappingActivities(activities)
+
   return {
-    activities: data || [],
+    activities,
+    overlappingActivities,
     past,
     loading,
     errors,
   }
+}
+
+const useFindOverlappingActivities = (
+  activities: Activity[]
+): [Activity, Activity][] => {
+  return useMemo(() => {
+    const overlappingActivities: [Activity, Activity][] = []
+
+    for (let i = 0; i < activities.length - 1; i += 1) {
+      for (let j = i + 1; j < activities.length; j += 1) {
+        const a1 = activities[i]
+        const a2 = activities[j]
+
+        if (a1.ends) {
+          const t1 = new Date(a1.ends)
+          const t2 = new Date(a2.starts)
+
+          if (a1.allDay) {
+            t1.setDate(t1.getDate() + 1)
+          }
+
+          if (t1 > t2) {
+            overlappingActivities.push([a1, a2])
+          }
+        }
+      }
+    }
+
+    return overlappingActivities
+  }, [activities])
 }
 
 export const useActivity = () => {

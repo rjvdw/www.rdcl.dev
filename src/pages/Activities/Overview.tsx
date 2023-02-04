@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from 'react'
+import classNames from 'classnames'
+import React, { FunctionComponent, useId, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Error } from '../../components/Error'
 import { Label } from '../../components/Label'
@@ -9,7 +10,10 @@ import { Activity } from './types'
 import { dateFuzzer, formatDate } from './util'
 
 export const Overview = () => {
-  const { activities, past, loading, errors } = useActivities()
+  const id = useId()
+  const { activities, overlappingActivities, past, loading, errors } =
+    useActivities()
+  const [highlighted, setHighlighted] = useState<string[]>([])
 
   return (
     <>
@@ -17,6 +21,7 @@ export const Overview = () => {
 
       <ActivitiesOverview
         activities={activities}
+        highlighted={highlighted}
         past={past}
         loading={loading}
         errors={errors}
@@ -33,6 +38,28 @@ export const Overview = () => {
           <Link to="/activities?past">Show past activities</Link>
         </p>
       )}
+
+      {overlappingActivities.length > 0 && (
+        <>
+          <h2>Overlapping activities</h2>
+
+          <ul className="activities__overlapping">
+            {overlappingActivities.map(([a1, a2]) => (
+              <li key={`${id}:${a1.id}:${a2.id}`}>
+                <button
+                  className="link"
+                  onMouseEnter={() => setHighlighted([a1.id, a2.id])}
+                  onMouseLeave={() => setHighlighted([])}
+                  onFocus={() => setHighlighted([a1.id, a2.id])}
+                  onBlur={() => setHighlighted([])}
+                >
+                  “{a1.title}” overlaps with “{a2.title}”.
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </>
   )
 }
@@ -40,6 +67,7 @@ export default Overview
 
 type ActivitiesOverviewProps = {
   activities: Activity[]
+  highlighted: string[]
   past: boolean
   loading: boolean
   errors: string[]
@@ -47,6 +75,7 @@ type ActivitiesOverviewProps = {
 
 const ActivitiesOverview: FunctionComponent<ActivitiesOverviewProps> = ({
   activities,
+  highlighted,
   past,
   loading,
   errors,
@@ -70,7 +99,11 @@ const ActivitiesOverview: FunctionComponent<ActivitiesOverviewProps> = ({
   return (
     <div className="activities__overview">
       {activities.map((activity) => (
-        <ActivityCard key={activity.id} activity={activity} />
+        <ActivityCard
+          key={activity.id}
+          activity={activity}
+          highlighted={highlighted.indexOf(activity.id) !== -1}
+        />
       ))}
     </div>
   )
@@ -78,13 +111,21 @@ const ActivitiesOverview: FunctionComponent<ActivitiesOverviewProps> = ({
 
 type ActivityCardProps = {
   activity: Activity
+  highlighted: boolean
 }
 
-const ActivityCard: FunctionComponent<ActivityCardProps> = ({ activity }) => {
+const ActivityCard: FunctionComponent<ActivityCardProps> = ({
+  activity,
+  highlighted,
+}) => {
   const fuzzed = dateFuzzer(activity)
 
   return (
-    <div className="activities__overview-card">
+    <div
+      className={classNames('activities__overview-card', {
+        'activities__overview-card--highlighted': highlighted,
+      })}
+    >
       <h2>
         <Link to={`/activities/${activity.id}`}>{activity.title}</Link>
       </h2>

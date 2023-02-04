@@ -23,17 +23,19 @@ p
     margin-bottom: 0
 
 a
-  @extend %link
+  @include vars.link
 
 button.link
+  appearance: none
+  display: inline
   border: none
   background: transparent
   padding: 0
   margin: 0
-  display: inline
   font: inherit
+  text-align: start
 
-  @extend %link
+  @include vars.link
 
 ol, ul
   margin-block-start: 0

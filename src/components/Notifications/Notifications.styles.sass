@@ -1,3 +1,5 @@
+@use "../../styles/vars"
+
 $notification-spacing: .5rem
 
 .notifications
@@ -19,16 +21,10 @@ $notification-spacing: .5rem
     max-width: calc(100vw - 2*$notification-spacing)
 
     &--info
-      border-color: #063
-      background: #ded
-      color: #063
+      @include vars.success
 
     &--warning
-      border-color: #640
-      background: #ffc
-      color: #640
+      @include vars.warning
 
     &--error
-      border-color: #933
-      background: #fdd
-      color: #933
+      @include vars.error

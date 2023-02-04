@@ -24,7 +24,9 @@ export const Profile = () => {
 
       {loading && <p>Loading profile...</p>}
 
-      {errors.length > 0 && <Error errors={errors}>Could not load profile</Error>}
+      {errors.length > 0 && (
+        <Error errors={errors}>Could not load profile</Error>
+      )}
 
       {profile && (
         <dl className="user-profile">
