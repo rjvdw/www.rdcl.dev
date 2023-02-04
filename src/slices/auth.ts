@@ -58,9 +58,12 @@ export const logout = (): StoreThunk => (dispatch) => {
   dispatch(actions.logout())
 }
 
-export const unauthorized = (): StoreThunk => (dispatch) => {
-  dispatch(logout())
-  dispatch(notify('error', 'Your session is invalid. Please log in again.'))
+export const unauthorized = (): StoreThunk => (dispatch, getState) => {
+  const loggedIn = selectIsLoggedIn(getState())
+  if (loggedIn) {
+    dispatch(logout())
+    dispatch(notify('error', 'Your session is invalid. Please log in again.'))
+  }
 }
 
 export const verify =
