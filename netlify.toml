@@ -3,9 +3,8 @@ command = "npm run build"
 publish = "build"
 functions = "api/functions"
 
-#[functions]
-#node_bundler = "esbuild"
-#external_node_modules = ["express"]
+[[plugins]]
+package = "/netlify/plugins/csp"
 
 # Let Netlify functions handle /api/-calls
 [[redirects]]
@@ -45,7 +44,11 @@ X-XSS-Protection = "1; mode=block"
 Strict-Transport-Security = "max-age=63072000; preload"
 Permissions-Policy = "interest-cohort=()"
 Referrer-Policy = "no-referrer"
-Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' 'unsafe-inline'; connect-src 'self' https://api.rdcl.dev"
+X_CSP = """\
+default-src 'self'; \
+style-src 'self' 'unsafe-inline'; \
+img-src 'self' 'unsafe-inline'; \
+connect-src 'self' https://api.rdcl.dev"""
 
 [[headers]]
 for = "/favicon.ico"
@@ -67,14 +70,14 @@ Content-Type = "application/xrd+json; charset=utf-8"
 [[headers]]
 for = "/*.html"
 [headers.values]
-Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+X_CSP = "default-src 'self' 'unsafe-inline'"
 
 [[headers]]
 for = "/aoc/*"
 [headers.values]
-Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+X_CSP = "default-src 'self' 'unsafe-inline'"
 
 [[headers]]
 for = "/rock-paper-scissors/*"
 [headers.values]
-Content-Security-Policy = "default-src 'self' 'unsafe-inline'"
+X_CSP = "default-src 'self' 'unsafe-inline'"
