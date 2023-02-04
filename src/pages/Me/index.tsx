@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import { ActiveRoute } from '../../components/ActiveRoute'
+import { Error } from '../../components/Error'
 import { RequireLogin } from '../../components/RequireLogin'
 import { Title } from '../../components/Title'
 import { useApi } from '../../util/http'
@@ -12,7 +13,7 @@ type Profile = {
 }
 
 export const Me = () => {
-  const { profile, loading, error } = useProfile()
+  const { profile, loading, errors } = useProfile()
 
   return (
     <>
@@ -23,9 +24,7 @@ export const Me = () => {
 
       {loading && <p>Loading profile...</p>}
 
-      {error && (
-        <p className="error-message">Could not load profile: {error}</p>
-      )}
+      {errors.length && <Error errors={errors}>Could not load profile</Error>}
 
       {profile && (
         <dl className="user-profile">
@@ -42,11 +41,14 @@ export const Me = () => {
 
 function useProfile() {
   const api = useApi()
-  const action = useCallback(async (): Promise<Profile> => {
-    const response = await api.get('/auth/me')
-    return response.json()
-  }, [api])
-  const { data: profile, loading, error } = useAsyncLoad(action)
+  const action = useCallback(
+    async (init?: RequestInit): Promise<Profile> => {
+      const response = await api.get('/auth/me', init)
+      return response.json()
+    },
+    [api]
+  )
+  const { data: profile, loading, errors } = useAsyncLoad(action)
 
-  return { profile, loading, error }
+  return { profile, loading, errors }
 }

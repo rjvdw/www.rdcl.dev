@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
+import { Error } from '../../components/Error'
 import { Label } from '../../components/Label'
 import { LabelList } from '../../components/LabelList'
 import { Dts } from './Dts'
@@ -8,7 +9,7 @@ import { Activity } from './types'
 import { dateFuzzer, formatDate } from './util'
 
 export const Overview = () => {
-  const { activities, past, loading, error } = useActivities()
+  const { activities, past, loading, errors } = useActivities()
 
   return (
     <>
@@ -18,7 +19,7 @@ export const Overview = () => {
         activities={activities}
         past={past}
         loading={loading}
-        error={error}
+        errors={errors}
       />
 
       {past ? (
@@ -40,14 +41,14 @@ type ActivitiesOverviewProps = {
   activities: Activity[]
   past: boolean
   loading: boolean
-  error?: string
+  errors: string[]
 }
 
 const ActivitiesOverview: FunctionComponent<ActivitiesOverviewProps> = ({
   activities,
   past,
   loading,
-  error,
+  errors,
 }) => {
   if (loading) {
     return past ? (
@@ -57,8 +58,8 @@ const ActivitiesOverview: FunctionComponent<ActivitiesOverviewProps> = ({
     )
   }
 
-  if (error) {
-    return <p className="error-message">Failed to load activities: {error}</p>
+  if (errors.length > 0) {
+    return <Error errors={errors}>Failed to load activities</Error>
   }
 
   if (activities.length === 0) {

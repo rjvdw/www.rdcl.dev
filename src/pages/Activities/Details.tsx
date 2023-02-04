@@ -13,7 +13,7 @@ import { formatUrl } from './util'
 
 export const Details = () => {
   const api = useActivitiesApi()
-  const { activity, setActivity, loading, error } = useActivity()
+  const { activity, setActivity, loading, errors } = useActivity()
   const [editing, setEditing] = useEditing()
   const navigate = useNavigate()
   const notify = useNotify()
@@ -35,11 +35,13 @@ export const Details = () => {
     )
   }
 
-  if (error || !activity) {
+  if (errors.length || !activity) {
     return (
       <>
         <h1>Failed to load activity</h1>
-        <p className="error-message">{error || 'activity not found'}</p>
+        <p className="error-message">
+          {errors.length ? errors : 'activity not found'}
+        </p>
       </>
     )
   }

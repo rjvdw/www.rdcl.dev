@@ -15,18 +15,22 @@ export function useHealthApi() {
 
   return useMemo(
     () => ({
-      async getSettings(): Promise<HealthSettings> {
-        const response = await api.get('/health/settings')
+      async getSettings(init?: RequestInit): Promise<HealthSettings> {
+        const response = await api.get('/health/settings', init)
         return response.json()
       },
 
-      async saveSettings(settings: HealthSettings): Promise<void> {
-        await api.post('/health/settings', settings, 'json')
+      async saveSettings(
+        settings: HealthSettings,
+        init?: RequestInit
+      ): Promise<void> {
+        await api.post('/health/settings', settings, 'json', init)
       },
 
       async list(
         from?: string,
-        to?: string
+        to?: string,
+        init?: RequestInit
       ): Promise<{ records: HealthRecord[]; count: number }> {
         const searchParams = new URLSearchParams()
         if (from) {
@@ -35,7 +39,10 @@ export function useHealthApi() {
         if (to) {
           searchParams.set('to', to)
         }
-        const response = await api.get(`/health?${searchParams.toString()}`)
+        const response = await api.get(
+          `/health?${searchParams.toString()}`,
+          init
+        )
         const body = (await response.json()) as ListResponseBody
 
         const records = body.health.map((record) => ({
@@ -46,12 +53,12 @@ export function useHealthApi() {
         return { records, count: body.count }
       },
 
-      async save(date: string, data: HealthData) {
-        await api.put(`/health/${date}`, data, 'json')
+      async save(date: string, data: HealthData, init?: RequestInit) {
+        await api.put(`/health/${date}`, data, 'json', init)
       },
 
-      async delete(date: string) {
-        await api.delete(`/health/${date}`)
+      async delete(date: string, init?: RequestInit) {
+        await api.delete(`/health/${date}`, init)
       },
     }),
     [api]

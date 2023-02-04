@@ -7,7 +7,7 @@ export const useActivities = () => {
   const api = useActivitiesApi()
   const [params] = useSearchParams()
   const past = params.has('past')
-  const { data, loading, error } = useAsyncLoad(
+  const { data, loading, errors } = useAsyncLoad(
     past ? api.getPast : api.getUpcoming
   )
 
@@ -15,27 +15,30 @@ export const useActivities = () => {
     activities: data || [],
     past,
     loading,
-    error,
+    errors,
   }
 }
 
 export const useActivity = () => {
   const api = useActivitiesApi()
   const { activityId } = useParams()
-  const action = useCallback(() => {
-    if (!activityId) {
-      throw new Error('no activity id provided')
-    }
+  const action = useCallback(
+    (init?: RequestInit) => {
+      if (!activityId) {
+        throw new Error('no activity id provided')
+      }
 
-    return api.get(activityId)
-  }, [activityId, api])
+      return api.get(activityId, init)
+    },
+    [activityId, api]
+  )
 
-  const { data, setData, loading, error } = useAsyncLoad(action)
+  const { data, setData, loading, errors } = useAsyncLoad(action)
 
   return {
     activity: data,
     setActivity: setData,
     loading,
-    error,
+    errors,
   }
 }

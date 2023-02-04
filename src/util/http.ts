@@ -55,32 +55,38 @@ export function useApi() {
         }
       },
 
-      async get(path: string): Promise<Response> {
-        return this.call('get', path)
+      async get(path: string, init?: RequestInit): Promise<Response> {
+        return this.call('get', path, init)
       },
 
       async post(
         path: string,
         data: Parameters<typeof getRequestInitWithBody>[0],
-        contentType: Parameters<typeof getRequestInitWithBody>[1] = 'form'
+        contentType: Parameters<typeof getRequestInitWithBody>[1],
+        init?: RequestInit
       ): Promise<Response> {
         return this.call(
           'post',
           path,
-          getRequestInitWithBody(data, contentType)
+          merge(getRequestInitWithBody(data, contentType), init)
         )
       },
 
       async put(
         path: string,
         data: Parameters<typeof getRequestInitWithBody>[0],
-        contentType: Parameters<typeof getRequestInitWithBody>[1] = 'form'
+        contentType: Parameters<typeof getRequestInitWithBody>[1],
+        init?: RequestInit
       ): Promise<Response> {
-        return this.call('put', path, getRequestInitWithBody(data, contentType))
+        return this.call(
+          'put',
+          path,
+          merge(getRequestInitWithBody(data, contentType), init)
+        )
       },
 
-      async delete(path: string): Promise<Response> {
-        return this.call('delete', path)
+      async delete(path: string, init?: RequestInit): Promise<Response> {
+        return this.call('delete', path, init)
       },
     }),
     [dispatch]
@@ -119,6 +125,17 @@ function getRequestInitWithBody(
       'Content-Type': 'application/json',
     },
     body: typeof data === 'string' ? data : JSON.stringify(data),
+  }
+}
+
+function merge(init1: RequestInit, init2?: RequestInit): RequestInit {
+  return {
+    ...init1,
+    ...init2,
+    headers: {
+      ...init1.headers,
+      ...init2?.headers,
+    },
   }
 }
 

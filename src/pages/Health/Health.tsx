@@ -14,10 +14,10 @@ export const Health = () => {
   const {
     settings,
     loading: loadingHealthSettings,
-    error: errorLoadingHealthSettings,
+    errors: errorsLoadingHealthSettings,
     refresh: refreshHealthSettings,
   } = useHealthSettings()
-  const { records, count, loading, error, refresh, loadMore } =
+  const { records, count, loading, errors, refresh, loadMore } =
     useHealthRecords(from, to)
 
   return (
@@ -42,7 +42,7 @@ export const Health = () => {
         records={records}
         count={count}
         loading={loading || loadingHealthSettings}
-        error={error || errorLoadingHealthSettings}
+        errors={errors.concat(errorsLoadingHealthSettings)}
         refresh={refresh}
         loadMore={loadMore}
       />
