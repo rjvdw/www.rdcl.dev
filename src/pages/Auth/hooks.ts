@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useNotify } from '../components/Notifications'
-import { logout, selectJwt, verify } from '../slices/auth'
-import { StoreDispatch, StoreState } from '../store'
+import { useNotify } from '../../components/Notifications'
+import { logout, selectJwt, verify } from '../../slices/auth'
+import { StoreDispatch, StoreState } from '../../store'
 
 type LoginForm = {
   username: string

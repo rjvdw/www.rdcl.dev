@@ -7,12 +7,12 @@ import { useApi } from '../../util/http'
 import { useAsyncLoad } from '../../util/useAsyncLoad'
 import './styles.sass'
 
-type Profile = {
+type UserProfile = {
   name: string
   email: string
 }
 
-export const Me = () => {
+export const Profile = () => {
   const { profile, loading, errors } = useProfile()
 
   return (
@@ -38,11 +38,12 @@ export const Me = () => {
     </>
   )
 }
+export default Profile
 
 function useProfile() {
   const api = useApi()
   const action = useCallback(
-    async (init?: RequestInit): Promise<Profile> => {
+    async (init?: RequestInit): Promise<UserProfile> => {
       const response = await api.get('/auth/me', init)
       return response.json()
     },

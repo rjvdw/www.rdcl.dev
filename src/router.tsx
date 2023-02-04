@@ -5,26 +5,21 @@ import {
   Route,
 } from 'react-router-dom'
 import { App } from './components/App'
-import Activities from './pages/Activities'
-import { Health } from './pages/Health'
+import { Activities } from './pages/Activities'
+import { Auth } from './pages/Auth'
 import { Home } from './pages/Home'
-import { Labels } from './pages/Labels'
-import { Me } from './pages/Me'
 import { NotFound } from './pages/NotFound'
-import { Session } from './pages/Session'
 import Tools from './pages/Tools'
 
-const Login = React.lazy(() => import('./pages/Login'))
-const VerifyLogin = React.lazy(() => import('./pages/VerifyLogin'))
-const Logout = React.lazy(() => import('./pages/Logout'))
+const Health = React.lazy(() => import('./pages/Health'))
+const Labels = React.lazy(() => import('./pages/Labels'))
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/" element={<Home />} />
-      <Route path="/me" element={<Me />} />
-      <Route path="/session" element={<Session />} />
-      <Route path="/labels" element={<Labels />} />
+
+      {/* tools */}
       <Route path="/tools" element={<Tools />}>
         <Route index element={<Tools.Index />} />
         <Route path="ascii" element={<Tools.Ascii />} />
@@ -36,15 +31,27 @@ export const router = createBrowserRouter(
         <Route path="ratings" element={<Tools.Ratings />} />
         <Route path="uuid" element={<Tools.UUID />} />
       </Route>
+
+      {/* auth */}
+      <Route path="/login" element={<Auth.Login />} />
+      <Route path="/login/verify" element={<Auth.VerifyLogin />} />
+      <Route path="/logout" element={<Auth.Logout />} />
+      <Route path="/session" element={<Auth.Session />} />
+      <Route path="/me" element={<Auth.Profile />} />
+
+      {/* activities */}
       <Route path="/activities" element={<Activities />}>
         <Route index element={<Activities.Overview />} />
         <Route path=":activityId" element={<Activities.Details />} />
         <Route path="new" element={<Activities.New />} />
       </Route>
+
+      {/* labels */}
+      <Route path="/labels" element={<Labels />} />
+
+      {/* health */}
       <Route path="/health" element={<Health />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/login/verify" element={<VerifyLogin />} />
-      <Route path="/logout" element={<Logout />} />
+
       <Route path="*" element={<NotFound />} />
     </Route>
   )

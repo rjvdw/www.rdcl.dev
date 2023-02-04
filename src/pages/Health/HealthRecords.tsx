@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, Suspense, useState } from 'react'
 import { Error } from '../../components/Error'
-import { Graph } from './Graph'
 import { Table } from './Table'
 import { useDeleteRecord } from './hooks'
 import { HealthRecord, HealthSettings } from './types'
+
+const Graph = React.lazy(() => import('./Graph'))
 
 type HealthRecordsProps = {
   settings?: HealthSettings
@@ -67,7 +68,11 @@ export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
         />
       )}
 
-      {mode === 'graph' && <Graph settings={settings} records={records} />}
+      {mode === 'graph' && (
+        <Suspense fallback={<rdcl-spinner />}>
+          <Graph settings={settings} records={records} />
+        </Suspense>
+      )}
 
       {records.length < count && (
         <button disabled={loading} onClick={loadMore}>

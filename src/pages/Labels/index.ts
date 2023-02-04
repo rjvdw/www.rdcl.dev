@@ -1,2 +1,2 @@
 import './styles.sass'
-export { Labels } from './Labels'
+export { Labels, Labels as default } from './Labels'

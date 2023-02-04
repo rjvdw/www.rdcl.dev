@@ -1,12 +1,9 @@
+import React from 'react'
 import { Activities as ActivitiesComponent } from './Activities'
-import { Details } from './Details'
-import { New } from './New'
-import { Overview } from './Overview'
 import './styles.sass'
 
 export const Activities = Object.assign(ActivitiesComponent, {
-  Overview,
-  Details,
-  New,
+  Overview: React.lazy(() => import('./Overview')),
+  Details: React.lazy(() => import('./Details')),
+  New: React.lazy(() => import('./New')),
 })
-export default Activities

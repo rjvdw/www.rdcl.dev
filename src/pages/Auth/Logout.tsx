@@ -1,7 +1,7 @@
 import React from 'react'
-import { ActiveRoute } from '../components/ActiveRoute'
-import { Title } from '../components/Title'
-import { useLogout } from './authenticationHooks'
+import { ActiveRoute } from '../../components/ActiveRoute'
+import { Title } from '../../components/Title'
+import { useLogout } from './hooks'
 
 export const Logout = () => {
   const logout = useLogout()

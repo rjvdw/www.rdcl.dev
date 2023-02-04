@@ -80,6 +80,7 @@ export const Details = () => {
     </>
   )
 }
+export default Details
 
 type ViewProps = {
   activity: Activity

@@ -1,10 +1,10 @@
 import { formatISO } from 'date-fns'
 import React, { FunctionComponent } from 'react'
 import { useSelector } from 'react-redux'
-import { ActiveRoute } from '../components/ActiveRoute'
-import { Title } from '../components/Title'
-import { selectJwt } from '../slices/auth'
-import { Jwt } from '../util/Jwt'
+import { ActiveRoute } from '../../components/ActiveRoute'
+import { Title } from '../../components/Title'
+import { selectJwt } from '../../slices/auth'
+import { Jwt } from '../../util/Jwt'
 
 const JWT_CLAIMS: Record<string, string> = {
   iss: 'Issuer',
@@ -30,6 +30,7 @@ export const Session = () => {
     </>
   )
 }
+export default Session
 
 const RenderJwt: FunctionComponent<{ jwt: Jwt }> = ({ jwt }) => {
   return (

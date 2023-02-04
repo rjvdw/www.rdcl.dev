@@ -6,7 +6,6 @@ import { router } from './router'
 import { updateScreenType } from './slices/screen'
 import { store } from './store'
 import './elements'
-import './init-charts'
 import './styles/main.sass'
 
 const container = document.getElementById('root')!

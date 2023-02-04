@@ -1,9 +1,19 @@
-import { ChartData } from 'chart.js'
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  ChartData,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
+} from 'chart.js'
 import { ChartOptions } from 'chart.js/dist/types'
 import { differenceInDays } from 'date-fns'
 import React, { FunctionComponent, useMemo, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { HealthData, HealthRecord, HealthSettings } from './types'
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip)
 
 type GraphConfiguration = {
   key: keyof HealthData
@@ -50,6 +60,7 @@ export const Graph: FunctionComponent<GraphProps> = ({ settings, records }) => {
     </>
   )
 }
+export default Graph
 
 type SingleGraphProps = GraphProps & {
   configuration: GraphConfiguration

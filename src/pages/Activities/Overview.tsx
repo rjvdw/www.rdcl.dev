@@ -36,6 +36,7 @@ export const Overview = () => {
     </>
   )
 }
+export default Overview
 
 type ActivitiesOverviewProps = {
   activities: Activity[]
