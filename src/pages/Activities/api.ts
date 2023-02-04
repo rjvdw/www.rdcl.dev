@@ -7,36 +7,45 @@ export function useActivitiesApi() {
 
   return useMemo(
     () => ({
-      async getUpcoming(): Promise<Activity[]> {
-        const response = await api.get('/activity')
+      async getUpcoming(init?: RequestInit): Promise<Activity[]> {
+        const response = await api.get('/activity', init)
         const body = await response.json()
 
         return body.activities
       },
 
-      async getPast(): Promise<Activity[]> {
-        const response = await api.get(`/activity?past=true`)
+      async getPast(init?: RequestInit): Promise<Activity[]> {
+        const response = await api.get(`/activity?past=true`, init)
         const body = await response.json()
 
         return body.activities
       },
 
-      async get(id: string): Promise<Activity> {
-        const response = await api.get(`/activity/${id}`)
+      async get(id: string, init?: RequestInit): Promise<Activity> {
+        const response = await api.get(`/activity/${id}`, init)
         return response.json()
       },
 
-      async create(activity: Activity): Promise<void> {
-        await api.post('/activity', activity)
+      async create(activity: Activity, init?: RequestInit): Promise<void> {
+        await api.post('/activity', activity, 'form', init)
       },
 
-      async update(id: string, activity: Activity): Promise<Activity> {
-        const response = await api.put(`/activity/${id}`, activity)
+      async update(
+        id: string,
+        activity: Activity,
+        init?: RequestInit
+      ): Promise<Activity> {
+        const response = await api.put(
+          `/activity/${id}`,
+          activity,
+          'form',
+          init
+        )
         return response.json()
       },
 
-      async delete(id: string): Promise<void> {
-        await api.delete(`/activity/${id}`)
+      async delete(id: string, init?: RequestInit): Promise<void> {
+        await api.delete(`/activity/${id}`, init)
       },
     }),
     [api]

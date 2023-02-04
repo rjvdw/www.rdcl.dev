@@ -7,23 +7,29 @@ import { HealthRecord } from './types'
 
 export const useHealthSettings = () => {
   const api = useHealthApi()
-  const action = useCallback(() => api.getSettings(), [api])
-  const { data, loading, error, refresh } = useAsyncLoad(action)
+  const action = useCallback(
+    (init?: RequestInit) => api.getSettings(init),
+    [api]
+  )
+  const { data, loading, errors, refresh } = useAsyncLoad(action)
 
-  return { settings: data, loading, error, refresh }
+  return { settings: data, loading, errors, refresh }
 }
 
 export const useHealthRecords = (from?: string, to?: string) => {
   const api = useHealthApi()
-  const action = useCallback(() => api.list(from, to), [api, from, to])
+  const action = useCallback(
+    (init?: RequestInit) => api.list(from, to, init),
+    [api, from, to]
+  )
   const {
     data,
     loading: loadingInitial,
-    error: errorInitialLoad,
+    errors: errorsInitialLoad,
     refresh,
   } = useAsyncLoad(action)
 
-  const { loadingMore, errorLoadingMore, loadMore, moreRecords } = useLoadMore(
+  const { loadingMore, errorsLoadingMore, loadMore, moreRecords } = useLoadMore(
     data?.records,
     from
   )
@@ -32,9 +38,9 @@ export const useHealthRecords = (from?: string, to?: string) => {
     () => loadingInitial || loadingMore,
     [loadingInitial, loadingMore]
   )
-  const error = useMemo(
-    () => errorInitialLoad || errorLoadingMore,
-    [errorInitialLoad, errorLoadingMore]
+  const errors = useMemo(
+    () => errorsInitialLoad.concat(errorsLoadingMore),
+    [errorsInitialLoad, errorsLoadingMore]
   )
 
   const sortedData = useMemo(() => {
@@ -48,7 +54,7 @@ export const useHealthRecords = (from?: string, to?: string) => {
     records: sortedData,
     count: data?.count,
     loading,
-    error,
+    errors,
     refresh,
     loadMore,
   }
@@ -56,38 +62,43 @@ export const useHealthRecords = (from?: string, to?: string) => {
 
 const useLoadMore = (records?: HealthRecord[], from?: string) => {
   const api = useHealthApi()
-  const [loadingMore, setLoadingMore] = useState<boolean>(false)
-  const [errorLoadingMore, setErrorLoadingMore] = useState<string>()
+  const [loadingMore, setLoadingMore] = useState<number>(0)
+  const [errorsLoadingMore, setErrorsLoadingMore] = useState<string[]>([])
   const [moreRecords, setMoreRecords] = useState<HealthRecord[]>(records ?? [])
 
   useEffect(() => {
     setMoreRecords(records ?? [])
   }, [records])
 
-  const loadMore = useCallback(async () => {
-    if (moreRecords.length === 0) {
-      setErrorLoadingMore('Initial load not available')
-      return
-    }
+  const loadMore = useCallback(
+    async (init?: RequestInit) => {
+      if (moreRecords.length === 0) {
+        setErrorsLoadingMore((errs) =>
+          errs.concat(['Initial load not available'])
+        )
+        return
+      }
 
-    try {
-      setLoadingMore(true)
+      try {
+        setLoadingMore((nr) => nr + 1)
 
-      const to = getNextTo(moreRecords)
-      const response = await api.list(from, to)
-      setMoreRecords((current) => current.concat(response.records))
+        const to = getNextTo(moreRecords)
+        const response = await api.list(from, to, init)
+        setMoreRecords((current) => current.concat(response.records))
 
-      setErrorLoadingMore(undefined)
-    } catch (err) {
-      setErrorLoadingMore(errorAsString(err))
-    } finally {
-      setLoadingMore(false)
-    }
-  }, [api, from, moreRecords])
+        setErrorsLoadingMore([])
+      } catch (err) {
+        setErrorsLoadingMore((errs) => errs.concat(errorAsString(err)))
+      } finally {
+        setLoadingMore((nr) => nr - 1)
+      }
+    },
+    [api, from, moreRecords]
+  )
 
   return {
-    loadingMore,
-    errorLoadingMore,
+    loadingMore: loadingMore > 0,
+    errorsLoadingMore,
     moreRecords,
     loadMore,
   }

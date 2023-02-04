@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from 'react'
+import { Error } from '../../components/Error'
 import { Graph } from './Graph'
 import { Table } from './Table'
 import { useDeleteRecord } from './hooks'
@@ -9,7 +10,7 @@ type HealthRecordsProps = {
   records: HealthRecord[]
   count?: number
   loading: boolean
-  error?: string
+  errors: string[]
   refresh(): void
   loadMore(): void
 }
@@ -19,27 +20,24 @@ export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
   records,
   count,
   loading,
-  error,
+  errors,
   refresh,
   loadMore,
 }) => {
   const deleteRecord = useDeleteRecord(refresh)
   const [mode, setMode] = useState<'table' | 'graph'>('table')
 
-  if (error) {
-    return (
-      <p className="error-message">Failed to load health records: {error}</p>
-    )
+  if (loading) {
+    return <p>Loading health records...</p>
+  }
+
+  if (errors.length > 0) {
+    return <Error errors={errors}>Failed to load health records</Error>
   }
 
   if (!count) {
-    if (loading) {
-      return <p>Loading health records...</p>
-    }
-
     return (
       <div className="responsive-table-wrapper health__overview">
-        <Error error={error} />
         <p>No records yet.</p>
       </div>
     )
@@ -76,13 +74,6 @@ export const HealthRecords: FunctionComponent<HealthRecordsProps> = ({
           {loading ? 'Loading...' : 'Load more'}
         </button>
       )}
-
-      <Error error={error} />
     </div>
   )
 }
-
-const Error: FunctionComponent<{ error?: string }> = ({ error }) =>
-  error ? (
-    <p className="error-message">Failed to load health records: {error}</p>
-  ) : null
