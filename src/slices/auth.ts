@@ -79,13 +79,16 @@ export const verify =
 
       dispatch(actions.pending())
 
-      const response = await fetch('/api/verify-login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ sessionToken, verificationCode }),
-      })
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/auth/login/verify`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `session-token=${sessionToken}&verification-code=${verificationCode}`,
+        }
+      )
 
       if (response.ok) {
         const { jwt } = await response.json()

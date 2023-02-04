@@ -30,13 +30,16 @@ export const useLogin = () => {
       delete localStorage.username
     }
     setState('pending')
-    const response = await fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/auth/login`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `email=${data.username}&callback=${window.location.origin}/login/verify`,
+      }
+    )
 
     if (response.ok) {
       const { sessionToken } = await response.json()
