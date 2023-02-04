@@ -1,6 +1,6 @@
 import React, { useId } from 'react'
 import { Title } from '../../components/Title'
-import { useDropRates } from './DropRates.hooks'
+import { useDropRates } from './hooks'
 
 export const DropRates = () => {
   const id = useId()
@@ -27,6 +27,8 @@ export const DropRates = () => {
           type="number"
           inputMode="decimal"
           step="any"
+          min={0}
+          max={100}
           {...register('dropRate', {
             valueAsNumber: true,
           })}
@@ -39,6 +41,8 @@ export const DropRates = () => {
         <input
           id={`${id}:nrAttempts`}
           data-testid="nrAttempts"
+          type="number"
+          min={0}
           {...register('nrAttempts', {
             valueAsNumber: true,
           })}
