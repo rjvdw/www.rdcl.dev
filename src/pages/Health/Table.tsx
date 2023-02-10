@@ -19,7 +19,7 @@ export const Table: FunctionComponent<TableProps> = ({
         <tr>
           <th>Date</th>
           <th>Weight</th>
-          <th>Body Fat %</th>
+          <th colSpan={2}>Body Fat</th>
           {settings?.height ? <th>BMI</th> : null}
           <th>Actions</th>
         </tr>
@@ -39,6 +39,14 @@ export const Table: FunctionComponent<TableProps> = ({
                 ? `${record.data.bodyFat.toLocaleString()}%`
                 : ''}
             </td>
+            <td>
+              {record.data.weight && record.data.bodyFat
+                ? `${computeBodyFatWeight(
+                    record.data.weight,
+                    record.data.bodyFat
+                  )}kg`
+                : ''}
+            </td>
             {settings?.height ? (
               <td>
                 {record.data.weight
@@ -54,4 +62,8 @@ export const Table: FunctionComponent<TableProps> = ({
       </tbody>
     </table>
   )
+}
+
+function computeBodyFatWeight(weight: number, bodyFat: number): number {
+  return Number(((weight * bodyFat) / 100).toFixed(1))
 }
