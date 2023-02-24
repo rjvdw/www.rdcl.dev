@@ -28,6 +28,7 @@ export const router = createBrowserRouter(
         <Route path="drop-rates" element={<Tools.DropRates />} />
         <Route path="float" element={<Tools.Float />} />
         <Route path="markdown-viewer" element={<Tools.MarkdownViewer />} />
+        <Route path="ip" element={<Tools.MyIp />} />
         <Route path="ratings" element={<Tools.Ratings />} />
         <Route path="uuid" element={<Tools.UUID />} />
       </Route>

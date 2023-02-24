@@ -1,0 +1,14 @@
+.ip-overview
+  display: grid
+  row-gap: .25rem
+  column-gap: 1rem
+  grid-template-columns: max-content auto
+
+  dt
+    font-weight: bold
+    &::after
+      content: ':'
+
+  &, dt, dd
+    margin: 0
+    padding: 0

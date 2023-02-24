@@ -48,7 +48,7 @@ X_CSP = """\
 default-src 'self'; \
 style-src 'self' 'unsafe-inline'; \
 img-src 'self' 'unsafe-inline'; \
-connect-src 'self' https://api.rdcl.dev"""
+connect-src 'self' https://api.rdcl.dev https://ipv4.rdcl.dev https://ipv6.rdcl.dev"""
 
 [[headers]]
 for = "/favicon.ico"

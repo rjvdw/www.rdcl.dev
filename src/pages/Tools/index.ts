@@ -10,6 +10,7 @@ export const Tools = Object.assign(ToolsComponent, {
   DropRates: React.lazy(() => import('../../tools/DropRates')),
   Float: React.lazy(() => import('../../tools/Float')),
   MarkdownViewer: React.lazy(() => import('../../tools/MarkdownViewer')),
+  MyIp: React.lazy(() => import('../../tools/MyIp')),
   Ratings: React.lazy(() => import('../../tools/Ratings')),
   UUID: React.lazy(() => import('../../tools/Uuid')),
 })

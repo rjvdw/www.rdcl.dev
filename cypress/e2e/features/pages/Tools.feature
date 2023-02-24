@@ -15,4 +15,5 @@ Feature: Tools Page
       | Drop Rate Calculator | /tools/drop-rates      | Given a drop rate, computes how many attempts you actually need to get your item.       |
       | Float Calculator     | /tools/float           | Calculator to help with floating point numbers.                                         |
       | Markdown viewer      | /tools/markdown-viewer | View a markdown file in your browser.                                                   |
+      | My IP                | /tools/ip              | Show your current IPv4 and IPv6 addresses.                                                                                        |
       | How to read a rating | /tools/ratings         | Given how many reviews out of a total number of reviews are positive, computes a score. |

@@ -30,6 +30,9 @@ export const Index = () => (
       <ToolLink to="/tools/markdown-viewer" title="Markdown viewer">
         View a markdown file in your browser.
       </ToolLink>
+      <ToolLink to="/tools/ip" title="My IP">
+        Show your current IPv4 and IPv6 addresses.
+      </ToolLink>
       <ToolLink to="/tools/ratings" title="How to read a rating">
         Given how many reviews out of a total number of reviews are positive,
         computes a score.
