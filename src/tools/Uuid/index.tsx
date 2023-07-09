@@ -15,7 +15,7 @@ export const Uuid: FunctionComponent = () => {
   } = useUuid()
 
   const historyDoubleClickHandler: MouseEventHandler<HTMLLIElement> = (
-    event
+    event,
   ) => {
     event.preventDefault()
     const range = document.createRange()

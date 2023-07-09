@@ -31,6 +31,6 @@ When('the user enters a bmi of {}', (bmi: string) => {
 Then('{field} has value {string}', (field: string, value: string) => {
   cy.get(`[data-testid="${field}"]`).should(
     'have.value',
-    value === '""' ? '' : value
+    value === '""' ? '' : value,
   )
 })

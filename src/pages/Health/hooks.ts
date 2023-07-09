@@ -9,7 +9,7 @@ export const useHealthSettings = () => {
   const api = useHealthApi()
   const action = useCallback(
     (init?: RequestInit) => api.getSettings(init),
-    [api]
+    [api],
   )
   const { data, loading, errors, refresh } = useAsyncLoad(action)
 
@@ -20,7 +20,7 @@ export const useHealthRecords = (from?: string, to?: string) => {
   const api = useHealthApi()
   const action = useCallback(
     (init?: RequestInit) => api.list(from, to, init),
-    [api, from, to]
+    [api, from, to],
   )
   const {
     data,
@@ -31,16 +31,16 @@ export const useHealthRecords = (from?: string, to?: string) => {
 
   const { loadingMore, errorsLoadingMore, loadMore, moreRecords } = useLoadMore(
     data?.records,
-    from
+    from,
   )
 
   const loading = useMemo(
     () => loadingInitial || loadingMore,
-    [loadingInitial, loadingMore]
+    [loadingInitial, loadingMore],
   )
   const errors = useMemo(
     () => errorsInitialLoad.concat(errorsLoadingMore),
-    [errorsInitialLoad, errorsLoadingMore]
+    [errorsInitialLoad, errorsLoadingMore],
   )
 
   const sortedData = useMemo(() => {
@@ -74,7 +74,7 @@ const useLoadMore = (records?: HealthRecord[], from?: string) => {
     async (init?: RequestInit) => {
       if (moreRecords.length === 0) {
         setErrorsLoadingMore((errs) =>
-          errs.concat(['Initial load not available'])
+          errs.concat(['Initial load not available']),
         )
         return
       }
@@ -93,7 +93,7 @@ const useLoadMore = (records?: HealthRecord[], from?: string) => {
         setLoadingMore((nr) => nr - 1)
       }
     },
-    [api, from, moreRecords]
+    [api, from, moreRecords],
   )
 
   return {

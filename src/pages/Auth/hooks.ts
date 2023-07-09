@@ -38,7 +38,7 @@ export const useLogin = () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: `email=${data.username}&callback=${window.location.origin}/login/verify`,
-      }
+      },
     )
 
     if (response.ok) {

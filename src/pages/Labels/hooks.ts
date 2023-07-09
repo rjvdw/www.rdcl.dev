@@ -57,7 +57,7 @@ export const useLabelState = (initialLabels: Record<string, LabelConfig>) => {
           label,
           config,
         },
-      ]
+      ],
     )
 
     entries.sort((a, b) => a[1].label.localeCompare(b[1].label))
@@ -118,9 +118,9 @@ export const useLabelState = (initialLabels: Record<string, LabelConfig>) => {
             textColor: undefined,
             ...config,
           },
-        ])
+        ]),
       ),
-    [labels]
+    [labels],
   )
 
   return {

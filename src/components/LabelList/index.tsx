@@ -12,7 +12,7 @@ export const LabelList: FunctionComponent<LabelListProps> = ({ children }) => {
       {React.Children.map(children, (child) =>
         (child as ReactElement).type === Label
           ? React.cloneElement(child as ReactElement, { as: 'li' })
-          : child
+          : child,
       )}
     </ul>
   )

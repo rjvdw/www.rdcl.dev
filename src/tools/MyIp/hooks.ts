@@ -14,7 +14,7 @@ export const useIp = (address: string) => {
         } else {
           setIp(undefined)
           console.error(
-            `Request to ${address} failed with ${response.status} ${response.statusText}`
+            `Request to ${address} failed with ${response.status} ${response.statusText}`,
           )
         }
       } catch (err) {

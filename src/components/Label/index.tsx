@@ -28,7 +28,7 @@ export const Label: FunctionComponent<LabelProps> = ({
 
   const labels = useMemo(
     () => providedLabels ?? labelsFromState,
-    [providedLabels, labelsFromState]
+    [providedLabels, labelsFromState],
   )
 
   const attrs = useMemo(
@@ -39,7 +39,7 @@ export const Label: FunctionComponent<LabelProps> = ({
         color: labels[label]?.color ?? '#000',
       },
     }),
-    [labels, label]
+    [labels, label],
   )
 
   if (as === 'li') {

@@ -36,15 +36,15 @@ export const notifications = reducer
 export const { dismiss } = actions
 
 export function notify(
-  notification: Notification
+  notification: Notification,
 ): ReturnType<typeof actions.notify>
 export function notify(
   type: Notification['type'],
-  message: string
+  message: string,
 ): ReturnType<typeof actions.notify>
 export function notify(
   notificationOrType: Notification | Notification['type'],
-  message?: string
+  message?: string,
 ) {
   if (typeof notificationOrType === 'string') {
     return actions.notify({

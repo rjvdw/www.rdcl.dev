@@ -9,7 +9,7 @@ type CDInputType = (
     min?: number
     max?: number
     autoFocus?: boolean
-  }
+  },
 ) => JSX.Element
 
 export const Countdown = () => {
@@ -23,7 +23,7 @@ export const Countdown = () => {
 
   const input: CDInputType = (
     key,
-    { min = 1, max = 100, autoFocus = false } = {}
+    { min = 1, max = 100, autoFocus = false } = {},
   ) => (
     <input
       autoFocus={autoFocus}

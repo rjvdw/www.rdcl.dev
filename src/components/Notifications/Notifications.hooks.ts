@@ -42,7 +42,7 @@ export const useNotify = () => {
     (type: Notification['type']) => (message: string) => {
       dispatch(notify(type, message))
     },
-    [dispatch]
+    [dispatch],
   )
 
   return useMemo(
@@ -52,6 +52,6 @@ export const useNotify = () => {
         warning: dispatcher('warning'),
         error: dispatcher('error'),
       }),
-    [dispatcher]
+    [dispatcher],
   )
 }

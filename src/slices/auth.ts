@@ -44,12 +44,12 @@ export const auth = reducer
 
 export const selectJwt = createSelector(
   (state: StoreState) => state.auth.jwt,
-  (jwt) => (jwt === undefined ? undefined : new Jwt(jwt))
+  (jwt) => (jwt === undefined ? undefined : new Jwt(jwt)),
 )
 
 export const selectIsLoggedIn = createSelector(
   selectJwt,
-  (jwt) => !!jwt && !jwt.isExpired()
+  (jwt) => !!jwt && !jwt.isExpired(),
 )
 
 export const logout = (): StoreThunk => (dispatch) => {
@@ -87,7 +87,7 @@ export const verify =
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: `session-token=${sessionToken}&verification-code=${verificationCode}`,
-        }
+        },
       )
 
       if (response.ok) {

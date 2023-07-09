@@ -6,7 +6,7 @@ import { StoreDispatch } from '../store'
 async function callApi(
   method: string,
   path: string,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<Response> {
   const response = await fetch(`${process.env.REACT_APP_API_URL}${path}`, {
     method,
@@ -42,7 +42,7 @@ export function useApi() {
       async call(
         method: string,
         path: string,
-        init?: RequestInit
+        init?: RequestInit,
       ): Promise<Response> {
         try {
           return await callApi(method, path, init)
@@ -63,12 +63,12 @@ export function useApi() {
         path: string,
         data: Parameters<typeof getRequestInitWithBody>[0],
         contentType: Parameters<typeof getRequestInitWithBody>[1],
-        init?: RequestInit
+        init?: RequestInit,
       ): Promise<Response> {
         return this.call(
           'post',
           path,
-          merge(getRequestInitWithBody(data, contentType), init)
+          merge(getRequestInitWithBody(data, contentType), init),
         )
       },
 
@@ -76,12 +76,12 @@ export function useApi() {
         path: string,
         data: Parameters<typeof getRequestInitWithBody>[0],
         contentType: Parameters<typeof getRequestInitWithBody>[1],
-        init?: RequestInit
+        init?: RequestInit,
       ): Promise<Response> {
         return this.call(
           'put',
           path,
-          merge(getRequestInitWithBody(data, contentType), init)
+          merge(getRequestInitWithBody(data, contentType), init),
         )
       },
 
@@ -89,7 +89,7 @@ export function useApi() {
         return this.call('delete', path, init)
       },
     }),
-    [dispatch]
+    [dispatch],
   )
 }
 
@@ -109,7 +109,7 @@ function getFormEncodedBody(data: Record<string, unknown>): string {
 
 function getRequestInitWithBody(
   data: string | Record<string, unknown>,
-  contentType: 'form' | 'json'
+  contentType: 'form' | 'json',
 ): RequestInit {
   if (contentType === 'form') {
     return {
@@ -146,7 +146,7 @@ export class ApiCallError extends Error {
 
   constructor(method: string, path: string, response: Response) {
     super(
-      `API call "${method} ${path}" failed with error: ${response.status} ${response.statusText}`
+      `API call "${method} ${path}" failed with error: ${response.status} ${response.statusText}`,
     )
     this.method = method
     this.path = path

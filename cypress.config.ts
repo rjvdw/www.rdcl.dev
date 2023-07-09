@@ -14,7 +14,7 @@ export default defineConfig({
         'file:preprocessor',
         browserify(config, {
           typescript: require.resolve('typescript'),
-        })
+        }),
       )
 
       // Make sure to return the config object as it might have been modified by the plugin.

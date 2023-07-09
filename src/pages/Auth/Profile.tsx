@@ -49,7 +49,7 @@ function useProfile() {
       const response = await api.get('/auth/me', init)
       return response.json()
     },
-    [api]
+    [api],
   )
   const { data: profile, loading, errors } = useAsyncLoad(action)
 

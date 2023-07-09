@@ -10,7 +10,7 @@ export type AsyncLoadResult<T> = {
 }
 
 export const useAsyncLoad = <T>(
-  action: (init?: RequestInit) => Promise<T>
+  action: (init?: RequestInit) => Promise<T>,
 ): AsyncLoadResult<T> => {
   const [data, setData] = useState<T>()
   const [nrLoading, setNrLoading] = useState<number>(0)
@@ -27,13 +27,13 @@ export const useAsyncLoad = <T>(
         setErrors((errs) =>
           errs
             .filter(([i]) => i === identifier) // clear out errors from other attempts
-            .concat([[identifier, errorAsString(err)]])
+            .concat([[identifier, errorAsString(err)]]),
         )
       } finally {
         setNrLoading((nr) => nr - 1)
       }
     },
-    [action]
+    [action],
   )
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export const useAsyncLoad = <T>(
 
   const errorsWithoutIdentifiers = useMemo(
     () => errors.map(([, e]) => e),
-    [errors]
+    [errors],
   )
 
   return {

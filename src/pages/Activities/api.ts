@@ -33,13 +33,13 @@ export function useActivitiesApi() {
       async update(
         id: string,
         activity: Activity,
-        init?: RequestInit
+        init?: RequestInit,
       ): Promise<Activity> {
         const response = await api.put(
           `/activity/${id}`,
           activity,
           'form',
-          init
+          init,
         )
         return response.json()
       },
@@ -48,6 +48,6 @@ export function useActivitiesApi() {
         await api.delete(`/activity/${id}`, init)
       },
     }),
-    [api]
+    [api],
   )
 }

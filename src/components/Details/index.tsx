@@ -18,7 +18,7 @@ type DetailsProps = (
 }
 
 function isDetailsPropsWithSummary(
-  props: DetailsPropsWithSummary | DetailsPropsWithSummaryOpenAndClosed
+  props: DetailsPropsWithSummary | DetailsPropsWithSummaryOpenAndClosed,
 ): props is DetailsPropsWithSummary {
   return (props as DetailsPropsWithSummary).summary !== undefined
 }

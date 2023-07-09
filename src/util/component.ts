@@ -4,7 +4,7 @@ import { EventHandler, ReactNode, SyntheticEvent } from 'react'
  * Convenience method for preventing the default on an event handler.
  */
 export function preventDefault<T extends SyntheticEvent>(
-  handler: EventHandler<T>
+  handler: EventHandler<T>,
 ): EventHandler<T> {
   return (event) => {
     event.preventDefault()
@@ -23,7 +23,7 @@ export type Fnc<T> = T | (() => T)
 export function conditionally(
   condition: Fnc<boolean>,
   ifTrue: Fnc<ReactNode>,
-  ifFalse: Fnc<ReactNode> = null
+  ifFalse: Fnc<ReactNode> = null,
 ): ReactNode {
   if ((typeof condition === 'function' && condition()) || condition) {
     if (typeof ifTrue === 'function') {

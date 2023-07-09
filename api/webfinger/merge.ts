@@ -25,7 +25,7 @@ export function mergeJrd(one: JRD, other: JRD): JRD {
  */
 function mergeLists<T>(
   l1: T[] | undefined,
-  l2: T[] | undefined
+  l2: T[] | undefined,
 ): T[] | undefined {
   return l2 ? (l1 ?? []).concat(l2) : l1
 }
@@ -40,7 +40,7 @@ function mergeLists<T>(
  */
 function mergeObjects<K extends string | number | symbol, V>(
   o1: Record<K, V> | undefined,
-  o2: Record<K, V> | undefined
+  o2: Record<K, V> | undefined,
 ): Record<K, V> | undefined {
   if (!o1) {
     return o2

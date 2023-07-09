@@ -42,7 +42,7 @@ Then('the following solution is found:', (data: DataTable) => {
         .map(
           ([operation, op1, op2, result]) => `
         <li>${op1} ${operation} ${op2} = ${result}</li>
-      `
+      `,
         )
         .join('')}
     </ul>
@@ -59,7 +59,7 @@ Then('no solution is found', () => {
       normalizeHtml(`
         <h2>Solution</h2>
         <p>This one is not possible</p>
-      `)
+      `),
     )
   })
 })

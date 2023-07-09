@@ -176,7 +176,7 @@ export class RdclSideMenu extends LitElement {
         bubbles: true,
         cancelable: true,
         composed: true,
-      })
+      }),
     )
   }
 
@@ -186,7 +186,7 @@ export class RdclSideMenu extends LitElement {
         bubbles: true,
         cancelable: true,
         composed: true,
-      })
+      }),
     )
   }
 }

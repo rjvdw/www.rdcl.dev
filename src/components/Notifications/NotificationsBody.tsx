@@ -28,7 +28,7 @@ const NotificationEntry: FunctionComponent<NotificationEntryProps> = ({
     <div
       className={classNames(
         'notifications__notification',
-        `notifications__notification--${notification.type}`
+        `notifications__notification--${notification.type}`,
       )}
       onClick={dismiss}
     >

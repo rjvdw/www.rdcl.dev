@@ -11,7 +11,7 @@ import { JRD } from './types'
  */
 export async function getData(
   resource: string,
-  relations?: string[]
+  relations?: string[],
 ): Promise<JRD | undefined> {
   const account = lookup(resource)
   if (!account) {
@@ -67,7 +67,7 @@ async function finger(profile: string): Promise<JRD | undefined> {
 
   if (result.status !== 200) {
     console.error(
-      `Request to '${url}' failed with: ${result.status} ${result.statusText}`
+      `Request to '${url}' failed with: ${result.status} ${result.statusText}`,
     )
     return undefined
   }

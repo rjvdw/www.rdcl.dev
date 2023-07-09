@@ -76,7 +76,7 @@ const SingleGraph: FunctionComponent<SingleGraphProps> = ({
     records,
     configuration,
     showData.checked,
-    showAverage.checked
+    showAverage.checked,
   )
   const options = useOptions(configuration)
 
@@ -143,11 +143,11 @@ const useData = (
   records: HealthRecord[],
   { key, label }: GraphConfiguration,
   showData: boolean,
-  showAverage: boolean
+  showAverage: boolean,
 ) => {
   const data = useMemo(
     () => records.sort((a, b) => a.date.localeCompare(b.date)),
-    [records]
+    [records],
   )
 
   const averagedData = useAveraged(data, key, 7)
@@ -183,14 +183,14 @@ const useData = (
         },
       ],
     }),
-    [label, data, key, showData, averagedData, showAverage]
+    [label, data, key, showData, averagedData, showAverage],
   )
 }
 
 const useAveraged = (
   data: HealthRecord[],
   key: keyof HealthData,
-  windowSize: number
+  windowSize: number,
 ) =>
   useMemo(() => {
     const averaged: HealthRecord[] = []
@@ -249,5 +249,5 @@ const useOptions = ({ grace, unit }: GraphConfiguration) =>
         },
       },
     }),
-    [grace, unit]
+    [grace, unit],
   )

@@ -8,7 +8,7 @@ When(
       filePath,
       mimeType,
     })
-  }
+  },
 )
 
 When('the user uploads the following files:', (data: DataTable) => {
@@ -16,7 +16,7 @@ When('the user uploads the following files:', (data: DataTable) => {
     data.rows().map(([filePath, mimeType]) => ({
       filePath,
       mimeType,
-    }))
+    })),
   )
 })
 
@@ -26,9 +26,9 @@ Then(
     cy.get(`[data-testid="output-${file}"]`).then(
       ($el: JQuery<HTMLElement>) => {
         expect(normalizeHtml($el.html())).to.equal(normalizeHtml(contents))
-      }
+      },
     )
-  }
+  },
 )
 
 Then(
@@ -37,5 +37,5 @@ Then(
     cy.get(`[data-testid="error-${file}"]`).then(($el: JQuery<HTMLElement>) => {
       expect($el.html()).to.equal(error)
     })
-  }
+  },
 )

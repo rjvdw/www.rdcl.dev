@@ -101,7 +101,7 @@ function read(file: File): Promise<string> {
       () => {
         resolve(String(reader.result))
       },
-      false
+      false,
     )
     reader.addEventListener('error', (err) => {
       reject(err)

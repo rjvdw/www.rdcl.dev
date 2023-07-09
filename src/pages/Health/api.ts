@@ -22,7 +22,7 @@ export function useHealthApi() {
 
       async saveSettings(
         settings: HealthSettings,
-        init?: RequestInit
+        init?: RequestInit,
       ): Promise<void> {
         await api.post('/health/settings', settings, 'json', init)
       },
@@ -30,7 +30,7 @@ export function useHealthApi() {
       async list(
         from?: string,
         to?: string,
-        init?: RequestInit
+        init?: RequestInit,
       ): Promise<{ records: HealthRecord[]; count: number }> {
         const searchParams = new URLSearchParams()
         if (from) {
@@ -41,7 +41,7 @@ export function useHealthApi() {
         }
         const response = await api.get(
           `/health?${searchParams.toString()}`,
-          init
+          init,
         )
         const body = (await response.json()) as ListResponseBody
 
@@ -61,6 +61,6 @@ export function useHealthApi() {
         await api.delete(`/health/${date}`, init)
       },
     }),
-    [api]
+    [api],
   )
 }

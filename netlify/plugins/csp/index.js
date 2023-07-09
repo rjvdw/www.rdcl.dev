@@ -8,7 +8,7 @@ export const onPreBuild = ({ netlifyConfig }) => {
           '[CSP][%s] replace "%s" with "%s"',
           header.for,
           header.values['Content-Security-Policy'],
-          header.values['X_CSP']
+          header.values['X_CSP'],
         )
       } else {
         console.log('[CSP][%s] add "%s"', header.for, header.values['X_CSP'])

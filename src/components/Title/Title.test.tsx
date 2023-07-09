@@ -24,7 +24,7 @@ it('renders a specific title with a prefix', () => {
 it('renders a specific title with a multi-part prefix', () => {
   render(<Title prefix={['prefix1', 'prefix2']}>some specific title</Title>)
   expect(document.title).toBe(
-    'some specific title | prefix2 | prefix1 | initial title'
+    'some specific title | prefix2 | prefix1 | initial title',
   )
 })
 
@@ -37,7 +37,7 @@ it('renders using a custom separator', () => {
   render(
     <Title prefix="prefix" separator=" :: ">
       some specific title
-    </Title>
+    </Title>,
   )
   expect(document.title).toBe('some specific title :: prefix :: initial title')
 })
@@ -45,6 +45,6 @@ it('renders using a custom separator', () => {
 it('omits empty parts', () => {
   render(<Title prefix={['prefix1', '', 'prefix2']}>some specific title</Title>)
   expect(document.title).toBe(
-    'some specific title | prefix2 | prefix1 | initial title'
+    'some specific title | prefix2 | prefix1 | initial title',
   )
 })

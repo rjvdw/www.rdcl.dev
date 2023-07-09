@@ -75,6 +75,6 @@ const useHandleClick = () => {
         close()
       }
     },
-    [navigate, close]
+    [navigate, close],
   )
 }

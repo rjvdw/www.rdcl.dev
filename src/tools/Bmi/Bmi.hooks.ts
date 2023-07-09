@@ -65,7 +65,7 @@ const useTargetBmi = (bmiForm: UseFormReturn<BmiForm>) => {
         }
         bmiForm.setValue(
           'weight',
-          rounded(computeTargetWeight(height, targetBmi), 2)
+          rounded(computeTargetWeight(height, targetBmi), 2),
         )
         setTargetBmiIsShown(false)
         reset()

@@ -54,6 +54,6 @@ export const router = createBrowserRouter(
       <Route path="/health" element={<Health />} />
 
       <Route path="*" element={<NotFound />} />
-    </Route>
-  )
+    </Route>,
+  ),
 )

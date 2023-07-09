@@ -84,7 +84,7 @@ export class RdclPageHeader extends LitElement {
         bubbles: true,
         cancelable: true,
         composed: true,
-      })
+      }),
     )
   }
 }

@@ -22,7 +22,7 @@ const WEEK_OPTIONS = { weekStartsOn: 1 } as const
 
 export function formatDateTime(
   activity: Activity,
-  key: 'starts' | 'ends'
+  key: 'starts' | 'ends',
 ): string {
   const value = activity[key]
   if (value) {
@@ -87,7 +87,7 @@ function convertToDay(date: Date) {
 
 function isNextWeek(
   date: Date,
-  options: Parameters<typeof startOfWeek>[1]
+  options: Parameters<typeof startOfWeek>[1],
 ): boolean {
   const nextWeek = addDays(new Date(), 7)
   const w1 = startOfWeek(nextWeek, options)

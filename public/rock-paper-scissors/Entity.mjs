@@ -67,7 +67,7 @@ export class Entity {
         0: ROCK,
         1: PAPER,
         2: SCISSORS,
-      }[rand(3)]
+      }[rand(3)],
     )
   }
 

@@ -43,7 +43,7 @@ export const Table: FunctionComponent<TableProps> = ({
               {record.data.weight && record.data.bodyFat
                 ? `${computeBodyFatWeight(
                     record.data.weight,
-                    record.data.bodyFat
+                    record.data.bodyFat,
                   )}kg`
                 : ''}
             </td>

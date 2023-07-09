@@ -20,7 +20,7 @@ type TagInputProps = {
 export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
   function TagInput(
     { tags: initial, suggested = [], ...inputProps },
-    forwardedRef
+    forwardedRef,
   ) {
     const id = useId()
     const innerRef = useRef<HTMLInputElement>(null)
@@ -33,7 +33,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
 
     const suggestions = useMemo(
       () => suggested.filter((v) => tags.indexOf(v) === -1),
-      [suggested, tags]
+      [suggested, tags],
     )
 
     const focusHandler = () => {
@@ -68,7 +68,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     }
 
     const handleInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (
-      event
+      event,
     ) => {
       if (event.key === 'Enter') {
         event.preventDefault()
@@ -133,5 +133,5 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
         />
       </div>
     )
-  }
+  },
 )

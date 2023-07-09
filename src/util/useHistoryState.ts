@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 export const useHistoryState = <T>(
-  initialState: T
+  initialState: T,
 ): [T, (value: T) => void] => {
   const location = useLocation()
   const navigate = useNavigate()

@@ -94,7 +94,7 @@ export const Float = () => {
                           {groupDigits(
                             mantissa,
                             8,
-                            sign.length + exponent.length
+                            sign.length + exponent.length,
                           )}
                         </span>
                       </td>
@@ -122,9 +122,9 @@ export const Float = () => {
                               <>
                                 {parseNormalMantissa(mantissa)}&times;2
                                 <sup>{parsedExponent}</sup>
-                              </>
+                              </>,
                             )}
-                          </>
+                          </>,
                         )}
                       </td>
                     </tr>
@@ -145,7 +145,7 @@ export const Float = () => {
                 {conditionally(
                   precision === 32,
                   () => ' -126 and 127 ',
-                  () => ' -1022 and 1023 '
+                  () => ' -1022 and 1023 ',
                 )}
                 (since we are considering {precision} bits floating points). To
                 get the exponent value, simply interpret the number as an
@@ -222,13 +222,13 @@ export const Float = () => {
                         inaccuracies
                       </em>
                       ).
-                    </>
-                  )
+                    </>,
+                  ),
                 )}
               </p>
             </>
           )
-        }
+        },
       )}
     </>
   )
@@ -255,11 +255,11 @@ function floatToBytes(number: number, precision: FloatPrecision): Uint8Array {
 
 function deconstructFloat(
   bytes: Uint8Array,
-  precision: FloatPrecision
+  precision: FloatPrecision,
 ): [string, string, string] {
   const str = bytes.reduce<string>(
     (p, c) => p + c.toString(2).padStart(8, '0'),
-    ''
+    '',
   )
 
   const sign = str[0]
@@ -330,7 +330,7 @@ function groupDigits(
   input: string,
   groupSize: number,
   offset: number,
-  separator = ' '
+  separator = ' ',
 ): string {
   input = input.padStart(input.length + offset, 'X')
   for (let i = groupSize; i < input.length; i += groupSize + separator.length) {

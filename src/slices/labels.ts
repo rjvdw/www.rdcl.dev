@@ -46,7 +46,7 @@ const { reducer, actions } = createSlice({
     },
     setLoaded(
       _state,
-      { payload: labels }: PayloadAction<Record<string, LabelConfig>>
+      { payload: labels }: PayloadAction<Record<string, LabelConfig>>,
     ) {
       return { state: 'loaded', labels }
     },
@@ -81,7 +81,7 @@ export const loadLabels = (): StoreThunk => async (dispatch) => {
       Object.entries(labelsResponse).map(([key, value]) => [
         key,
         JSON.parse(value),
-      ])
+      ]),
     )
 
     dispatch(actions.setLoaded(labels))
@@ -107,8 +107,8 @@ export const saveLabels =
             Object.entries(labels).map(([key, value]) => [
               key,
               JSON.stringify(value),
-            ])
-          )
+            ]),
+          ),
         ),
       })
 
@@ -126,5 +126,5 @@ export const selectLabelsState = (state: StoreState) => state.labels
 export const selectLabels = createSelector(
   selectLabelsState,
   (labels): Record<string, LabelConfig> =>
-    labels.state === 'loaded' ? labels.labels : {}
+    labels.state === 'loaded' ? labels.labels : {},
 )

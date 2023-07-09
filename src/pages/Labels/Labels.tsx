@@ -98,7 +98,7 @@ const Editor: FunctionComponent<{ labels: Record<string, LabelConfig> }> = ({
                           updateField(
                             key,
                             'background-color',
-                            event.target.value
+                            event.target.value,
                           )
                         }
                       />

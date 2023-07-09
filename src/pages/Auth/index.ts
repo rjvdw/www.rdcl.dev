@@ -8,5 +8,5 @@ export const Auth = Object.assign(
     Logout: React.lazy(() => import('./Logout')),
     Session: React.lazy(() => import('./Session')),
     Profile: React.lazy(() => import('./Profile')),
-  }
+  },
 )

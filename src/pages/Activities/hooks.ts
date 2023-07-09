@@ -9,7 +9,7 @@ export const useActivities = () => {
   const [params] = useSearchParams()
   const past = params.has('past')
   const { data, loading, errors } = useAsyncLoad(
-    past ? api.getPast : api.getUpcoming
+    past ? api.getPast : api.getUpcoming,
   )
 
   const activities = useMemo(() => data || [], [data])
@@ -26,7 +26,7 @@ export const useActivities = () => {
 }
 
 const useFindOverlappingActivities = (
-  activities: Activity[]
+  activities: Activity[],
 ): [Activity, Activity][] => {
   return useMemo(() => {
     const overlappingActivities: [Activity, Activity][] = []
@@ -66,7 +66,7 @@ export const useActivity = () => {
 
       return api.get(activityId, init)
     },
-    [activityId, api]
+    [activityId, api],
   )
 
   const { data, setData, loading, errors } = useAsyncLoad(action)

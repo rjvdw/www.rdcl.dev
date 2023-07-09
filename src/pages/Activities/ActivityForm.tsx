@@ -21,7 +21,7 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = ({
   const id = useId()
   const { register, handleSubmit, watch, setValue } = useForm<Activity>()
   const [endIsKnown, setEndIsKnown] = useState<boolean>(
-    !activity || Boolean(activity.ends)
+    !activity || Boolean(activity.ends),
   )
   const [error, setError] = useState<string>()
   const notify = useNotify()
@@ -182,7 +182,7 @@ export const ActivityForm: FunctionComponent<ActivityFormProps> = ({
 
 function getDefaultValueForIsoDate(
   activity: Activity | undefined,
-  key: 'starts' | 'ends'
+  key: 'starts' | 'ends',
 ): string | undefined {
   if (!activity) {
     return undefined
@@ -193,7 +193,7 @@ function getDefaultValueForIsoDate(
 
 function formatDateForInput(
   value: string | undefined,
-  allDay: boolean
+  allDay: boolean,
 ): string | undefined {
   if (!value) {
     return undefined
@@ -209,7 +209,7 @@ function formatDateForInput(
 }
 
 function setValueAsIsoDate(
-  value: string | null | undefined
+  value: string | null | undefined,
 ): string | null | undefined {
   if (!value) {
     return value
