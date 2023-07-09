@@ -23,7 +23,7 @@
     "unified": "^10.1.2"
   },
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^17.2.1",
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.1",
     "@cypress/browserify-preprocessor": "^3.0.2",
     "@netlify/functions": "^1.6.0",
     "@testing-library/jest-dom": "^5.16.5",
