@@ -1,4 +1,6 @@
 import { FunctionComponent } from 'preact'
+import { MenuItem } from './MenuItem.tsx'
+import icons from '../icons'
 
 export const App: FunctionComponent = () => (
   <div class="app">
@@ -8,8 +10,15 @@ export const App: FunctionComponent = () => (
       <h1>Hello, World!</h1>
     </main>
 
-    <aside class="app-nav">
-      <nav>...</nav>
+    <aside class="app-side-menu">
+      <nav class="app-nav">
+        <MenuItem href="/" route="home" icon={icons.Home}>
+          Home
+        </MenuItem>
+        <MenuItem href="/tools" route="tools" icon={icons.Tools}>
+          Tools
+        </MenuItem>
+      </nav>
     </aside>
   </div>
 )
