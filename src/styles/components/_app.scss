@@ -1,0 +1,36 @@
+.app {
+  display: grid;
+  grid-template:
+    'header header' 5rem
+    'nav    main  ' 1fr
+    / 15rem 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+.app-header {
+  grid-area: header;
+  background: var(--theme-color);
+  color: #fff;
+  border-block-end: var(--grid-border);
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-family: var(--headers-font-family);
+  font-size: 2rem;
+  padding-inline-start: 4rem;
+  position: relative;
+}
+
+.app-nav {
+  grid-area: nav;
+  background: var(--grid-side-menu-background);
+  border-inline-end: var(--grid-border);
+}
+
+.app-main {
+  grid-area: main;
+  padding: 1rem;
+  overflow: auto;
+  scrollbar-gutter: stable;
+}

@@ -1,0 +1,21 @@
+:root {
+  accent-color: var(--highlight-color);
+  font-family: var(--base-font-family);
+}
+
+:root,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: var(--base-background-color);
+  color: var(--base-foreground-color);
+}
+
+* {
+  box-sizing: border-box;
+}

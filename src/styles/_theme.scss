@@ -1,0 +1,22 @@
+:root {
+  /* base settings */
+  --base-font-family: Tahoma, Arial, serif;
+  --base-background-color: #f3f3f3;
+  --base-foreground-color: #333;
+  --base-link-color: #337ab7;
+  --base-link-color--hover: #23527c;
+  --theme-color: #474069;
+  --highlight-color: #837aae;
+
+  /* headers */
+  --headers-font-family: Lucida Grande, Verdana, Arial, sans-serif;
+
+  /* app grid */
+  --grid-border: thin solid #333;
+  --grid-side-menu-background: #27233933;
+  --grid-side-menu-toggle-background: #aaa;
+  --grid-side-menu-toggle-foreground: #333;
+  --grid-side-menu-item-background: #e6e6e6;
+  --grid-side-menu-item-background-active: #f3f3f3;
+  --grid-side-menu-item-foreground: #333;
+}
