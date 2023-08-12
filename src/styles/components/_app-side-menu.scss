@@ -7,9 +7,9 @@
   --size: 15rem;
 
   grid-area: side-menu;
+  inline-size: var(--size);
   background: var(--grid-side-menu-background);
   border-inline-end: var(--grid-border);
-  inline-size: var(--size);
 
   > .close-side-menu {
     display: none;
@@ -21,24 +21,24 @@
   flex-direction: column;
 
   > .menu-item {
-    background: var(--grid-side-menu-item-background);
     color: var(--grid-side-menu-item-foreground);
+    background: var(--grid-side-menu-item-background);
     border-block-end: var(--grid-border);
 
     > a {
-      color: inherit;
-      border-inline-start: var(--active-border-size) solid #0003;
-      text-decoration: none;
-      block-size: var(--base-size);
-      white-space: nowrap;
-      overflow: hidden;
-      outline: none;
       display: grid;
       grid-template:
         'icon content' auto / calc(var(--base-size) - var(--active-border-size))
         1fr;
       grid-column-gap: 0.5rem;
       align-items: center;
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      white-space: nowrap;
+      border-inline-start: var(--active-border-size) solid #0003;
+      outline: none;
+      block-size: var(--base-size);
 
       > .icon {
         grid-area: icon;
@@ -49,12 +49,6 @@
       }
     }
 
-    &:hover {
-      > a {
-        border-inline-start-color: var(--highlight-color);
-      }
-    }
-
     &--active {
       background: var(--grid-side-menu-item-background-active);
 
@@ -62,31 +56,37 @@
         border-inline-start-color: var(--theme-color);
       }
     }
+
+    &:hover {
+      > a {
+        border-inline-start-color: var(--highlight-color);
+      }
+    }
   }
 }
 
 @media (max-width: app-settings.$breakpoint) {
   .app-side-menu {
-    background: #f3f3f3e6;
-    border: unset;
     position: fixed;
-    inset-inline: 0;
     inset-block: 0;
+    inset-inline: 0;
     inline-size: unset;
     padding: 0.5rem;
     padding-block-start: 4rem;
+    background: #f3f3f3e6;
+    border: unset;
 
     &:not(.visible) {
       display: none;
     }
 
     > .close-side-menu {
-      display: unset;
       position: absolute;
       inset-block-start: 0.5rem;
       inset-inline-end: 0.5rem;
-      block-size: 2rem;
+      display: unset;
       aspect-ratio: 1/1;
+      block-size: 2rem;
     }
   }
 

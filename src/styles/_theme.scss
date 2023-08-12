@@ -1,15 +1,15 @@
 :root {
   /* base settings */
-  --base-font-family: Tahoma, Arial, serif;
+  --base-font-family: tahoma, arial, serif;
   --base-background-color: #f3f3f3;
   --base-foreground-color: #333;
   --base-link-color: #337ab7;
-  --base-link-color--hover: #23527c;
+  --base-link-hover-color: #23527c;
   --theme-color: #474069;
   --highlight-color: #837aae;
 
   /* headers */
-  --headers-font-family: Lucida Grande, Verdana, Arial, sans-serif;
+  --headers-font-family: lucida grande, verdana, arial, sans-serif;
 
   /* app grid */
   --grid-breakpoint: 55rem;

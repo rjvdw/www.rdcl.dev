@@ -1,19 +1,19 @@
 :root {
-  accent-color: var(--highlight-color);
   font-family: var(--base-font-family);
+  accent-color: var(--highlight-color);
 }
 
 :root,
 body {
-  margin: 0;
-  padding: 0;
   inline-size: 100%;
+  padding: 0;
+  margin: 0;
   block-size: 100%;
 }
 
 body {
-  background-color: var(--base-background-color);
   color: var(--base-foreground-color);
+  background-color: var(--base-background-color);
 }
 
 * {
