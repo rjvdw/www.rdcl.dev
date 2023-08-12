@@ -1,0 +1,47 @@
+@mixin link {
+  color: var(--base-link-color);
+  text-decoration: none;
+  cursor: pointer;
+  outline: initial;
+
+  &:hover,
+  &:focus {
+    color: var(--base-link-hover-color);
+    text-decoration: underline;
+    outline: initial;
+  }
+}
+
+@mixin success {
+  color: #063;
+  background: #ded;
+  border-color: #063;
+}
+
+@mixin warning {
+  color: #640;
+  background: #ffc;
+  border-color: #640;
+}
+
+@mixin error {
+  color: #933;
+  background: #fdd;
+  border-color: #933;
+}
+
+@mixin focusable-ui-component {
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  outline: none;
+
+  &:focus {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-offset);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

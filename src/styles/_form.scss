@@ -1,0 +1,54 @@
+@use 'mixins';
+
+input:not([type='range'], [type='radio'], [type='checkbox']),
+textarea,
+.input {
+  @include mixins.focusable-ui-component;
+
+  min-inline-size: 2rem;
+  color: #333;
+  background: #fff;
+  border: thin solid #666;
+
+  &:disabled {
+    color: #666;
+    background: #eee;
+    border-color: #999;
+  }
+
+  &:valid {
+    @include mixins.success;
+  }
+
+  &:invalid {
+    @include mixins.error;
+  }
+}
+
+button,
+input[type='button'] {
+  @include mixins.focusable-ui-component;
+
+  margin-block: 0;
+  margin-inline: 0;
+  color: #333;
+  background: #ccc;
+  border: thin solid #333;
+
+  &:disabled {
+    color: #666;
+    border-color: #666;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: max-content auto;
+  row-gap: 0.5rem;
+  column-gap: 1.5rem;
+  align-items: center;
+
+  > [data-start='2'] {
+    grid-column-start: 2;
+  }
+}

@@ -6,7 +6,8 @@ import { startLogin } from '../state/auth'
 
 export const Login: FunctionComponent = () => {
   const id = useId()
-  const { onSubmit, success, pending, error } = useLoginForm()
+  const { username, rememberMe, onSubmit, success, pending, error } =
+    useLoginForm()
 
   return (
     <>
@@ -19,22 +20,36 @@ export const Login: FunctionComponent = () => {
         <p>Login request sent successfully, please wait for an e-mail.</p>
       ) : (
         <form onSubmit={onSubmit} disabled={pending}>
-          <label htmlFor={`${id}:user`}>User</label>
-          <input
-            id={`${id}:user`}
-            type="text"
-            name="user"
-            autoComplete="user"
-            required
-          />
+          <section class="form-grid">
+            <label htmlFor={`${id}:user`}>User</label>
+            <input
+              id={`${id}:user`}
+              type="text"
+              name="user"
+              autoComplete="user"
+              required
+              defaultValue={username}
+            />
 
-          <div className="controls">
-            <button>Log in</button>
-          </div>
+            <button data-start="2">Log in</button>
+
+            <label data-start="2">
+              <input
+                type="checkbox"
+                name="remember-me"
+                defaultChecked={rememberMe}
+              />{' '}
+              Remember me
+            </label>
+
+            {error !== undefined && (
+              <p data-start="2" class="error">
+                Could not log in: {error}
+              </p>
+            )}
+          </section>
         </form>
       )}
-
-      {error !== undefined && <p class="error">Could not log in: {error}</p>}
     </>
   )
 }
@@ -60,6 +75,12 @@ function useLoginForm() {
         return
       }
 
+      if (rememberMe(event.target)) {
+        localStorage.username = user
+      } else {
+        delete localStorage.username
+      }
+
       setPending(true)
       setError(undefined)
       startLogin(user).then(
@@ -78,6 +99,10 @@ function useLoginForm() {
 
   return useMemo(
     () => ({
+      username: localStorage.username
+        ? String(localStorage.username)
+        : undefined,
+      rememberMe: Boolean(localStorage.username),
       onSubmit,
       success,
       pending,
@@ -102,4 +127,10 @@ function isFormSubmitEvent(event: Event): event is FormSubmitEvent {
 
 function isValidUser(user: FormDataEntryValue | null): user is string {
   return Boolean(user) && typeof user === 'string'
+}
+
+function rememberMe(form: HTMLFormElement): boolean {
+  const rememberMe = form.elements.namedItem('remember-me') as unknown
+
+  return rememberMe instanceof HTMLInputElement && rememberMe.checked
 }

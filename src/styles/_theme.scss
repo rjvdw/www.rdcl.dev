@@ -11,6 +11,10 @@
   /* headers */
   --headers-font-family: lucida grande, verdana, arial, sans-serif;
 
+  /* focus */
+  --focus-outline: thin dashed #333;
+  --focus-offset: -0.25rem;
+
   /* app grid */
   --grid-breakpoint: 55rem;
   --grid-border: thin solid #333;
