@@ -14,7 +14,7 @@
   border-block-end: var(--grid-border);
   block-size: 5rem;
 
-  > .open-side-menu {
+  > .show-side-menu {
     display: none;
 
     > img {
@@ -33,7 +33,7 @@
     text-align: center;
     block-size: 3rem;
 
-    > .open-side-menu {
+    > .show-side-menu {
       position: absolute;
       inset-block: 0.5rem;
       inset-inline-start: 0.5rem;

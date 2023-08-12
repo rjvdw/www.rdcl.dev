@@ -1,4 +1,4 @@
 import { render } from 'preact'
-import { App } from './components/App.tsx'
+import { Index } from './components/App'
 
-render(<App />, document.body)
+render(<Index />, document.body)

@@ -1,7 +1,7 @@
 import { FunctionComponent, JSX } from 'preact'
-import CloseSideMenu from './close-side-menu.svg'
+import HideSideMenu from './hide-side-menu.svg'
 import Home from './home.svg'
-import OpenSideMenu from './open-side-menu.svg'
+import ShowSideMenu from './show-side-menu.svg'
 import Tools from './tools.svg'
 
 type IconProps = Omit<JSX.HTMLAttributes, 'src'>
@@ -10,8 +10,8 @@ export type IconComponent = FunctionComponent<IconProps>
 export default asComponents({
   Home,
   Tools,
-  OpenSideMenu,
-  CloseSideMenu,
+  ShowSideMenu,
+  HideSideMenu,
 })
 
 function asComponents<K extends string>(

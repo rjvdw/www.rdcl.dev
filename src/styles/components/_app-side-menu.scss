@@ -11,7 +11,7 @@
   background: var(--grid-side-menu-background);
   border-inline-end: var(--grid-border);
 
-  > .close-side-menu {
+  > .hide-side-menu {
     display: none;
   }
 }
@@ -80,7 +80,7 @@
       display: none;
     }
 
-    > .close-side-menu {
+    > .hide-side-menu {
       position: absolute;
       inset-block-start: 0.5rem;
       inset-inline-end: 0.5rem;
