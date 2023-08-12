@@ -29,3 +29,17 @@ p {
     margin-block-end: 0;
   }
 }
+
+a {
+  color: var(--base-link-color);
+  text-decoration: none;
+  outline: initial;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    color: var(--base-link-color--hover);
+    text-decoration: underline;
+    outline: initial;
+  }
+}
