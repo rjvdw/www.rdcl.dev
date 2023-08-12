@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'preact'
 import classNames from 'classnames'
 import { IconComponent } from './Icon'
+import { useRoutingContext } from './Routing.tsx'
 
 type MenuItemProps = {
   href: string
@@ -14,15 +15,19 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
   route,
   icon: Icon,
   children: text,
-}) => (
-  <div
-    class={classNames('menu-item', {
-      'menu-item--active': route === 'home',
-    })}
-  >
-    <a href={href} title={text}>
-      <Icon class="icon" alt="" role="presentation" />
-      <span class="content">{text}</span>
-    </a>
-  </div>
-)
+}) => {
+  const { activeRoute } = useRoutingContext()
+
+  return (
+    <div
+      class={classNames('menu-item', {
+        'menu-item--active': route === activeRoute,
+      })}
+    >
+      <a href={href} title={text}>
+        <Icon class="icon" alt="" role="presentation" />
+        <span class="content">{text}</span>
+      </a>
+    </div>
+  )
+}
