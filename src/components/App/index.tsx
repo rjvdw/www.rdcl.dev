@@ -1,8 +1,15 @@
 import { FunctionComponent } from 'preact'
 import { Router } from 'preact-router'
+import { Activities } from '../../pages/Activities.tsx'
+import { Health } from '../../pages/Health.tsx'
 import { Home } from '../../pages/Home.tsx'
+import { Labels } from '../../pages/Labels.tsx'
+import { Login } from '../../pages/Login.tsx'
+import { LoginVerify } from '../../pages/LoginVerify.tsx'
+import { Logout } from '../../pages/Logout.tsx'
 import { NotFound } from '../../pages/NotFound.tsx'
 import { Tools } from '../../pages/Tools.tsx'
+import { auth } from '../../state/auth'
 import Icon from '../Icon'
 import { MenuItem } from '../MenuItem.tsx'
 import { AppHeader } from './AppHeader.tsx'
@@ -25,6 +32,12 @@ export const Index: FunctionComponent = () => {
             <Tools.Dummy2 path="/tools/dummy2" />
             <Tools.Dummy3 path="/tools/dummy3" />
           </Tools>
+          <Health path="/health" />
+          <Activities path="/activities" />
+          <Labels path="/labels" />
+          <Login path="/login" />
+          <LoginVerify path="/login/verify" />
+          <Logout path="/logout" />
           <NotFound default />
         </Router>
       </main>
@@ -36,6 +49,26 @@ export const Index: FunctionComponent = () => {
         <MenuItem href="/tools" route="tools" icon={Icon.Tools}>
           Tools
         </MenuItem>
+        {auth.value.loggedIn && (
+          <>
+            <MenuItem href="/health" route="health" icon={Icon.Health}>
+              Health
+            </MenuItem>
+            <MenuItem
+              href="/activities"
+              route="activities"
+              icon={Icon.Activities}
+            >
+              Activities
+            </MenuItem>
+            <MenuItem href="/labels" route="labels" icon={Icon.Labels}>
+              Labels
+            </MenuItem>
+            <MenuItem href="/logout" route="logout" icon={Icon.Logout}>
+              Logout
+            </MenuItem>
+          </>
+        )}
       </AppSideMenu>
     </div>
   )
