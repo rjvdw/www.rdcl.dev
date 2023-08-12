@@ -1,17 +1,18 @@
 import { FunctionComponent } from 'preact'
 import classNames from 'classnames'
+import { IconComponent } from './Icon'
 
 type MenuItemProps = {
   href: string
   route: string
-  icon: string
+  icon: IconComponent
   children: string
 }
 
 export const MenuItem: FunctionComponent<MenuItemProps> = ({
   href,
   route,
-  icon,
+  icon: Icon,
   children: text,
 }) => (
   <div
@@ -20,7 +21,7 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
     })}
   >
     <a href={href} title={text}>
-      <img src={icon} class="icon" alt="" role="presentation" />
+      <Icon class="icon" alt="" role="presentation" />
       <span class="content">{text}</span>
     </a>
   </div>

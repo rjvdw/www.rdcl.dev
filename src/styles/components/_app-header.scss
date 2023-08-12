@@ -1,0 +1,43 @@
+@use 'app-settings';
+
+.app-header {
+  grid-area: header;
+  block-size: 5rem;
+  background: var(--theme-color);
+  color: #fff;
+  border-block-end: var(--grid-border);
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-family: var(--headers-font-family);
+  font-size: 2rem;
+  padding-inline-start: 4rem;
+  position: relative;
+
+  > .open-side-menu {
+    display: none;
+
+    > img {
+      filter: invert(92%);
+    }
+  }
+}
+
+@media (max-width: app-settings.$breakpoint) {
+  .app-header {
+    block-size: 3rem;
+    padding: 0;
+    text-align: center;
+    display: grid;
+    place-content: center;
+    align-items: unset;
+    justify-content: unset;
+
+    > .open-side-menu {
+      display: unset;
+      position: absolute;
+      inset-inline-start: 0.5rem;
+      inset-block: 0.5rem;
+    }
+  }
+}

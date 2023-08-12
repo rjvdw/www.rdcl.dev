@@ -1,0 +1,13 @@
+.icon-button {
+  cursor: pointer;
+  background: transparent;
+  color: inherit;
+  border: 0;
+  margin: 0;
+  padding: 0;
+
+  > img {
+    aspect-ratio: 1/1;
+    block-size: 100%;
+  }
+}
