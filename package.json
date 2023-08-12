@@ -17,6 +17,7 @@
     "fix": "npm run fix:stylelint && npm run fix:prettier && npm run fix:eslint"
   },
   "dependencies": {
+    "@preact/signals": "^1.2.1",
     "classnames": "^2.3.2",
     "preact": "^10.16.0",
     "preact-router": "^4.1.2"

@@ -1,9 +1,11 @@
 import { FunctionComponent } from 'preact'
-import { Meta } from '../components/Meta.tsx'
+import { ActiveRoute } from '../components/ActiveRoute.tsx'
+import { PageTitle } from '../components/PageTitle.tsx'
 
 export const Dummy1: FunctionComponent = () => (
   <>
-    <Meta activeRoute="dummy1" pageTitle="dummy1" />
+    <ActiveRoute>dummy1</ActiveRoute>
+    <PageTitle>dummy1</PageTitle>
 
     <h1>Dummy 1</h1>
   </>

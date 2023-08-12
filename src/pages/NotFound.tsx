@@ -1,9 +1,11 @@
 import { FunctionComponent } from 'preact'
-import { Meta } from '../components/Meta.tsx'
+import { ActiveRoute } from '../components/ActiveRoute.tsx'
+import { PageTitle } from '../components/PageTitle.tsx'
 
 export const NotFound: FunctionComponent = () => (
   <>
-    <Meta pageTitle="not found" />
+    <ActiveRoute>not-found</ActiveRoute>
+    <PageTitle>page not found</PageTitle>
 
     <h1>Page not found</h1>
   </>

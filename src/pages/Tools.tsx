@@ -1,29 +1,29 @@
 import { FunctionComponent } from 'preact'
 import { Router } from 'preact-router'
-import { Meta } from '../components/Meta.tsx'
+import { ActiveRoute } from '../components/ActiveRoute.tsx'
+import { PageTitle } from '../components/PageTitle.tsx'
 import { Routing } from '../components/Routing.tsx'
 import { Dummy1 } from '../tools/Dummy1.tsx'
 import { Dummy2 } from '../tools/Dummy2.tsx'
 import { Dummy3 } from '../tools/Dummy3.tsx'
 
-export const Tools: FunctionComponent = () => (
+const ToolsComponent: FunctionComponent = ({ children }) => (
   <>
-    <Meta activeRoute="tools" />
+    <ActiveRoute>tools</ActiveRoute>
 
     <Routing>
-      <Router>
-        <Dummy1 path="/tools/dummy1" />
-        <Dummy2 path="/tools/dummy2" />
-        <Dummy3 path="/tools/dummy3" />
-        <Index default />
-      </Router>
+      <PageTitle.Provider title="tools">
+        <Router>{children}</Router>
+      </PageTitle.Provider>
     </Routing>
   </>
 )
 
 const Index: FunctionComponent = () => (
   <>
-    <Meta activeRoute="index" pageTitle="tools" />
+    <ActiveRoute>index</ActiveRoute>
+    <PageTitle />
+
     <h1>Tools</h1>
 
     <ul>
@@ -39,3 +39,10 @@ const Index: FunctionComponent = () => (
     </ul>
   </>
 )
+
+export const Tools = Object.assign(ToolsComponent, {
+  Index,
+  Dummy1,
+  Dummy2,
+  Dummy3,
+})

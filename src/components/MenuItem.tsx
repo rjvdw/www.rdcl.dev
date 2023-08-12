@@ -21,7 +21,7 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
   return (
     <div
       class={classNames('menu-item', {
-        'menu-item--active': route === activeRoute,
+        'menu-item--active': route === activeRoute.value,
       })}
     >
       <a href={href} title={text}>

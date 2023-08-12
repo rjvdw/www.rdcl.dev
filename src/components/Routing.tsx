@@ -1,27 +1,42 @@
+import { signal, Signal } from '@preact/signals'
 import { createContext, FunctionComponent } from 'preact'
-import { useContext, useState } from 'preact/hooks'
+import { useContext } from 'preact/hooks'
 
 export type RoutingContext = {
-  activeRoute?: string
-  setActiveRoute: (route?: string) => void
+  activeRoute: Signal<string | null>
+  parent?: RoutingContext
 }
 
-const Ctx = createContext<RoutingContext>({
-  setActiveRoute() {
-    throw new Error('no available routing context')
-  },
+const RCtx = createContext<RoutingContext>({
+  activeRoute: signal(null),
 })
 
 export const Routing: FunctionComponent = ({ children }) => {
-  const [activeRoute, setActiveRoute] = useState<string>()
+  const parent = useContext(RCtx)
+  const activeRoute = signal(null)
 
   return (
-    <Ctx.Provider value={{ activeRoute, setActiveRoute }}>
-      {children}
-    </Ctx.Provider>
+    <RCtx.Provider value={{ activeRoute, parent }}>{children}</RCtx.Provider>
   )
 }
 
-export const useRoutingContext = (): RoutingContext => {
-  return useContext(Ctx)
+export const useRoutingContext = () => {
+  const ctx = useContext(RCtx)
+
+  return {
+    activeRoute: ctx.activeRoute,
+    fullRoute: resolveFullRoute(ctx),
+  }
+}
+
+function resolveFullRoute(ctx: RoutingContext): (string | null)[] {
+  let current = ctx
+  const route = [ctx.activeRoute.value]
+
+  while (current.parent) {
+    current = current.parent
+    route.push(current.activeRoute.value)
+  }
+
+  return route
 }
