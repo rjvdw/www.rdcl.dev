@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'preact'
-import { useRoutingContext } from './Routing.tsx'
 import { useEffect } from 'preact/hooks'
+import { useRoutingContext } from './Routing.tsx'
 
 export type MetaProps = {
   activeRoute?: string

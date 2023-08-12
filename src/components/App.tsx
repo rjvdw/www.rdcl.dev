@@ -1,14 +1,14 @@
-import { FunctionComponent } from 'preact'
-import { MenuItem } from './MenuItem.tsx'
-import Icon from './Icon'
-import { useState } from 'preact/hooks'
 import classNames from 'classnames'
-import { IconButton } from './IconButton.tsx'
-import Router from 'preact-router'
+import { FunctionComponent } from 'preact'
+import { useState } from 'preact/hooks'
+import { Router } from 'preact-router'
 import { Home } from '../pages/Home.tsx'
-import { Tools } from '../pages/Tools.tsx'
-import { Routing } from './Routing.tsx'
 import { NotFound } from '../pages/NotFound.tsx'
+import { Tools } from '../pages/Tools.tsx'
+import Icon from './Icon'
+import { IconButton } from './IconButton.tsx'
+import { MenuItem } from './MenuItem.tsx'
+import { Routing } from './Routing.tsx'
 
 export const App: FunctionComponent = () => {
   const [sideMenuVisible, setSideMenuVisible] = useState(false)

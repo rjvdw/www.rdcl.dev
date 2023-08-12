@@ -12,7 +12,7 @@ export const IconButton: FunctionComponent<IconButtonProps> = ({
   class: clz,
   ...props
 }) => (
-  <button class={`icon-button ${clz}`} title={label} {...props}>
+  <button class={`icon-button ${String(clz)}`} title={label} {...props}>
     <Icon alt={label} />
   </button>
 )

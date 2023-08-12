@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'preact'
+import { Router } from 'preact-router'
 import { Meta } from '../components/Meta.tsx'
 import { Routing } from '../components/Routing.tsx'
-import Router from 'preact-router'
 import { Dummy1 } from '../tools/Dummy1.tsx'
 import { Dummy2 } from '../tools/Dummy2.tsx'
 import { Dummy3 } from '../tools/Dummy3.tsx'
