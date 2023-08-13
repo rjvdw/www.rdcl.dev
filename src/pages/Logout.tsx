@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 import { route } from 'preact-router'
-import { ActiveRoute } from '../components/ActiveRoute.tsx'
-import { PageTitle } from '../components/PageTitle.tsx'
+import { ActiveRoute } from '../components/ActiveRoute'
+import { PageTitle } from '../components/PageTitle'
 import { logout } from '../state/auth'
 
 export const Logout: FunctionComponent = () => {

@@ -1,4 +1,4 @@
-import { useRoutingContext } from './Routing.tsx'
+import { useRoutingContext } from './Routing'
 
 export type ActiveRouteProps = {
   children?: string

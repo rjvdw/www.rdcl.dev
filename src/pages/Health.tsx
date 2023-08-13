@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'preact'
-import { ActiveRoute } from '../components/ActiveRoute.tsx'
-import { LoginRequired } from '../components/LoginRequired.tsx'
-import { PageTitle } from '../components/PageTitle.tsx'
+import { ActiveRoute } from '../components/ActiveRoute'
+import { LoginRequired } from '../components/LoginRequired'
+import { PageTitle } from '../components/PageTitle'
 
 export const Health: FunctionComponent = () => (
   <>

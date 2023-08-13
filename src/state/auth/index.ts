@@ -1,11 +1,11 @@
 import { signal } from '@preact/signals'
-import { Jwt } from './Jwt.ts'
+import { Jwt } from './Jwt'
 import {
   isValidLoginResponseBody,
   isValidVerifyResponseBody,
   loggedOutState,
-} from './types.ts'
-import { getInitialState, getLoggedInState, post } from './util.ts'
+} from './types'
+import { getInitialState, getLoggedInState, post } from './util'
 
 export { Jwt }
 

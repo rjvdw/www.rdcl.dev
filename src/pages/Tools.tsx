@@ -1,11 +1,11 @@
 import { FunctionComponent } from 'preact'
 import { Router } from 'preact-router'
-import { ActiveRoute } from '../components/ActiveRoute.tsx'
-import { PageTitle } from '../components/PageTitle.tsx'
-import { Routing } from '../components/Routing.tsx'
-import { Dummy1 } from '../tools/Dummy1.tsx'
-import { Dummy2 } from '../tools/Dummy2.tsx'
-import { Dummy3 } from '../tools/Dummy3.tsx'
+import { ActiveRoute } from '../components/ActiveRoute'
+import { PageTitle } from '../components/PageTitle'
+import { Routing } from '../components/Routing'
+import { Dummy1 } from '../tools/Dummy1'
+import { Dummy2 } from '../tools/Dummy2'
+import { Dummy3 } from '../tools/Dummy3'
 
 const ToolsComponent: FunctionComponent = ({ children }) => (
   <>

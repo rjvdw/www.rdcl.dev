@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'preact'
-import { ActiveRoute } from '../components/ActiveRoute.tsx'
-import { PageTitle } from '../components/PageTitle.tsx'
+import { ActiveRoute } from '../components/ActiveRoute'
+import { PageTitle } from '../components/PageTitle'
 
 export const Dummy1: FunctionComponent = () => (
   <>

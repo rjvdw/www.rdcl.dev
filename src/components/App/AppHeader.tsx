@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'preact'
 import Icon from '../Icon'
-import { IconButton } from '../IconButton.tsx'
+import { IconButton } from '../IconButton'
 
 export type AppHeaderProps = {
   onShowSideMenu(): void

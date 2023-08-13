@@ -1,5 +1,5 @@
-import { Jwt } from './Jwt.ts'
-import { AuthState, LoggedInAuthState, loggedOutState } from './types.ts'
+import { Jwt } from './Jwt'
+import { AuthState, LoggedInAuthState, loggedOutState } from './types'
 
 export function getInitialState(): AuthState {
   if (typeof localStorage.jwt === 'string') {

@@ -1,4 +1,4 @@
-import { Jwt } from './Jwt.ts'
+import { Jwt } from './Jwt'
 
 export const loggedOutState = { loggedIn: false } as const
 

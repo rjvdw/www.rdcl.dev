@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { FunctionComponent } from 'preact'
 import { IconComponent } from './Icon'
-import { useRoutingContext } from './Routing.tsx'
+import { useRoutingContext } from './Routing'
 
 type MenuItemProps = {
   href: string

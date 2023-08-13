@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'preact'
 import { useCallback, useId, useMemo, useState } from 'preact/hooks'
-import { ActiveRoute } from '../components/ActiveRoute.tsx'
-import { PageTitle } from '../components/PageTitle.tsx'
+import { ActiveRoute } from '../components/ActiveRoute'
+import { PageTitle } from '../components/PageTitle'
 import { startLogin } from '../state/auth'
 
 export const Login: FunctionComponent = () => {

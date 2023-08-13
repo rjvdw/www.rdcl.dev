@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'preact'
-import { ActiveRoute } from '../components/ActiveRoute.tsx'
+import { ActiveRoute } from '../components/ActiveRoute'
 import { JwtSession } from '../components/JwtSession'
-import { PageTitle } from '../components/PageTitle.tsx'
+import { PageTitle } from '../components/PageTitle'
 import { auth } from '../state/auth'
 
 export const Session: FunctionComponent = () => (

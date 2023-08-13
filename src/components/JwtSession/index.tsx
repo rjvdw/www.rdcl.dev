@@ -1,9 +1,9 @@
 import { FunctionComponent } from 'preact'
-import { Claim } from './Claim.tsx'
-import { Entry } from './Entry.tsx'
-import { Raw } from './Raw.tsx'
-import { Table } from './Table.tsx'
-import { Value } from './Value.tsx'
+import { Claim } from './Claim'
+import { Entry } from './Entry'
+import { Raw } from './Raw'
+import { Table } from './Table'
+import { Value } from './Value'
 
 const JwtSessionComponent: FunctionComponent = ({ children }) => <>{children}</>
 

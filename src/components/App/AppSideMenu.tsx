@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { FunctionComponent } from 'preact'
 import Icon from '../Icon'
-import { IconButton } from '../IconButton.tsx'
+import { IconButton } from '../IconButton'
 
 type AppSideMenuProps = {
   visible: boolean
