@@ -2,6 +2,8 @@ import { FunctionComponent } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 import { route } from 'preact-router'
 import { completeLogin } from '../state/auth'
+import { errorAsString } from '../util/errors'
+import { useApi } from '../util/http'
 
 export const LoginVerify: FunctionComponent = () => {
   const { error } = useVerification()
@@ -21,6 +23,7 @@ export const LoginVerify: FunctionComponent = () => {
 
 function useVerification() {
   const [error, setError] = useState<string>()
+  const api = useApi(false)
 
   useEffect(() => {
     const params = new URL(document.location.href).searchParams
@@ -31,7 +34,7 @@ function useVerification() {
       return
     }
 
-    completeLogin(verificationCode).then(
+    completeLogin(verificationCode, api).then(
       () => {
         route(
           typeof localStorage.redirectAfterLogin === 'string'
@@ -42,7 +45,7 @@ function useVerification() {
         delete localStorage.redirectAfterLogin
       },
       (err) => {
-        setError(String(err))
+        setError(errorAsString(err))
       },
     )
   }, [setError])

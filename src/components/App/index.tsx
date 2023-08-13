@@ -8,6 +8,7 @@ import { Login } from '../../pages/Login'
 import { LoginVerify } from '../../pages/LoginVerify'
 import { Logout } from '../../pages/Logout'
 import { NotFound } from '../../pages/NotFound'
+import { Profile } from '../../pages/Profile'
 import { Session } from '../../pages/Session'
 import { Tools } from '../../pages/Tools'
 import { auth } from '../../state/auth'
@@ -39,6 +40,7 @@ export const Index: FunctionComponent = () => {
           <Login path="/login" />
           <LoginVerify path="/login/verify" />
           <Logout path="/logout" />
+          <Profile path="/profile" />
           <Session path="/session" />
           <NotFound default />
         </Router>
@@ -65,6 +67,9 @@ export const Index: FunctionComponent = () => {
             </MenuItem>
             <MenuItem href="/labels" route="labels" icon={Icon.Labels}>
               Labels
+            </MenuItem>
+            <MenuItem href="/profile" route="profile" icon={Icon.Profile}>
+              Profile
             </MenuItem>
             <MenuItem href="/logout" route="logout" icon={Icon.Logout}>
               Logout

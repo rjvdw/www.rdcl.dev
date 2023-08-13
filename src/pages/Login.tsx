@@ -3,6 +3,8 @@ import { useCallback, useId, useMemo, useState } from 'preact/hooks'
 import { ActiveRoute } from '../components/ActiveRoute'
 import { PageTitle } from '../components/PageTitle'
 import { startLogin } from '../state/auth'
+import { errorAsString } from '../util/errors'
+import { useApi } from '../util/http'
 
 export const Login: FunctionComponent = () => {
   const id = useId()
@@ -58,6 +60,7 @@ function useLoginForm() {
   const [success, setSuccess] = useState(false)
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string>()
+  const api = useApi(false)
 
   const onSubmit = useCallback(
     (event: Event) => {
@@ -83,14 +86,14 @@ function useLoginForm() {
 
       setPending(true)
       setError(undefined)
-      startLogin(user).then(
+      startLogin(user, api).then(
         () => {
           setPending(false)
           setSuccess(true)
         },
         (error) => {
           setPending(false)
-          setError(String(error))
+          setError(errorAsString(error))
         },
       )
     },
@@ -99,9 +102,10 @@ function useLoginForm() {
 
   return useMemo(
     () => ({
-      username: localStorage.username
-        ? String(localStorage.username)
-        : undefined,
+      username:
+        typeof localStorage.username === 'string'
+          ? localStorage.username
+          : undefined,
       rememberMe: Boolean(localStorage.username),
       onSubmit,
       success,
