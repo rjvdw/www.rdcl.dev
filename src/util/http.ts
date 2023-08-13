@@ -13,6 +13,20 @@ export async function getBody<T>(
   return body
 }
 
+export function asParams(form: HTMLFormElement | FormData): URLSearchParams {
+  const formData = form instanceof FormData ? form : new FormData(form)
+  const params = new URLSearchParams()
+
+  for (const [key, value] of formData) {
+    if (typeof value !== 'string') {
+      throw new Error(`Could not convert field ${key} to string`)
+    }
+    params.set(key, value)
+  }
+
+  return params
+}
+
 async function callApi(
   method: string,
   path: string,
@@ -47,16 +61,12 @@ export function useApi(authenticated: boolean): Api {
         return await callApi(method, path, authenticated, init)
       },
 
-      async get(path, init?) {
-        return this.call('get', path, init)
-      },
-
-      async post(path, arg1?, arg2?) {
+      async callWithBody(method, path, arg1?, arg2?) {
         let init: RequestInit | undefined = undefined
-        let body: string | URLSearchParams | undefined = undefined
+        let body: string | RequestBody | undefined = undefined
 
         if (arg1) {
-          if (arg1 instanceof URLSearchParams) {
+          if (arg1 instanceof URLSearchParams || arg1 instanceof FormData) {
             body = arg1
           } else {
             init = arg1
@@ -67,25 +77,41 @@ export function useApi(authenticated: boolean): Api {
           init = arg2
         }
 
-        return this.call('post', path, {
+        return this.call(method, path, {
           body,
           ...init,
         })
+      },
+
+      async get(path, init?) {
+        return this.call('get', path, init)
+      },
+
+      async post(path, body, init?) {
+        return this.callWithBody('post', path, body, init)
+      },
+
+      async patch(path, body, init?) {
+        return this.callWithBody('patch', path, body, init)
       },
     }),
     [],
   )
 }
 
+type RequestBody = URLSearchParams | FormData
+
 export interface Api {
   call(method: string, path: string, init?: RequestInit): Promise<Response>
-  get(path: string, init?: RequestInit): Promise<Response>
-  post(path: string, init?: RequestInit): Promise<Response>
-  post(
+  callWithBody(
+    method: string,
     path: string,
-    body: URLSearchParams,
+    body: RequestBody,
     init?: RequestInit,
   ): Promise<Response>
+  get(path: string, init?: RequestInit): Promise<Response>
+  post(path: string, body: RequestBody, init?: RequestInit): Promise<Response>
+  patch(path: string, body: RequestBody, init?: RequestInit): Promise<Response>
 }
 
 export class ApiError extends Error {

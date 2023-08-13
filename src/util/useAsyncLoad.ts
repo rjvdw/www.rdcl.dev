@@ -3,10 +3,10 @@ import { errorAsString } from './errors'
 
 export type AsyncLoadResult<T> = {
   data?: T
-  setData(value: T): void
+  setData(this: void, value: T): void
   loading: boolean
   errors: string[]
-  refresh(): void
+  refresh(this: void): void
 }
 
 export const useAsyncLoad = <T>(

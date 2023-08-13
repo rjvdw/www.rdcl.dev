@@ -4,6 +4,7 @@ import { ActiveRoute } from '../components/ActiveRoute'
 import { PageTitle } from '../components/PageTitle'
 import { startLogin } from '../state/auth'
 import { errorAsString } from '../util/errors'
+import { isFormSubmitEvent } from '../util/form'
 import { useApi } from '../util/http'
 
 export const Login: FunctionComponent = () => {
@@ -114,19 +115,6 @@ function useLoginForm() {
     }),
     [onSubmit, success, pending, error],
   )
-}
-
-interface FormSubmitEvent extends SubmitEvent {
-  target: HTMLFormElement
-}
-
-/**
- * Checks whether the received event is actually a SubmitEvent on a HTMLFormElement.
- *
- * This should not be necessary, but due to preact's typings, this check is needed for everything to work.
- */
-function isFormSubmitEvent(event: Event): event is FormSubmitEvent {
-  return event.type === 'submit' && event.target instanceof HTMLFormElement
 }
 
 function isValidUser(user: FormDataEntryValue | null): user is string {
