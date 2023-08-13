@@ -1,8 +1,10 @@
+import { Jwt } from './Jwt.ts'
+
 export const loggedOutState = { loggedIn: false } as const
 
 export type LoggedInAuthState = {
   loggedIn: true
-  jwt: string
+  jwt: Jwt
 }
 
 export type AuthState = typeof loggedOutState | LoggedInAuthState

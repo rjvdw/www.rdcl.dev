@@ -1,10 +1,13 @@
 import { signal } from '@preact/signals'
+import { Jwt } from './Jwt.ts'
 import {
   isValidLoginResponseBody,
   isValidVerifyResponseBody,
   loggedOutState,
 } from './types.ts'
-import { getInitialState, getLoggedInState, isValid, post } from './util.ts'
+import { getInitialState, getLoggedInState, post } from './util.ts'
+
+export { Jwt }
 
 export const auth = signal(getInitialState())
 
@@ -35,10 +38,11 @@ export async function completeLogin(verificationCode: string) {
     isValidVerifyResponseBody,
   )
 
-  if (isValid(body.jwt)) {
+  const jwt = new Jwt(body.jwt)
+  if (!jwt.expired) {
     delete localStorage.sessionToken
     localStorage.jwt = body.jwt
-    auth.value = getLoggedInState(body.jwt)
+    auth.value = getLoggedInState(jwt)
   } else {
     await logout()
   }

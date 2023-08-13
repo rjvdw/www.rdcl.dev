@@ -1,15 +1,21 @@
+import { Jwt } from './Jwt.ts'
 import { AuthState, LoggedInAuthState, loggedOutState } from './types.ts'
 
-export function isValid(jwt: unknown): jwt is string {
-  return typeof jwt === 'string'
-}
-
 export function getInitialState(): AuthState {
-  const { jwt } = localStorage
-  return isValid(jwt) ? getLoggedInState(jwt) : loggedOutState
+  if (typeof localStorage.jwt === 'string') {
+    const jwt = new Jwt(localStorage.jwt)
+
+    if (jwt.expired) {
+      delete localStorage.jwt
+    } else {
+      return getLoggedInState(jwt)
+    }
+  }
+
+  return loggedOutState
 }
 
-export function getLoggedInState(jwt: string): LoggedInAuthState {
+export function getLoggedInState(jwt: Jwt): LoggedInAuthState {
   return {
     loggedIn: true,
     jwt,

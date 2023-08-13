@@ -8,6 +8,7 @@ import { Login } from '../../pages/Login.tsx'
 import { LoginVerify } from '../../pages/LoginVerify.tsx'
 import { Logout } from '../../pages/Logout.tsx'
 import { NotFound } from '../../pages/NotFound.tsx'
+import { Session } from '../../pages/Session.tsx'
 import { Tools } from '../../pages/Tools.tsx'
 import { auth } from '../../state/auth'
 import Icon from '../Icon'
@@ -38,6 +39,7 @@ export const Index: FunctionComponent = () => {
           <Login path="/login" />
           <LoginVerify path="/login/verify" />
           <Logout path="/logout" />
+          <Session path="/session" />
           <NotFound default />
         </Router>
       </main>
