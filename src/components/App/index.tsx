@@ -30,6 +30,7 @@ export const Index: FunctionComponent = () => {
           <Home path="/" />
           <Tools path="/tools/:rest*">
             <Tools.Index default />
+            <Tools.Countdown path="/tools/countdown" />
             <Tools.DropRates path="/tools/drop-rates" />
           </Tools>
           <Health path="/health" />

@@ -3,6 +3,7 @@ import { Router } from 'preact-router'
 import { ActiveRoute } from '../components/ActiveRoute'
 import { PageTitle } from '../components/PageTitle'
 import { Routing } from '../components/Routing'
+import { Countdown } from '../tools/Countdown'
 import { DropRates } from '../tools/DropRates'
 
 const ToolsComponent: FunctionComponent = ({ children }) => (
@@ -27,6 +28,10 @@ const Index: FunctionComponent = () => (
     <List>
       <Item href="/password.html" label="Generate Password" data-native>
         Securely generates a password using <code>window.crypto</code>.
+      </Item>
+
+      <Item href="/tools/countdown" label="Countdown">
+        Solves the numbers game in Countdown.
       </Item>
 
       <Item href="/tools/drop-rates" label="Drop Rate Calculator">
@@ -59,5 +64,6 @@ const Item: FunctionComponent<{ href: string; label: string }> = ({
 
 export const Tools = Object.assign(ToolsComponent, {
   Index,
+  Countdown,
   DropRates,
 })
