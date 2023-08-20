@@ -13,21 +13,21 @@
 }
 
 @mixin success {
-  color: #063;
-  background: #ded;
-  border-color: #063;
+  color: var(--success-foreground);
+  background: var(--success-background);
+  border-color: var(--success-border);
 }
 
 @mixin warning {
-  color: #640;
-  background: #ffc;
-  border-color: #640;
+  color: var(--warning-foreground);
+  background: var(--warning-background);
+  border-color: var(--warning-border);
 }
 
 @mixin error {
-  color: #933;
-  background: #fdd;
-  border-color: #933;
+  color: var(--error-foreground);
+  background: var(--error-background);
+  border-color: var(--error-border);
 }
 
 @mixin focusable-ui-component {

@@ -24,4 +24,15 @@
   --grid-side-menu-item-background: #e6e6e6;
   --grid-side-menu-item-background-active: #f3f3f3;
   --grid-side-menu-item-foreground: #333;
+
+  /* statuses */
+  --success-foreground: #063;
+  --success-background: #ded;
+  --success-border: var(--success-foreground);
+  --warning-foreground: #640;
+  --warning-background: #fdd;
+  --warning-border: var(--warning-foreground);
+  --error-foreground: #933;
+  --error-background: #fdd;
+  --error-border: var(--error-foreground);
 }

@@ -17,11 +17,13 @@ textarea,
   }
 
   &:valid {
-    @include mixins.success;
+    border-color: var(--success-border);
+    box-shadow: 0 0 2px var(--success-border);
   }
 
   &:invalid {
-    @include mixins.error;
+    border-color: var(--error-border);
+    box-shadow: 0 0 2px var(--error-border);
   }
 }
 
