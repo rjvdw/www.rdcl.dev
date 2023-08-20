@@ -48,7 +48,40 @@ input[type='button'] {
   column-gap: 1.5rem;
   align-items: center;
 
+  > [data-start='1'] {
+    grid-column-start: 1;
+  }
+
   > [data-start='2'] {
     grid-column-start: 2;
+  }
+
+  > [data-start='3'] {
+    grid-column-start: 3;
+  }
+
+  > [data-span='2'] {
+    grid-column: span 2;
+  }
+
+  > [data-span='3'] {
+    grid-column: span 3;
+  }
+
+  > hr,
+  > [data-span='full'] {
+    grid-column: 1 / span 2;
+
+    & + * {
+      grid-column-start: 1;
+    }
+  }
+
+  &[data-suffix] {
+    grid-template-columns: max-content auto max-content;
+
+    > [data-span='full'] {
+      grid-column: 1 / span 3;
+    }
   }
 }

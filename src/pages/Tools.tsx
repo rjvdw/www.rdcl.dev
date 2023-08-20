@@ -3,9 +3,7 @@ import { Router } from 'preact-router'
 import { ActiveRoute } from '../components/ActiveRoute'
 import { PageTitle } from '../components/PageTitle'
 import { Routing } from '../components/Routing'
-import { Dummy1 } from '../tools/Dummy1'
-import { Dummy2 } from '../tools/Dummy2'
-import { Dummy3 } from '../tools/Dummy3'
+import { DropRates } from '../tools/DropRates'
 
 const ToolsComponent: FunctionComponent = ({ children }) => (
   <>
@@ -26,23 +24,40 @@ const Index: FunctionComponent = () => (
 
     <h1>Tools</h1>
 
-    <ul>
-      <li>
-        <a href="/tools/dummy1">Dummy 1</a>
-      </li>
-      <li>
-        <a href="/tools/dummy2">Dummy 2</a>
-      </li>
-      <li>
-        <a href="/tools/dummy3">Dummy 3</a>
-      </li>
-    </ul>
+    <List>
+      <Item href="/password.html" label="Generate Password" data-native>
+        Securely generates a password using <code>window.crypto</code>.
+      </Item>
+
+      <Item href="/tools/drop-rates" label="Drop Rate Calculator">
+        Given a drop rate, computes how many attempts you actually need to get
+        your item.
+      </Item>
+    </List>
+  </>
+)
+
+const List: FunctionComponent = ({ children }) => (
+  <dl class="tools-list">{children}</dl>
+)
+
+const Item: FunctionComponent<{ href: string; label: string }> = ({
+  children,
+  href,
+  label,
+  ...rest
+}) => (
+  <>
+    <dt>
+      <a href={href} {...rest}>
+        {label}
+      </a>
+    </dt>
+    <dd>{children}</dd>
   </>
 )
 
 export const Tools = Object.assign(ToolsComponent, {
   Index,
-  Dummy1,
-  Dummy2,
-  Dummy3,
+  DropRates,
 })

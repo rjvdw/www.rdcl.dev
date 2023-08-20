@@ -1,3 +1,5 @@
+import { useCallback, useId } from 'preact/hooks'
+
 interface FormSubmitEvent extends SubmitEvent {
   target: HTMLFormElement
 }
@@ -9,4 +11,22 @@ interface FormSubmitEvent extends SubmitEvent {
  */
 export function isFormSubmitEvent(event: Event): event is FormSubmitEvent {
   return event.type === 'submit' && event.target instanceof HTMLFormElement
+}
+
+export function useFormId() {
+  const id = useId()
+
+  return useCallback((field: string) => `${id}:${field}`, [id])
+}
+
+type Converters = {
+  number(this: void, value: string): number | undefined
+}
+
+export const convert: Converters = {
+  number(value) {
+    if (value === '') return undefined
+    const nr = Number(value)
+    return isNaN(nr) ? undefined : nr
+  },
 }
