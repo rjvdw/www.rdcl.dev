@@ -5,6 +5,7 @@ import { PageTitle } from '../components/PageTitle'
 import { Routing } from '../components/Routing'
 import { Countdown } from '../tools/Countdown'
 import { DropRates } from '../tools/DropRates'
+import { MyIp } from '../tools/MyIp'
 
 const ToolsComponent: FunctionComponent = ({ children }) => (
   <>
@@ -38,6 +39,10 @@ const Index: FunctionComponent = () => (
         Given a drop rate, computes how many attempts you actually need to get
         your item.
       </Item>
+
+      <Item href="/tools/my-ip" label="My IP">
+        Show your current IPv4 and IPv6 addresses.
+      </Item>
     </List>
   </>
 )
@@ -66,4 +71,5 @@ export const Tools = Object.assign(ToolsComponent, {
   Index,
   Countdown,
   DropRates,
+  MyIp,
 })
