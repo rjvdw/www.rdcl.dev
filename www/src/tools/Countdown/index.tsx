@@ -18,15 +18,45 @@ export const Countdown: FunctionComponent = () => {
       <form onSubmit={onSubmit} disabled={computing}>
         <section class="countdown-form-grid">
           <label for={id('numbers.0')}>Numbers:</label>
-          <CDInput id={id('numbers.0')} name="numbers.0" />
-          <CDInput id={id('numbers.1')} name="numbers.1" />
-          <CDInput id={id('numbers.2')} name="numbers.2" />
-          <CDInput id={id('numbers.3')} name="numbers.3" />
-          <CDInput id={id('numbers.4')} name="numbers.4" />
-          <CDInput id={id('numbers.5')} name="numbers.5" />
+          <CDInput
+            id={id('numbers.0')}
+            name="numbers.0"
+            data-testid="cd-inp-numbers.0"
+          />
+          <CDInput
+            id={id('numbers.1')}
+            name="numbers.1"
+            data-testid="cd-inp-numbers.1"
+          />
+          <CDInput
+            id={id('numbers.2')}
+            name="numbers.2"
+            data-testid="cd-inp-numbers.2"
+          />
+          <CDInput
+            id={id('numbers.3')}
+            name="numbers.3"
+            data-testid="cd-inp-numbers.3"
+          />
+          <CDInput
+            id={id('numbers.4')}
+            name="numbers.4"
+            data-testid="cd-inp-numbers.4"
+          />
+          <CDInput
+            id={id('numbers.5')}
+            name="numbers.5"
+            data-testid="cd-inp-numbers.5"
+          />
 
           <label for={id('target')}>Target:</label>
-          <CDInput id={id('target')} name="target" min={1} max={999} />
+          <CDInput
+            id={id('target')}
+            name="target"
+            data-testid="cd-inp-target"
+            min={1}
+            max={999}
+          />
 
           <button>Let&apos;s Play Countdown!</button>
         </section>
@@ -71,6 +101,7 @@ const CDInput: FunctionComponent<CDInputProps> = ({
   name,
   min = 1,
   max = 100,
+  ...args
 }) => (
   <input
     id={id}
@@ -80,5 +111,6 @@ const CDInput: FunctionComponent<CDInputProps> = ({
     min={min}
     max={max}
     required
+    {...args}
   />
 )

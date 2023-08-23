@@ -3,10 +3,13 @@
   "private": true,
   "type": "module",
   "workspaces": [
+    "integration-tests",
     "www"
   ],
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "check": "npm -w www run check && npm -w integration-tests run check",
+    "fix": "npm -w www run fix && npm -w integration-tests run fix"
   },
   "devDependencies": {
     "husky": "^8.0.3"

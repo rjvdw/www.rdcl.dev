@@ -40,7 +40,7 @@ const Index: FunctionComponent = () => (
         your item.
       </Item>
 
-      <Item href="/tools/my-ip" label="My IP">
+      <Item href="/tools/ip" label="My IP">
         Show your current IPv4 and IPv6 addresses.
       </Item>
     </List>

@@ -10,8 +10,8 @@
     "fix:eslint": "npm run check:eslint -- --fix",
     "check:stylelint": "stylelint -f verbose 'src/**/*.scss'",
     "fix:stylelint": "npm run check:stylelint -- --fix",
-    "check:prettier": "prettier --check .",
-    "fix:prettier": "prettier --write .",
+    "check:prettier": "prettier --config ../.prettierrc.json --check .",
+    "fix:prettier": "prettier --config ../.prettierrc.json --write .",
     "check": "npm run check:stylelint && npm run check:prettier && npm run check:eslint",
     "fix": "npm run fix:stylelint && npm run fix:prettier && npm run fix:eslint"
   },

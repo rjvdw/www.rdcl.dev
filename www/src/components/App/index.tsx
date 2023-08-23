@@ -32,7 +32,7 @@ export const Index: FunctionComponent = () => {
             <Tools.Index default />
             <Tools.Countdown path="/tools/countdown" />
             <Tools.DropRates path="/tools/drop-rates" />
-            <Tools.MyIp path="/tools/my-ip" />
+            <Tools.MyIp path="/tools/ip" />
           </Tools>
           <Health path="/health" />
           <Activities path="/activities" />

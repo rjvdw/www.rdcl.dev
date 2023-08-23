@@ -23,6 +23,7 @@ export const DropRates: FunctionComponent = () => {
           <input
             id={id('drop-rate')}
             name="drop-rate"
+            data-testid="drop-rate"
             type="number"
             inputMode="decimal"
             step="any"
@@ -37,6 +38,7 @@ export const DropRates: FunctionComponent = () => {
           <input
             id={id('nr-attempts')}
             name="nr-attempts"
+            data-testid="nr-attempts"
             type="number"
             min={0}
           />
@@ -46,18 +48,33 @@ export const DropRates: FunctionComponent = () => {
           <label data-start={1} for={id('chance')}>
             Chance
           </label>
-          <input id={id('chance')} readOnly value={chance} />
+          <input
+            id={id('chance')}
+            data-testid="chance"
+            readOnly
+            value={chance}
+          />
           <label htmlFor={id('chance')}>%</label>
 
           <label data-start={1} htmlFor={id('perc95')}>
             95%
           </label>
-          <input id={id('perc95')} readOnly value={perc95} />
+          <input
+            id={id('perc95')}
+            data-testid="perc95"
+            readOnly
+            value={perc95}
+          />
 
           <label data-start={1} htmlFor={id('perc99')}>
             99%
           </label>
-          <input id={id('perc99')} readOnly value={perc99} />
+          <input
+            id={id('perc99')}
+            data-testid="perc99"
+            readOnly
+            value={perc99}
+          />
         </section>
       </form>
     </>

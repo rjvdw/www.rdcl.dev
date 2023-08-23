@@ -5,8 +5,10 @@ import { PageTitle } from '../components/PageTitle'
 export const NotFound: FunctionComponent = () => (
   <>
     <ActiveRoute>not-found</ActiveRoute>
-    <PageTitle>page not found</PageTitle>
+    <PageTitle>not found</PageTitle>
 
     <h1>Page not found</h1>
+
+    <p>The page you were trying to reach does not exist.</p>
   </>
 )
