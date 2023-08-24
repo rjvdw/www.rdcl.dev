@@ -1,10 +1,9 @@
 import { FunctionComponent } from 'preact'
-import { useCallback, useId, useMemo, useState } from 'preact/hooks'
+import { useId, useMemo, useState } from 'preact/hooks'
 import { ActiveRoute } from '../components/ActiveRoute'
 import { PageTitle } from '../components/PageTitle'
 import { startLogin } from '../state/auth'
-import { errorAsString } from '../util/errors'
-import { isFormSubmitEvent } from '../util/form'
+import { useFormHandler } from '../util/form'
 import { useApi } from '../util/http'
 
 export const Login: FunctionComponent = () => {
@@ -60,46 +59,31 @@ export const Login: FunctionComponent = () => {
 function useLoginForm() {
   const [success, setSuccess] = useState(false)
   const [pending, setPending] = useState(false)
-  const [error, setError] = useState<string>()
   const api = useApi(false)
 
-  const onSubmit = useCallback(
-    (event: Event) => {
-      event.preventDefault()
+  const { error, onSubmit } = useFormHandler(async (event, { setError }) => {
+    const user = new FormData(event.target).get('user')
 
-      if (!isFormSubmitEvent(event)) {
-        setError('Unexpected error handling the form submit')
-        return
-      }
+    if (!isValidUser(user)) {
+      setError('Invalid user')
+      return
+    }
 
-      const user = new FormData(event.target).get('user')
+    if (rememberMe(event.target)) {
+      localStorage.username = user
+    } else {
+      delete localStorage.username
+    }
 
-      if (!isValidUser(user)) {
-        setError('Invalid user')
-        return
-      }
-
-      if (rememberMe(event.target)) {
-        localStorage.username = user
-      } else {
-        delete localStorage.username
-      }
-
-      setPending(true)
-      setError(undefined)
-      startLogin(user, api).then(
-        () => {
-          setPending(false)
-          setSuccess(true)
-        },
-        (error) => {
-          setPending(false)
-          setError(errorAsString(error))
-        },
-      )
-    },
-    [setSuccess, setPending, setError],
-  )
+    setPending(true)
+    setError(undefined)
+    try {
+      await startLogin(user, api)
+      setSuccess(true)
+    } finally {
+      setPending(false)
+    }
+  }, [])
 
   return useMemo(
     () => ({

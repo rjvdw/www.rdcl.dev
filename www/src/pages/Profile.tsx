@@ -3,8 +3,7 @@ import { useCallback, useId, useState } from 'preact/hooks'
 import { ActiveRoute } from '../components/ActiveRoute'
 import { LoginRequired } from '../components/LoginRequired'
 import { PageTitle } from '../components/PageTitle'
-import { errorAsString } from '../util/errors'
-import { isFormSubmitEvent } from '../util/form'
+import { useFormHandler } from '../util/form'
 import { asParams, getBody, useApi } from '../util/http'
 import { useAsyncLoad } from '../util/useAsyncLoad'
 
@@ -86,48 +85,29 @@ function useProfile(setData: (data: UserProfile) => void) {
   const id = useId()
   const [mode, setMode] = useState<ProfileMode>('view')
   const [pending, setPending] = useState(false)
-  const [error, setError] = useState<string>()
   const api = useApi(true)
 
   const edit = useCallback(() => setMode('edit'), [setMode])
 
-  const onReset = useCallback(
-    (event: Event) => {
-      event.preventDefault()
+  const onReset = useCallback((event: Event) => {
+    event.preventDefault()
+    setMode('view')
+  }, [])
+
+  const { error, onSubmit } = useFormHandler(async (event, { setError }) => {
+    const body = asParams(event.target)
+
+    setPending(true)
+    setError(undefined)
+    try {
+      const response = await api.patch('/auth/me', body)
+      const profile = await getBody(response, isUserProfile)
+      setData(profile)
       setMode('view')
-    },
-    [setMode],
-  )
-
-  const onSubmit = useCallback(
-    (event: Event) => {
-      event.preventDefault()
-      if (!isFormSubmitEvent(event)) {
-        setError('Unexpected error handling the form submit')
-        return
-      }
-
-      const body = asParams(event.target)
-
-      setPending(true)
-      api
-        .patch('/auth/me', body)
-        .then((response) => getBody(response, isUserProfile))
-        .then(
-          (profile) => {
-            setPending(false)
-            setError(undefined)
-            setMode('view')
-            setData(profile)
-          },
-          (err) => {
-            setPending(false)
-            setError(errorAsString(err))
-          },
-        )
-    },
-    [setMode],
-  )
+    } finally {
+      setPending(false)
+    }
+  }, [])
 
   return {
     id,

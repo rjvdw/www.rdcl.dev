@@ -66,7 +66,11 @@ export function useApi(authenticated: boolean): Api {
         let body: string | RequestBody | undefined = undefined
 
         if (arg1) {
-          if (arg1 instanceof URLSearchParams || arg1 instanceof FormData) {
+          if (
+            arg1 instanceof URLSearchParams ||
+            arg1 instanceof FormData ||
+            typeof arg1 === 'string'
+          ) {
             body = arg1
           } else {
             init = arg1
@@ -91,18 +95,31 @@ export function useApi(authenticated: boolean): Api {
         return this.callWithBody('post', path, body, init)
       },
 
+      async put(path, body, init?) {
+        return this.callWithBody('put', path, body, init)
+      },
+
       async patch(path, body, init?) {
         return this.callWithBody('patch', path, body, init)
+      },
+
+      async delete(path, init?) {
+        return this.call('delete', path, init)
       },
     }),
     [],
   )
 }
 
-type RequestBody = URLSearchParams | FormData
+type RequestBody = URLSearchParams | FormData | string
 
 export interface Api {
   call(method: string, path: string, init?: RequestInit): Promise<Response>
+  callWithBody(
+    method: string,
+    path: string,
+    init?: RequestInit,
+  ): Promise<Response>
   callWithBody(
     method: string,
     path: string,
@@ -111,7 +128,9 @@ export interface Api {
   ): Promise<Response>
   get(path: string, init?: RequestInit): Promise<Response>
   post(path: string, body: RequestBody, init?: RequestInit): Promise<Response>
+  put(path: string, body: RequestBody, init?: RequestInit): Promise<Response>
   patch(path: string, body: RequestBody, init?: RequestInit): Promise<Response>
+  delete(path: string, init?: RequestInit): Promise<Response>
 }
 
 export class ApiError extends Error {

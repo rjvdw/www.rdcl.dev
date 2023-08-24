@@ -1,6 +1,5 @@
 import { useState } from 'preact/hooks'
-import { errorAsString } from '../../util/errors'
-import { convert, isFormSubmitEvent } from '../../util/form'
+import { convert, useFormHandler } from '../../util/form'
 import { Answer, solve } from './solver'
 
 type UseCountdownReturn = {
@@ -13,42 +12,30 @@ type UseCountdownReturn = {
 export function useCountdown(): UseCountdownReturn {
   const [computing, setComputing] = useState(false)
   const [solution, setSolution] = useState<string[] | null>()
-  const [error, setError] = useState<string>()
+
+  const { error, onSubmit } = useFormHandler(async (event, { setError }) => {
+    const formData = readForm(event.target)
+    if (formData === undefined) {
+      setError('Please fill in all required fields')
+      return
+    }
+    const [target, numbers] = formData
+
+    setComputing(true)
+    setError(undefined)
+    try {
+      const solution = await solve(target, numbers)
+      setSolution(solution ? solution.map(formatLine) : solution)
+    } finally {
+      setComputing(false)
+    }
+  }, [])
 
   return {
     computing,
     solution,
     error,
-    onSubmit(event) {
-      event.preventDefault()
-
-      if (!isFormSubmitEvent(event)) {
-        setError('Unexpected error handling the form submit')
-        return
-      }
-
-      const formData = readForm(event.target)
-      if (formData === undefined) {
-        setError('Please fill in all required fields')
-        return
-      }
-      const [target, numbers] = formData
-
-      setComputing(true)
-      solve(target, numbers)
-        .then(
-          (solution) => {
-            setError(undefined)
-            setSolution(solution ? solution.map(formatLine) : solution)
-          },
-          (error) => {
-            setError(errorAsString(error))
-          },
-        )
-        .finally(() => {
-          setComputing(false)
-        })
-    },
+    onSubmit,
   }
 }
 

@@ -80,6 +80,16 @@ dl:not([class]) {
   }
 }
 
+details:not([class]) {
+  overflow: hidden;
+
+  summary {
+    @include mixins.link;
+
+    margin-block-end: 1rem;
+  }
+}
+
 pre {
   font-size: 1rem;
 }
