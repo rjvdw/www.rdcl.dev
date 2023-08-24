@@ -2,24 +2,13 @@
   "name": "integration-tests",
   "private": true,
   "scripts": {
-    "start": "cypress open --e2e",
-    "check:eslint": "eslint .",
-    "fix:eslint": "npm run check:eslint -- --fix",
-    "check:prettier": "prettier --config ../.prettierrc.json --check .",
-    "fix:prettier": "prettier --config ../.prettierrc.json --write .",
-    "check": "npm run check:prettier && npm run check:eslint",
-    "fix": "npm run fix:prettier && npm run fix:eslint"
+    "start": "cypress open --e2e"
   },
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^18.0.4",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@cypress/browserify-preprocessor": "^3.0.2",
-    "@typescript-eslint/eslint-plugin": "^6.4.1",
     "cypress": "^12.17.4",
-    "eslint": "^8.47.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.28.1",
-    "prettier": "^3.0.2",
     "typescript": "^5.1.6"
   },
   "cypress-cucumber-preprocessor": {

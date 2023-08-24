@@ -5,15 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "check:eslint": "eslint .",
-    "fix:eslint": "npm run check:eslint -- --fix",
-    "check:stylelint": "stylelint -f verbose 'src/**/*.scss'",
-    "fix:stylelint": "npm run check:stylelint -- --fix",
-    "check:prettier": "prettier --config ../.prettierrc.json --check .",
-    "fix:prettier": "prettier --config ../.prettierrc.json --write .",
-    "check": "npm run check:stylelint && npm run check:prettier && npm run check:eslint",
-    "fix": "npm run fix:stylelint && npm run fix:prettier && npm run fix:eslint"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@preact/signals": "^1.2.1",
@@ -25,11 +17,6 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
-    "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "eslint": "^8.47.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.28.1",
-    "prettier": "^3.0.2",
     "sass": "^1.66.1",
     "stylelint": "^15.10.3",
     "stylelint-config-recess-order": "^4.3.0",
