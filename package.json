@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "prepare": "husky install",
-    "check:stylelint": "stylelint -f verbose 'www/src/**/*.scss'",
+    "check:stylelint": "stylelint -f verbose 'www/src/**/*.scss' 'www/public/**/*.css'",
     "fix:stylelint": "npm run check:stylelint -- --fix",
     "check:prettier": "prettier --check .",
     "fix:prettier": "prettier --write .",

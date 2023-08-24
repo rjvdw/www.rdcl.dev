@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advent of Code '22 - Day 19</title>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: monospace;
+        font-size: 18px;
+        line-height: 120%;
+      }
+
+      body {
+        background: #0f0f23;
+        color: #ccc;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      main {
+        padding: 1rem;
+      }
+
+      h1,
+      h2,
+      p,
+      ul,
+      ol,
+      table {
+        margin: 0 0 1.2rem;
+        padding: 0;
+        font-size: 1rem;
+        font-weight: normal;
+      }
+
+      p:last-child,
+      ul:last-child,
+      ol:last-child,
+      table:last-child {
+        margin: 0;
+      }
+
+      section + section {
+        margin-top: 1.2rem;
+      }
+
+      .disabled {
+        opacity: 0.3;
+        user-select: none;
+      }
+
+      h1::before {
+        content: '--- ';
+      }
+
+      h1::after {
+        content: ' ---';
+      }
+
+      input {
+        border: 1px solid #333340;
+        background: #fffe;
+        font-size: inherit;
+        font-family: inherit;
+      }
+
+      button {
+        color: #009900;
+        background: transparent;
+        font-size: inherit;
+        font-family: inherit;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        cursor: pointer;
+      }
+
+      button:disabled,
+      button.disabled {
+        cursor: default;
+      }
+
+      button:not(:disabled, .disabled):hover,
+      button:not(:disabled, .disabled):focus {
+        color: #99ff99;
+      }
+
+      button::before {
+        content: '[';
+      }
+
+      button::after {
+        content: ']';
+      }
+
+      button:focus,
+      input:focus {
+        outline: 1px dashed #ccc;
+        outline-offset: -1px;
+      }
+
+      .frame {
+        border: 1px solid #333340;
+        background: #10101a;
+        color: #ccc;
+        padding: 0.5rem;
+        overflow-y: auto;
+        white-space: nowrap;
+        margin-bottom: 1.2rem;
+      }
+
+      .blueprint p {
+        padding-left: 2ch;
+      }
+
+      .blueprint label {
+        border-bottom: 1px dashed #ccc;
+      }
+
+      .blueprint input {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        width: 3ch;
+        background: transparent;
+        color: inherit;
+      }
+
+      .resources {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+
+      .resources caption {
+        text-align: left;
+      }
+
+      .resources caption::after {
+        content: ':';
+      }
+
+      .resources th,
+      .resources td {
+        text-align: left;
+        font-weight: normal;
+      }
+
+      .resources th {
+        padding-left: 2ch;
+        padding-right: 5ch;
+      }
+
+      .resources td:last-child {
+        padding-left: 2ch;
+      }
+
+      .current-state h2::before {
+        content: '== ';
+      }
+
+      .current-state h2::after {
+        content: ' ==';
+      }
+
+      .log {
+        margin-top: 1rem;
+      }
+
+      .log h2,
+      .log p {
+        margin: 0;
+      }
+
+      .log p + h2 {
+        margin-top: 1.2rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <h1>Day 19: Not Enough Minerals</h1>
+
+      <section id="blueprint" class="blueprint">
+        <form>
+          <div class="frame">
+            <h2>
+              <label
+                >Blueprint
+                <input id="blueprint-id" type="text" autofocus /></label
+              >:
+            </h2>
+
+            <p>
+              Each ore robot costs
+              <label><input id="ore-robot:ore" type="text" /> ore</label>.<br />
+              Each clay robot costs
+              <label><input id="clay-robot:ore" type="text" /> ore</label
+              >.<br />
+              Each obsidian robot costs
+              <label><input id="obsidian-robot:ore" type="text" /> ore</label>
+              ore and
+              <label><input id="obsidian-robot:clay" type="text" /> clay</label
+              >.<br />
+              Each geode robot costs
+              <label><input id="geode-robot:ore" type="text" /> ore</label> and
+              <label
+                ><input id="geode-robot:obsidian" type="text" /> obsidian</label
+              >.<br />
+            </p>
+          </div>
+
+          <button id="start">Start</button>
+          <button id="stop" type="button">Stop</button>
+        </form>
+      </section>
+
+      <section id="current-state" class="current-state">
+        <h2 id="minute">Minute 0</h2>
+
+        <table class="resources">
+          <caption>
+            Robots
+          </caption>
+          <tr>
+            <th>Ore-collecting robots</th>
+            <td id="ore-robot:count">0</td>
+            <td>
+              <button data-build="ore">Build</button>
+            </td>
+          </tr>
+          <tr>
+            <th>Clay-collecting robots</th>
+            <td id="clay-robot:count">0</td>
+            <td>
+              <button data-build="clay">Build</button>
+            </td>
+          </tr>
+          <tr>
+            <th>Obsidian-collecting robots</th>
+            <td id="obsidian-robot:count">0</td>
+            <td>
+              <button data-build="obsidian">Build</button>
+            </td>
+          </tr>
+          <tr>
+            <th>Geode-cracking robots</th>
+            <td id="geode-robot:count">0</td>
+            <td>
+              <button data-build="geode">Build</button>
+            </td>
+          </tr>
+        </table>
+
+        <table class="resources">
+          <caption>
+            Resources
+          </caption>
+          <tr>
+            <th>Ore</th>
+            <td id="ore:count">0</td>
+          </tr>
+          <tr>
+            <th>Clay</th>
+            <td id="clay:count">0</td>
+          </tr>
+          <tr>
+            <th>Obsidian</th>
+            <td id="obsidian:count">0</td>
+          </tr>
+          <tr>
+            <th>Geode</th>
+            <td id="geode:count">0</td>
+          </tr>
+        </table>
+
+        <button id="wait">Wait</button>
+
+        <div class="log frame" id="log"></div>
+      </section>
+    </main>
+
+    <script type="module">
+      const page = {
+        start: document.getElementById('start'),
+        stop: document.getElementById('stop'),
+        blueprint: document.getElementById('blueprint'),
+        blueprintInputs: {
+          id: document.getElementById('blueprint-id'),
+          oreRobotOre: document.getElementById('ore-robot:ore'),
+          clayRobotOre: document.getElementById('clay-robot:ore'),
+          obsidianRobotOre: document.getElementById('obsidian-robot:ore'),
+          obsidianRobotClay: document.getElementById('obsidian-robot:clay'),
+          geodeRobotOre: document.getElementById('geode-robot:ore'),
+          geodeRobotObsidian: document.getElementById('geode-robot:obsidian'),
+        },
+        currentState: document.getElementById('current-state'),
+        minute: document.getElementById('minute'),
+        robots: {
+          ore: document.getElementById('ore-robot:count'),
+          clay: document.getElementById('clay-robot:count'),
+          obsidian: document.getElementById('obsidian-robot:count'),
+          geode: document.getElementById('geode-robot:count'),
+        },
+        resources: {
+          ore: document.getElementById('ore:count'),
+          clay: document.getElementById('clay:count'),
+          obsidian: document.getElementById('obsidian:count'),
+          geode: document.getElementById('geode:count'),
+        },
+        wait: document.getElementById('wait'),
+        log: document.getElementById('log'),
+      }
+
+      const blueprint = {
+        get id() {
+          return page.blueprintInputs.id.value
+        },
+
+        get ore() {
+          return {
+            ore: +page.blueprintInputs.oreRobotOre.value,
+            clay: 0,
+            obsidian: 0,
+            geode: 0,
+          }
+        },
+
+        get clay() {
+          return {
+            ore: +page.blueprintInputs.clayRobotOre.value,
+            clay: 0,
+            obsidian: 0,
+            geode: 0,
+          }
+        },
+
+        get obsidian() {
+          return {
+            ore: +page.blueprintInputs.obsidianRobotOre.value,
+            clay: +page.blueprintInputs.obsidianRobotClay.value,
+            obsidian: 0,
+            geode: 0,
+          }
+        },
+
+        get geode() {
+          return {
+            ore: +page.blueprintInputs.geodeRobotOre.value,
+            clay: 0,
+            obsidian: +page.blueprintInputs.geodeRobotObsidian.value,
+            geode: 0,
+          }
+        },
+      }
+
+      const state = {
+        get minute() {
+          return +page.minute.innerText.trim().substring('Minute '.length)
+        },
+
+        set minute(value) {
+          page.minute.innerText = `Minute ${value}`
+        },
+      }
+
+      const robots = {
+        get ore() {
+          return +page.robots.ore.innerText.trim()
+        },
+
+        set ore(value) {
+          page.robots.ore.innerText = value
+        },
+
+        get clay() {
+          return +page.robots.clay.innerText.trim()
+        },
+
+        set clay(value) {
+          page.robots.clay.innerText = value
+        },
+
+        get obsidian() {
+          return +page.robots.obsidian.innerText.trim()
+        },
+
+        set obsidian(value) {
+          page.robots.obsidian.innerText = value
+        },
+
+        get geode() {
+          return +page.robots.geode.innerText.trim()
+        },
+
+        set geode(value) {
+          page.robots.geode.innerText = value
+        },
+      }
+
+      const resources = {
+        get ore() {
+          return +page.resources.ore.innerText.trim()
+        },
+
+        set ore(value) {
+          page.resources.ore.innerText = value
+        },
+
+        get clay() {
+          return +page.resources.clay.innerText.trim()
+        },
+
+        set clay(value) {
+          page.resources.clay.innerText = value
+        },
+
+        get obsidian() {
+          return +page.resources.obsidian.innerText.trim()
+        },
+
+        set obsidian(value) {
+          page.resources.obsidian.innerText = value
+        },
+
+        get geode() {
+          return +page.resources.geode.innerText.trim()
+        },
+
+        set geode(value) {
+          page.resources.geode.innerText = value
+        },
+      }
+
+      const log = {
+        clear() {
+          page.log.innerText = ''
+        },
+
+        writeTime() {
+          const h2 = document.createElement('h2')
+          h2.innerText = `Minute ${state.minute}`
+          page.log.appendChild(h2)
+        },
+
+        writeStartBuilding(resource) {
+          switch (resource) {
+            case 'ore':
+              log.write(
+                `Spend ${blueprint.ore.ore} ore to start building an ore-collecting robot.`,
+              )
+              break
+            case 'clay':
+              log.write(
+                `Spend ${blueprint.clay.ore} ore to start building a clay-collecting robot.`,
+              )
+              break
+            case 'obsidian':
+              log.write(
+                `Spend ${blueprint.obsidian.ore} ore and ${blueprint.obsidian.clay} to start building an obsidian-collecting robot.`,
+              )
+              break
+            case 'geode':
+              log.write(
+                `Spend ${blueprint.geode.ore} ore and ${blueprint.geode.obsidian} to start building a geode-cracking robot.`,
+              )
+              break
+          }
+        },
+
+        writeResource(resource) {
+          if (robots[resource] > 0) {
+            log.write(
+              `${robots[resource]} ${resource}-collecting robots collect ${robots[resource]} ${resource}; you now have ${resources[resource]} ${resource}.`,
+            )
+          }
+        },
+
+        writeGeodes() {
+          if (robots.geode > 0) {
+            log.write(
+              `${robots.geode} geode-cracking robots collect ${robots.geode} geodes; you now have ${resources.geode} geodes.`,
+            )
+          }
+        },
+
+        writeBuildingReady(resource) {
+          if (resource === 'geode') {
+            log.write(
+              `The new geode-cracking robot is ready; you now have ${robots.geode} of them.`,
+            )
+          } else {
+            log.write(
+              `The new ${resource}-collecting robot is ready; you now have ${robots[resource]} of them.`,
+            )
+          }
+        },
+
+        write(line) {
+          const p = document.createElement('p')
+          if (line) {
+            p.innerText = line
+          }
+          page.log.appendChild(p)
+        },
+      }
+
+      function init() {
+        stop()
+
+        page.blueprint
+          .querySelector('form')
+          .addEventListener('submit', (event) => {
+            event.preventDefault()
+            start()
+          })
+
+        page.start.addEventListener('click', (event) => {
+          event.preventDefault()
+          start()
+        })
+
+        page.stop.addEventListener('click', (event) => {
+          event.preventDefault()
+          stop()
+        })
+
+        page.currentState.addEventListener('click', (event) => {
+          if (event.target.tagName === 'BUTTON') {
+            if (isStarted()) {
+              step(event.target.dataset.build)
+            }
+          }
+        })
+
+        page.blueprint.addEventListener('change', () => {
+          const params = {}
+
+          if (blueprint.id) {
+            params.id = blueprint.id
+          }
+
+          if (blueprint.ore.ore) {
+            params.or1 = blueprint.ore.ore
+          }
+
+          if (blueprint.clay.ore) {
+            params.cl1 = blueprint.clay.ore
+          }
+
+          if (blueprint.obsidian.ore) {
+            params.ob1 = blueprint.obsidian.ore
+          }
+
+          if (blueprint.obsidian.clay) {
+            params.ob2 = blueprint.obsidian.clay
+          }
+
+          if (blueprint.geode.ore) {
+            params.ge1 = blueprint.geode.ore
+          }
+
+          if (blueprint.geode.obsidian) {
+            params.ge2 = blueprint.geode.obsidian
+          }
+
+          document.location.hash = new URLSearchParams(params).toString()
+        })
+
+        page.wait.addEventListener('keyup', (event) => {
+          if (isStarted()) {
+            switch (event.key) {
+              case '1':
+                if (canBuild('ore')) {
+                  step('ore')
+                }
+                break
+              case '2':
+                if (canBuild('clay')) {
+                  step('clay')
+                }
+                break
+              case '3':
+                if (canBuild('obsidian')) {
+                  step('obsidian')
+                }
+                break
+              case '4':
+                if (canBuild('geode')) {
+                  step('geode')
+                }
+                break
+            }
+          }
+        })
+
+        window.addEventListener('hashchange', () => {
+          parseHash()
+          stop()
+        })
+        parseHash()
+      }
+
+      function start() {
+        log.clear()
+        page.currentState.classList.remove('disabled')
+        for (const item of page.currentState.querySelectorAll(
+          'input, textarea, button',
+        )) {
+          item.disabled = false
+        }
+        for (const item of page.blueprint.querySelectorAll(
+          'input, textarea, button',
+        )) {
+          item.disabled = true
+        }
+        page.start.classList.add('disabled')
+        page.start.disabled = true
+        page.stop.classList.remove('disabled')
+        page.stop.disabled = false
+
+        state.minute = 1
+
+        robots.ore = 1
+        robots.clay = 0
+        robots.obsidian = 0
+        robots.geode = 0
+
+        resources.ore = 0
+        resources.clay = 0
+        resources.obsidian = 0
+        resources.geode = 0
+
+        checkBuildable()
+        page.wait.focus()
+      }
+
+      function stop() {
+        page.currentState.classList.add('disabled')
+        for (const item of page.currentState.querySelectorAll(
+          'input, textarea, button',
+        )) {
+          item.disabled = true
+        }
+        for (const item of page.blueprint.querySelectorAll(
+          'input, textarea, button',
+        )) {
+          item.disabled = false
+        }
+        page.start.classList.remove('disabled')
+        page.start.disabled = false
+        page.stop.classList.add('disabled')
+        page.stop.disabled = true
+      }
+
+      function step(resource) {
+        if (build(resource)) {
+          log.writeTime()
+          if (resource) {
+            log.writeStartBuilding(resource)
+          }
+
+          resources.ore += robots.ore
+          log.writeResource('ore')
+          resources.clay += robots.clay
+          log.writeResource('clay')
+          resources.obsidian += robots.obsidian
+          log.writeResource('obsidian')
+          resources.geode += robots.geode
+          log.writeGeodes()
+          if (resource) {
+            robots[resource] += 1
+            log.writeBuildingReady(resource)
+          }
+
+          state.minute += 1
+          checkBuildable()
+        } else {
+          alert('You do not have sufficient resources to build this robot')
+        }
+      }
+
+      function isStarted() {
+        return !page.currentState.classList.contains('disabled')
+      }
+
+      function canBuild(type) {
+        const bp = blueprint[type]
+
+        return (
+          resources.ore >= bp.ore &&
+          resources.clay >= bp.clay &&
+          resources.obsidian >= bp.obsidian
+        )
+      }
+
+      function build(type) {
+        if (!type) {
+          return true
+        }
+
+        const bp = blueprint[type]
+
+        if (canBuild(type)) {
+          resources.ore -= bp.ore
+          resources.clay -= bp.clay
+          resources.obsidian -= bp.obsidian
+
+          return true
+        } else {
+          return false
+        }
+      }
+
+      function checkBuildable() {
+        for (const button of page.currentState.querySelectorAll(
+          'button[data-build]',
+        )) {
+          const type = button.dataset.build
+          if (canBuild(type)) {
+            button.disabled = false
+            button.classList.remove('disabled')
+          } else {
+            button.disabled = true
+            button.classList.add('disabled')
+          }
+        }
+      }
+
+      function parseHash() {
+        const params = new URLSearchParams(document.location.hash.substring(1))
+
+        page.blueprintInputs.id.value = params.get('id') ?? ''
+        page.blueprintInputs.oreRobotOre.value = params.get('or1') ?? ''
+        page.blueprintInputs.clayRobotOre.value = params.get('cl1') ?? ''
+        page.blueprintInputs.obsidianRobotOre.value = params.get('ob1') ?? ''
+        page.blueprintInputs.obsidianRobotClay.value = params.get('ob2') ?? ''
+        page.blueprintInputs.geodeRobotOre.value = params.get('ge1') ?? ''
+        page.blueprintInputs.geodeRobotObsidian.value = params.get('ge2') ?? ''
+      }
+
+      init()
+    </script>
+  </body>
+</html>
