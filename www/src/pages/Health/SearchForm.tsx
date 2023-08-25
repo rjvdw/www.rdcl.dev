@@ -17,7 +17,7 @@ export const SearchForm = ({ onSubmit, from, to }: SearchFromProps) => {
     <details ref={detailsRef}>
       <summary>{open ? 'Close search' : 'Open search'}</summary>
 
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} class="health-search">
         <section class="form-grid" data-suffix={true}>
           <Input id={id('from')} name="from" value={from} />
           <Input id={id('to')} name="to" value={to} />

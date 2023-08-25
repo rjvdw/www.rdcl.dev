@@ -12,7 +12,13 @@ export const NewEntryForm = ({ onSubmit }: NewEntryFormProps) => {
     <form onSubmit={onSubmit}>
       <section class="form-grid" data-suffix={true}>
         <label for={id('date')}>Date</label>
-        <input id={id('date')} name="date" type="date" defaultValue={today()} />
+        <input
+          id={id('date')}
+          name="date"
+          type="date"
+          required
+          defaultValue={today()}
+        />
 
         <label data-start={1} for={id('weight')}>
           Weight
@@ -21,7 +27,6 @@ export const NewEntryForm = ({ onSubmit }: NewEntryFormProps) => {
           id={id('weight')}
           name="weight"
           type="number"
-          inputMode="decimal"
           step={0.1}
           min={0}
         />
@@ -34,7 +39,6 @@ export const NewEntryForm = ({ onSubmit }: NewEntryFormProps) => {
           id={id('body-fat')}
           name="body-fat"
           type="number"
-          inputMode="decimal"
           step={0.1}
           min={0}
           max={100}

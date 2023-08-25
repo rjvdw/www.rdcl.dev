@@ -73,7 +73,7 @@ type TableProps = {
 }
 
 const Table: FunctionComponent<TableProps> = ({ children, settings }) => (
-  <div class="responsive-table-wrapper">
+  <div class="responsive-table-wrapper health-records">
     <table>
       <thead>
         <tr>

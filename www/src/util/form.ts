@@ -33,7 +33,10 @@ export const convert: Converters = {
 
   number(value) {
     if (value === '') return undefined
-    const nr = Number(value)
+    const nr =
+      typeof value === 'string'
+        ? Number(value.replace(/,/, '.'))
+        : Number(value)
     return isNaN(nr) ? undefined : nr
   },
 }
