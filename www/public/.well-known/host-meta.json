@@ -1,0 +1,9 @@
+{
+  "subject": "https://www.rdcl.dev",
+  "links": [
+    {
+      "rel": "lrdd",
+      "template": "https://www.rdcl.dev/.well-known/webfinger?resource={uri}"
+    }
+  ]
+}
