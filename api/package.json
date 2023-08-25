@@ -1,0 +1,14 @@
+{
+  "name": "api",
+  "private": true,
+  "dependencies": {
+    "@netlify/functions": "^2.0.2",
+    "axios": "^1.4.0",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.5",
+    "@types/node": "^20.5.6",
+    "typescript": "^5.2.2"
+  }
+}
