@@ -1,9 +1,7 @@
 import { FunctionComponent } from 'preact'
 import { Router } from 'preact-router'
-import { Activities } from '../../pages/Activities'
 import { Health } from '../../pages/Health'
 import { Home } from '../../pages/Home'
-import { Labels } from '../../pages/Labels'
 import { Login } from '../../pages/Login'
 import { LoginVerify } from '../../pages/LoginVerify'
 import { Logout } from '../../pages/Logout'
@@ -35,8 +33,6 @@ export const Index: FunctionComponent = () => {
             <Tools.MyIp path="/tools/ip" />
           </Tools>
           <Health path="/health" />
-          <Activities path="/activities" />
-          <Labels path="/labels" />
           <Login path="/login" />
           <LoginVerify path="/login/verify" />
           <Logout path="/logout" />
@@ -57,16 +53,6 @@ export const Index: FunctionComponent = () => {
           <>
             <MenuItem href="/health" route="health" icon={Icon.Health}>
               Health
-            </MenuItem>
-            <MenuItem
-              href="/activities"
-              route="activities"
-              icon={Icon.Activities}
-            >
-              Activities
-            </MenuItem>
-            <MenuItem href="/labels" route="labels" icon={Icon.Labels}>
-              Labels
             </MenuItem>
             <MenuItem href="/profile" route="profile" icon={Icon.Profile}>
               Profile

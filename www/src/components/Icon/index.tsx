@@ -1,9 +1,7 @@
 import { FunctionComponent, JSX } from 'preact'
-import Activities from './activities.svg'
 import Health from './health.svg'
 import HideSideMenu from './hide-side-menu.svg'
 import Home from './home.svg'
-import Labels from './labels.svg'
 import Logout from './logout.svg'
 import Profile from './profile.svg'
 import ShowSideMenu from './show-side-menu.svg'
@@ -13,11 +11,9 @@ type IconProps = Omit<JSX.HTMLAttributes, 'src'>
 export type IconComponent = FunctionComponent<IconProps>
 
 export default asComponents({
-  Activities,
   Health,
   HideSideMenu,
   Home,
-  Labels,
   Logout,
   Profile,
   ShowSideMenu,
