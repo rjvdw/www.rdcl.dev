@@ -2,8 +2,6 @@
 
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
-  ignorePatterns: ['vite.config.ts'],
   extends: [
     'eslint:recommended',
     'plugin:import/recommended',
