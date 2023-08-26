@@ -25,7 +25,7 @@ export const Index: FunctionComponent = () => {
       <AppHeader onShowSideMenu={sideMenu.show}>rdcl.dev</AppHeader>
 
       <main class="app-main">
-        <Router>
+        <Router onChange={() => sideMenu.hide()}>
           <Home path="/" />
           <Tools path="/tools/:rest*">
             <Tools.Index default />
