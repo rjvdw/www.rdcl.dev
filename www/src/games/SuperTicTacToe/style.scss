@@ -1,0 +1,74 @@
+%tic-tac-toe {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-content: center;
+  justify-content: center;
+  padding: 0.5rem;
+  color: #eee;
+  background: #1118;
+
+  > * {
+    border: 0 none;
+  }
+
+  > :nth-child(-n + 6) {
+    border-block-end: 1px solid #eee;
+  }
+
+  > :nth-child(3n + 1),
+  > :nth-child(3n + 2) {
+    border-inline-end: 1px solid #eee;
+  }
+}
+
+.super-tic-tac-toe {
+  @extend %tic-tac-toe;
+
+  block-size: 30rem;
+  inline-size: 30rem;
+
+  > .sub-board {
+    position: relative;
+
+    > .inner {
+      @extend %tic-tac-toe;
+
+      block-size: 100%;
+      inline-size: 100%;
+
+      > .cell {
+        display: grid;
+        place-content: center;
+        padding: 0;
+        margin: 0;
+        font-size: 2rem;
+        color: inherit;
+        cursor: pointer;
+        background: transparent;
+
+        &:hover,
+        &:focus {
+          outline: 1px dashed #fff;
+          outline-offset: -4px;
+        }
+      }
+    }
+
+    > .overlay {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-content: center;
+      font-size: 10rem;
+      line-height: 10rem;
+      text-transform: uppercase;
+    }
+
+    &[data-completed='true'] {
+      > .inner {
+        opacity: 0.3;
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { ActiveRoute } from '../../components/ActiveRoute'
 import { PageTitle } from '../../components/PageTitle'
 import { useFormId } from '../../util/form'
 import { useCountdown } from './hooks'
+import './styles.scss'
 
 export const Countdown: FunctionComponent = () => {
   const id = useFormId()

@@ -1,23 +1,13 @@
 import { FunctionComponent } from 'preact'
-import { Router } from 'preact-router'
 import { ActiveRoute } from '../components/ActiveRoute'
+import { NestedRoutes } from '../components/NestedRoutes'
 import { PageTitle } from '../components/PageTitle'
-import { Routing } from '../components/Routing'
+import { SubNavList } from '../components/SubNavList'
 import { Countdown } from '../tools/Countdown'
 import { DropRates } from '../tools/DropRates'
 import { MyIp } from '../tools/MyIp'
 
-const ToolsComponent: FunctionComponent = ({ children }) => (
-  <>
-    <ActiveRoute>tools</ActiveRoute>
-
-    <Routing>
-      <PageTitle.Provider title="tools">
-        <Router>{children}</Router>
-      </PageTitle.Provider>
-    </Routing>
-  </>
-)
+const ToolsComponent = NestedRoutes('tools')
 
 const Index: FunctionComponent = () => (
   <>
@@ -26,44 +16,28 @@ const Index: FunctionComponent = () => (
 
     <h1>Tools</h1>
 
-    <List>
-      <Item href="/password.html" label="Generate Password" data-native>
+    <SubNavList class="tools-list">
+      <SubNavList.Item
+        href="/password.html"
+        label="Generate Password"
+        data-native
+      >
         Securely generates a password using <code>window.crypto</code>.
-      </Item>
+      </SubNavList.Item>
 
-      <Item href="/tools/countdown" label="Countdown">
+      <SubNavList.Item href="/tools/countdown" label="Countdown">
         Solves the numbers game in Countdown.
-      </Item>
+      </SubNavList.Item>
 
-      <Item href="/tools/drop-rates" label="Drop Rate Calculator">
+      <SubNavList.Item href="/tools/drop-rates" label="Drop Rate Calculator">
         Given a drop rate, computes how many attempts you actually need to get
         your item.
-      </Item>
+      </SubNavList.Item>
 
-      <Item href="/tools/ip" label="My IP">
+      <SubNavList.Item href="/tools/ip" label="My IP">
         Show your current IPv4 and IPv6 addresses.
-      </Item>
-    </List>
-  </>
-)
-
-const List: FunctionComponent = ({ children }) => (
-  <dl class="tools-list">{children}</dl>
-)
-
-const Item: FunctionComponent<{ href: string; label: string }> = ({
-  children,
-  href,
-  label,
-  ...rest
-}) => (
-  <>
-    <dt>
-      <a href={href} {...rest}>
-        {label}
-      </a>
-    </dt>
-    <dd>{children}</dd>
+      </SubNavList.Item>
+    </SubNavList>
   </>
 )
 

@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'preact'
 import { Router } from 'preact-router'
+import { Games } from '../../pages/Games'
 import { Health } from '../../pages/Health'
 import { Home } from '../../pages/Home'
 import { Login } from '../../pages/Login'
@@ -32,6 +33,10 @@ export const Index: FunctionComponent = () => {
             <Tools.DropRates path="/tools/drop-rates" />
             <Tools.MyIp path="/tools/ip" />
           </Tools>
+          <Games path="/games/:rest*">
+            <Games.Index default />
+            <Games.SuperTicTacToe path="/games/super-tic-tac-toe" />
+          </Games>
           <Health path="/health" />
           <Login path="/login" />
           <LoginVerify path="/login/verify" />

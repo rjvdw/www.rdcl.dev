@@ -1,0 +1,7 @@
+%form-grid {
+  display: grid;
+  grid-template-columns: max-content auto;
+  row-gap: 0.5rem;
+  column-gap: 1.5rem;
+  align-items: center;
+}

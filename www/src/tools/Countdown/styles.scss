@@ -1,4 +1,4 @@
-@use '../form';
+@use '../../styles/util/form';
 
 .countdown-form-grid {
   @extend %form-grid;

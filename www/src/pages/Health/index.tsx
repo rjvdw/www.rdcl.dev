@@ -9,6 +9,7 @@ import { SettingsForm } from './SettingsForm'
 import { HealthRecord, HealthSettings } from './state'
 import { useFormHandlers } from './useFormHandlers'
 import { useHealthData } from './useHealthData'
+import './styles.scss'
 
 export const Health: FunctionComponent = () => {
   const {
