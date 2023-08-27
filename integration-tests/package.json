@@ -1,5 +1,5 @@
 {
-  "name": "integration-tests",
+  "name": "@rdcl.dev/integration-tests",
   "private": true,
   "scripts": {
     "start": "cypress open --e2e"

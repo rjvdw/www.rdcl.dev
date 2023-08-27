@@ -1,5 +1,5 @@
 {
-  "name": "rdcl.dev",
+  "name": "@rdcl.dev/parent",
   "private": true,
   "type": "module",
   "workspaces": [

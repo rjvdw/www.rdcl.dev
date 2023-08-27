@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "@rdcl.dev/api",
   "private": true,
   "dependencies": {
     "@netlify/functions": "^2.0.2",

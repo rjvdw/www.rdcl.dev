@@ -1,5 +1,5 @@
 {
-  "name": "www.rdcl.dev",
+  "name": "@rdcl.dev/www",
   "private": true,
   "type": "module",
   "scripts": {
