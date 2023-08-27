@@ -1,14 +1,11 @@
 import { FunctionComponent } from 'preact'
 import { Router } from 'preact-router'
+import { Auth } from '../../pages/Auth'
 import { Games } from '../../pages/Games'
 import { Health } from '../../pages/Health'
 import { Home } from '../../pages/Home'
-import { Login } from '../../pages/Login'
-import { LoginVerify } from '../../pages/LoginVerify'
-import { Logout } from '../../pages/Logout'
 import { NotFound } from '../../pages/NotFound'
 import { Profile } from '../../pages/Profile'
-import { Session } from '../../pages/Session'
 import { Tools } from '../../pages/Tools'
 import { auth } from '../../state/auth'
 import Icon from '../Icon'
@@ -38,11 +35,13 @@ export const Index: FunctionComponent = () => {
             <Games.SuperTicTacToe path="/games/super-tic-tac-toe" />
           </Games>
           <Health path="/health" />
-          <Login path="/login" />
-          <LoginVerify path="/login/verify" />
-          <Logout path="/logout" />
-          <Profile path="/profile" />
-          <Session path="/session" />
+          <Auth.Login path="/login" />
+          <Auth.LoginVerify path="/login/verify" />
+          <Auth.Logout path="/logout" />
+          <Auth.Session path="/session" />
+          <Profile path="/profile/:rest*">
+            <Profile.Index default />
+          </Profile>
           <NotFound default />
         </Router>
       </main>

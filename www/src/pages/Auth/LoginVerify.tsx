@@ -1,9 +1,9 @@
 import { FunctionComponent } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 import { route } from 'preact-router'
-import { completeLogin } from '../state/auth'
-import { errorAsString } from '../util/errors'
-import { useApi } from '../util/http'
+import { completeLogin } from '../../state/auth'
+import { errorAsString } from '../../util/errors'
+import { useApi } from '../../util/http'
 
 export const LoginVerify: FunctionComponent = () => {
   const { error } = useVerification()

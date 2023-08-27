@@ -1,9 +1,9 @@
 import { FunctionComponent } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 import { route } from 'preact-router'
-import { ActiveRoute } from '../components/ActiveRoute'
-import { PageTitle } from '../components/PageTitle'
-import { logout } from '../state/auth'
+import { ActiveRoute } from '../../components/ActiveRoute'
+import { PageTitle } from '../../components/PageTitle'
+import { logout } from '../../state/auth'
 
 export const Logout: FunctionComponent = () => {
   const { success, onClick } = useLogoutState()

@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'preact'
 import { useId, useMemo, useState } from 'preact/hooks'
-import { ActiveRoute } from '../components/ActiveRoute'
-import { PageTitle } from '../components/PageTitle'
-import { startLogin } from '../state/auth'
-import { useFormHandler } from '../util/form'
-import { useApi } from '../util/http'
+import { ActiveRoute } from '../../components/ActiveRoute'
+import { PageTitle } from '../../components/PageTitle'
+import { startLogin } from '../../state/auth'
+import { useFormHandler } from '../../util/form'
+import { useApi } from '../../util/http'
 
 export const Login: FunctionComponent = () => {
   const id = useId()
