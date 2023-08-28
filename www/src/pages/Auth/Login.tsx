@@ -3,12 +3,13 @@ import { useId, useMemo, useState } from 'preact/hooks'
 import { ActiveRoute } from '../../components/ActiveRoute'
 import { PageTitle } from '../../components/PageTitle'
 import { startLogin } from '../../state/auth'
+import { LoginResponseBody } from '../../state/auth/types'
 import { useFormHandler } from '../../util/form'
 import { useApi } from '../../util/http'
 
 export const Login: FunctionComponent = () => {
   const id = useId()
-  const { username, rememberMe, onSubmit, success, pending, error } =
+  const { username, rememberMe, onSubmit, mode, pending, error } =
     useLoginForm()
 
   return (
@@ -18,8 +19,10 @@ export const Login: FunctionComponent = () => {
 
       <h1>Login</h1>
 
-      {success ? (
+      {mode === 'EMAIL' ? (
         <p>Login request sent successfully, please wait for an e-mail.</p>
+      ) : mode === 'AUTHENTICATOR' ? (
+        <p>Logged in successfully.</p>
       ) : (
         <form onSubmit={onSubmit} disabled={pending}>
           <section class="form-grid">
@@ -57,6 +60,7 @@ export const Login: FunctionComponent = () => {
 }
 
 function useLoginForm() {
+  const [mode, setMode] = useState<LoginResponseBody['mode']>()
   const [success, setSuccess] = useState(false)
   const [pending, setPending] = useState(false)
   const api = useApi(false)
@@ -78,7 +82,8 @@ function useLoginForm() {
     setPending(true)
     setError(undefined)
     try {
-      await startLogin(user, api)
+      const body = await startLogin(api, user)
+      setMode(body.mode)
       setSuccess(true)
     } finally {
       setPending(false)
@@ -93,6 +98,7 @@ function useLoginForm() {
           : undefined,
       rememberMe: Boolean(localStorage.username),
       onSubmit,
+      mode,
       success,
       pending,
       error,

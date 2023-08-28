@@ -10,16 +10,21 @@ export type LoggedInAuthState = {
 export type AuthState = typeof loggedOutState | LoggedInAuthState
 
 export type LoginResponseBody = {
-  sessionToken: string
+  mode: 'EMAIL' | 'AUTHENTICATOR'
+  payload: string
 }
 
 export function isValidLoginResponseBody(
   body: unknown,
 ): body is LoginResponseBody {
-  if (!body) return false
-
-  // noinspection SuspiciousTypeOfGuard
-  return typeof (body as LoginResponseBody).sessionToken === 'string'
+  return (
+    typeof body === 'object' &&
+    body !== null &&
+    'mode' in body &&
+    (body.mode === 'EMAIL' || body.mode === 'AUTHENTICATOR') &&
+    'payload' in body &&
+    typeof body.payload === 'string'
+  )
 }
 
 export type LoginVerifyResponseBody = {

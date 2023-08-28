@@ -1,6 +1,5 @@
 import { FunctionComponent } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
-import { route } from 'preact-router'
 import { completeLogin } from '../../state/auth'
 import { errorAsString } from '../../util/errors'
 import { useApi } from '../../util/http'
@@ -34,20 +33,9 @@ function useVerification() {
       return
     }
 
-    completeLogin(verificationCode, api).then(
-      () => {
-        route(
-          typeof localStorage.redirectAfterLogin === 'string'
-            ? localStorage.redirectAfterLogin
-            : '/',
-          true,
-        )
-        delete localStorage.redirectAfterLogin
-      },
-      (err) => {
-        setError(errorAsString(err))
-      },
-    )
+    completeLogin(verificationCode, api).catch((err) => {
+      setError(errorAsString(err))
+    })
   }, [setError])
 
   return {
