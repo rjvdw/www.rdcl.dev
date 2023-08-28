@@ -91,3 +91,9 @@ input[type='button'] {
     }
   }
 }
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}

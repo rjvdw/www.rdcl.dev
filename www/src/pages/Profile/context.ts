@@ -1,103 +1,105 @@
 import { createContext } from 'preact'
 import { useContext, useEffect, useState } from 'preact/hooks'
 import { errorAsString } from '../../util/errors'
-import { getBody, useApi } from '../../util/http'
+import { Api, getBody, useApi } from '../../util/http'
 import { isUserProfile, UserProfile } from './types'
 
 type InitialState = {
-  state: 'initial'
+  type: 'initial'
 }
 
 type LoadingState = {
-  state: 'loading'
+  type: 'loading'
 }
 
 type ErrorState = {
-  state: 'error'
+  type: 'error'
   error: string
 }
 
 type CompleteState = {
-  state: 'complete'
+  type: 'complete'
   profile: UserProfile
 }
 
-type ProfileContext = (
-  | InitialState
-  | LoadingState
-  | ErrorState
-  | CompleteState
-) & {
+type ProfileContext = {
   mode: 'view' | 'edit'
   update(this: void, profile: UserProfile): void
   setMode(this: void, mode: ProfileContext['mode']): void
+  refresh(this: void): void
+  state: InitialState | LoadingState | ErrorState | CompleteState
 }
 
-const PCtx = createContext<ProfileContext>({
-  state: 'initial',
-  mode: 'view',
-  update() {
-    throw new Error('missing required provider')
-  },
-  setMode() {
-    throw new Error('missing required provider')
-  },
-})
+const PCtx = createContext<ProfileContext>(null as unknown as ProfileContext)
 
 export const Provider = PCtx.Provider
 
 export function useSetupContext(): ProfileContext {
   const [value, setValue] = useState<ProfileContext>({
-    state: 'initial',
+    state: { type: 'initial' },
     mode: 'view',
     update(profile: UserProfile) {
       setValue((v) => ({
-        state: 'complete',
-        profile,
-        mode: v.mode,
-        update: v.update,
-        setMode: v.setMode,
+        ...v,
+        state: {
+          type: 'complete',
+          profile,
+        },
       }))
     },
     setMode(mode) {
       setValue((v) => ({ ...v, mode }))
     },
+    refresh() {
+      setValue((v) => ({
+        ...v,
+        state: { type: 'initial' },
+      }))
+    },
   })
   const api = useApi(true)
 
   useEffect(() => {
-    setValue((v) => ({
-      state: 'loading',
-      mode: v.mode,
-      update: v.update,
-      setMode: v.setMode,
-    }))
-    api
-      .get('/auth/me')
-      .then((response) => getBody(response, isUserProfile))
-      .then((profile) =>
-        setValue((v) => ({
-          state: 'complete',
-          profile,
-          mode: v.mode,
-          update: v.update,
-          setMode: v.setMode,
-        })),
+    if (value.state.type === 'initial') {
+      setValue((v) => ({
+        ...v,
+        state: { type: 'loading' },
+      }))
+
+      loadProfile(api).then(
+        (profile) =>
+          setValue((v) => ({
+            ...v,
+            state: {
+              type: 'complete',
+              profile,
+            },
+          })),
+        (error) =>
+          setValue((v) => ({
+            ...v,
+            state: {
+              type: 'error',
+              error: errorAsString(error),
+            },
+          })),
       )
-      .catch((error) =>
-        setValue((v) => ({
-          state: 'error',
-          error: errorAsString(error),
-          mode: v.mode,
-          update: v.update,
-          setMode: v.setMode,
-        })),
-      )
-  }, [api])
+    }
+  }, [value.state.type, api])
 
   return value
 }
 
 export function useProfileContext(): ProfileContext {
   return useContext(PCtx)
+}
+
+export function useRefresh() {
+  return useContext(PCtx).refresh
+}
+
+async function loadProfile(api: Api): Promise<UserProfile> {
+  const response = await api.get('/auth/me')
+
+  return getBody(response, isUserProfile)
 }

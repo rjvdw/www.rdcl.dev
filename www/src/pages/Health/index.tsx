@@ -116,7 +116,9 @@ const Record = ({ record, settings, deleteRecord }: RecordProps) => (
       </td>
     ) : null}
     <td>
-      <button onClick={deleteRecord}>Delete</button>
+      <div class="actions">
+        <button onClick={deleteRecord}>Delete</button>
+      </div>
     </td>
   </tr>
 )

@@ -33,5 +33,6 @@ table:not(.simple-table) {
 
 .responsive-table-wrapper {
   max-inline-size: 100%;
+  margin-block-end: 1rem;
   overflow: auto;
 }

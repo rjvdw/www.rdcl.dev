@@ -17,9 +17,11 @@ export const View = ({ profile }: ViewProps) => {
         <dd>{profile.name}</dd>
       </dl>
 
-      <button class="link" onClick={() => setMode('edit')}>
-        Edit profile
-      </button>
+      <p>
+        <button class="link" onClick={() => setMode('edit')}>
+          Edit profile
+        </button>
+      </p>
     </>
   )
 }
