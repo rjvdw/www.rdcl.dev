@@ -24,14 +24,26 @@ textarea,
     border-color: #999;
   }
 
-  &:valid {
+  &:user-valid {
     border-color: var(--success-border);
     box-shadow: 0 0 2px var(--success-border);
   }
 
-  &:invalid {
+  &:user-invalid {
     border-color: var(--error-border);
     box-shadow: 0 0 2px var(--error-border);
+  }
+
+  @supports not selector(:user-invalid) {
+    &:valid {
+      border-color: var(--success-border);
+      box-shadow: 0 0 2px var(--success-border);
+    }
+
+    &:invalid {
+      border-color: var(--error-border);
+      box-shadow: 0 0 2px var(--error-border);
+    }
   }
 }
 
