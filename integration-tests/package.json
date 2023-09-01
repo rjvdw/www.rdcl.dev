@@ -9,6 +9,7 @@
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@cypress/browserify-preprocessor": "^3.0.2",
     "cypress": "^13.0.0",
+    "cypress-localstorage-commands": "^2.2.4",
     "typescript": "^5.2.2"
   },
   "cypress-cucumber-preprocessor": {

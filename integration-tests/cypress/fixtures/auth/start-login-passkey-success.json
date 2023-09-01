@@ -1,0 +1,4 @@
+{
+  "mode": "AUTHENTICATOR",
+  "payload": "{\"publicKey\":{\"challenge\":\"abc123\",\"rpId\":\"rdcl.dev\",\"allowCredentials\":[{\"type\":\"public-key\",\"id\":\"abc123\"}],\"extensions\":{}}}"
+}

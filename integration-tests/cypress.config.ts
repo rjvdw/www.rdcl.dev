@@ -4,13 +4,18 @@ import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-prepro
 import createEsbuildPlugin from '@badeball/cypress-cucumber-preprocessor/esbuild'
 import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
 import { defineConfig } from 'cypress'
+import cypressLocalStorageCommandsPlugin from 'cypress-localstorage-commands/plugin'
 
 export default defineConfig({
+  env: {
+    API_URL: process.env.API_URL || 'http://api.localhost',
+  },
   e2e: {
     baseUrl: 'http://localhost:4173',
     specPattern: ['cypress/**/*.feature', 'cypress/**/*.spec.*'],
     async setupNodeEvents(on, config) {
       await addCucumberPreprocessorPlugin(on, config)
+      cypressLocalStorageCommandsPlugin(on, config)
 
       on(
         'file:preprocessor',

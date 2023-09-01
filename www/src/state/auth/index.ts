@@ -24,46 +24,62 @@ export async function startLogin(
   api: Api,
   user: string,
   mode?: LoginResponseBody['mode'],
-): Promise<LoginResponseBody> {
+): Promise<{ response: Response; body: LoginResponseBody }> {
   const requestBody = new URLSearchParams()
   requestBody.set('email', user)
   requestBody.set('callback', `${window.location.origin}/login/verify`)
   if (mode) requestBody.set('mode', mode)
 
-  const loginResponse = await api.post('/auth/login', requestBody)
-  const responseBody = await getBody(loginResponse, isValidLoginResponseBody)
+  const response = await api.post('/auth/login', requestBody)
+  const body = await getBody(response, isValidLoginResponseBody)
 
-  if (responseBody.mode === 'EMAIL') {
-    localStorage.sessionToken = responseBody.payload
-  } else {
-    const options = parse(responseBody.payload)
-    let credential: PublicKeyCredentialWithAssertionJSON
-    try {
-      credential = await get(options)
-    } catch (err) {
-      console.warn(errorAsString(err))
-      return await startLogin(api, user, 'EMAIL')
-    }
-
-    const loginCallback = loginResponse.headers.get('Location')
-    if (loginCallback === null) {
-      throw new ApiError(
-        'Missing required response header: Location',
-        loginResponse,
-      )
-    }
-
-    const response = await api.call('post', loginCallback, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credential),
-    })
-
-    await handleSuccessfulLogin(response)
+  if (mode && body.mode !== mode) {
+    // server responded with a different mode than requested
+    throw new ApiError(
+      'Received invalid authentication mode: ' + body.mode,
+      response,
+    )
   }
 
-  return responseBody
+  return { response, body }
+}
+
+export async function handleLogin(
+  api: Api,
+  { mode, payload }: LoginResponseBody,
+  loginResponse: Response,
+): Promise<boolean> {
+  if (mode === 'EMAIL') {
+    localStorage.sessionToken = payload
+    return true
+  }
+
+  const options = parse(payload)
+  let credential: PublicKeyCredentialWithAssertionJSON
+  try {
+    credential = await get(options)
+  } catch (err) {
+    console.warn(errorAsString(err))
+    return false
+  }
+
+  const loginCallback = loginResponse.headers.get('Location')
+  if (loginCallback === null) {
+    throw new ApiError(
+      'Missing required response header: Location',
+      loginResponse,
+    )
+  }
+
+  const response = await api.call('post', loginCallback, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credential),
+  })
+
+  await handleSuccessfulLogin(response)
+  return true
 }
 
 export async function completeLogin(verificationCode: string, api: Api) {

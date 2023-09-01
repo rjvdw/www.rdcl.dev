@@ -6,4 +6,8 @@ export const Navigation = {
   get tools() {
     return cy.get('.app-nav [href="/tools"]')
   },
+
+  get logout() {
+    return cy.get('.app-nav [href="/logout"]')
+  },
 }

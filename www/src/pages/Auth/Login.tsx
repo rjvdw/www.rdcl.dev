@@ -1,16 +1,23 @@
 import { FunctionComponent } from 'preact'
-import { useId, useMemo, useState } from 'preact/hooks'
+import { useMemo, useState } from 'preact/hooks'
 import { ActiveRoute } from '../../components/ActiveRoute'
 import { PageTitle } from '../../components/PageTitle'
-import { startLogin } from '../../state/auth'
+import { handleLogin, startLogin } from '../../state/auth'
 import { LoginResponseBody } from '../../state/auth/types'
 import { useFormHandler } from '../../util/form'
 import { useApi } from '../../util/http'
 
 export const Login: FunctionComponent = () => {
-  const id = useId()
-  const { username, rememberMe, onSubmit, mode, pending, error } =
-    useLoginForm()
+  const {
+    username,
+    rememberMe,
+    onSubmit,
+    mode,
+    success,
+    pending,
+    error,
+    loginPending,
+  } = useLoginForm()
 
   return (
     <>
@@ -19,22 +26,32 @@ export const Login: FunctionComponent = () => {
 
       <h1>Login</h1>
 
-      {mode === 'EMAIL' ? (
+      {loginPending ? (
+        <p>Login pending...</p>
+      ) : success && mode === 'EMAIL' ? (
         <p>Login request sent successfully, please wait for an e-mail.</p>
-      ) : mode === 'AUTHENTICATOR' ? (
+      ) : success && mode === 'AUTHENTICATOR' ? (
         <p>Logged in successfully.</p>
       ) : (
-        <form onSubmit={onSubmit} disabled={pending}>
+        <form onSubmit={onSubmit} disabled={pending} data-testid="login:form">
           <section class="form-grid">
-            <label htmlFor={`${id}:user`}>User</label>
+            <label for="login:user">User</label>
             <input
-              id={`${id}:user`}
+              id="login:user"
+              data-testid="login:user"
               type="text"
               name="user"
               autoComplete="user"
               required
               defaultValue={username}
             />
+
+            {success === false && (
+              <label data-start="2">
+                <input type="checkbox" name="mode-email" /> Use e-mail
+                authentication
+              </label>
+            )}
 
             <button data-start="2">Log in</button>
 
@@ -61,8 +78,9 @@ export const Login: FunctionComponent = () => {
 
 function useLoginForm() {
   const [mode, setMode] = useState<LoginResponseBody['mode']>()
-  const [success, setSuccess] = useState(false)
+  const [success, setSuccess] = useState<boolean | null>(null)
   const [pending, setPending] = useState(false)
+  const [loginPending, setLoginPending] = useState(false)
   const api = useApi(false)
 
   const { error, onSubmit } = useFormHandler(async (event, { setError }) => {
@@ -80,13 +98,26 @@ function useLoginForm() {
     }
 
     setPending(true)
+    setSuccess(null)
     setError(undefined)
     try {
-      const body = await startLogin(api, user)
+      const { response, body } = await startLogin(
+        api,
+        user,
+        enforeModeEmail(event.target),
+      )
+      setLoginPending(true)
+      const success = await handleLogin(api, body, response)
+      setLoginPending(false)
+
       setMode(body.mode)
-      setSuccess(true)
+      setSuccess(success)
+      if (!success) {
+        setError('Login attempt failed')
+      }
     } finally {
       setPending(false)
+      setLoginPending(false)
     }
   }, [])
 
@@ -102,8 +133,9 @@ function useLoginForm() {
       success,
       pending,
       error,
+      loginPending,
     }),
-    [onSubmit, success, pending, error],
+    [onSubmit, success, pending, error, loginPending],
   )
 }
 
@@ -115,4 +147,10 @@ function rememberMe(form: HTMLFormElement): boolean {
   const rememberMe = form.elements.namedItem('remember-me') as unknown
 
   return rememberMe instanceof HTMLInputElement && rememberMe.checked
+}
+
+function enforeModeEmail(form: HTMLFormElement): 'EMAIL' | undefined {
+  const mode = form.elements.namedItem('mode-email') as unknown
+
+  return mode instanceof HTMLInputElement && mode.checked ? 'EMAIL' : undefined
 }
