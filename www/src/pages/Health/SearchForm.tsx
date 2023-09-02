@@ -50,7 +50,7 @@ const Input = ({ id, name, value }: InputProps) => {
 
   return (
     <>
-      <label data-start={1} htmlFor={id}>
+      <label data-start={1} for={id}>
         From
       </label>
       <input

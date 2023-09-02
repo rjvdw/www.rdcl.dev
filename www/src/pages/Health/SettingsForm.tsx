@@ -18,7 +18,7 @@ export const SettingsForm = ({
 
       <form onSubmit={onSubmit}>
         <section class="form-grid" data-suffix={true}>
-          <label data-start={1} htmlFor={id('height')}>
+          <label data-start={1} for={id('height')}>
             Height
           </label>
           <input
@@ -30,7 +30,7 @@ export const SettingsForm = ({
             min={0}
             defaultValue={height ? String(height) : ''}
           />
-          <label htmlFor={id('height')}>cm</label>
+          <label for={id('height')}>cm</label>
 
           <button data-start={2}>Save</button>
         </section>

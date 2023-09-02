@@ -28,7 +28,7 @@ export const Edit = ({ profile }: EditProps) => {
           value={profile.email}
         />
 
-        <label htmlFor="edit-profile:name">Name</label>
+        <label for="edit-profile:name">Name</label>
         <input
           id="edit-profile:name"
           type="string"

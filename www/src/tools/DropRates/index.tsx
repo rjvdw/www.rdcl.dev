@@ -54,9 +54,9 @@ export const DropRates: FunctionComponent = () => {
             readOnly
             value={chance}
           />
-          <label htmlFor={id('chance')}>%</label>
+          <label for={id('chance')}>%</label>
 
-          <label data-start={1} htmlFor={id('perc95')}>
+          <label data-start={1} for={id('perc95')}>
             95%
           </label>
           <input
@@ -66,7 +66,7 @@ export const DropRates: FunctionComponent = () => {
             value={perc95}
           />
 
-          <label data-start={1} htmlFor={id('perc99')}>
+          <label data-start={1} for={id('perc99')}>
             99%
           </label>
           <input
