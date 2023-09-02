@@ -11,13 +11,9 @@ export const fmt = {
     return asDate(value).toLocaleString(
       document.documentElement.lang,
       options ?? {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-
-        hour: 'numeric',
-        minute: '2-digit',
-        second: '2-digit',
+        dateStyle: 'medium',
+        timeStyle: 'medium',
+        hour12: false,
       },
     )
   },
@@ -29,12 +25,11 @@ export const fmt = {
   ): string {
     if (value === undefined) return ''
 
-    return asDate(value).toLocaleDateString(
+    return asDate(value).toLocaleString(
       document.documentElement.lang,
       options ?? {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+        dateStyle: 'medium',
+        hour12: false,
       },
     )
   },
@@ -46,12 +41,11 @@ export const fmt = {
   ): string {
     if (value === undefined) return ''
 
-    return asDate(value).toLocaleDateString(
+    return asDate(value).toLocaleString(
       document.documentElement.lang,
       options ?? {
-        hour: 'numeric',
-        minute: '2-digit',
-        second: '2-digit',
+        timeStyle: 'medium',
+        hour12: false,
       },
     )
   },
