@@ -1,3 +1,4 @@
+import { settings } from '../../state/settings'
 import { useProfileContext } from './context'
 import { UserProfile } from './types'
 
@@ -15,6 +16,17 @@ export const View = ({ profile }: ViewProps) => {
         <dd>{profile.email}</dd>
         <dt>Name</dt>
         <dd>{profile.name}</dd>
+      </dl>
+
+      <h2>Settings</h2>
+
+      <dl>
+        <dt>Date style</dt>
+        <dd>{settings.value.dateStyle}</dd>
+        <dt>Time style</dt>
+        <dd>{settings.value.timeStyle}</dd>
+        <dt>Clock style</dt>
+        <dd>{settings.value.hour12 ? '12-hour clock' : '24-hour clock'}</dd>
       </dl>
 
       <p>

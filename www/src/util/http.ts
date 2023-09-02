@@ -27,7 +27,7 @@ export function asParams(form: HTMLFormElement | FormData): URLSearchParams {
   return params
 }
 
-async function callApi(
+export async function callApi(
   method: string,
   path: string,
   authenticated: boolean,

@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'preact'
+import { useEffect } from 'preact/hooks'
 import { Router } from 'preact-router'
 import { Auth } from '../../pages/Auth'
 import { Games } from '../../pages/Games'
@@ -8,6 +9,7 @@ import { NotFound } from '../../pages/NotFound'
 import { Profile } from '../../pages/Profile'
 import { Tools } from '../../pages/Tools'
 import { auth } from '../../state/auth'
+import { loadSettings } from '../../state/settings'
 import Icon from '../Icon'
 import { MenuItem } from '../MenuItem'
 import { AppHeader } from './AppHeader'
@@ -16,6 +18,10 @@ import { useSideMenu } from './useSideMenu'
 
 export const Index: FunctionComponent = () => {
   const sideMenu = useSideMenu()
+
+  useEffect(() => {
+    void loadSettings()
+  }, [])
 
   return (
     <div class="app">
