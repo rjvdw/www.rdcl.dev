@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'preact'
 import { ActiveRoute } from '../../components/ActiveRoute'
+import { DateTime } from '../../components/DateTime'
 import { LoginRequired } from '../../components/LoginRequired'
 import { PageTitle } from '../../components/PageTitle'
 import { fmt } from '../../util/format'
@@ -74,7 +75,7 @@ type TableProps = {
 }
 
 const Table: FunctionComponent<TableProps> = ({ children, settings }) => (
-  <div class="responsive-table-wrapper health-records">
+  <div class="responsive-table-wrapper no-wrap health-records">
     <table>
       <thead>
         <tr>
@@ -98,7 +99,9 @@ type RecordProps = {
 
 const Record = ({ record, settings, deleteRecord }: RecordProps) => (
   <tr>
-    <td>{fmt.date(record.date)}</td>
+    <td>
+      <DateTime value={record.date} mode="date" />
+    </td>
     <td>{record.data.weight ? `${fmt.number(record.data.weight)}kg` : ''}</td>
     <td>{record.data.bodyFat ? `${fmt.number(record.data.bodyFat)}%` : ''}</td>
     <td>

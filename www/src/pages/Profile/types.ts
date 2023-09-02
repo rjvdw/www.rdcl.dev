@@ -1,6 +1,7 @@
 export type Authenticator = {
   id: string
   name?: string
+  lastUsed?: string
 }
 
 export type UserProfile = {
@@ -29,6 +30,7 @@ function isAuthenticator(this: void, body: unknown): body is Authenticator {
     body !== null &&
     'id' in body &&
     typeof body.id === 'string' &&
-    (!('name' in body) || typeof body.name === 'string')
+    (!('name' in body) || typeof body.name === 'string') &&
+    (!('lastUsed' in body) || typeof body.lastUsed === 'string')
   )
 }

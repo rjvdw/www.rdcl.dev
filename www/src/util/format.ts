@@ -1,15 +1,57 @@
 export const LOCALE = undefined
 
 export const fmt = {
-  date(this: void, value?: Date, options?: Intl.DateTimeFormatOptions): string {
+  dateTime(
+    this: void,
+    value?: Date | string,
+    options?: Intl.DateTimeFormatOptions,
+  ): string {
     if (value === undefined) return ''
 
-    return value.toLocaleDateString(
-      LOCALE,
+    return asDate(value).toLocaleString(
+      document.documentElement.lang,
       options ?? {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
+
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+      },
+    )
+  },
+
+  date(
+    this: void,
+    value?: Date | string,
+    options?: Intl.DateTimeFormatOptions,
+  ): string {
+    if (value === undefined) return ''
+
+    return asDate(value).toLocaleDateString(
+      document.documentElement.lang,
+      options ?? {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      },
+    )
+  },
+
+  time(
+    this: void,
+    value?: Date | string,
+    options?: Intl.DateTimeFormatOptions,
+  ): string {
+    if (value === undefined) return ''
+
+    return asDate(value).toLocaleDateString(
+      document.documentElement.lang,
+      options ?? {
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
       },
     )
   },
@@ -22,10 +64,18 @@ export const fmt = {
     if (value === undefined) return ''
 
     return value.toLocaleString(
-      LOCALE,
+      document.documentElement.lang,
       options ?? {
         maximumFractionDigits: 1,
       },
     )
   },
 } as const
+
+function asDate(value: string | Date): Date {
+  if (value instanceof Date) {
+    return value
+  }
+
+  return new Date(value)
+}
