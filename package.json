@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "workspaces": [
+    "api",
+    "app"
+  ],
+  "scripts": {
+    "dev": "concurrently 'npm -w app run dev' 'npm -w api run dev'",
+    "prepare": "husky install",
+    "check:stylelint": "stylelint -f verbose 'app/**/*.{scss,css}'",
+    "check:prettier": "prettier --check . 'app/src/**/*.svelte'",
+    "check": "npm run check:stylelint && npm run check:prettier",
+    "fix:stylelint": "npm run check:stylelint -- --fix",
+    "fix:prettier": "prettier --write . 'app/src/**/*.svelte'",
+    "fix": "npm run fix:stylelint && npm run fix:prettier"
+  },
+  "dependencies": {
+    "husky": "^8.0.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-svelte": "^2.33.1",
+    "prettier": "^3.0.3",
+    "prettier-plugin-svelte": "^3.0.3",
+    "stylelint": "^15.10.3",
+    "stylelint-config-recess-order": "^4.3.0",
+    "stylelint-config-standard-scss": "^11.0.0"
+  }
+}

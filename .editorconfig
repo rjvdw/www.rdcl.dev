@@ -1,0 +1,20 @@
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_size = 4
+
+[*.{js,ts,java}]
+max_line_length = 120
+
+[*.{js,cjs,mjs,ts,json}]
+indent_size = 2
+
+[*.{html,svelte}]
+indent_size = 2
+
+[*.{css,scss}]
+indent_size = 2

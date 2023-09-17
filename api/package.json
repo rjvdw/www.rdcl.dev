@@ -1,0 +1,8 @@
+{
+  "name": "@rdcl-dev/api",
+  "private": true,
+  "scripts": {
+    "dev": "mvn clean compile quarkus:dev",
+    "build": "mvn clean verify"
+  }
+}
