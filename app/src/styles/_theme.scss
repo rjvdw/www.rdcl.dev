@@ -1,0 +1,11 @@
+:root {
+  --main-bg-color: #fff;
+  --main-fg-color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-bg-color: #000;
+    --main-fg-color: #fff;
+  }
+}
