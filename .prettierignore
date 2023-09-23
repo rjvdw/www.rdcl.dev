@@ -2,3 +2,6 @@
 /app/.svelte-kit
 /app/package
 /api/target
+
+# better would be to place a `.prettierignore` in the `.idea` directory, but unfortunately this is not supported by prettier
+/.idea
