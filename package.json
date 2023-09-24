@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "dev": "concurrently 'npm -w app run dev' 'npm -w api run dev'",
+    "build": "npm -ws run build",
     "prepare": "husky install",
     "check:eslint": "eslint .",
     "check:stylelint": "stylelint -f verbose 'app/**/*.{scss,css}'",

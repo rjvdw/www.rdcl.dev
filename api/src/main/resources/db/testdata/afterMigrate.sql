@@ -4,5 +4,6 @@ on conflict do nothing;
 
 insert into "auth"."allowed_callback" (url)
 values ('https://example.com/login/verify'),
+       ('http://localhost:4173/login/verify'),
        ('http://localhost:5173/login/verify')
 on conflict do nothing;

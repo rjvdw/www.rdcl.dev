@@ -3,10 +3,11 @@ import type { Actions } from './$types'
 import { callApi } from '$lib/api'
 
 export const actions = {
-  async default({ request, cookies }) {
+  async default({ request, cookies, url }) {
     try {
       const data = await request.formData()
-      const response = await login(data)
+      const callback = `${url.origin}/login/verify`
+      const response = await login(data, callback)
       cookies.set('session-token', response.sessionToken, {
         path: '/',
         sameSite: 'strict',
@@ -33,7 +34,7 @@ type LoginResponseBody = {
   sessionToken: string
 }
 
-async function login(data: FormData): Promise<LoginResponseBody> {
+async function login(data: FormData, callback: string): Promise<LoginResponseBody> {
   const email = data.get('email')
   if (!(typeof email === 'string') || !email) {
     throw new LoginError('invalid email')
@@ -46,6 +47,7 @@ async function login(data: FormData): Promise<LoginResponseBody> {
     },
     body: JSON.stringify({
       email,
+      callback,
     }),
   })
 
