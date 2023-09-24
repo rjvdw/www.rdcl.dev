@@ -1,50 +1,49 @@
+import { redirect } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
 import { Jwt } from '$lib/jwt'
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
-  try {
-    const sessionToken = cookies.get('session-token') ?? ''
-    const verificationCode = url.searchParams.get('verification-code') ?? ''
+  const sessionToken = cookies.get('session-token') ?? ''
+  const verificationCode = url.searchParams.get('verification-code') ?? ''
 
-    const errors: string[] = []
-    if (!sessionToken) errors.push('no session token')
-    if (!verificationCode) errors.push('no verification code')
+  const errors: string[] = []
+  if (!sessionToken) errors.push('no session token')
+  if (!verificationCode) errors.push('no verification code')
 
-    if (errors.length > 0) {
-      return {
-        success: false,
-        errors,
-      }
-    }
-
-    const response = await verify(sessionToken, verificationCode)
-
-    const jwt = new Jwt(response.jwt)
-    cookies.set('jwt', response.jwt, {
-      path: '/',
-      sameSite: 'strict',
-      expires: jwt.expires,
-    })
-
-    cookies.set('session-token', '', {
-      path: '/',
-      sameSite: 'strict',
-      expires: new Date(0),
-    })
-
+  if (errors.length > 0) {
     return {
-      success: true,
+      errors,
     }
+  }
+
+  let response: VerifyResponseBody
+  try {
+    response = await verify(sessionToken, verificationCode)
   } catch (err) {
     if (err instanceof VerifyError) {
       return {
-        success: false,
         errors: [err.message],
       }
     }
 
     throw err
   }
+
+  const jwt = new Jwt(response.jwt)
+  cookies.set('jwt', response.jwt, {
+    path: '/',
+    sameSite: 'strict',
+    expires: jwt.expires,
+    secure: true,
+  })
+
+  cookies.delete('session-token', {
+    path: '/',
+    sameSite: 'strict',
+    secure: true,
+  })
+
+  throw redirect(303, '/login/success')
 }
 
 type VerifyResponseBody = {

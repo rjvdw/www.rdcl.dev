@@ -1,7 +1,9 @@
 import jwtDecode, { type JwtPayload } from 'jwt-decode'
 
 interface Payload extends JwtPayload {
-  preferred_username?: string
+  sub: Required<JwtPayload>['sub']
+  exp: Required<JwtPayload>['exp']
+  preferred_username: string
 }
 
 export class Jwt {
@@ -20,16 +22,10 @@ export class Jwt {
   }
 
   get expires() {
-    if (this.#payload.exp === undefined) {
-      return undefined
-    }
     return new Date(this.#payload.exp * 1000)
   }
 
   get expired() {
-    if (this.#payload.exp === undefined) {
-      return false
-    }
     return Date.now() > this.#payload.exp * 1000
   }
 }

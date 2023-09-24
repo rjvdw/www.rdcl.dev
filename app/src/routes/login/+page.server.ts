@@ -9,6 +9,7 @@ export const actions = {
       cookies.set('session-token', response.sessionToken, {
         path: '/',
         sameSite: 'strict',
+        secure: true,
       })
 
       return {
