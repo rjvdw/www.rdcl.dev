@@ -1,17 +1,21 @@
-html,
+:root {
+  font-family: var(--base-font-family);
+  accent-color: var(--highlight-color);
+}
+
+:root,
 body {
-  font-family: sans-serif;
+  inline-size: 100%;
+  padding: 0;
+  margin: 0;
+  block-size: 100%;
+}
+
+body {
+  color: var(--base-foreground-color);
+  background-color: var(--base-background-color);
 }
 
 * {
   box-sizing: border-box;
-}
-
-body {
-  color: var(--main-fg-color);
-  background: var(--main-bg-color);
-}
-
-.error {
-  color: #c33;
 }

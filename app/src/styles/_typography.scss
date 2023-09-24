@@ -1,11 +1,105 @@
+@use 'util/mixins';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  padding: 0;
+  margin-block: 0.5rem;
+  margin-inline: 0;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
+  font-family: var(--headers-font-family);
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.45rem;
+}
+
+p:last-child {
+  margin-block-end: 0;
+}
+
+a {
+  @include mixins.link;
+}
+
+button.link {
+  display: inline;
   padding: 0;
+  margin: 0;
+  font: inherit;
+  text-align: start;
+  appearance: none;
+  background: transparent;
+  border: none;
+
+  @include mixins.link;
+}
+
+ol,
+ul {
+  padding-inline-start: 2.5rem;
+  margin-block: 0 0.75rem;
+  margin-inline: 0;
+}
+
+li {
+  margin-block-end: 0.75rem;
+}
+
+dl:not([class]) {
+  display: grid;
+  grid-template-columns: max-content auto;
+  row-gap: 0.25rem;
+  column-gap: 2rem;
+
+  dt {
+    grid-column-start: 1;
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+  }
+
+  dd {
+    grid-column-start: 2;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+details:not([class]) {
+  overflow: hidden;
+
+  summary {
+    @include mixins.link;
+
+    margin-block-end: 1rem;
+  }
+}
+
+pre {
+  font-size: 1rem;
+}
+
+hr {
   margin-block: 0.5rem;
   margin-inline: 0;
-  font-weight: bold;
+  overflow: initial;
+  border: none;
+  border-block-end: thin solid #333;
 }

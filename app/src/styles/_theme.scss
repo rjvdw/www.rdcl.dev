@@ -1,11 +1,65 @@
 :root {
-  --main-bg-color: #fff;
-  --main-fg-color: #000;
+  /* base settings */
+  --base-font-family: tahoma, arial, serif;
+  --base-background-color: #f3f3f3;
+  --base-foreground-color: #333;
+  --base-link-color: #337ab7;
+  --base-link-hover-color: #23527c;
+  --theme-color: #474069;
+  --highlight-color: #837aae;
+
+  /* headers */
+  --headers-font-family: lucida grande, verdana, arial, sans-serif;
+
+  /* focus */
+  --focus-outline-color: var(--base-foreground-color);
+  --focus-outline: thin dashed var(--focus-outline-color);
+  --focus-offset: -0.25rem;
+
+  /* statuses */
+  --success-foreground: #063;
+  --success-background: #ded;
+  --success-border: var(--success-foreground);
+  --warning-foreground: #640;
+  --warning-background: #fdd;
+  --warning-border: var(--warning-foreground);
+  --error-foreground: #933;
+  --error-background: #fdd;
+  --error-border: var(--error-foreground);
+
+  /* form */
+  --input-background-color: #fff;
+  --input-foreground-color: #000;
+  --input-border-color: #666;
+  --disabled-input-background-color: #eee;
+  --disabled-input-foreground-color: #666;
+  --disabled-input-border-color: #999;
+  --button-background-color: #ccc;
+  --button-foreground-color: #333;
+  --button-border-color: var(--button-foreground-color);
+  --disabled-button-background-color: #ccc;
+  --disabled-button-foreground-color: #666;
+  --disabled-button-border-color: var(--disabled-button-foreground-color);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --main-bg-color: #000;
-    --main-fg-color: #fff;
+    /* base settings */
+    --base-background-color: #111;
+    --base-foreground-color: #aaa;
+
+    /* form */
+    --input-background-color: #222;
+    --input-foreground-color: #eee;
+    --input-border-color: #666;
+    --disabled-input-background-color: #333;
+    --disabled-input-foreground-color: #999;
+    --disabled-input-border-color: var(--input-border-color);
+    --button-background-color: var(--input-background-color);
+    --button-foreground-color: var(--input-foreground-color);
+    --button-border-color: var(--input-border-color);
+    --disabled-button-background-color: var(--disabled-input-background-color);
+    --disabled-button-foreground-color: var(--disabled-input-foreground-color);
+    --disabled-button-border-color: var(--input-border-color);
   }
 }
