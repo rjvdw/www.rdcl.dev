@@ -4,6 +4,10 @@
   export let form: ActionData
 </script>
 
+<svelte:head>
+  <title>log in | rdcl.dev</title>
+</svelte:head>
+
 <h1>Log in</h1>
 {#if form?.success}
   <p>Login request sent successfully, please wait for an e-mail.</p>
