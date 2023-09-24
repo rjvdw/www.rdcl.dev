@@ -7,12 +7,14 @@
   "scripts": {
     "dev": "concurrently 'npm -w app run dev' 'npm -w api run dev'",
     "prepare": "husky install",
+    "check:eslint": "eslint .",
     "check:stylelint": "stylelint -f verbose 'app/**/*.{scss,css}'",
     "check:prettier": "prettier --check . 'app/src/**/*.svelte'",
-    "check": "npm run check:stylelint && npm run check:prettier",
+    "check": "npm -w app run check && npm run check:eslint && npm run check:stylelint && npm run check:prettier",
+    "fix:eslint": "npm run check:eslint -- --fix",
     "fix:stylelint": "npm run check:stylelint -- --fix",
     "fix:prettier": "prettier --write . 'app/src/**/*.svelte'",
-    "fix": "npm run fix:stylelint && npm run fix:prettier"
+    "fix": "npm run fix:eslint && npm run fix:stylelint && npm run fix:prettier"
   },
   "dependencies": {
     "husky": "^8.0.3"
@@ -21,6 +23,8 @@
     "concurrently": "^8.2.1",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-svelte": "^2.33.2",
     "prettier": "^3.0.3",
     "prettier-plugin-svelte": "^3.0.3",
