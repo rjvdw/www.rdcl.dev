@@ -1,5 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
+import { callApi } from '$lib/api'
 import { Jwt } from '$lib/jwt'
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
@@ -51,7 +52,7 @@ type VerifyResponseBody = {
 }
 
 async function verify(sessionToken: string, verificationCode: string): Promise<VerifyResponseBody> {
-  const response = await fetch('http://localhost:8080/auth/login/verify', {
+  const response = await callApi('/auth/login/verify', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

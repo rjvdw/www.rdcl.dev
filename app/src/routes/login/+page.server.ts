@@ -1,5 +1,6 @@
 import { fail } from '@sveltejs/kit'
 import type { Actions } from './$types'
+import { callApi } from '$lib/api'
 
 export const actions = {
   async default({ request, cookies }) {
@@ -38,7 +39,7 @@ async function login(data: FormData): Promise<LoginResponseBody> {
     throw new LoginError('invalid email')
   }
 
-  const response = await fetch('http://localhost:8080/auth/login', {
+  const response = await callApi('/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
