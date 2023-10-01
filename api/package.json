@@ -2,13 +2,13 @@
   "name": "@rdcl.dev/api",
   "private": true,
   "dependencies": {
-    "@netlify/functions": "^2.0.2",
-    "axios": "^1.5.0",
+    "@netlify/functions": "^2.1.0",
+    "axios": "^1.5.1",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.6",
-    "@types/node": "^20.6.3",
+    "@types/node": "^20.8.0",
     "typescript": "^5.2.2"
   }
 }
