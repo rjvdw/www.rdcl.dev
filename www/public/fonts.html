@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>fonts</title>
+    <style>
+      html,
+      body,
+      dl,
+      dt,
+      dd {
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+
+      html {
+        font-size: 20px;
+      }
+
+      body {
+        font-family: sans-serif;
+        display: grid;
+        place-content: center;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      dl {
+        display: grid;
+        grid-template-columns: max-content auto;
+        column-gap: 2rem;
+      }
+
+      dt,
+      dd {
+        line-height: 2rem;
+        white-space: nowrap;
+      }
+
+      dt {
+        font-weight: bold;
+        text-align: end;
+      }
+
+      @media (max-width: 720px) {
+        body {
+          display: unset;
+          place-content: unset;
+        }
+
+        dl {
+          margin: 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
+
+        dd + dt {
+          margin-block-start: 2rem;
+        }
+
+        dt {
+          text-align: start;
+        }
+
+        dd {
+          white-space: unset;
+          padding: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <dl>
+      <dt>serif</dt>
+      <dd style="font-family: serif">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>sans-serif</dt>
+      <dd style="font-family: sans-serif">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>monospace</dt>
+      <dd style="font-family: monospace">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>cursive</dt>
+      <dd style="font-family: cursive">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>fantasy</dt>
+      <dd style="font-family: fantasy">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>system-ui</dt>
+      <dd style="font-family: system-ui">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>ui-serif</dt>
+      <dd style="font-family: ui-serif">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>ui-sans-serif</dt>
+      <dd style="font-family: ui-sans-serif">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>ui-monospace</dt>
+      <dd style="font-family: ui-monospace">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>ui-rounded</dt>
+      <dd style="font-family: ui-rounded">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>emoji</dt>
+      <dd style="font-family: emoji">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>math</dt>
+      <dd style="font-family: math">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+
+      <dt>fangsong</dt>
+      <dd style="font-family: fangsong">
+        The quick brown fox jumps over the lazy dog
+      </dd>
+    </dl>
+  </body>
+</html>
