@@ -32,3 +32,7 @@ hr {
   border: none;
   border-block-end: thin solid #333;
 }
+
+.hidden {
+  display: none;
+}

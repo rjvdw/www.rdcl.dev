@@ -1,0 +1,225 @@
+---
+import type { CredentialRequestOptionsJSON } from '@github/webauthn-json'
+import FormGrid from '$components/FormGrid'
+import Layout from '$layouts/Login.astro'
+import { login, verifyCredential } from '$lib/auth/api'
+import { Jwt } from '$lib/auth/Jwt'
+
+let data: URLSearchParams | null = null
+let rememberMe: string | null = Astro.cookies.get('remember-me')?.value ?? null
+let options: CredentialRequestOptionsJSON | null = null
+let logInId: string | null = null
+let error: string | null = null
+if (Astro.request.method === 'POST') {
+  try {
+    // Typescript does not accept FormData in the URLSearchParams constructor.
+    data = new URLSearchParams((await Astro.request.formData()) as any)
+
+    if (data.get('remember-me') === '1') {
+      data.delete('remember-me')
+      const email = data.get('email')
+      if (email) {
+        rememberMe = email
+        const expires = new Date()
+        expires.setFullYear(expires.getFullYear() + 1)
+
+        Astro.cookies.set('remember-me', email, {
+          sameSite: 'lax',
+          httpOnly: true,
+          secure: true,
+          path: '/login',
+          expires,
+        })
+      }
+    } else {
+      rememberMe = null
+      Astro.cookies.set('remember-me', 'deleted', {
+        sameSite: 'lax',
+        httpOnly: true,
+        secure: true,
+        path: '/login',
+        expires: new Date(0),
+      })
+    }
+
+    if (data.has('credential')) {
+      // authenticator flow
+      const credential = data.get('credential')!
+      const logInId = data.get('logInId')!
+      const body = await verifyCredential(logInId, credential)
+      const jwt = new Jwt(body.jwt)
+
+      Astro.cookies.set('jwt', body.jwt, {
+        sameSite: 'lax',
+        httpOnly: true,
+        secure: true,
+        path: '/',
+        expires: jwt.expires,
+      })
+
+      return Astro.redirect('/login/logged-in')
+    } else {
+      // regular login flow
+      data.set('callback', `${Astro.url.origin}/login/verify`)
+
+      const body = await login(data)
+
+      if (body.mode === 'EMAIL') {
+        Astro.cookies.set('session-token', body.sessionToken, {
+          sameSite: 'lax',
+          httpOnly: true,
+          secure: true,
+          path: '/login',
+        })
+
+        return Astro.redirect('/login/sent')
+      }
+
+      options = body.options
+      logInId = body.logInId
+    }
+  } catch (err) {
+    error = String(err)
+  }
+}
+---
+
+<Layout>
+  {
+    options && (
+      <>
+        <script
+          id="credential-request-options"
+          type="application/json"
+          set:html={JSON.stringify(options)}
+        />
+
+        <p id="login-pending">Log in pending...</p>
+      </>
+    )
+  }
+
+  <form
+    id="login-form"
+    action="/login"
+    method="post"
+    class:list={[{ hidden: Boolean(options) }]}
+  >
+    {
+      /* set the mode to EMAIL, and remove this input if javascript is supported */
+    }
+    <input type="hidden" name="mode" value="EMAIL" />
+    {logInId && <input type="hidden" name="logInId" value={logInId} />}
+
+    <FormGrid>
+      <FormGrid.Field label="user" for="login:user">
+        <input
+          id="login:user"
+          name="email"
+          type="email"
+          value={data?.get('email') ?? rememberMe}
+          autocomplete="username"
+          required
+        />
+      </FormGrid.Field>
+
+      {
+        // If this form is shown while there are WebAuthn options available,
+        // this means the log in attempt failed. Give the user an option to log
+        // in with e-mail authentication.
+        options && (
+          <label data-start="2">
+            <input type="checkbox" name="mode" value="EMAIL" />
+            Use e-mail authentication
+          </label>
+        )
+      }
+
+      <FormGrid.Actions>
+        <button>Log in</button>
+      </FormGrid.Actions>
+
+      <label data-start="2">
+        <input
+          type="checkbox"
+          name="remember-me"
+          value="1"
+          checked={rememberMe !== null}
+        />
+         Remember me
+      </label>
+
+      <p
+        id="error-message"
+        class="error"
+        data-start="2"
+        class:list={[{ hidden: !error }]}
+      >
+        {error}
+      </p>
+    </FormGrid>
+  </form>
+</Layout>
+
+<script>
+  import {
+    get,
+    type CredentialRequestOptionsJSON,
+    type PublicKeyCredentialWithAssertionJSON,
+  } from '@github/webauthn-json'
+  import { isCredentialRequestOptionsJSON } from '$lib/auth/util'
+  import { getFormById } from '$lib/form/util'
+
+  const pendingEl = document.getElementById('login-pending')!
+  const errorEl = document.getElementById('error-message')!
+  const form = getFormById('login-form')
+
+  // javascript is supported, so this field can be removed
+  form.querySelector('input[type="hidden"][name="mode"]')?.remove()
+
+  const options = readOptions()
+  if (options) {
+    await completeAuthentication(options)
+  }
+
+  function readOptions(): CredentialRequestOptionsJSON | null {
+    const el = document.getElementById('credential-request-options')
+    if (!el) {
+      return null
+    }
+
+    const options = JSON.parse(el.innerHTML)
+    if (!isCredentialRequestOptionsJSON(options)) {
+      return null
+    }
+
+    return options
+  }
+
+  async function completeAuthentication(options: CredentialRequestOptionsJSON) {
+    let credential: PublicKeyCredentialWithAssertionJSON
+
+    try {
+      credential = await get(options)
+    } catch (err) {
+      handleError(err)
+      return
+    }
+
+    const input = document.createElement('input')
+    input.type = 'hidden'
+    input.name = 'credential'
+    input.value = JSON.stringify(credential)
+    form.append(input)
+    form.submit()
+    input.remove()
+  }
+
+  function handleError(err: unknown) {
+    console.warn(err)
+    form.classList.remove('hidden')
+    pendingEl.classList.add('hidden')
+    errorEl.classList.remove('hidden')
+    errorEl.innerHTML = String(err)
+  }
+</script>

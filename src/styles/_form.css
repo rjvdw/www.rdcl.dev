@@ -9,12 +9,18 @@ input:not([type='range'], [type='radio'], [type='checkbox']),
 textarea,
 .input {
   inline-size: 100%;
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
   font-size: inherit;
+  border: 1px solid #333;
 }
 
 button,
 input[type='button'],
 input[type='submit'] {
   inline-size: 100%;
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
   font-size: inherit;
+  border: 1px solid #333;
 }

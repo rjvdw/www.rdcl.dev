@@ -1,0 +1,23 @@
+---
+import Layout from '$layouts/Base.astro'
+
+if (Astro.request.method === 'POST') {
+  Astro.cookies.set('jwt', 'deleted', {
+    sameSite: 'lax',
+    httpOnly: true,
+    secure: true,
+    path: '/',
+    expires: new Date(0),
+  })
+
+  return Astro.redirect('/')
+}
+---
+
+<Layout title="log out">
+  <h1>Log out</h1>
+
+  <form action="/logout" method="post">
+    <button>Log out</button>
+  </form>
+</Layout>

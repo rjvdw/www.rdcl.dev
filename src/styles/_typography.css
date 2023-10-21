@@ -38,3 +38,7 @@ ul {
 li + li {
   margin-block-start: 1rem;
 }
+
+.error {
+  color: red;
+}

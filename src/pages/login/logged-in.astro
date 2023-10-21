@@ -1,0 +1,13 @@
+---
+import Layout from '$layouts/Login.astro'
+
+const { jwt } = Astro.locals
+
+if (!jwt) {
+  return Astro.redirect('/login')
+}
+---
+
+<Layout>
+  <p>Logged in successfully.</p>
+</Layout>

@@ -1,0 +1,42 @@
+---
+import Layout from '$layouts/Login.astro'
+import { verify } from '$lib/auth/api'
+import { Jwt } from '$lib/auth/Jwt'
+
+let error = ''
+const verificationCode = Astro.url.searchParams.get('verification-code')
+const sessionToken = Astro.cookies.get('session-token')?.value
+
+if (verificationCode && sessionToken) {
+  try {
+    const body = await verify(verificationCode, sessionToken)
+    const jwt = new Jwt(body.jwt)
+
+    Astro.cookies.set('session-token', 'deleted', {
+      sameSite: 'lax',
+      httpOnly: true,
+      secure: true,
+      path: '/login',
+      expires: new Date(0),
+    })
+
+    Astro.cookies.set('jwt', body.jwt, {
+      sameSite: 'lax',
+      httpOnly: true,
+      secure: true,
+      path: '/',
+      expires: jwt.expires,
+    })
+
+    return Astro.redirect('/login/logged-in')
+  } catch (err) {
+    error = String(err)
+  }
+} else {
+  error = 'missing token'
+}
+---
+
+<Layout>
+  <p>Log in failed: <em>{error}</em>. <a href="/login">Please try again</a>.</p>
+</Layout>

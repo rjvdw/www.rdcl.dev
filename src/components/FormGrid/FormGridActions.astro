@@ -1,0 +1,20 @@
+<div data-start="2" class="form-grid-actions">
+  <slot />
+</div>
+
+<style>
+  div {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: stretch;
+  }
+</style>
+
+<style is:global>
+  .form-grid-actions > button {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+  }
+</style>
