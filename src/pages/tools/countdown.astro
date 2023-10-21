@@ -1,0 +1,166 @@
+---
+import Layout from '$layouts/Tools.astro'
+
+export const prerender = true
+---
+
+<Layout title="countdown">
+  <h1>Countdown</h1>
+
+  <form id="countdown">
+    <section class="grid">
+      <label for="countdown:numbers">Numbers</label>
+      <input
+        id="countdown:numbers"
+        name="number[0]"
+        type="text"
+        inputmode="numeric"
+        required
+      />
+      <input name="number[1]" type="text" inputmode="numeric" required />
+
+      <input
+        data-start="2"
+        name="number[2]"
+        type="text"
+        inputmode="numeric"
+        required
+      />
+      <input name="number[3]" type="text" inputmode="numeric" required />
+
+      <input
+        data-start="2"
+        name="number[4]"
+        type="text"
+        inputmode="numeric"
+        required
+      />
+      <input name="number[5]" type="text" inputmode="numeric" required />
+
+      <label for="countdown:target">Target</label>
+      <input
+        data-full-width
+        id="countdown:target"
+        name="target"
+        type="text"
+        inputmode="numeric"
+        required
+      />
+
+      <button data-full-width>Let's play countdown!</button>
+    </section>
+  </form>
+
+  <section id="solution" class="solution">
+    <h2>Solution</h2>
+
+    <p>This one is not possible.</p>
+
+    <ul></ul>
+  </section>
+</Layout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: max-content 1fr 1fr;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  [data-start='2'] {
+    grid-column-start: 2;
+  }
+
+  [data-full-width] {
+    grid-column: 2 / span 2;
+  }
+
+  label {
+    padding-inline-start: 1rem;
+    text-align: end;
+  }
+
+  .solution {
+    display: none;
+  }
+
+  .solution.solved,
+  .solution.impossible {
+    display: unset;
+  }
+
+  .solution.solved > p {
+    display: none;
+  }
+
+  .solution.impossible > ul {
+    display: none;
+  }
+</style>
+
+<script>
+  import { getFormById, InputParser } from '$lib/form/util'
+  import { solve, type Answer } from '$lib/tools/countdown'
+
+  const form = getFormById('countdown')
+  const solutionEl = document.getElementById('solution')
+  const answerEl = solutionEl?.querySelector<HTMLUListElement>('ul')
+
+  if (!solutionEl || !answerEl) {
+    throw new Error('element #solution does not exist')
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    const data = new FormData(form)
+    const numbers = [
+      InputParser.numeric(data.get('number[0]')),
+      InputParser.numeric(data.get('number[1]')),
+      InputParser.numeric(data.get('number[2]')),
+      InputParser.numeric(data.get('number[3]')),
+      InputParser.numeric(data.get('number[4]')),
+      InputParser.numeric(data.get('number[5]')),
+    ]
+    const target = InputParser.numeric(data.get('target'))
+
+    if (!isComplete(numbers) || target === null) {
+      throw new Error('missing required inputs')
+    }
+
+    const solution = await solve(target, numbers)
+
+    if (solution === null) {
+      solutionEl.classList.remove('solved')
+      solutionEl.classList.add('impossible')
+    } else {
+      solutionEl.classList.add('solved')
+      solutionEl.classList.remove('impossible')
+
+      answerEl.innerHTML = ''
+
+      for (const answer of solution) {
+        const li = document.createElement('li')
+        li.innerHTML = formatLine(answer)
+        answerEl.append(li)
+      }
+    }
+  })
+
+  function formatLine([operation, op1, op2, result]: Answer): string {
+    switch (operation) {
+      case 'add':
+        return `${op1} + ${op2} = ${result}`
+      case 'multiply':
+        return `${op1} * ${op2} = ${result}`
+      case 'subtract':
+        return `${op1} - ${op2} = ${result}`
+      case 'divide':
+        return `${op1} / ${op2} = ${result}`
+    }
+  }
+
+  function isComplete(numbers: (number | null)[]): numbers is number[] {
+    return numbers.every((i) => i !== null)
+  }
+</script>

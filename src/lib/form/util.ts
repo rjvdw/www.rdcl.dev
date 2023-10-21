@@ -16,8 +16,25 @@ export function getInputFieldById(id: string) {
   return el
 }
 
+export function isForm(el: unknown): el is HTMLFormElement {
+  return el instanceof HTMLFormElement
+}
+
+export function getFormById(id: string) {
+  const el = document.getElementById(id)
+  if (!isForm(el)) {
+    throw new Error(`Element #${id} is not a valid form`)
+  }
+  return el
+}
+
 export const InputParser = {
-  numeric(value: string): number | null {
+  numeric(
+    value: FormDataEntryValue | string | null | undefined,
+  ): number | null {
+    if (!(typeof value === 'string')) {
+      return null
+    }
     return value === '' ? null : +value
   },
 }
