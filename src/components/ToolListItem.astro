@@ -1,0 +1,11 @@
+---
+type Props = {
+  name: string
+  href: string
+}
+
+const { name, href } = Astro.props
+---
+
+<dt><a href={href}>{name}</a></dt>
+<dd><slot /></dd>

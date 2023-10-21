@@ -1,3 +1,11 @@
 body {
   font-family: var(--base-font-family);
 }
+
+hr {
+  margin-block: 0.5rem;
+  margin-inline: 0;
+  overflow: initial;
+  border: none;
+  border-block-end: thin solid #333;
+}

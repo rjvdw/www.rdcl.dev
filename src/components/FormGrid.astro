@@ -1,0 +1,58 @@
+---
+type Props = {
+  suffix?: boolean
+}
+
+const { suffix = false } = Astro.props
+---
+
+<section class="form-grid" data-suffix={suffix}>
+  <slot />
+</section>
+
+<style>
+  section {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  section[data-suffix] {
+    grid-template-columns: max-content 1fr max-content;
+  }
+</style>
+
+<style is:global>
+  .form-grid > hr {
+    grid-column: span 2;
+  }
+
+  .form-grid > [data-start='1'] {
+    grid-column-start: 1;
+  }
+
+  .form-grid > [data-start='2'] {
+    grid-column-start: 2;
+  }
+
+  .form-grid > [data-start='3'] {
+    grid-column-start: 3;
+  }
+
+  .form-grid > [data-span='2'] {
+    grid-column: span 2;
+  }
+
+  .form-grid > [data-span='3'] {
+    grid-column: span 3;
+  }
+
+  .form-grid > [data-span='full'] {
+    grid-column: 1 / span 2;
+  }
+
+  .form-grid[data-suffix] > [data-span='full'] {
+    grid-column: 1 / span 3;
+  }
+</style>

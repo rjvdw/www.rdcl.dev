@@ -1,7 +1,16 @@
 ---
 import Layout from '../../layouts/Tools.astro'
+import ToolList from '../../components/ToolList.astro'
+import ToolListItem from '../../components/ToolListItem.astro'
 ---
 
 <Layout>
   <h1>Tools</h1>
+
+  <ToolList>
+    <ToolListItem name="Drop Rate Calculator" href="/tools/drop-rates">
+      Given a drop rate, computes how many attempts you actually need to get
+      your item.
+    </ToolListItem>
+  </ToolList>
 </Layout>
