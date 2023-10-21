@@ -1,0 +1,30 @@
+{
+  "name": "www.rdcl.dev",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "npm run check:stylelint && npm run check:prettier",
+    "check:stylelint": "stylelint --allow-empty-input -f verbose 'src/**/*.{css,astro}'",
+    "check:prettier": "prettier --check . 'src/**/*.astro'",
+    "fix": "npm run fix:stylelint && npm run fix:prettier",
+    "fix:stylelint": "npm run check:stylelint -- --fix",
+    "fix:prettier": "prettier --write . 'src/**/*.astro'"
+  },
+  "dependencies": {
+    "astro": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.7",
+    "husky": "^8.0.3",
+    "prettier": "^3.0.3",
+    "prettier-plugin-astro": "^0.12.0",
+    "stylelint": "^15.11.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-recess-order": "^4.3.0"
+  }
+}

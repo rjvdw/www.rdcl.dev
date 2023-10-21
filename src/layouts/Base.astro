@@ -1,0 +1,29 @@
+---
+import '../styles/main.css'
+
+const BASE_TITLE = 'rdcl.dev'
+
+type Props = {
+  title?: string
+}
+
+const { title } = Astro.props
+const pageTitle = title ? `${title} | ${BASE_TITLE}` : BASE_TITLE
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#474069" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

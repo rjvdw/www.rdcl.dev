@@ -1,0 +1,16 @@
+---
+import Layout from './Base.astro'
+
+const BASE_TITLE = 'tools'
+
+type Props = {
+  title?: string
+}
+
+const { title } = Astro.props
+const pageTitle = title ? `${title} | ${BASE_TITLE}` : BASE_TITLE
+---
+
+<Layout title={pageTitle}>
+  <slot />
+</Layout>
