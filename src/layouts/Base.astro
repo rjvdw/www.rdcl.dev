@@ -24,6 +24,37 @@ const pageTitle = title ? `${title} | ${BASE_TITLE}` : BASE_TITLE
     <title>{pageTitle}</title>
   </head>
   <body>
-    <slot />
+    <header>rdcl.dev</header>
+
+    <nav>
+      <a href="/">Home</a>
+      <a href="/tools">Tools</a>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
   </body>
 </html>
+
+<style>
+  header {
+    inline-size: max-content;
+    margin-block: 1rem;
+    margin-inline: auto;
+    font-size: 2rem;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    inline-size: max-content;
+    margin-block: 1rem 3rem;
+    margin-inline: auto;
+  }
+
+  main {
+    padding: 1rem;
+  }
+</style>
