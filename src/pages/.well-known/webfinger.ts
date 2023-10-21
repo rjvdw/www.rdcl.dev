@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { getData } from '../../webfinger'
+import { getData } from '$lib/webfinger'
 
 export const GET: APIRoute = async ({ url }) => {
   const resource = url.searchParams.get('resource')

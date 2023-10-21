@@ -1,7 +1,6 @@
 ---
-import Layout from '../../layouts/Tools.astro'
-import FormGrid from '../../components/FormGrid.astro'
-import FormGridField from '../../components/FormGridField.astro'
+import Layout from '$layouts/Tools.astro'
+import FormGrid from '$components/FormGrid'
 
 export const prerender = true
 ---
@@ -11,37 +10,37 @@ export const prerender = true
 
   <form>
     <FormGrid suffix>
-      <FormGridField label="Drop rate" for="drop-rates:drop-rate" suffix="%">
+      <FormGrid.Field label="Drop rate" for="drop-rates:drop-rate" suffix="%">
         <input
           id="drop-rates:drop-rate"
           name="drop-rate"
           type="text"
           inputmode="decimal"
         />
-      </FormGridField>
+      </FormGrid.Field>
 
-      <FormGridField label="Nr. of attempts" for="drop-rates:nr-attempts">
+      <FormGrid.Field label="Nr. of attempts" for="drop-rates:nr-attempts">
         <input
           id="drop-rates:nr-attempts"
           name="nr-attempts"
           type="text"
           inputmode="numeric"
         />
-      </FormGridField>
+      </FormGrid.Field>
 
       <hr />
 
-      <FormGridField label="Chance" for="drop-rates:chance" suffix="%">
+      <FormGrid.Field label="Chance" for="drop-rates:chance" suffix="%">
         <input id="drop-rates:chance" type="text" readonly />
-      </FormGridField>
+      </FormGrid.Field>
 
-      <FormGridField label="95%" for="drop-rates:p95">
+      <FormGrid.Field label="95%" for="drop-rates:p95">
         <input id="drop-rates:p95" type="text" readonly />
-      </FormGridField>
+      </FormGrid.Field>
 
-      <FormGridField label="99%" for="drop-rates:p99">
+      <FormGrid.Field label="99%" for="drop-rates:p99">
         <input id="drop-rates:p99" type="text" readonly />
-      </FormGridField>
+      </FormGrid.Field>
     </FormGrid>
   </form>
 </Layout>
@@ -51,12 +50,13 @@ export const prerender = true
     getInputFieldById,
     InputParser,
     InputFormatter,
-  } from '../../lib/form-util'
+  } from '$lib/form/util'
+  import { computeChance, computePercentiles } from '$lib/tools/drop-rates'
 
   const Fields = getFields()
 
-  computeChance()
-  computePercentiles()
+  setChance()
+  setPercentiles()
 
   function getFields() {
     const dropRateEl = getInputFieldById('drop-rates:drop-rate')
@@ -66,11 +66,12 @@ export const prerender = true
     const p99El = getInputFieldById('drop-rates:p99')
 
     dropRateEl.addEventListener('input', () => {
-      computeChance()
-      computePercentiles()
+      setChance()
+      setPercentiles()
     })
+
     nrAttemptsEl.addEventListener('input', () => {
-      computeChance()
+      setChance()
     })
 
     return {
@@ -96,59 +97,15 @@ export const prerender = true
     }
   }
 
-  function computeChance() {
+  function setChance() {
     const { dropRate, nrAttempts } = Fields
-
-    if (dropRate === null || nrAttempts === null) {
-      Fields.chance = null
-      return
-    }
-
-    const p = normalizeDropRate(dropRate)
-    const n = Math.round(nrAttempts)
-
-    if (n <= 0 || p <= 0) {
-      Fields.chance = 0
-    } else {
-      Fields.chance = 100 - 100 * Math.pow(1 - p, n)
-    }
+    Fields.chance = computeChance(dropRate, nrAttempts)
   }
 
-  function computePercentiles() {
+  function setPercentiles() {
     const { dropRate } = Fields
-
-    if (dropRate === null) {
-      Fields.p95 = null
-      Fields.p99 = null
-    } else if (dropRate <= 0) {
-      Fields.p95 = Infinity
-      Fields.p99 = Infinity
-    } else {
-      Fields.p95 = computePercentile(dropRate, 0.95)
-      Fields.p99 = computePercentile(dropRate, 0.99)
-    }
-  }
-
-  function computePercentile(dropRate: number, percentile: number): number {
-    const p = normalizeDropRate(dropRate)
-
-    let lower = 0
-    let upper = Number.MAX_SAFE_INTEGER
-    let res
-
-    do {
-      res = Math.floor((lower + upper) / 2)
-      if (1 - Math.pow(1 - p, res) < percentile) {
-        lower = res
-      } else {
-        upper = res
-      }
-    } while (lower < upper - 1)
-
-    return res
-  }
-
-  function normalizeDropRate(dropRate: number): number {
-    return (dropRate <= 0 ? 0 : dropRate >= 100 ? 100 : dropRate) / 100
+    const { p95, p99 } = computePercentiles(dropRate)
+    Fields.p95 = p95
+    Fields.p99 = p99
   }
 </script>

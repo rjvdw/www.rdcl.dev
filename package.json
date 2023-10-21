@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "npm run check:stylelint && npm run check:prettier",
+    "check": "astro check && npm run check:stylelint && npm run check:prettier",
     "check:stylelint": "stylelint --allow-empty-input -f verbose 'src/**/*.{css,astro}'",
     "check:prettier": "prettier --check . 'src/**/*.astro'",
     "fix": "npm run fix:stylelint && npm run fix:prettier",
@@ -16,9 +16,11 @@
     "fix:prettier": "prettier --write . 'src/**/*.astro'"
   },
   "dependencies": {
+    "@astrojs/check": "^0.2.1",
     "@astrojs/node": "^6.0.3",
     "astro": "^3.3.2",
-    "husky": "^8.0.3"
+    "husky": "^8.0.3",
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@types/node": "^20.8.7",
