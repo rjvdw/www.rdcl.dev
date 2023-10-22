@@ -14,7 +14,7 @@ const { label, for: htmlFor, suffix } = Astro.props
 <slot />
 {suffix && <label for={htmlFor}>{suffix}</label>}
 
-<style>
+<style lang="scss">
   .form-grid-field-label {
     padding-inline-start: var(--form-grid-field-padding-start, 1rem);
     text-align: var(--form-grid-field-label-alignment, end);

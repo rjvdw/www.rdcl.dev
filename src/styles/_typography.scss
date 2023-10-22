@@ -40,5 +40,5 @@ li + li {
 }
 
 .error {
-  color: red;
+  color: var(--error-foreground-color);
 }

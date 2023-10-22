@@ -18,11 +18,11 @@ body {
 
 a {
   color: var(--base-link-color);
-}
 
-a:focus,
-a:hover {
-  color: var(--base-link-color-hover);
+  &:focus,
+  &:hover {
+    color: var(--base-link-color-hover);
+  }
 }
 
 hr {

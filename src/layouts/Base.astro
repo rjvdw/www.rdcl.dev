@@ -1,5 +1,5 @@
 ---
-import '$styles/main.css'
+import '$styles/main.scss'
 
 const BASE_TITLE = 'rdcl.dev'
 
@@ -50,7 +50,7 @@ const { jwt } = Astro.locals
   </body>
 </html>
 
-<style>
+<style lang="scss">
   header {
     inline-size: max-content;
     margin-block: 1rem;
@@ -61,13 +61,21 @@ const { jwt } = Astro.locals
   nav {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
-    inline-size: max-content;
     margin-block: 1rem 3rem;
     margin-inline: auto;
+    max-inline-size: max(25rem, 75%);
+
+    @media (width < 45rem) {
+      margin-block-end: 1rem;
+    }
   }
 
   main {
+    max-width: var(--max-page-width, 45rem);
     padding: 1rem;
+    margin-inline: auto;
   }
 </style>

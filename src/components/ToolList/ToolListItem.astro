@@ -9,3 +9,15 @@ const { name, href } = Astro.props
 
 <dt><a href={href}>{name}</a></dt>
 <dd><slot /></dd>
+
+<style lang="scss">
+  dt {
+    margin-block: 1rem 0.5rem;
+    font-weight: bold;
+  }
+
+  dd {
+    margin-block: 0.5rem 2.5rem;
+    margin-inline: 0;
+  }
+</style>
