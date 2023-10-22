@@ -8,7 +8,7 @@
     "@badeball/cypress-cucumber-preprocessor": "^18.0.6",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@cypress/browserify-preprocessor": "^3.0.2",
-    "cypress": "^13.3.1",
+    "cypress": "^13.3.2",
     "cypress-localstorage-commands": "^2.2.4",
     "typescript": "^5.2.2"
   },

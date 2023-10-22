@@ -2,8 +2,7 @@
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
-  align-content: center;
-  justify-content: center;
+  place-content: center center;
   padding: 0.5rem;
   color: #eee;
   background: #1118;
