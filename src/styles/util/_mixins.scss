@@ -1,13 +1,12 @@
 @mixin link {
   color: var(--base-link-color);
-  text-decoration: none;
+  text-decoration: underline;
   cursor: pointer;
   outline: initial;
 
   &:hover,
   &:focus {
-    color: var(--base-link-hover-color);
-    text-decoration: underline;
+    color: var(--base-link-color-hover);
     outline: initial;
   }
 }

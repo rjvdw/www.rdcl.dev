@@ -34,6 +34,7 @@ const { jwt } = Astro.locals
       {
         jwt ? (
           <>
+            <a href="/health">Health</a>
             <a href="/logout">Log out</a>
           </>
         ) : (

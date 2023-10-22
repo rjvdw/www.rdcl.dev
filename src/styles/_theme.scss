@@ -34,6 +34,10 @@
   --button-foreground-color: var(--theme-foreground-color-3);
   --button-border-color: #333;
 
+  /* Table */
+  --table-odd-row-background-color: var(--base-background-color);
+  --table-even-row-background-color: #fff;
+
   /* Statuses */
   --error-foreground-color: #933;
 }
@@ -52,6 +56,10 @@
     --input-background-color: #333;
     --input-foreground-color: #aaa;
     --input-border-color: #aaa;
+
+    /* Table */
+    --table-odd-row-background-color: var(--base-background-color);
+    --table-even-row-background-color: #333;
 
     /* Statuses */
     --error-foreground-color: #f99;

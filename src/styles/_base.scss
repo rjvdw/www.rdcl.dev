@@ -1,3 +1,5 @@
+@use 'util/mixins';
+
 :root,
 body {
   padding: 0;
@@ -16,13 +18,9 @@ body {
   box-sizing: border-box;
 }
 
-a {
-  color: var(--base-link-color);
-
-  &:focus,
-  &:hover {
-    color: var(--base-link-color-hover);
-  }
+a,
+.link {
+  @include mixins.link;
 }
 
 hr {
