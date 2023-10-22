@@ -39,7 +39,10 @@
   --table-even-row-background-color: #fff;
 
   /* Statuses */
+  --success-foreground-color: #393;
+  --success-border-color: var(--success-foreground-color);
   --error-foreground-color: #933;
+  --error-border-color: var(--error-foreground-color);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -62,6 +65,7 @@
     --table-even-row-background-color: #333;
 
     /* Statuses */
+    --success-foreground-color: #9f9;
     --error-foreground-color: #f99;
   }
 }

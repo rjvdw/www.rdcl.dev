@@ -15,6 +15,28 @@ textarea,
   background-color: var(--input-background-color);
   color: var(--input-foreground-color);
   border: 1px solid var(--input-border-color);
+
+  &:user-valid {
+    border-color: var(--success-border-color);
+    box-shadow: 0 0 2px var(--success-border-color);
+  }
+
+  &:user-invalid {
+    border-color: var(--error-border-color);
+    box-shadow: 0 0 2px var(--error-border-color);
+  }
+
+  @supports not selector(:user-invalid) {
+    &:valid {
+      border-color: var(--success-border-color);
+      box-shadow: 0 0 2px var(--success-border-color);
+    }
+
+    &:invalid {
+      border-color: var(--error-border-color);
+      box-shadow: 0 0 2px var(--error-border-color);
+    }
+  }
 }
 
 button,

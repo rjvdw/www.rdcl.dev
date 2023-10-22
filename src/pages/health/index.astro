@@ -111,6 +111,7 @@ function parseDateFromSearchParams(key: string): Date | undefined {
           name="weight"
           type="text"
           inputmode="decimal"
+          pattern="\\d+(?:[,\\.]\\d+)?"
         />
       </FormGrid.Field>
 
@@ -120,6 +121,7 @@ function parseDateFromSearchParams(key: string): Date | undefined {
           name="bodyFat"
           type="text"
           inputmode="decimal"
+          pattern="\\d+(?:[,\\.]\\d+)?"
         />
       </FormGrid.Field>
 
@@ -142,6 +144,7 @@ function parseDateFromSearchParams(key: string): Date | undefined {
             name="height"
             type="text"
             inputmode="decimal"
+            pattern="\\d+(?:[,\\.]\\d+)?"
             value={response?.settings?.height}
           />
         </FormGrid.Field>

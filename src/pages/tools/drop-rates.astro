@@ -14,6 +14,7 @@ import FormGrid from '$components/FormGrid'
           name="drop-rate"
           type="text"
           inputmode="decimal"
+          pattern="\\d+(?:[,\\.]\\d+)?"
         />
       </FormGrid.Field>
 
@@ -23,6 +24,7 @@ import FormGrid from '$components/FormGrid'
           name="nr-attempts"
           type="text"
           inputmode="numeric"
+          pattern="\\d+"
         />
       </FormGrid.Field>
 
