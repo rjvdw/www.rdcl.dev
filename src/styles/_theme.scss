@@ -30,9 +30,12 @@
   --input-background-color: #fff;
   --input-foreground-color: #333;
   --input-border-color: #666;
-  --button-background-color: var(--theme-color-3);
-  --button-foreground-color: var(--theme-foreground-color-3);
+  --button-background-color: var(--theme-color-1);
+  --button-foreground-color: var(--theme-foreground-color-1);
   --button-border-color: #333;
+  --button-background-color-hover: var(--theme-color-3);
+  --button-foreground-color-hover: var(--button-foreground-color);
+  --button-border-color-hover: var(--button-border-color);
 
   /* Table */
   --table-odd-row-background-color: var(--base-background-color);
