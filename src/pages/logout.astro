@@ -1,14 +1,11 @@
 ---
 import Layout from '$layouts/Base.astro'
+import { JwtCookie } from '$lib/auth/cookies'
+
+const jwtCookie = new JwtCookie(Astro.cookies)
 
 if (Astro.request.method === 'POST') {
-  Astro.cookies.set('jwt', 'deleted', {
-    sameSite: 'lax',
-    httpOnly: true,
-    secure: true,
-    path: '/',
-    expires: new Date(0),
-  })
+  jwtCookie.delete()
 
   return Astro.redirect('/')
 }

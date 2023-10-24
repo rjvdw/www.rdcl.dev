@@ -1,9 +1,12 @@
 ---
 import FormGrid from '$components/FormGrid'
 import Layout from '$layouts/Base.astro'
+import { JwtCookie } from '$lib/auth/cookies'
 import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
 import { get, save, type Data, type HealthData } from '$lib/health/api'
 import { isoDateString, parseDecimal } from '$lib/health/util'
+
+const jwtCookie = new JwtCookie(Astro.cookies)
 
 const { jwt } = Astro.locals
 
@@ -49,13 +52,7 @@ try {
   response = await get(jwt, from, to)
 } catch (err) {
   if (err instanceof UnauthorizedError) {
-    Astro.cookies.set('jwt', 'deleted', {
-      sameSite: 'lax',
-      httpOnly: true,
-      secure: true,
-      path: '/',
-      expires: new Date(0),
-    })
+    jwtCookie.delete()
     return Astro.redirect('/login')
   }
   error = String(err)

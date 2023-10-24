@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
 import { deleteRecord } from '$lib/health/api'
 import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
+import { JwtCookie } from '$lib/auth/cookies'
 
 export const POST: APIRoute = async ({
   locals,
@@ -12,6 +13,8 @@ export const POST: APIRoute = async ({
   if (!jwt) {
     return redirect('/login')
   }
+
+  const jwtCookie = new JwtCookie(cookies)
 
   const referrer = request.headers.get('Referer')
   if (!referrer) {
@@ -47,13 +50,7 @@ export const POST: APIRoute = async ({
     await deleteRecord(jwt, date)
   } catch (err) {
     if (err instanceof UnauthorizedError) {
-      cookies.set('jwt', 'deleted', {
-        sameSite: 'lax',
-        httpOnly: true,
-        secure: true,
-        path: '/',
-        expires: new Date(0),
-      })
+      jwtCookie.delete()
       return redirect('/login')
     }
     throw err

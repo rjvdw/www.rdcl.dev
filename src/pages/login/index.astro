@@ -3,10 +3,18 @@ import type { CredentialRequestOptionsJSON } from '@github/webauthn-json'
 import FormGrid from '$components/FormGrid'
 import Layout from '$layouts/Login.astro'
 import { login, verifyCredential } from '$lib/auth/api'
-import { Jwt } from '$lib/auth/Jwt'
+import {
+  JwtCookie,
+  SessionTokenCookie,
+  RememberMeCookie,
+} from '$lib/auth/cookies'
+
+const jwtCookie = new JwtCookie(Astro.cookies)
+const sessionTokenCookie = new SessionTokenCookie(Astro.cookies)
+const rememberMeCookie = new RememberMeCookie(Astro.cookies)
 
 let data: URLSearchParams | null = null
-let rememberMe: string | null = Astro.cookies.get('remember-me')?.value ?? null
+let rememberMe: string | null = rememberMeCookie.value() ?? null
 let options: CredentialRequestOptionsJSON | null = null
 let logInId: string | null = null
 let error: string | null = null
@@ -23,23 +31,11 @@ if (Astro.request.method === 'POST') {
         const expires = new Date()
         expires.setFullYear(expires.getFullYear() + 1)
 
-        Astro.cookies.set('remember-me', email, {
-          sameSite: 'lax',
-          httpOnly: true,
-          secure: true,
-          path: '/login',
-          expires,
-        })
+        rememberMeCookie.set(email)
       }
     } else {
       rememberMe = null
-      Astro.cookies.set('remember-me', 'deleted', {
-        sameSite: 'lax',
-        httpOnly: true,
-        secure: true,
-        path: '/login',
-        expires: new Date(0),
-      })
+      rememberMeCookie.delete()
     }
 
     if (data.has('credential')) {
@@ -47,15 +43,8 @@ if (Astro.request.method === 'POST') {
       const credential = data.get('credential')!
       const logInId = data.get('logInId')!
       const body = await verifyCredential(logInId, credential)
-      const jwt = new Jwt(body.jwt)
 
-      Astro.cookies.set('jwt', body.jwt, {
-        sameSite: 'lax',
-        httpOnly: true,
-        secure: true,
-        path: '/',
-        expires: jwt.expires,
-      })
+      jwtCookie.set(body.jwt)
 
       return Astro.redirect('/login/logged-in')
     } else {
@@ -65,12 +54,7 @@ if (Astro.request.method === 'POST') {
       const body = await login(data)
 
       if (body.mode === 'EMAIL') {
-        Astro.cookies.set('session-token', body.sessionToken, {
-          sameSite: 'lax',
-          httpOnly: true,
-          secure: true,
-          path: '/login',
-        })
+        sessionTokenCookie.set(body.sessionToken)
 
         return Astro.redirect('/login/sent')
       }

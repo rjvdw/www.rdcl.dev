@@ -1,20 +1,16 @@
 import { defineMiddleware } from 'astro:middleware'
 import { Jwt } from '$lib/auth/Jwt'
+import { JwtCookie } from '$lib/auth/cookies'
 
 export const onRequest = defineMiddleware(async ({ cookies, locals }, next) => {
-  const jwtString = cookies.get('jwt')?.value
+  const jwtCookie = new JwtCookie(cookies)
+  const jwtString = jwtCookie.value()
 
   if (jwtString) {
     const jwt = new Jwt(jwtString)
 
     if (jwt.expired) {
-      cookies.set('jwt', 'deleted', {
-        sameSite: 'lax',
-        httpOnly: true,
-        secure: true,
-        path: '/',
-        expires: new Date(0),
-      })
+      jwtCookie.delete()
     } else {
       locals.jwt = jwtString
     }

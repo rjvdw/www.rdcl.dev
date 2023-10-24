@@ -1,32 +1,21 @@
 ---
 import Layout from '$layouts/Login.astro'
 import { verify } from '$lib/auth/api'
-import { Jwt } from '$lib/auth/Jwt'
+import { JwtCookie, SessionTokenCookie } from '$lib/auth/cookies'
+
+const jwtCookie = new JwtCookie(Astro.cookies)
+const sessionTokenCookie = new SessionTokenCookie(Astro.cookies)
 
 let error = ''
 const verificationCode = Astro.url.searchParams.get('verification-code')
-const sessionToken = Astro.cookies.get('session-token')?.value
+const sessionToken = sessionTokenCookie.value()
 
 if (verificationCode && sessionToken) {
   try {
     const body = await verify(verificationCode, sessionToken)
-    const jwt = new Jwt(body.jwt)
 
-    Astro.cookies.set('session-token', 'deleted', {
-      sameSite: 'lax',
-      httpOnly: true,
-      secure: true,
-      path: '/login',
-      expires: new Date(0),
-    })
-
-    Astro.cookies.set('jwt', body.jwt, {
-      sameSite: 'lax',
-      httpOnly: true,
-      secure: true,
-      path: '/',
-      expires: jwt.expires,
-    })
+    sessionTokenCookie.delete()
+    jwtCookie.set(body.jwt)
 
     return Astro.redirect('/login/logged-in')
   } catch (err) {
