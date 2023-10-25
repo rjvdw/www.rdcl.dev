@@ -1,0 +1,16 @@
+<div class="responsive-table-wrapper"><slot /></div>
+
+<style lang="scss" is:global>
+  .responsive-table-wrapper {
+    max-inline-size: 100%;
+    margin-block-end: 1rem;
+    overflow: auto;
+
+    &.no-wrap {
+      th,
+      td {
+        white-space: nowrap;
+      }
+    }
+  }
+</style>

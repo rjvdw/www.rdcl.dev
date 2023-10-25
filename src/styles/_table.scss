@@ -21,19 +21,6 @@ thead > tr:last-of-type {
   }
 }
 
-.responsive-table-wrapper {
-  max-inline-size: 100%;
-  margin-block-end: 1rem;
-  overflow: auto;
-
-  &.no-wrap {
-    th,
-    td {
-      white-space: nowrap;
-    }
-  }
-}
-
 table:not(.simple-table) {
   tbody:nth-of-type(odd) > tr:nth-of-type(even),
   tbody:nth-of-type(even) > tr:nth-of-type(odd) {

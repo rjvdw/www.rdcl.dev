@@ -1,5 +1,6 @@
 ---
 import FormGrid from '$components/FormGrid'
+import ResponsiveTableWrapper from '$components/ResponsiveTableWrapper.astro'
 import Layout from '$layouts/Base.astro'
 import { JwtCookie } from '$lib/auth/cookies'
 import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
@@ -192,7 +193,7 @@ function parseDateFromSearchParams(key: string): Date | undefined {
           Showing {response.health.length} out of {response.count} matching
           records.
         </p>
-        <div class="responsive-table-wrapper">
+        <ResponsiveTableWrapper>
           <table>
             <thead>
               <tr>
@@ -226,7 +227,7 @@ function parseDateFromSearchParams(key: string): Date | undefined {
               ))}
             </tbody>
           </table>
-        </div>
+        </ResponsiveTableWrapper>
       </>
     )
   }
