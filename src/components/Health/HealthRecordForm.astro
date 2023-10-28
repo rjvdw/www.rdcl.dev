@@ -1,0 +1,96 @@
+---
+import FormGrid from '$components/FormGrid'
+import { type HealthData, save } from '$lib/health/api'
+import { isoDateString, parseDecimal } from '$lib/health/util'
+
+export type HealthRecordFormErrors = {
+  date?: string[]
+  weight?: string[]
+  bodyFat?: string[]
+}
+
+type Props = {
+  errors: HealthRecordFormErrors
+}
+
+const { errors } = Astro.props
+
+export async function handleHealthRecordFormPost(
+  jwt: string,
+  request: Request,
+  url: URL,
+): Promise<string | HealthRecordFormErrors> {
+  const errors: HealthRecordFormErrors = {}
+
+  // Typescript does not accept FormData in the URLSearchParams constructor.
+  const data = new URLSearchParams((await request.formData()) as any)
+  const date = data.get('date')
+
+  if (date && date.match(/^\d+-\d+-\d+$/)) {
+    const healthData: HealthData = {}
+    const weight = data.get('weight')
+    if (weight) {
+      healthData.weight = parseDecimal(weight)
+    }
+    const bodyFat = data.get('bodyFat')
+    if (bodyFat) {
+      healthData.bodyFat = parseDecimal(bodyFat)
+    }
+
+    await save(jwt, date, healthData)
+
+    let redirectUrl = url.pathname
+    if (url.search) {
+      redirectUrl += url.search
+    }
+
+    return redirectUrl
+  } else {
+    errors.date = ['invalid date']
+  }
+
+  return errors
+}
+---
+
+<form method="POST">
+  <FormGrid>
+    <FormGrid.Field label="date" for="create:date" errors={errors?.date}>
+      <input
+        id="create:date"
+        name="date"
+        type="date"
+        value={isoDateString(new Date())}
+        required
+      />
+    </FormGrid.Field>
+
+    <FormGrid.Field label="weight" for="create:weight" errors={errors?.weight}>
+      <input
+        id="create:weight"
+        name="weight"
+        type="text"
+        inputmode="decimal"
+        pattern="\\d+(?:[,\\.]\\d+)?"
+      />
+    </FormGrid.Field>
+
+    <FormGrid.Field
+      label="body fat"
+      for="create:bodyFat"
+      errors={errors?.bodyFat}
+    >
+      <input
+        id="create:bodyFat"
+        name="bodyFat"
+        type="text"
+        inputmode="decimal"
+        pattern="\\d+(?:[,\\.]\\d+)?"
+      />
+    </FormGrid.Field>
+
+    <FormGrid.Actions>
+      <button>Save</button>
+    </FormGrid.Actions>
+  </FormGrid>
+</form>

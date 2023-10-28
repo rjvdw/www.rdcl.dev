@@ -1,0 +1,77 @@
+---
+import type { Data } from '$lib/health/api'
+import { isoDateString } from '$lib/health/util'
+import ResponsiveTableWrapper from '../ResponsiveTableWrapper.astro'
+
+type Props = {
+  data: Data
+}
+
+const {
+  data: { health, count },
+} = Astro.props
+
+function format(value: number | undefined, unit = ''): string {
+  if (value === undefined) {
+    return ''
+  }
+
+  return (
+    value.toLocaleString(undefined, {
+      maximumFractionDigits: 1,
+    }) + unit
+  )
+}
+---
+
+<p>
+  Showing {health.length} out of {count} matching records.
+</p>
+<ResponsiveTableWrapper>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Weight</th>
+        <th colspan="2">Body fat</th>
+        <th>BMI</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {
+        health.map((record) => (
+          <tr>
+            <td>{record.date.toLocaleDateString()}</td>
+            <td>{format(record.data.weight, 'kg')}</td>
+            <td>{format(record.data.bodyFatPercentage, '%')}</td>
+            <td>{format(record.data.bodyFatValue, 'kg')}</td>
+            <td>{format(record.data.bmi)}</td>
+            <td>
+              <form method="post" action="/health/delete">
+                <input
+                  type="hidden"
+                  name="date"
+                  value={isoDateString(record.date)}
+                />
+                <button class="link">Delete</button>
+              </form>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</ResponsiveTableWrapper>
+
+<style lang="scss">
+  table {
+    min-width: 100%;
+  }
+
+  th,
+  td {
+    white-space: nowrap;
+  }
+</style>

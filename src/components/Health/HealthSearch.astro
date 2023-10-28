@@ -1,0 +1,40 @@
+---
+import CollapsibleSection from '$components/CollapsibleSection.astro'
+import FormGrid from '$components/FormGrid'
+import { isoDateString } from '$lib/health/util'
+
+type Props = {
+  from?: Date | undefined
+  to?: Date | undefined
+}
+
+const { from, to } = Astro.props
+---
+
+<CollapsibleSection summary="Search">
+  <form>
+    <FormGrid>
+      <FormGrid.Field label="from" for="search:from">
+        <input
+          id="search:from"
+          name="from"
+          type="date"
+          value={from && isoDateString(from)}
+        />
+      </FormGrid.Field>
+
+      <FormGrid.Field label="to" for="search:to">
+        <input
+          id="search:to"
+          name="to"
+          type="date"
+          value={to && isoDateString(to)}
+        />
+      </FormGrid.Field>
+
+      <FormGrid.Actions>
+        <button>Search</button>
+      </FormGrid.Actions>
+    </FormGrid>
+  </form>
+</CollapsibleSection>

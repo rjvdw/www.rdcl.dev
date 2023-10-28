@@ -1,0 +1,22 @@
+---
+type Props = {
+  summary: string
+}
+
+const { summary } = Astro.props
+---
+
+<details>
+  <summary class="link">{summary}</summary>
+  <slot />
+</details>
+
+<style>
+  details {
+    margin-block-end: 2rem;
+  }
+
+  details[open] > summary {
+    padding-block-end: 1rem;
+  }
+</style>

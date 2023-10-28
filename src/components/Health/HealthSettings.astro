@@ -1,0 +1,32 @@
+---
+import CollapsibleSection from '$components/CollapsibleSection.astro'
+import FormGrid from '$components/FormGrid'
+import type { Settings } from '$lib/health/api'
+
+type Props = {
+  settings?: Settings | undefined
+}
+
+const { settings } = Astro.props
+---
+
+<CollapsibleSection summary="Settings">
+  <form method="post" action="/health/settings">
+    <FormGrid>
+      <FormGrid.Field label="height" for="settings:height">
+        <input
+          id="settings:height"
+          name="height"
+          type="text"
+          inputmode="decimal"
+          pattern="\\d+(?:[,\\.]\\d+)?"
+          value={settings?.height}
+        />
+      </FormGrid.Field>
+
+      <FormGrid.Actions>
+        <button>Save</button>
+      </FormGrid.Actions>
+    </FormGrid>
+  </form>
+</CollapsibleSection>

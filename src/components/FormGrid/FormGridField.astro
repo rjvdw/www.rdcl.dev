@@ -3,9 +3,10 @@ type Props = {
   label: string
   for: string
   suffix?: string
+  errors?: string[] | undefined
 }
 
-const { label, for: htmlFor, suffix } = Astro.props
+const { label, for: htmlFor, suffix, errors } = Astro.props
 ---
 
 <label data-start="1" for={htmlFor} class="form-grid-field-label">
@@ -13,6 +14,13 @@ const { label, for: htmlFor, suffix } = Astro.props
 </label>
 <slot />
 {suffix && <label for={htmlFor}>{suffix}</label>}
+{
+  errors?.map((error) => (
+    <p class="error" data-start="2">
+      {error}
+    </p>
+  ))
+}
 
 <style lang="scss">
   .form-grid-field-label {

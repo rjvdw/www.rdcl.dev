@@ -1,11 +1,13 @@
 ---
-import FormGrid from '$components/FormGrid'
-import ResponsiveTableWrapper from '$components/ResponsiveTableWrapper.astro'
+import Health from '$components/Health'
+import {
+  handleHealthRecordFormPost,
+  type HealthRecordFormErrors,
+} from '$components/Health/HealthRecordForm.astro'
 import Layout from '$layouts/Base.astro'
 import { JwtCookie } from '$lib/auth/cookies'
 import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
-import { get, save, type Data, type HealthData } from '$lib/health/api'
-import { isoDateString, parseDecimal } from '$lib/health/util'
+import { get, type Data } from '$lib/health/api'
 
 const jwtCookie = new JwtCookie(Astro.cookies)
 
@@ -18,34 +20,17 @@ if (!jwt) {
 const from = parseDateFromSearchParams('from')
 const to = parseDateFromSearchParams('to')
 
-let error: string | null = null
-let response: Data | null = null
+let error: string | undefined = undefined
+let healthRecordFormErrors: HealthRecordFormErrors = {}
+let response: Data | undefined = undefined
 
 if (Astro.request.method === 'POST') {
-  // Typescript does not accept FormData in the URLSearchParams constructor.
-  const data = new URLSearchParams((await Astro.request.formData()) as any)
-  const date = data.get('date')
+  const result = await handleHealthRecordFormPost(jwt, Astro.request, Astro.url)
 
-  if (date && date.match(/^\d+-\d+-\d+$/)) {
-    const healthData: HealthData = {}
-    const weight = data.get('weight')
-    if (weight) {
-      healthData.weight = parseDecimal(weight)
-    }
-    const bodyFat = data.get('bodyFat')
-    if (bodyFat) {
-      healthData.bodyFat = parseDecimal(bodyFat)
-    }
-
-    await save(jwt, date, healthData)
-
-    let redirectUrl = Astro.url.pathname
-    if (Astro.url.search) {
-      redirectUrl += Astro.url.search
-    }
-    return Astro.redirect(redirectUrl)
+  if (typeof result === 'string') {
+    return Astro.redirect(result)
   } else {
-    error = 'invalid date specified'
+    healthRecordFormErrors = result
   }
 }
 
@@ -57,18 +42,6 @@ try {
     return Astro.redirect('/login')
   }
   error = String(err)
-}
-
-function format(value: number | undefined, unit = ''): string {
-  if (value === undefined) {
-    return ''
-  }
-
-  return (
-    value.toLocaleString(undefined, {
-      maximumFractionDigits: 1,
-    }) + unit
-  )
 }
 
 function parseDateFromSearchParams(key: string): Date | undefined {
@@ -88,171 +61,20 @@ function parseDateFromSearchParams(key: string): Date | undefined {
 
 <Layout title="health">
   <h1>Health</h1>
-
   {error && <p class="error">{error}</p>}
-
-  <form method="POST">
-    <FormGrid>
-      <FormGrid.Field label="date" for="create:date">
-        <input
-          id="create:date"
-          name="date"
-          type="date"
-          value={isoDateString(new Date())}
-          required
-        />
-      </FormGrid.Field>
-
-      <FormGrid.Field label="weight" for="create:weight">
-        <input
-          id="create:weight"
-          name="weight"
-          type="text"
-          inputmode="decimal"
-          pattern="\\d+(?:[,\\.]\\d+)?"
-        />
-      </FormGrid.Field>
-
-      <FormGrid.Field label="body fat" for="create:bodyFat">
-        <input
-          id="create:bodyFat"
-          name="bodyFat"
-          type="text"
-          inputmode="decimal"
-          pattern="\\d+(?:[,\\.]\\d+)?"
-        />
-      </FormGrid.Field>
-
-      <FormGrid.Actions>
-        <button>Save</button>
-      </FormGrid.Actions>
-    </FormGrid>
-  </form>
+  <Health.RecordForm errors={healthRecordFormErrors} />
 
   <h2>Settings</h2>
-
-  <details>
-    <summary class="link">Settings</summary>
-
-    <form method="post" action="/health/settings">
-      <FormGrid>
-        <FormGrid.Field label="height" for="settings:height">
-          <input
-            id="settings:height"
-            name="height"
-            type="text"
-            inputmode="decimal"
-            pattern="\\d+(?:[,\\.]\\d+)?"
-            value={response?.settings?.height}
-          />
-        </FormGrid.Field>
-
-        <FormGrid.Actions>
-          <button>Save</button>
-        </FormGrid.Actions>
-      </FormGrid>
-    </form>
-  </details>
+  <Health.Settings settings={response?.settings} />
 
   <h2>Records</h2>
+  <Health.Search from={from} to={to} />
 
-  <details>
-    <summary class="link">Search</summary>
-
-    <form>
-      <FormGrid>
-        <FormGrid.Field label="from" for="search:from">
-          <input
-            id="search:from"
-            name="from"
-            type="date"
-            value={from && isoDateString(from)}
-          />
-        </FormGrid.Field>
-
-        <FormGrid.Field label="to" for="search:to">
-          <input
-            id="search:to"
-            name="to"
-            type="date"
-            value={to && isoDateString(to)}
-          />
-        </FormGrid.Field>
-
-        <FormGrid.Actions>
-          <button>Search</button>
-        </FormGrid.Actions>
-      </FormGrid>
-    </form>
-  </details>
-
-  {
-    response && (
-      <>
-        <p>
-          Showing {response.health.length} out of {response.count} matching
-          records.
-        </p>
-        <ResponsiveTableWrapper>
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Weight</th>
-                <th colspan="2">Body fat</th>
-                <th>BMI</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {response.health.map((record) => (
-                <tr>
-                  <td>{record.date.toLocaleDateString()}</td>
-                  <td>{format(record.data.weight, 'kg')}</td>
-                  <td>{format(record.data.bodyFatPercentage, '%')}</td>
-                  <td>{format(record.data.bodyFatValue, 'kg')}</td>
-                  <td>{format(record.data.bmi)}</td>
-                  <td>
-                    <form method="post" action="/health/delete">
-                      <input
-                        type="hidden"
-                        name="date"
-                        value={isoDateString(record.date)}
-                      />
-                      <button class="link">Delete</button>
-                    </form>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </ResponsiveTableWrapper>
-      </>
-    )
-  }
+  {response && <Health.Records data={response} />}
 </Layout>
 
 <style lang="scss">
   :root {
     --max-page-width: 60rem;
-  }
-
-  table {
-    min-width: 100%;
-  }
-
-  th,
-  td {
-    white-space: nowrap;
-  }
-
-  details {
-    margin-block-end: 2rem;
-  }
-
-  details > form {
-    display: block;
-    margin-block: 1rem;
   }
 </style>
