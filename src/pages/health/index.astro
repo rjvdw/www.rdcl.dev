@@ -6,15 +6,15 @@ import {
 } from '$components/Health/HealthRecordForm.astro'
 import Layout from '$layouts/Base.astro'
 import { JwtCookie } from '$lib/auth/cookies'
+import { checkJwtOrRedirect } from '$lib/auth/util'
 import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
 import { get, type Data } from '$lib/health/api'
 
 const jwtCookie = new JwtCookie(Astro.cookies)
 
-const { jwt } = Astro.locals
-
-if (!jwt) {
-  return Astro.redirect('/login')
+const jwt = checkJwtOrRedirect(Astro)
+if (jwt instanceof Response) {
+  return jwt
 }
 
 const from = parseDateFromSearchParams('from')

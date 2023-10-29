@@ -32,6 +32,17 @@ export class SessionTokenCookie extends Cookie {
   }
 }
 
+export class RedirectToCookie extends Cookie {
+  constructor(cookies: AstroCookies) {
+    super(cookies, 'redirect-to', {
+      sameSite: 'lax',
+      httpOnly: true,
+      secure: true,
+      path: '/login',
+    })
+  }
+}
+
 export class RememberMeCookie extends Cookie {
   constructor(cookies: AstroCookies) {
     super(cookies, 'remember-me', {

@@ -6,19 +6,28 @@ import { login, verifyCredential } from '$lib/auth/api'
 import {
   JwtCookie,
   SessionTokenCookie,
+  RedirectToCookie,
   RememberMeCookie,
 } from '$lib/auth/cookies'
 
 const jwtCookie = new JwtCookie(Astro.cookies)
 const sessionTokenCookie = new SessionTokenCookie(Astro.cookies)
+const redirectToCookie = new RedirectToCookie(Astro.cookies)
 const rememberMeCookie = new RememberMeCookie(Astro.cookies)
 
-let data: URLSearchParams | null = null
-let rememberMe: string | null = rememberMeCookie.value() ?? null
-let options: CredentialRequestOptionsJSON | null = null
-let logInId: string | null = null
-let error: string | null = null
+let data: URLSearchParams | undefined = undefined
+let rememberMe: string | undefined = rememberMeCookie.value()
+let redirectTo: string | null = Astro.url.searchParams.get('return-to')
+let options: CredentialRequestOptionsJSON | undefined = undefined
+let logInId: string | undefined = undefined
+let error: string | undefined = undefined
 if (Astro.request.method === 'POST') {
+  if (redirectTo === null) {
+    redirectToCookie.delete()
+  } else {
+    redirectToCookie.set(redirectTo)
+  }
+
   try {
     // Typescript does not accept FormData in the URLSearchParams constructor.
     data = new URLSearchParams((await Astro.request.formData()) as any)
@@ -34,7 +43,7 @@ if (Astro.request.method === 'POST') {
         rememberMeCookie.set(email)
       }
     } else {
-      rememberMe = null
+      rememberMe = undefined
       rememberMeCookie.delete()
     }
 
@@ -85,7 +94,6 @@ if (Astro.request.method === 'POST') {
 
   <form
     id="login-form"
-    action="/login"
     method="post"
     class:list={[{ hidden: Boolean(options) }]}
   >
@@ -128,7 +136,7 @@ if (Astro.request.method === 'POST') {
           type="checkbox"
           name="remember-me"
           value="1"
-          checked={rememberMe !== null}
+          checked={rememberMe !== undefined}
         />
          Remember me
       </label>
@@ -166,15 +174,15 @@ if (Astro.request.method === 'POST') {
     await completeAuthentication(options)
   }
 
-  function readOptions(): CredentialRequestOptionsJSON | null {
+  function readOptions(): CredentialRequestOptionsJSON | undefined {
     const el = document.getElementById('credential-request-options')
     if (!el) {
-      return null
+      return undefined
     }
 
     const options = JSON.parse(el.innerHTML)
     if (!isCredentialRequestOptionsJSON(options)) {
-      return null
+      return undefined
     }
 
     return options

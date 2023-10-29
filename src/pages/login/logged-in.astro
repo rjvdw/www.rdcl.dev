@@ -1,10 +1,17 @@
 ---
 import Layout from '$layouts/Login.astro'
+import { RedirectToCookie } from '$lib/auth/cookies'
 
 const { jwt } = Astro.locals
 
 if (!jwt) {
   return Astro.redirect('/login')
+}
+
+const redirectToCookie = new RedirectToCookie(Astro.cookies)
+const redirectTo = redirectToCookie.value()
+if (redirectTo) {
+  return Astro.redirect(redirectTo)
 }
 ---
 
