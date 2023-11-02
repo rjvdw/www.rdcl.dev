@@ -1,6 +1,6 @@
 ---
 import Layout from '$layouts/Login.astro'
-import { verify } from '$lib/auth/api'
+import { verify } from '$lib/auth/loginApi'
 import { JwtCookie, SessionTokenCookie } from '$lib/auth/cookies'
 
 const jwtCookie = new JwtCookie(Astro.cookies)

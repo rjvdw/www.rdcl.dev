@@ -1,4 +1,12 @@
-<div class="responsive-table-wrapper"><slot /></div>
+---
+export type Props = {
+  nowrap?: boolean
+}
+
+const { nowrap } = Astro.props
+---
+
+<div class:list={['responsive-table-wrapper', { nowrap }]}><slot /></div>
 
 <style lang="scss" is:global>
   .responsive-table-wrapper {
@@ -6,7 +14,7 @@
     margin-block-end: 1rem;
     overflow: auto;
 
-    &.no-wrap {
+    &.nowrap {
       th,
       td {
         white-space: nowrap;

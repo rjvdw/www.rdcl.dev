@@ -1,4 +1,7 @@
-import type { CredentialRequestOptionsJSON } from '@github/webauthn-json'
+import type {
+  CredentialCreationOptionsJSON,
+  CredentialRequestOptionsJSON,
+} from '@github/webauthn-json'
 
 export function isCredentialRequestOptionsJSON(
   data: unknown,
@@ -15,6 +18,23 @@ function isPublicKeyCredentialRequestOptionsJSON(
   data: unknown,
 ): data is CredentialRequestOptionsJSON['publicKey'] {
   return typeof data === 'object' && data !== null
+}
+
+export function isCredentialCreationOptionsJson(
+  body: unknown,
+): body is CredentialCreationOptionsJSON {
+  return (
+    typeof body === 'object' &&
+    body !== null &&
+    'publicKey' in body &&
+    isPublicKeyCredentialCreationOptionsJSON(body.publicKey)
+  )
+}
+
+function isPublicKeyCredentialCreationOptionsJSON(
+  body: unknown,
+): body is CredentialCreationOptionsJSON['publicKey'] {
+  return typeof body === 'object' && body !== null
 }
 
 type CheckJwtParameters = {

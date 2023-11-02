@@ -30,7 +30,7 @@ function format(value: number | undefined, unit = ''): string {
       <p>
         Showing {health.length} out of {count} matching records.
       </p>
-      <ResponsiveTableWrapper>
+      <ResponsiveTableWrapper nowrap>
         <table>
           <thead>
             <tr>
@@ -74,10 +74,5 @@ function format(value: number | undefined, unit = ''): string {
 <style lang="scss">
   table {
     min-width: 100%;
-  }
-
-  th,
-  td {
-    white-space: nowrap;
   }
 </style>

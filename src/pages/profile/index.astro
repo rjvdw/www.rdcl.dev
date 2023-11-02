@@ -1,0 +1,205 @@
+---
+import FormGrid from '$components/FormGrid'
+import ResponsiveTableWrapper from '$components/ResponsiveTableWrapper.astro'
+import Layout from '$layouts/Base.astro'
+import { getProfile, updateProfile } from '$lib/auth/profileApi'
+import { checkJwtOrRedirect } from '$lib/auth/util'
+
+const jwt = checkJwtOrRedirect(Astro)
+if (jwt instanceof Response) {
+  return jwt
+}
+
+if (Astro.request.method === 'POST') {
+  const data = await Astro.request.formData()
+  const name = data.get('name') || undefined
+
+  if (name !== undefined && typeof name !== 'string') {
+    return new Response('invalid name', {
+      status: 400,
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    })
+  }
+
+  await updateProfile(jwt, name)
+
+  return Astro.redirect('/profile')
+}
+
+const profile = await getProfile(jwt)
+---
+
+<Layout title="profile">
+  <h1>Profile</h1>
+
+  <form method="post">
+    <FormGrid>
+      <FormGrid.Field label="email" for="profile:email">
+        <input id="profile:email" readonly type="email" value={profile.email} />
+      </FormGrid.Field>
+
+      <FormGrid.Field label="name" for="profile:name">
+        <input id="profile:name" name="name" type="text" value={profile.name} />
+      </FormGrid.Field>
+
+      <FormGrid.Actions>
+        <button>Update profile</button>
+      </FormGrid.Actions>
+    </FormGrid>
+  </form>
+
+  <h2>Authenticators</h2>
+
+  {
+    /*
+     * There seems to be a bug in astro that causes the next sibling
+     * after the ResponsiveTableWrapper to be rendered as a child.
+     * Wrapping it in a fragment solves this for now.
+     */
+  }
+  <>
+    <ResponsiveTableWrapper nowrap>
+      <table class="authenticators">
+        <tr>
+          <th>Name</th>
+          <th>Last Used</th>
+          <th>Actions</th>
+        </tr>
+
+        {
+          profile.authenticators.map((authenticator) => (
+            <tr>
+              <td>
+                <form
+                  id={`update-authenticator:${authenticator.id}`}
+                  method="post"
+                  action={`/profile/authenticator/${authenticator.id}`}
+                >
+                  <input
+                    name="name"
+                    type="text"
+                    value={authenticator.name}
+                    placeholder="Unnamed authenticator"
+                  />
+                </form>
+              </td>
+              <td>
+                {authenticator.lastUsed?.toLocaleString() ?? 'Never used'}
+              </td>
+              <td>
+                <div class="actions">
+                  <button
+                    class="link"
+                    form={`update-authenticator:${authenticator.id}`}
+                  >
+                    Update
+                  </button>
+
+                  <form
+                    method="post"
+                    action={`/profile/authenticator/${authenticator.id}/delete`}
+                  >
+                    <button class="link">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          ))
+        }
+      </table>
+    </ResponsiveTableWrapper>
+  </>
+
+  <div class="hidden add-authenticator-container">
+    <form
+      id="add-authenticator"
+      method="post"
+      action="/profile/authenticator/add"
+    >
+      <button>Add authenticator</button>
+    </form>
+  </div>
+</Layout>
+
+<style>
+  input[readonly] {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .authenticators {
+    inline-size: 100%;
+  }
+
+  .authenticators input {
+    min-inline-size: 15rem;
+  }
+
+  .actions {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 1ch;
+  }
+
+  .actions > form {
+    display: contents;
+  }
+
+  .add-authenticator-container {
+    margin-block-start: 1rem;
+  }
+</style>
+
+<script>
+  import { create } from '@github/webauthn-json'
+  import type { NewAuthenticatorResponse } from '$lib/auth/profileApi'
+  import { isCredentialCreationOptionsJson } from '$lib/auth/util'
+  import { getFormById } from '$lib/form/util'
+
+  document
+    .querySelector<HTMLElement>('.add-authenticator-container')
+    ?.classList.remove('hidden')
+
+  const addAuthenticatorForm = getFormById('add-authenticator')
+
+  addAuthenticatorForm.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    const response = await fetch(addAuthenticatorForm.action, {
+      method: addAuthenticatorForm.method,
+    })
+
+    const responseBody = (await response.json()) as unknown
+    if (isNewAuthenticatorResponse(responseBody)) {
+      const credential = await create(responseBody.options)
+      const requestBody = {
+        credential,
+        callback: responseBody.callback,
+      }
+
+      await fetch(addAuthenticatorForm.action, {
+        method: addAuthenticatorForm.method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      })
+
+      location.reload()
+    }
+  })
+
+  function isNewAuthenticatorResponse(
+    body: unknown,
+  ): body is NewAuthenticatorResponse {
+    return (
+      body !== null &&
+      typeof body === 'object' &&
+      'callback' in body &&
+      typeof body.callback === 'string' &&
+      'options' in body &&
+      isCredentialCreationOptionsJson(body.options)
+    )
+  }
+</script>

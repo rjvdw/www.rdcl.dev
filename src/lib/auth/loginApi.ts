@@ -1,5 +1,6 @@
 import type { CredentialRequestOptionsJSON } from '@github/webauthn-json'
 import { isCredentialRequestOptionsJSON } from './util'
+import { call } from '$lib/api'
 
 type EmailLoginResponse = {
   mode: 'EMAIL'
@@ -18,20 +19,10 @@ export async function login(
   requestBody: URLSearchParams,
 ): Promise<LoginResponse> {
   const url = `${import.meta.env.API_URL}/auth/login`
-  const response = await fetch(url, {
+  const response = await call(url, {
     method: 'post',
     body: requestBody,
   })
-
-  if (!response.ok) {
-    console.error(
-      'request to "%s" failed with status %s: %s',
-      url,
-      response.status,
-      await response.text(),
-    )
-    throw new Error('login request failed')
-  }
 
   return parseLoginResponse(response)
 }
@@ -92,20 +83,10 @@ export async function verify(
   requestBody.set('session-token', sessionToken)
 
   const url = `${import.meta.env.API_URL}/auth/login/verify`
-  const response = await fetch(url, {
+  const response = await call(url, {
     method: 'post',
     body: requestBody,
   })
-
-  if (!response.ok) {
-    console.error(
-      'request to "%s" failed with status %s: %s',
-      url,
-      response.status,
-      await response.text(),
-    )
-    throw new Error('verification request failed')
-  }
 
   const body = (await response.json()) as unknown
 
@@ -121,23 +102,13 @@ export async function verifyCredential(
   credential: string,
 ): Promise<VerifyResponse> {
   const url = `${import.meta.env.API_URL}/auth/login/${logInId}/complete`
-  const response = await fetch(url, {
+  const response = await call(url, {
     method: 'post',
     body: credential,
     headers: {
       'Content-Type': 'application/json',
     },
   })
-
-  if (!response.ok) {
-    console.error(
-      'request to "%s" failed with status %s: %s',
-      url,
-      response.status,
-      await response.text(),
-    )
-    throw new Error('verification request failed')
-  }
 
   const body = (await response.json()) as unknown
 
