@@ -16,16 +16,16 @@
     "fix:prettier": "prettier --write . 'src/**/*.astro'"
   },
   "dependencies": {
-    "@astrojs/check": "^0.2.1",
+    "@astrojs/check": "^0.3.1",
     "@astrojs/node": "^6.0.3",
     "@github/webauthn-json": "^2.1.1",
-    "astro": "^3.4.0",
+    "astro": "^3.4.3",
     "husky": "^8.0.3",
     "jwt-decode": "^4.0.0",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@types/node": "^20.8.9",
+    "@types/node": "^20.8.10",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.1",
     "sass": "^1.69.5",
