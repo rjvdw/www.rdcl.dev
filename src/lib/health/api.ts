@@ -1,4 +1,4 @@
-import { ApiError } from '$lib/errors/ApiError'
+import { InvalidResponse } from '$lib/errors/InvalidResponse'
 import { callAuthenticated } from '$lib/api'
 import { isoDateString } from './util'
 
@@ -52,10 +52,7 @@ async function parseHealthDataResponse(
   const settingsBody = (await settingsBodyResponse) as unknown
   if (settingsBody === null || typeof settingsBody !== 'object') {
     console.error(settingsBody)
-    throw new ApiError(
-      'received an unexpected response from the upstream server',
-      settingsResponse,
-    )
+    throw new InvalidResponse(settingsResponse)
   }
 
   const settings: Settings = {}
@@ -73,10 +70,7 @@ async function parseHealthDataResponse(
     !Array.isArray(healthBody.health)
   ) {
     console.error(healthBody)
-    throw new ApiError(
-      'received an unexpected response from the upstream server',
-      healthResponse,
-    )
+    throw new InvalidResponse(healthResponse)
   }
 
   const records = healthBody.health.map((record) =>
@@ -106,20 +100,14 @@ function parseHealthDataRecord(
     typeof record.data !== 'string'
   ) {
     console.error(record)
-    throw new ApiError(
-      'received an unexpected response from the upstream server',
-      response,
-    )
+    throw new InvalidResponse(response)
   }
 
   const data = JSON.parse(record.data) as unknown
 
   if (data === null || typeof data !== 'object') {
     console.error(data)
-    throw new ApiError(
-      'received unexpected data from the upstream server',
-      response,
-    )
+    throw new InvalidResponse(response)
   }
 
   const healthData: Record['data'] = {}

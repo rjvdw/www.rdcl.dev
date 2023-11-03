@@ -1,6 +1,8 @@
 import type { CredentialRequestOptionsJSON } from '@github/webauthn-json'
 import { isCredentialRequestOptionsJSON } from './util'
 import { call } from '$lib/api'
+import { ApiError } from '$lib/errors/ApiError'
+import { InvalidResponse } from '$lib/errors/InvalidResponse'
 
 type EmailLoginResponse = {
   mode: 'EMAIL'
@@ -37,7 +39,7 @@ async function parseLoginResponse(response: Response): Promise<LoginResponse> {
     !('payload' in body) ||
     typeof body.payload !== 'string'
   ) {
-    throw new Error('received unexpected response from authentication server')
+    throw new InvalidResponse(response)
   }
 
   if (body.mode === 'EMAIL') {
@@ -52,12 +54,12 @@ async function parseLoginResponse(response: Response): Promise<LoginResponse> {
     const options = JSON.parse(body.payload) as unknown
 
     if (!location || !isCredentialRequestOptionsJSON(options)) {
-      throw new Error('received unexpected response from authentication server')
+      throw new InvalidResponse(response)
     }
 
     const match = location.match(/^\/auth\/login\/(.*)\/complete$/)
     if (!match) {
-      throw new Error('received unexpected response from authentication server')
+      throw new InvalidResponse(response)
     }
 
     return {
@@ -67,7 +69,7 @@ async function parseLoginResponse(response: Response): Promise<LoginResponse> {
     }
   }
 
-  throw new Error('unsupported login mode: ' + body.mode)
+  throw new ApiError('unsupported login mode: ' + body.mode, response)
 }
 
 type VerifyResponse = {
@@ -91,7 +93,7 @@ export async function verify(
   const body = (await response.json()) as unknown
 
   if (!isVerifyResponse(body)) {
-    throw new Error('received unexpected response from authentication server')
+    throw new InvalidResponse(response)
   }
 
   return body
@@ -113,7 +115,7 @@ export async function verifyCredential(
   const body = (await response.json()) as unknown
 
   if (!isVerifyResponse(body)) {
-    throw new Error('received unexpected response from authentication server')
+    throw new InvalidResponse(response)
   }
 
   return body

@@ -1,0 +1,79 @@
+---
+import ResponsiveTableWrapper from '$components/ResponsiveTableWrapper.astro'
+import { type ProfileResponse } from '$lib/auth/profileApi'
+
+export type Props = {
+  profile: ProfileResponse
+}
+
+const { profile } = Astro.props
+---
+
+<ResponsiveTableWrapper nowrap>
+  <table class="authenticators">
+    <tr>
+      <th>Name</th>
+      <th>Last Used</th>
+      <th>Actions</th>
+    </tr>
+
+    {
+      profile.authenticators.map((authenticator) => (
+        <tr>
+          <td>
+            <form
+              id={`update-authenticator:${authenticator.id}`}
+              method="post"
+              action={`/profile/authenticator/${authenticator.id}`}
+            >
+              <input
+                name="name"
+                type="text"
+                value={authenticator.name}
+                placeholder="Unnamed authenticator"
+              />
+            </form>
+          </td>
+          <td>{authenticator.lastUsed?.toLocaleString() ?? 'Never used'}</td>
+          <td>
+            <div class="actions">
+              <button
+                class="link"
+                form={`update-authenticator:${authenticator.id}`}
+              >
+                Update
+              </button>
+
+              <form
+                method="post"
+                action={`/profile/authenticator/${authenticator.id}/delete`}
+              >
+                <button class="link">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      ))
+    }
+  </table>
+</ResponsiveTableWrapper>
+
+<style>
+  .authenticators {
+    inline-size: 100%;
+  }
+
+  .authenticators input {
+    min-inline-size: 15rem;
+  }
+
+  .actions {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 1ch;
+  }
+
+  .actions > form {
+    display: contents;
+  }
+</style>

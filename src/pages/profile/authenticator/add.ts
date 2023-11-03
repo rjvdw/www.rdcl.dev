@@ -4,33 +4,48 @@ import {
   addAuthenticator,
   completeAddingAuthenticator,
 } from '$lib/auth/profileApi'
+import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
+import { unauthorized } from '$lib/responses'
 
 type CompleteRequest = {
   credential: PublicKeyCredentialWithAttestationJSON
   callback: string
 }
 
-export const POST: APIRoute = async ({ locals, redirect, request }) => {
+export const POST: APIRoute = async ({ locals, request }) => {
   const { jwt } = locals
   if (!jwt) {
-    return redirect('/login')
+    return unauthorized()
   }
 
-  const data = await readRequestBody(request)
+  try {
+    const data = await readRequestBody(request)
 
-  if (data) {
-    await completeAddingAuthenticator(jwt, data.callback, data.credential)
+    if (data) {
+      await completeAddingAuthenticator(jwt, data.callback, data.credential)
 
-    return new Response(null, {
-      status: 204,
-    })
-  } else {
-    const response = await addAuthenticator(jwt)
+      return new Response(null, {
+        status: 204,
+      })
+    } else {
+      const response = await addAuthenticator(jwt)
 
-    return new Response(JSON.stringify(response), {
-      status: 200,
+      return new Response(JSON.stringify(response), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    }
+  } catch (err) {
+    if (err instanceof UnauthorizedError) {
+      return unauthorized()
+    }
+
+    return new Response('error from upstream server', {
+      status: 502,
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain',
       },
     })
   }

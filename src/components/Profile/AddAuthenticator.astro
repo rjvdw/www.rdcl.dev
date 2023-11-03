@@ -1,0 +1,52 @@
+<div class="hidden add-authenticator-container">
+  <form
+    id="add-authenticator:form"
+    method="post"
+    action="/profile/authenticator/add"
+  >
+    <button>Add authenticator</button>
+  </form>
+
+  <p id="add-authenticator:error" class="error hidden"></p>
+</div>
+
+<style>
+  .add-authenticator-container {
+    margin-block-start: 1rem;
+  }
+
+  .error {
+    margin-block-start: 1rem;
+  }
+</style>
+
+<script>
+  import { getFormById } from '$lib/form/util'
+  import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
+  import { AddAuthenticator } from '$lib/auth/authenticator'
+
+  document
+    .querySelector<HTMLElement>('.add-authenticator-container')
+    ?.classList.remove('hidden')
+
+  const addAuthenticatorForm = getFormById('add-authenticator:form')
+  const addAuthenticator = new AddAuthenticator(addAuthenticatorForm)
+  const error = document.getElementById('add-authenticator:error')!
+
+  addAuthenticatorForm.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    try {
+      error.classList.add('hidden')
+      await addAuthenticator.flow()
+      location.reload()
+    } catch (err) {
+      if (err instanceof UnauthorizedError) {
+        const url = err.toRedirectUrl(location)
+        location.assign(url)
+      }
+
+      error.classList.remove('hidden')
+      error.innerText = `${err}`
+    }
+  })
+</script>

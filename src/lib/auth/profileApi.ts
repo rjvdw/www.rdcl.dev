@@ -4,15 +4,16 @@ import {
 } from '@github/webauthn-json'
 import { callAuthenticated } from '$lib/api'
 import { ApiError } from '$lib/errors/ApiError'
+import { InvalidResponse } from '$lib/errors/InvalidResponse'
 import { isCredentialCreationOptionsJson } from './util'
 
-type AuthenticatorResponse = {
+export type AuthenticatorResponse = {
   id: string
   name?: string | undefined
   lastUsed?: Date | undefined
 }
 
-type ProfileResponse = {
+export type ProfileResponse = {
   name: string
   email: string
   authenticators: AuthenticatorResponse[]
@@ -57,7 +58,7 @@ export async function addAuthenticator(
 
   const options = (await response.json()) as unknown
   if (!isCredentialCreationOptionsJson(options)) {
-    throw new ApiError('unexpected response', response)
+    throw new InvalidResponse(response)
   }
 
   return {
@@ -106,6 +107,7 @@ export async function deleteAuthenticator(jwt: string, id: string) {
 
 function parseAuthenticatorResponse(
   authenticator: unknown,
+  response: Response,
 ): AuthenticatorResponse {
   if (
     authenticator === null ||
@@ -113,7 +115,7 @@ function parseAuthenticatorResponse(
     !('id' in authenticator) ||
     typeof authenticator.id !== 'string'
   ) {
-    throw new Error('received unexpected response')
+    throw new InvalidResponse(response)
   }
 
   const result: AuthenticatorResponse = { id: authenticator.id }
@@ -147,11 +149,11 @@ async function parseProfileResponse(
     !('authenticators' in body) ||
     !Array.isArray(body.authenticators)
   ) {
-    throw new Error('received unexpected response')
+    throw new InvalidResponse(response)
   }
 
-  const authenticators = body.authenticators.map((a) =>
-    parseAuthenticatorResponse(a),
+  const authenticators = body.authenticators.map((authenticator) =>
+    parseAuthenticatorResponse(authenticator, response),
   )
 
   authenticators.sort(cmpAuthenticator)

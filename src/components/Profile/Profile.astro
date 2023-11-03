@@ -1,0 +1,33 @@
+---
+import FormGrid from '$components/FormGrid'
+import { type ProfileResponse } from '$lib/auth/profileApi'
+
+export type Props = {
+  profile: ProfileResponse
+}
+
+const { profile } = Astro.props
+---
+
+<form method="post">
+  <FormGrid>
+    <FormGrid.Field label="email" for="profile:email">
+      <input id="profile:email" readonly type="email" value={profile.email} />
+    </FormGrid.Field>
+
+    <FormGrid.Field label="name" for="profile:name">
+      <input id="profile:name" name="name" type="text" value={profile.name} />
+    </FormGrid.Field>
+
+    <FormGrid.Actions>
+      <button>Update profile</button>
+    </FormGrid.Actions>
+  </FormGrid>
+</form>
+
+<style>
+  input[readonly] {
+    background: transparent;
+    border-color: transparent;
+  }
+</style>

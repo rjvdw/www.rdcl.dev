@@ -50,13 +50,13 @@ export class RememberMeCookie extends Cookie {
       httpOnly: true,
       secure: true,
       path: '/login',
-      expires: getExpires(),
+      expires: RememberMeCookie.getExpires(),
     })
   }
-}
 
-function getExpires() {
-  const expires = new Date()
-  expires.setFullYear(expires.getFullYear() + 1)
-  return expires
+  private static getExpires() {
+    const expires = new Date()
+    expires.setFullYear(expires.getFullYear() + 1)
+    return expires
+  }
 }
