@@ -11,50 +11,54 @@ const { profile } = Astro.props
 
 <ResponsiveTableWrapper nowrap>
   <table class="authenticators">
-    <tr>
-      <th>Name</th>
-      <th>Last Used</th>
-      <th>Actions</th>
-    </tr>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Last Used</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
 
-    {
-      profile.authenticators.map((authenticator) => (
-        <tr>
-          <td>
-            <form
-              id={`update-authenticator:${authenticator.id}`}
-              method="post"
-              action={`/profile/authenticator/${authenticator.id}`}
-            >
-              <input
-                name="name"
-                type="text"
-                value={authenticator.name}
-                placeholder="Unnamed authenticator"
-              />
-            </form>
-          </td>
-          <td>{authenticator.lastUsed?.toLocaleString() ?? 'Never used'}</td>
-          <td>
-            <div class="actions">
-              <button
-                class="link"
-                form={`update-authenticator:${authenticator.id}`}
-              >
-                Update
-              </button>
-
+    <tbody>
+      {
+        profile.authenticators.map((authenticator) => (
+          <tr>
+            <td>
               <form
+                id={`update-authenticator:${authenticator.id}`}
                 method="post"
-                action={`/profile/authenticator/${authenticator.id}/delete`}
+                action={`/profile/authenticator/${authenticator.id}`}
               >
-                <button class="link">Delete</button>
+                <input
+                  name="name"
+                  type="text"
+                  value={authenticator.name}
+                  placeholder="Unnamed authenticator"
+                />
               </form>
-            </div>
-          </td>
-        </tr>
-      ))
-    }
+            </td>
+            <td>{authenticator.lastUsed?.toLocaleString() ?? 'Never used'}</td>
+            <td>
+              <div class="actions">
+                <button
+                  class="link"
+                  form={`update-authenticator:${authenticator.id}`}
+                >
+                  Update
+                </button>
+
+                <form
+                  method="post"
+                  action={`/profile/authenticator/${authenticator.id}/delete`}
+                >
+                  <button class="link">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
   </table>
 </ResponsiveTableWrapper>
 
