@@ -19,13 +19,13 @@
     "@astrojs/check": "^0.3.1",
     "@astrojs/node": "^6.0.3",
     "@github/webauthn-json": "^2.1.1",
-    "astro": "^3.4.3",
+    "astro": "^3.5.0",
     "husky": "^8.0.3",
     "jwt-decode": "^4.0.0",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@types/node": "^20.8.10",
+    "@types/node": "^20.9.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.1",
     "sass": "^1.69.5",
