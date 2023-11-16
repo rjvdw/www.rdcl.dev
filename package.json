@@ -5,6 +5,8 @@
     "prepare": "husky install",
     "dev": "astro dev",
     "start": "astro dev",
+    "test": "vitest",
+    "test:ci": "CI=true npm run test -- --coverage",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -26,11 +28,13 @@
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
+    "@vitest/coverage-v8": "^0.34.6",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.1",
     "sass": "^1.69.5",
     "stylelint": "^15.11.0",
     "stylelint-config-html": "^1.1.0",
-    "stylelint-config-recess-order": "^4.3.0"
+    "stylelint-config-recess-order": "^4.3.0",
+    "vitest": "^0.34.6"
   }
 }
