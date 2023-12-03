@@ -60,4 +60,9 @@ export type Link = {
    * The values are strings or null.
    */
   properties?: Record<string, string>
+
+  /**
+   * A template describing how the link should be constructed given some parameters.
+   */
+  template?: string
 }

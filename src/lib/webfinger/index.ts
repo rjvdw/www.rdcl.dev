@@ -1,6 +1,5 @@
 import type { JRD } from './types'
 import data, { type Account } from './data'
-import { mergeJrd } from './merge'
 
 export async function getData(
   resource: string,
@@ -12,12 +11,6 @@ export async function getData(
   }
 
   let data = account.base
-  if (account.mastodon) {
-    const mastodon = await finger(account.mastodon)
-    if (mastodon) {
-      data = mergeJrd(data, mastodon)
-    }
-  }
 
   const jrd: JRD = {
     ...data,
@@ -70,7 +63,7 @@ async function finger(profile: string): Promise<JRD | undefined> {
     return undefined
   }
 
-  const data = (await result.text()) as unknown
+  const data = (await result.json()) as unknown
 
   return data as JRD
 }
