@@ -45,25 +45,25 @@ function lookup(account: string): Account | undefined {
   return result
 }
 
-/**
- * Perform a WebFinger request to some other instance.
- *
- * @param profile
- */
-async function finger(profile: string): Promise<JRD | undefined> {
-  const [, instance] = profile.split('@')
-  const url = new URL(`https://${instance}/.well-known/webfinger`)
-  url.searchParams.set('resource', `acct:${profile}`)
-  const result = await fetch(url)
+// /**
+//  * Perform a WebFinger request to some other instance.
+//  *
+//  * @param profile
+//  */
+// async function finger(profile: string): Promise<JRD | undefined> {
+//   const [, instance] = profile.split('@')
+//   const url = new URL(`https://${instance}/.well-known/webfinger`)
+//   url.searchParams.set('resource', `acct:${profile}`)
+//   const result = await fetch(url)
 
-  if (!result.ok) {
-    console.error(
-      `Request to '${url}' failed with: ${result.status} ${result.statusText}`,
-    )
-    return undefined
-  }
+//   if (!result.ok) {
+//     console.error(
+//       `Request to '${url}' failed with: ${result.status} ${result.statusText}`,
+//     )
+//     return undefined
+//   }
 
-  const data = (await result.json()) as unknown
+//   const data = (await result.json()) as unknown
 
-  return data as JRD
-}
+//   return data as JRD
+// }
