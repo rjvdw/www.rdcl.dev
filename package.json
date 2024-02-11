@@ -18,23 +18,23 @@
     "fix:prettier": "prettier --write . 'src/**/*.astro'"
   },
   "dependencies": {
-    "@astrojs/check": "^0.4.1",
+    "@astrojs/check": "^0.5.2",
     "@astrojs/node": "^8.2.0",
     "@github/webauthn-json": "^2.1.1",
-    "astro": "^4.3.2",
+    "astro": "^4.3.5",
     "husky": "^9.0.10",
     "jwt-decode": "^4.0.0",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.11.17",
     "@vitest/coverage-v8": "^1.2.2",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",
     "sass": "^1.70.0",
     "stylelint": "^16.2.1",
     "stylelint-config-html": "^1.1.0",
-    "stylelint-config-recess-order": "^4.4.0",
+    "stylelint-config-recess-order": "^4.6.0",
     "vitest": "^1.2.2"
   }
 }
