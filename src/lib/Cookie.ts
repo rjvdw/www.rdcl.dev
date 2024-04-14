@@ -1,23 +1,16 @@
 import { type AstroCookies } from 'astro'
-
-type Options = {
-  domain?: string
-  expires?: Date
-  httpOnly?: boolean
-  maxAge?: number
-  path?: string
-  sameSite?: boolean | 'lax' | 'none' | 'strict'
-  secure?: boolean
-}
-
-type OptionOverrides = Pick<Options, 'expires' | 'maxAge'>
+import type { CookieSerializeOptions } from 'cookie'
 
 export class Cookie {
   readonly #cookies: AstroCookies
   readonly #name: string
-  readonly #options?: Options
+  readonly #options?: CookieSerializeOptions
 
-  constructor(cookies: AstroCookies, name: string, options?: Options) {
+  constructor(
+    cookies: AstroCookies,
+    name: string,
+    options?: CookieSerializeOptions,
+  ) {
     this.#cookies = cookies
     this.#name = name
     if (options) {
@@ -29,7 +22,10 @@ export class Cookie {
     return this.#cookies.get(this.#name)?.value
   }
 
-  set(value: string, overrides?: OptionOverrides) {
+  set(
+    value: string,
+    overrides?: Pick<CookieSerializeOptions, 'expires' | 'maxAge'>,
+  ) {
     const options = overrides
       ? {
           ...this.#options,
