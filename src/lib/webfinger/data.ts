@@ -23,8 +23,9 @@ const data: Record<string, AccountRecord> = {
         'https://pleroma.rdcl.dev/users/rj',
         'acct:rdcl@mastodon.nl',
         'mailto:rj@rdcl.dev',
+        'mailto:ruud@ruud.online',
         'acct:rj@rdcl.dev',
-        'acct:me@ruud.online',
+        'acct:ruud@ruud.online',
       ],
       links: [
         {
@@ -54,7 +55,7 @@ const data: Record<string, AccountRecord> = {
       ],
     },
   },
-  'acct:me@ruud.online': {
+  'acct:ruud@ruud.online': {
     type: 'alias',
     alias: 'acct:rj@rdcl.dev',
   },
