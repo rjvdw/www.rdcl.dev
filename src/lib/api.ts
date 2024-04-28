@@ -7,6 +7,7 @@ export async function call(
   const response = await fetch(input, init)
 
   if (!response.ok) {
+    console.error(await response.text())
     throw new ApiError(
       `Request to "${input.toString()}" failed with status ${response.status}`,
       response,
@@ -33,6 +34,7 @@ export async function callAuthenticated(
   }
 
   if (!response.ok) {
+    console.error(await response.text())
     throw new ApiError(
       `Request to "${input.toString()}" failed with status ${response.status}`,
       response,

@@ -21,7 +21,7 @@
     "@astrojs/check": "^0.5.10",
     "@astrojs/node": "^8.2.5",
     "@github/webauthn-json": "^2.1.1",
-    "astro": "^4.6.3",
+    "astro": "^4.7.0",
     "husky": "^9.0.11",
     "jwt-decode": "^4.0.0",
     "typescript": "^5.4.5"
@@ -29,11 +29,11 @@
   "devDependencies": {
     "@types/cookie": "^0.6.0",
     "@types/node": "^20.12.7",
-    "@vitest/coverage-v8": "^1.5.0",
+    "@vitest/coverage-v8": "^1.5.2",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",
     "sass": "^1.75.0",
-    "stylelint": "^16.3.1",
+    "stylelint": "^16.4.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recess-order": "^5.0.1",
     "vitest": "^1.2.2"

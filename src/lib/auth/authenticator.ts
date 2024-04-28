@@ -31,6 +31,7 @@ export class AddAuthenticator {
     }
 
     if (!response.ok) {
+      console.error(await response.text())
       throw new ApiError(
         `Request failed with status ${response.status}`,
         response,
