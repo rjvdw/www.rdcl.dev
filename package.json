@@ -19,20 +19,20 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
-    "@astrojs/node": "^8.3.0",
+    "@astrojs/node": "^8.3.1",
     "@github/webauthn-json": "^2.1.1",
-    "astro": "^4.10.2",
+    "astro": "^4.11.0",
     "husky": "^9.0.11",
     "jwt-decode": "^4.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.8",
     "@vitest/coverage-v8": "^1.6.0",
     "prettier": "^3.3.2",
     "prettier-plugin-astro": "^0.14.0",
-    "sass": "^1.77.5",
+    "sass": "^1.77.6",
     "stylelint": "^16.6.1",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recess-order": "^5.0.1",
