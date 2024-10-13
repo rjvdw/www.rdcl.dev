@@ -113,7 +113,16 @@ const matrix = getMatrix(Astro.url.searchParams)
             <tr>
               <td>(Row {i + 1})</td>
               {row.map((value) => (
-                <td>{value}</td>
+                <td>
+                  {value.denominator === 1 ? (
+                    value.numerator
+                  ) : (
+                    <div class="fraction">
+                      <span>{value.numerator}</span>
+                      <span>{value.denominator}</span>
+                    </div>
+                  )}
+                </td>
               ))}
             </tr>
           ))}
@@ -265,6 +274,21 @@ const matrix = getMatrix(Astro.url.searchParams)
     }
   }
 
+  :global(.fraction) {
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+
+    & > :global(span:first-child) {
+      border-block-end: thin solid var(--base-foreground-color);
+    }
+
+    & > :global(span) {
+      padding-block: 0.1rem;
+      padding-inline: 0.25rem;
+    }
+  }
+
   .operations {
     display: flex;
     flex-direction: column;
@@ -378,7 +402,21 @@ const matrix = getMatrix(Astro.url.searchParams)
     Array.from(table.querySelectorAll('tr')).forEach((tr, row) =>
       Array.from(tr.querySelectorAll('td')).forEach((td, column) => {
         if (column !== 0) {
-          td.innerHTML = '' + matrix[row]![column - 1]!
+          const value = matrix[row]![column - 1]!
+          td.innerHTML = ''
+          if (value.denominator === 1) {
+            td.innerHTML += value.numerator
+          } else {
+            const div = document.createElement('div')
+            div.classList.add('fraction')
+            const span1 = document.createElement('span')
+            span1.innerHTML = '' + value.numerator
+            div.appendChild(span1)
+            const span2 = document.createElement('span')
+            span2.innerHTML = '' + value.denominator
+            div.appendChild(span2)
+            td.appendChild(div)
+          }
         }
       }),
     )
