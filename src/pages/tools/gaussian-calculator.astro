@@ -64,8 +64,7 @@ const matrix = getMatrix(Astro.url.searchParams)
                       <input
                         name={`x[${row}][${i}]`}
                         type="text"
-                        inputmode="decimal"
-                        pattern="-?\\d+(?:[,\\.]\\d+)?"
+                        pattern="-?\\d+\\s*(/-?\\s*\\d+)?$"
                         required
                       />{' '}
                       x<sub>{i}</sub>
@@ -78,8 +77,7 @@ const matrix = getMatrix(Astro.url.searchParams)
                     <input
                       name={`y[${row}]`}
                       type="text"
-                      inputmode="decimal"
-                      pattern="-?\\d+(?:[,\\.]\\d+)?"
+                      pattern="-?\\d+\\s*(/-?\\s*\\d+)?$"
                       required
                     />
                   </label>
@@ -170,8 +168,7 @@ const matrix = getMatrix(Astro.url.searchParams)
                 <input
                   name="scalar"
                   type="text"
-                  inputmode="decimal"
-                  pattern="-?\\d+(?:[,\\.]\\d+)?"
+                  pattern="-?\\d+\\s*(/-?\\s*\\d+)?$"
                   value="1"
                   required
                 />
@@ -197,34 +194,7 @@ const matrix = getMatrix(Astro.url.searchParams)
                 <input
                   name="scalar"
                   type="text"
-                  inputmode="decimal"
-                  pattern="-?\\d+(?:[,\\.]\\d+)?"
-                  value="1"
-                  required
-                />
-              </label>
-              . <button class="link">Go</button>
-            </p>
-          </form>
-
-          <form data-op="divide">
-            <p>
-              Divide{' '}
-              <label>
-                row{' '}
-                <select name="row">
-                  {repeat(nr).map((i) => (
-                    <option value={i}>{i + 1}</option>
-                  ))}
-                </select>
-              </label>{' '}
-              <label>
-                by
-                <input
-                  name="scalar"
-                  type="text"
-                  inputmode="decimal"
-                  pattern="-?\\d+(?:[,\\.]\\d+)?"
+                  pattern="-?\\d+\\s*(/-?\\s*\\d+)?$"
                   value="1"
                   required
                 />
@@ -315,6 +285,7 @@ const matrix = getMatrix(Astro.url.searchParams)
 </style>
 
 <script>
+  import { Fraction } from '$lib/math/fraction'
   import { getMatrix } from './gaussian-calculator/util'
 
   const matrix = getMatrix(new URLSearchParams(window.location.search))
@@ -334,9 +305,6 @@ const matrix = getMatrix(Astro.url.searchParams)
         break
       case 'multiply':
         performMultiply(data)
-        break
-      case 'divide':
-        performDivide(data)
         break
       default:
         console.error('unsupported operation: %s', op, form)
@@ -358,13 +326,13 @@ const matrix = getMatrix(Astro.url.searchParams)
   function performAdd(data: FormData) {
     const row1 = +data.get('row1')!
     const row2 = +data.get('row2')!
-    const scalar = +data.get('scalar')!
+    const scalar = Fraction.parse(data.get('scalar')! as string)
 
     registerOperation(`[row ${row1 + 1}] += ${scalar} * [row ${row2 + 1}]`)
     const r1 = matrix[row1]!
     const r2 = matrix[row2]!
     for (let i = 0; i < r2.length; i += 1) {
-      r2[i]! += scalar * r1[i]!
+      r2[i] = r2[i]!.add(scalar.multiply(r1[i]!))
     }
 
     update()
@@ -372,25 +340,12 @@ const matrix = getMatrix(Astro.url.searchParams)
 
   function performMultiply(data: FormData) {
     const row = +data.get('row')!
-    const scalar = +data.get('scalar')!
+    const scalar = Fraction.parse(data.get('scalar')! as string)
 
     registerOperation(`[row ${row + 1}] *= ${scalar}`)
     const r = matrix[row]!
     for (let i = 0; i < r.length; i += 1) {
-      r[i]! *= scalar
-    }
-
-    update()
-  }
-
-  function performDivide(data: FormData) {
-    const row = +data.get('row')!
-    const scalar = +data.get('scalar')!
-
-    registerOperation(`[row ${row + 1}] /= ${scalar}`)
-    const r = matrix[row]!
-    for (let i = 0; i < r.length; i += 1) {
-      r[i]! /= scalar
+      r[i] = r[i]!.multiply(scalar)
     }
 
     update()
