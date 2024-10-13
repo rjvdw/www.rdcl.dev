@@ -15,11 +15,13 @@ textarea,
 .input {
   @include mixins.focusable-ui-component;
 
-  inline-size: 100%;
-  background-color: var(--input-background-color);
-  color: var(--input-foreground-color);
-  border: 1px solid var(--input-border-color);
-  border-radius: 0;
+  & {
+    inline-size: 100%;
+    background-color: var(--input-background-color);
+    color: var(--input-foreground-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 0;
+  }
 
   &:user-valid {
     border-color: var(--success-border-color);
@@ -49,12 +51,14 @@ input[type='button'],
 input[type='submit'] {
   @include mixins.focusable-ui-component;
 
-  inline-size: 100%;
-  background-color: var(--button-background-color);
-  color: var(--button-foreground-color);
-  border: 1px solid var(--button-border-color);
-  outline-color: var(--button-foreground-color) !important;
-  border-radius: 0;
+  & {
+    inline-size: 100%;
+    background-color: var(--button-background-color);
+    color: var(--button-foreground-color);
+    border: 1px solid var(--button-border-color);
+    outline-color: var(--button-foreground-color) !important;
+    border-radius: 0;
+  }
 
   &:hover,
   &:focus {
@@ -66,14 +70,16 @@ input[type='submit'] {
   &.link {
     @include mixins.link;
 
-    inline-size: initial;
-    display: inline;
-    padding: 0;
-    margin: 0;
-    font: inherit;
-    text-align: start;
-    appearance: none;
-    background: transparent;
-    border: none;
+    & {
+      inline-size: initial;
+      display: inline;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      text-align: start;
+      appearance: none;
+      background: transparent;
+      border: none;
+    }
   }
 }

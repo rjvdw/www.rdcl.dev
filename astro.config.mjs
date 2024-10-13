@@ -7,4 +7,13 @@ export default defineConfig({
   adapter: nodejs({
     mode: 'standalone',
   }),
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern',
+        },
+      },
+    },
+  },
 })
