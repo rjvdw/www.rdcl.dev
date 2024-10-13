@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro'
 import { saveSettings, type Settings } from '$lib/health/api'
-import { parseDecimal } from '$lib/health/util'
+import { parseDecimal } from '$lib/number-util'
 import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
 import { JwtCookie } from '$lib/auth/cookies'
 

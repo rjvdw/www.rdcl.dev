@@ -11,7 +11,6 @@ td {
   padding-block: 0.5rem;
   padding-inline: 1rem 2.5rem;
   text-align: start;
-  border-block-end: thin solid #666;
 }
 
 thead > tr:last-of-type {
@@ -22,6 +21,11 @@ thead > tr:last-of-type {
 }
 
 table:not(.simple-table) {
+  th,
+  td {
+    border-block-end: thin solid #666;
+  }
+
   tbody:nth-of-type(odd) > tr:nth-of-type(even),
   tbody:nth-of-type(even) > tr:nth-of-type(odd) {
     & > th,

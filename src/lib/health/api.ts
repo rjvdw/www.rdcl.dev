@@ -1,6 +1,6 @@
 import { InvalidResponse } from '$lib/errors/InvalidResponse'
 import { callAuthenticated } from '$lib/api'
-import { isoDateString } from './util'
+import { isoDateString } from '../date-util'
 
 export type Settings = {
   height?: number

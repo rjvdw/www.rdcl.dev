@@ -6,6 +6,10 @@ input[type='datetime-local'] {
   block-size: 2.3rem;
 }
 
+select {
+  @include mixins.focusable-ui-component;
+}
+
 input:not([type='range'], [type='radio'], [type='checkbox']),
 textarea,
 .input {

@@ -1,7 +1,8 @@
 ---
 import FormGrid from '$components/FormGrid'
 import { type HealthData, save } from '$lib/health/api'
-import { isoDateString, parseDecimal } from '$lib/health/util'
+import { isoDateString } from '$lib/date-util'
+import { parseDecimal } from '$lib/number-util'
 
 export type HealthRecordFormErrors = {
   date?: string[]

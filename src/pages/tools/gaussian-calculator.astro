@@ -1,0 +1,431 @@
+---
+import Layout from '$layouts/Tools.astro'
+import FormGrid from '$components/FormGrid'
+import JavaScriptWarning from '$components/JavaScriptWarning.astro'
+import {
+  getNumeric,
+  getMatrix,
+  repeat,
+  DEFAULT_NR,
+} from './gaussian-calculator/util'
+
+const step = getNumeric(Astro.url.searchParams, 'step') ?? 1
+const nr = getNumeric(Astro.url.searchParams, 'nr') ?? DEFAULT_NR
+const matrix = getMatrix(Astro.url.searchParams)
+---
+
+<Layout title="gaussian calculator">
+  <h1>Gaussian Calculator</h1>
+
+  <JavaScriptWarning />
+
+  {
+    step === 1 && (
+      <form>
+        <FormGrid>
+          <FormGrid.Field label="Number of equations" for="gauss:nr">
+            <input
+              id="gauss:nr"
+              name="nr"
+              type="number"
+              value={nr}
+              min="2"
+              step="1"
+              required
+            />
+          </FormGrid.Field>
+
+          <FormGrid.Actions>
+            <button type="submit" name="step" value="2">
+              Next step
+            </button>
+          </FormGrid.Actions>
+        </FormGrid>
+      </form>
+    )
+  }
+
+  {
+    step === 2 && (
+      <>
+        <form id="previous-step-form">
+          <input type="hidden" name="nr" value={nr} />
+        </form>
+        <form>
+          <input type="hidden" name="nr" value={nr} />
+
+          <div class="equations">
+            {repeat(nr).map((row) => (
+              <div class="row">
+                {repeat(nr).map((i) => (
+                  <span class="cell">
+                    <label>
+                      {i !== 0 && '+'}{' '}
+                      <input
+                        name={`x[${row}][${i}]`}
+                        type="text"
+                        inputmode="decimal"
+                        pattern="-?\\d+(?:[,\\.]\\d+)?"
+                        required
+                      />{' '}
+                      x<sub>{i}</sub>
+                    </label>
+                  </span>
+                ))}
+                <span class="cell">
+                  <label>
+                    ={' '}
+                    <input
+                      name={`y[${row}]`}
+                      type="text"
+                      inputmode="decimal"
+                      pattern="-?\\d+(?:[,\\.]\\d+)?"
+                      required
+                    />
+                  </label>
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div class="actions">
+            <button type="submit" name="step" value="3">
+              Next step
+            </button>
+            <button
+              type="submit"
+              name="step"
+              value="1"
+              form="previous-step-form"
+            >
+              Previous step
+            </button>
+          </div>
+        </form>
+      </>
+    )
+  }
+
+  {
+    step === 3 && (
+      <>
+        <form id="reset" />
+        <table class="simple-table matrix">
+          {matrix.map((row, i) => (
+            <tr>
+              <td>(Row {i + 1})</td>
+              {row.map((value) => (
+                <td>{value}</td>
+              ))}
+            </tr>
+          ))}
+        </table>
+
+        <div class="operations">
+          <form data-op="swap">
+            <p>
+              Swap{' '}
+              <label>
+                row{' '}
+                <select name="row1">
+                  {repeat(nr).map((i) => (
+                    <option value={i}>{i + 1}</option>
+                  ))}
+                </select>
+              </label>{' '}
+              with{' '}
+              <label>
+                row{' '}
+                <select name="row2">
+                  {repeat(nr).map((i) => (
+                    <option value={i}>{i + 1}</option>
+                  ))}
+                </select>
+              </label>
+              . <button class="link">Go</button>
+            </p>
+          </form>
+
+          <form data-op="add">
+            <p>
+              Add{' '}
+              <label>
+                row{' '}
+                <select name="row1">
+                  {repeat(nr).map((i) => (
+                    <option value={i}>{i + 1}</option>
+                  ))}
+                </select>
+              </label>{' '}
+              to{' '}
+              <label>
+                row{' '}
+                <select name="row2">
+                  {repeat(nr).map((i) => (
+                    <option value={i}>{i + 1}</option>
+                  ))}
+                </select>
+              </label>{' '}
+              <label>
+                <input
+                  name="scalar"
+                  type="text"
+                  inputmode="decimal"
+                  pattern="-?\\d+(?:[,\\.]\\d+)?"
+                  value="1"
+                  required
+                />
+                times
+              </label>
+              . <button class="link">Go</button>
+            </p>
+          </form>
+
+          <form data-op="multiply">
+            <p>
+              Multiply{' '}
+              <label>
+                row{' '}
+                <select name="row">
+                  {repeat(nr).map((i) => (
+                    <option value={i}>{i + 1}</option>
+                  ))}
+                </select>
+              </label>{' '}
+              <label>
+                by
+                <input
+                  name="scalar"
+                  type="text"
+                  inputmode="decimal"
+                  pattern="-?\\d+(?:[,\\.]\\d+)?"
+                  value="1"
+                  required
+                />
+              </label>
+              . <button class="link">Go</button>
+            </p>
+          </form>
+
+          <form data-op="divide">
+            <p>
+              Divide{' '}
+              <label>
+                row{' '}
+                <select name="row">
+                  {repeat(nr).map((i) => (
+                    <option value={i}>{i + 1}</option>
+                  ))}
+                </select>
+              </label>{' '}
+              <label>
+                by
+                <input
+                  name="scalar"
+                  type="text"
+                  inputmode="decimal"
+                  pattern="-?\\d+(?:[,\\.]\\d+)?"
+                  value="1"
+                  required
+                />
+              </label>
+              . <button class="link">Go</button>
+            </p>
+          </form>
+        </div>
+
+        <h2>Operations</h2>
+
+        <p class="operations-list">No operations performed yet</p>
+
+        <div class="actions">
+          <button type="submit" form="reset">
+            Discard everything and start over
+          </button>
+        </div>
+      </>
+    )
+  }
+</Layout>
+
+<style define:vars={{ 'nr-columns': nr + 1 }}>
+  .equations {
+    display: grid;
+    grid-template-columns: repeat(var(--nr-columns), min-content);
+    gap: 0.5rem;
+
+    .row {
+      display: contents;
+    }
+
+    .cell {
+      white-space: nowrap;
+    }
+
+    input {
+      inline-size: 5rem;
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-block-start: 2rem;
+  }
+
+  .matrix {
+    white-space: nowrap;
+
+    td:first-child {
+      font-size: 90%;
+      font-style: italic;
+      color: #999;
+      @media (prefers-color-scheme: dark) {
+        color: #666;
+      }
+    }
+
+    td:nth-child(2) {
+      border-inline-start: thin solid #666;
+    }
+
+    td:last-child {
+      border-inline: thin solid #666;
+    }
+  }
+
+  .operations {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-block-start: 2rem;
+
+    select,
+    input {
+      padding-block: 0.1rem;
+      padding-inline: 0.5rem;
+    }
+
+    input {
+      inline-size: 5rem;
+      text-align: end;
+    }
+  }
+</style>
+
+<script>
+  import { getMatrix } from './gaussian-calculator/util'
+
+  const matrix = getMatrix(new URLSearchParams(window.location.search))
+
+  document.querySelector('.operations')?.addEventListener('submit', (event) => {
+    event.preventDefault()
+    const form = event.target as HTMLFormElement
+    const op = form.dataset.op
+    const data = new FormData(form)
+
+    switch (op) {
+      case 'swap':
+        performSwap(data)
+        break
+      case 'add':
+        performAdd(data)
+        break
+      case 'multiply':
+        performMultiply(data)
+        break
+      case 'divide':
+        performDivide(data)
+        break
+      default:
+        console.error('unsupported operation: %s', op, form)
+    }
+  })
+
+  function performSwap(data: FormData) {
+    const row1 = +data.get('row1')!
+    const row2 = +data.get('row2')!
+
+    registerOperation(`swap([row ${row1 + 1}], [row ${row2 + 1}])`)
+    const t = matrix[row1]!
+    matrix[row1] = matrix[row2]!
+    matrix[row2] = t
+
+    update()
+  }
+
+  function performAdd(data: FormData) {
+    const row1 = +data.get('row1')!
+    const row2 = +data.get('row2')!
+    const scalar = +data.get('scalar')!
+
+    registerOperation(`[row ${row1 + 1}] += ${scalar} * [row ${row2 + 1}]`)
+    const r1 = matrix[row1]!
+    const r2 = matrix[row2]!
+    for (let i = 0; i < r2.length; i += 1) {
+      r2[i]! += scalar * r1[i]!
+    }
+
+    update()
+  }
+
+  function performMultiply(data: FormData) {
+    const row = +data.get('row')!
+    const scalar = +data.get('scalar')!
+
+    registerOperation(`[row ${row + 1}] *= ${scalar}`)
+    const r = matrix[row]!
+    for (let i = 0; i < r.length; i += 1) {
+      r[i]! *= scalar
+    }
+
+    update()
+  }
+
+  function performDivide(data: FormData) {
+    const row = +data.get('row')!
+    const scalar = +data.get('scalar')!
+
+    registerOperation(`[row ${row + 1}] /= ${scalar}`)
+    const r = matrix[row]!
+    for (let i = 0; i < r.length; i += 1) {
+      r[i]! /= scalar
+    }
+
+    update()
+  }
+
+  function registerOperation(description: string) {
+    const ul = getOperationsList()
+    const li = document.createElement('li')
+    ul.appendChild(li)
+    li.innerHTML = description
+  }
+
+  function getOperationsList(): HTMLUListElement {
+    const el = document.querySelector('.operations-list') as HTMLElement
+
+    if (el.tagName === 'UL') {
+      return el as HTMLUListElement
+    }
+
+    const ul = document.createElement('ul')
+    ul.className = el.className
+    el.replaceWith(ul)
+
+    return ul
+  }
+
+  function update() {
+    const table = document.querySelector('.matrix') as HTMLTableElement
+
+    Array.from(table.querySelectorAll('tr')).forEach((tr, row) =>
+      Array.from(tr.querySelectorAll('td')).forEach((td, column) => {
+        if (column !== 0) {
+          td.innerHTML = '' + matrix[row]![column - 1]!
+        }
+      }),
+    )
+  }
+</script>
