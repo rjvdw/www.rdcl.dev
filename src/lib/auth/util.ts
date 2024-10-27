@@ -1,11 +1,6 @@
-import type {
-  CredentialCreationOptionsJSON,
-  CredentialRequestOptionsJSON,
-} from '@github/webauthn-json'
+import type { CredentialCreationOptionsJSON, CredentialRequestOptionsJSON } from '@github/webauthn-json'
 
-export function isCredentialRequestOptionsJSON(
-  data: unknown,
-): data is CredentialRequestOptionsJSON {
+export function isCredentialRequestOptionsJSON(data: unknown): data is CredentialRequestOptionsJSON {
   return (
     typeof data === 'object' &&
     data !== null &&
@@ -14,15 +9,11 @@ export function isCredentialRequestOptionsJSON(
   )
 }
 
-function isPublicKeyCredentialRequestOptionsJSON(
-  data: unknown,
-): data is CredentialRequestOptionsJSON['publicKey'] {
+function isPublicKeyCredentialRequestOptionsJSON(data: unknown): data is CredentialRequestOptionsJSON['publicKey'] {
   return typeof data === 'object' && data !== null
 }
 
-export function isCredentialCreationOptionsJson(
-  body: unknown,
-): body is CredentialCreationOptionsJSON {
+export function isCredentialCreationOptionsJson(body: unknown): body is CredentialCreationOptionsJSON {
   return (
     typeof body === 'object' &&
     body !== null &&
@@ -31,9 +22,7 @@ export function isCredentialCreationOptionsJson(
   )
 }
 
-function isPublicKeyCredentialCreationOptionsJSON(
-  body: unknown,
-): body is CredentialCreationOptionsJSON['publicKey'] {
+function isPublicKeyCredentialCreationOptionsJSON(body: unknown): body is CredentialCreationOptionsJSON['publicKey'] {
   return typeof body === 'object' && body !== null
 }
 
@@ -43,11 +32,7 @@ type CheckJwtParameters = {
   redirect(url: string): Response
 }
 
-export function checkJwtOrRedirect({
-  locals,
-  url,
-  redirect,
-}: CheckJwtParameters): string | Response {
+export function checkJwtOrRedirect({ locals, url, redirect }: CheckJwtParameters): string | Response {
   const { jwt } = locals
 
   if (jwt) {

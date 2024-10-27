@@ -22,13 +22,7 @@ import JavaScriptWarning from '$components/JavaScriptWarning.astro'
       </FormGrid.Field>
 
       <FormGrid.Field label="Nr. of attempts" for="drop-rates:nr-attempts">
-        <input
-          id="drop-rates:nr-attempts"
-          name="nr-attempts"
-          type="text"
-          inputmode="numeric"
-          pattern="\\d+"
-        />
+        <input id="drop-rates:nr-attempts" name="nr-attempts" type="text" inputmode="numeric" pattern="\\d+" />
       </FormGrid.Field>
 
       <hr />
@@ -49,11 +43,7 @@ import JavaScriptWarning from '$components/JavaScriptWarning.astro'
 </Layout>
 
 <script>
-  import {
-    getInputFieldById,
-    InputParser,
-    InputFormatter,
-  } from '$lib/form/util'
+  import { getInputFieldById, InputParser, InputFormatter } from '$lib/form/util'
   import { computeChance, computePercentiles } from '$lib/tools/drop-rates'
 
   const Fields = getFields()

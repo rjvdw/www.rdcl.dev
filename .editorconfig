@@ -4,27 +4,8 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 
-[*.ts]
+[*.{ts,css,scss,astro,md,json,yml}]
 charset = utf-8
 indent_style = space
 indent_size = 2
-
-[*.{css,scss}]
-charset = utf-8
-indent_style = space
-indent_size = 2
-
-[*.astro]
-charset = utf-8
-indent_style = space
-indent_size = 2
-
-[*.md]
-charset = utf-8
-indent_style = space
-indent_size = 2
-
-[*.{json,yml}]
-charset = utf-8
-indent_style = space
-indent_size = 2
+max_line_length = 120

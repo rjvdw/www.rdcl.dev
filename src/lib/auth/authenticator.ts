@@ -1,7 +1,4 @@
-import {
-  create,
-  type PublicKeyCredentialWithAttestationJSON,
-} from '@github/webauthn-json'
+import { create, type PublicKeyCredentialWithAttestationJSON } from '@github/webauthn-json'
 import type { NewAuthenticatorResponse } from '$lib/auth/profileApi'
 import { isCredentialCreationOptionsJson } from '$lib/auth/util'
 import { InvalidResponse } from '$lib/errors/InvalidResponse'
@@ -32,10 +29,7 @@ export class AddAuthenticator {
 
     if (!response.ok) {
       console.error(await response.text())
-      throw new ApiError(
-        `Request failed with status ${response.status}`,
-        response,
-      )
+      throw new ApiError(`Request failed with status ${response.status}`, response)
     }
 
     const responseBody = (await response.json()) as unknown
@@ -47,10 +41,7 @@ export class AddAuthenticator {
     return responseBody
   }
 
-  async #complete(
-    credential: PublicKeyCredentialWithAttestationJSON,
-    callback: string,
-  ): Promise<void> {
+  async #complete(credential: PublicKeyCredentialWithAttestationJSON, callback: string): Promise<void> {
     await fetch(this.#form.action, {
       method: this.#form.method,
       headers: {
@@ -61,9 +52,7 @@ export class AddAuthenticator {
   }
 }
 
-function isNewAuthenticatorResponse(
-  body: unknown,
-): body is NewAuthenticatorResponse {
+function isNewAuthenticatorResponse(body: unknown): body is NewAuthenticatorResponse {
   return (
     body !== null &&
     typeof body === 'object' &&

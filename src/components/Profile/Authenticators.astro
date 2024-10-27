@@ -29,28 +29,17 @@ const { profile } = Astro.props
                 method="post"
                 action={`/profile/authenticator/${authenticator.id}`}
               >
-                <input
-                  name="name"
-                  type="text"
-                  value={authenticator.name}
-                  placeholder="Unnamed authenticator"
-                />
+                <input name="name" type="text" value={authenticator.name} placeholder="Unnamed authenticator" />
               </form>
             </td>
             <td>{authenticator.lastUsed?.toLocaleString() ?? 'Never used'}</td>
             <td>
               <div class="actions">
-                <button
-                  class="link"
-                  form={`update-authenticator:${authenticator.id}`}
-                >
+                <button class="link" form={`update-authenticator:${authenticator.id}`}>
                   Update
                 </button>
 
-                <form
-                  method="post"
-                  action={`/profile/authenticator/${authenticator.id}/delete`}
-                >
+                <form method="post" action={`/profile/authenticator/${authenticator.id}/delete`}>
                   <button class="link">Delete</button>
                 </form>
               </div>

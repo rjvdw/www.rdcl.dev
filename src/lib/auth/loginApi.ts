@@ -17,9 +17,7 @@ type AuthenticatorLoginResponse = {
 
 type LoginResponse = EmailLoginResponse | AuthenticatorLoginResponse
 
-export async function login(
-  requestBody: URLSearchParams,
-): Promise<LoginResponse> {
+export async function login(requestBody: URLSearchParams): Promise<LoginResponse> {
   const url = `${import.meta.env.API_URL}/auth/login`
   const response = await call(url, {
     method: 'post',
@@ -76,10 +74,7 @@ type VerifyResponse = {
   jwt: string
 }
 
-export async function verify(
-  verificationCode: string,
-  sessionToken: string,
-): Promise<VerifyResponse> {
+export async function verify(verificationCode: string, sessionToken: string): Promise<VerifyResponse> {
   const requestBody = new URLSearchParams()
   requestBody.set('verification-code', verificationCode)
   requestBody.set('session-token', sessionToken)
@@ -99,10 +94,7 @@ export async function verify(
   return body
 }
 
-export async function verifyCredential(
-  logInId: string,
-  credential: string,
-): Promise<VerifyResponse> {
+export async function verifyCredential(logInId: string, credential: string): Promise<VerifyResponse> {
   const url = `${import.meta.env.API_URL}/auth/login/${logInId}/complete`
   const response = await call(url, {
     method: 'post',
@@ -122,10 +114,5 @@ export async function verifyCredential(
 }
 
 function isVerifyResponse(body: unknown): body is VerifyResponse {
-  return (
-    body !== null &&
-    typeof body === 'object' &&
-    'jwt' in body &&
-    typeof body.jwt === 'string'
-  )
+  return body !== null && typeof body === 'object' && 'jwt' in body && typeof body.jwt === 'string'
 }

@@ -42,10 +42,7 @@ export async function get(jwt: string, from?: Date, to?: Date): Promise<Data> {
   return parseHealthDataResponse(healthResponse, settingsResponse)
 }
 
-async function parseHealthDataResponse(
-  healthResponse: Response,
-  settingsResponse: Response,
-): Promise<Data> {
+async function parseHealthDataResponse(healthResponse: Response, settingsResponse: Response): Promise<Data> {
   const settingsBodyResponse = settingsResponse.json()
   const healthBodyResponse = healthResponse.json()
 
@@ -73,9 +70,7 @@ async function parseHealthDataResponse(
     throw new InvalidResponse(healthResponse)
   }
 
-  const records = healthBody.health.map((record) =>
-    parseHealthDataRecord(record, settings.height, healthResponse),
-  )
+  const records = healthBody.health.map((record) => parseHealthDataRecord(record, settings.height, healthResponse))
 
   records.sort((a, b) => b.date.getTime() - a.date.getTime())
 
@@ -86,11 +81,7 @@ async function parseHealthDataResponse(
   }
 }
 
-function parseHealthDataRecord(
-  record: unknown,
-  height: number | undefined,
-  response: Response,
-): Record {
+function parseHealthDataRecord(record: unknown, height: number | undefined, response: Response): Record {
   if (
     record === null ||
     typeof record !== 'object' ||

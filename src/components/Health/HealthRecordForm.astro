@@ -57,37 +57,15 @@ export async function handleHealthRecordFormPost(
 <form method="POST">
   <FormGrid>
     <FormGrid.Field label="date" for="create:date" errors={errors?.date}>
-      <input
-        id="create:date"
-        name="date"
-        type="date"
-        value={isoDateString(new Date())}
-        required
-      />
+      <input id="create:date" name="date" type="date" value={isoDateString(new Date())} required />
     </FormGrid.Field>
 
     <FormGrid.Field label="weight" for="create:weight" errors={errors?.weight}>
-      <input
-        id="create:weight"
-        name="weight"
-        type="text"
-        inputmode="decimal"
-        pattern="\\d+(?:[,\\.]\\d+)?"
-      />
+      <input id="create:weight" name="weight" type="text" inputmode="decimal" pattern="\\d+(?:[,\\.]\\d+)?" />
     </FormGrid.Field>
 
-    <FormGrid.Field
-      label="body fat"
-      for="create:bodyFat"
-      errors={errors?.bodyFat}
-    >
-      <input
-        id="create:bodyFat"
-        name="bodyFat"
-        type="text"
-        inputmode="decimal"
-        pattern="\\d+(?:[,\\.]\\d+)?"
-      />
+    <FormGrid.Field label="body fat" for="create:bodyFat" errors={errors?.bodyFat}>
+      <input id="create:bodyFat" name="bodyFat" type="text" inputmode="decimal" pattern="\\d+(?:[,\\.]\\d+)?" />
     </FormGrid.Field>
 
     <FormGrid.Actions>

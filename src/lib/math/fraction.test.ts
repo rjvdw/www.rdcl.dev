@@ -53,15 +53,9 @@ describe('Fraction', () => {
   })
 
   test('Invalid numerator or denominator lead to an error', () => {
-    expect(() => frac(1.2, 2)).toThrowError(
-      'Numerator and denominator must both be integer values',
-    )
-    expect(() => frac(1, 1.2)).toThrowError(
-      'Numerator and denominator must both be integer values',
-    )
-    expect(() => frac(1.2, 1.2)).toThrowError(
-      'Numerator and denominator must both be integer values',
-    )
+    expect(() => frac(1.2, 2)).toThrowError('Numerator and denominator must both be integer values')
+    expect(() => frac(1, 1.2)).toThrowError('Numerator and denominator must both be integer values')
+    expect(() => frac(1.2, 1.2)).toThrowError('Numerator and denominator must both be integer values')
   })
 
   test('Fractions can be parsed from a string', () => {

@@ -2,13 +2,7 @@ import type { APIRoute } from 'astro'
 import { checkJwtOrRedirect } from '$lib/auth/util'
 import { updateAuthenticator } from '$lib/auth/profileApi'
 
-export const POST: APIRoute = async ({
-  locals,
-  params,
-  redirect,
-  request,
-  url,
-}) => {
+export const POST: APIRoute = async ({ locals, params, redirect, request, url }) => {
   const jwt = checkJwtOrRedirect({ locals, url, redirect })
   if (jwt instanceof Response) {
     return jwt

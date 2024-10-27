@@ -3,11 +3,7 @@ import Authenticators from '$components/Profile/Authenticators.astro'
 import AddAuthenticator from '$components/Profile/AddAuthenticator.astro'
 import Profile from '$components/Profile/Profile.astro'
 import Layout from '$layouts/Base.astro'
-import {
-  getProfile,
-  updateProfile,
-  type ProfileResponse,
-} from '$lib/auth/profileApi'
+import { getProfile, updateProfile, type ProfileResponse } from '$lib/auth/profileApi'
 import { checkJwtOrRedirect } from '$lib/auth/util'
 import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
 

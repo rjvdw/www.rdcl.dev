@@ -2,10 +2,7 @@ import { Fraction } from '$lib/math/fraction'
 
 export const DEFAULT_NR = 3
 
-export function getNumeric(
-  params: URLSearchParams,
-  field: string,
-): number | null {
+export function getNumeric(params: URLSearchParams, field: string): number | null {
   const value = params.get(field)
 
   return value == null ? null : +value

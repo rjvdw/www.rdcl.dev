@@ -1,26 +1,18 @@
 import { ApiError } from './errors/ApiError'
 import { UnauthorizedError } from './errors/UnauthorizedError'
 
-export async function call(
-  ...[input, init]: Parameters<typeof fetch>
-): Promise<Response> {
+export async function call(...[input, init]: Parameters<typeof fetch>): Promise<Response> {
   const response = await fetch(input, init)
 
   if (!response.ok) {
     console.error(await response.text())
-    throw new ApiError(
-      `Request to "${input.toString()}" failed with status ${response.status}`,
-      response,
-    )
+    throw new ApiError(`Request to "${input.toString()}" failed with status ${response.status}`, response)
   }
 
   return response
 }
 
-export async function callAuthenticated(
-  jwt: string,
-  ...[input, init]: Parameters<typeof fetch>
-): Promise<Response> {
+export async function callAuthenticated(jwt: string, ...[input, init]: Parameters<typeof fetch>): Promise<Response> {
   const response = await fetch(input, {
     ...init,
     headers: {
@@ -35,10 +27,7 @@ export async function callAuthenticated(
 
   if (!response.ok) {
     console.error(await response.text())
-    throw new ApiError(
-      `Request to "${input.toString()}" failed with status ${response.status}`,
-      response,
-    )
+    throw new ApiError(`Request to "${input.toString()}" failed with status ${response.status}`, response)
   }
 
   return response

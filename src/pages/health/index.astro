@@ -1,9 +1,6 @@
 ---
 import Health from '$components/Health'
-import {
-  handleHealthRecordFormPost,
-  type HealthRecordFormErrors,
-} from '$components/Health/HealthRecordForm.astro'
+import { handleHealthRecordFormPost, type HealthRecordFormErrors } from '$components/Health/HealthRecordForm.astro'
 import Layout from '$layouts/Base.astro'
 import { JwtCookie } from '$lib/auth/cookies'
 import { checkJwtOrRedirect } from '$lib/auth/util'

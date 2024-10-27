@@ -6,11 +6,7 @@ export class Cookie {
   readonly #name: string
   readonly #options?: CookieSerializeOptions
 
-  constructor(
-    cookies: AstroCookies,
-    name: string,
-    options?: CookieSerializeOptions,
-  ) {
+  constructor(cookies: AstroCookies, name: string, options?: CookieSerializeOptions) {
     this.#cookies = cookies
     this.#name = name
     if (options) {
@@ -22,10 +18,7 @@ export class Cookie {
     return this.#cookies.get(this.#name)?.value
   }
 
-  set(
-    value: string,
-    overrides?: Pick<CookieSerializeOptions, 'expires' | 'maxAge'>,
-  ) {
+  set(value: string, overrides?: Pick<CookieSerializeOptions, 'expires' | 'maxAge'>) {
     const options = overrides
       ? {
           ...this.#options,

@@ -52,11 +52,7 @@ function format(value: number | undefined, unit = ''): string {
                 <td>{format(record.data.bmi)}</td>
                 <td>
                   <form method="post" action="/health/delete">
-                    <input
-                      type="hidden"
-                      name="date"
-                      value={isoDateString(record.date)}
-                    />
+                    <input type="hidden" name="date" value={isoDateString(record.date)} />
                     <button class="link">Delete</button>
                   </form>
                 </td>

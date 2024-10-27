@@ -1,11 +1,5 @@
-export function isInputField(
-  el: unknown,
-): el is HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement {
-  return (
-    el instanceof HTMLInputElement ||
-    el instanceof HTMLTextAreaElement ||
-    el instanceof HTMLSelectElement
-  )
+export function isInputField(el: unknown): el is HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement {
+  return el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement
 }
 
 export function getInputFieldById(id: string) {
@@ -29,9 +23,7 @@ export function getFormById(id: string) {
 }
 
 export const InputParser = {
-  numeric(
-    value: FormDataEntryValue | string | null | undefined,
-  ): number | null {
+  numeric(value: FormDataEntryValue | string | null | undefined): number | null {
     if (!(typeof value === 'string')) {
       return null
     }

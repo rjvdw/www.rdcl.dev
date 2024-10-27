@@ -1,7 +1,4 @@
-export function computeChance(
-  dropRate: number | null,
-  nrAttempts: number | null,
-): number | null {
+export function computeChance(dropRate: number | null, nrAttempts: number | null): number | null {
   if (dropRate === null || nrAttempts === null) {
     return null
   }

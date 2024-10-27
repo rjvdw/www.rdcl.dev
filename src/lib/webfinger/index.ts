@@ -1,10 +1,7 @@
 import type { JRD } from './types'
 import data, { type Account } from './data'
 
-export async function getData(
-  resource: string,
-  relations: string | null,
-): Promise<JRD | undefined> {
+export async function getData(resource: string, relations: string | null): Promise<JRD | undefined> {
   const account = lookup(resource)
   if (!account) {
     return undefined

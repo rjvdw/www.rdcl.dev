@@ -1,9 +1,6 @@
 import type { APIRoute } from 'astro'
 import type { PublicKeyCredentialWithAttestationJSON } from '@github/webauthn-json'
-import {
-  addAuthenticator,
-  completeAddingAuthenticator,
-} from '$lib/auth/profileApi'
+import { addAuthenticator, completeAddingAuthenticator } from '$lib/auth/profileApi'
 import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
 import { unauthorized } from '$lib/responses'
 
@@ -51,9 +48,7 @@ export const POST: APIRoute = async ({ locals, request }) => {
   }
 }
 
-async function readRequestBody(
-  request: Request,
-): Promise<CompleteRequest | null> {
+async function readRequestBody(request: Request): Promise<CompleteRequest | null> {
   try {
     const data = (await request.json()) as unknown
 

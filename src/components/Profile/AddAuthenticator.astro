@@ -1,9 +1,5 @@
 <div class="hidden add-authenticator-container">
-  <form
-    id="add-authenticator:form"
-    method="post"
-    action="/profile/authenticator/add"
-  >
+  <form id="add-authenticator:form" method="post" action="/profile/authenticator/add">
     <button>Add authenticator</button>
   </form>
 
@@ -25,9 +21,7 @@
   import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
   import { AddAuthenticator } from '$lib/auth/authenticator'
 
-  document
-    .querySelector<HTMLElement>('.add-authenticator-container')
-    ?.classList.remove('hidden')
+  document.querySelector<HTMLElement>('.add-authenticator-container')?.classList.remove('hidden')
 
   const addAuthenticatorForm = getFormById('add-authenticator:form')
   const addAuthenticator = new AddAuthenticator(addAuthenticatorForm)

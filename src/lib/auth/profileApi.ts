@@ -1,7 +1,4 @@
-import {
-  type CredentialCreationOptionsJSON,
-  type PublicKeyCredentialWithAttestationJSON,
-} from '@github/webauthn-json'
+import { type CredentialCreationOptionsJSON, type PublicKeyCredentialWithAttestationJSON } from '@github/webauthn-json'
 import { callAuthenticated } from '$lib/api'
 import { ApiError } from '$lib/errors/ApiError'
 import { InvalidResponse } from '$lib/errors/InvalidResponse'
@@ -43,9 +40,7 @@ export async function updateProfile(jwt: string, name: string | undefined) {
   })
 }
 
-export async function addAuthenticator(
-  jwt: string,
-): Promise<NewAuthenticatorResponse> {
+export async function addAuthenticator(jwt: string): Promise<NewAuthenticatorResponse> {
   const url = `${import.meta.env.API_URL}/auth/authenticator`
   const response = await callAuthenticated(jwt, url, {
     method: 'post',
@@ -82,11 +77,7 @@ export async function completeAddingAuthenticator(
   })
 }
 
-export async function updateAuthenticator(
-  jwt: string,
-  id: string,
-  name: string | undefined,
-) {
+export async function updateAuthenticator(jwt: string, id: string, name: string | undefined) {
   const url = `${import.meta.env.API_URL}/auth/authenticator/${id}`
   const body = new URLSearchParams()
   if (name) {
@@ -105,10 +96,7 @@ export async function deleteAuthenticator(jwt: string, id: string) {
   })
 }
 
-function parseAuthenticatorResponse(
-  authenticator: unknown,
-  response: Response,
-): AuthenticatorResponse {
+function parseAuthenticatorResponse(authenticator: unknown, response: Response): AuthenticatorResponse {
   if (
     authenticator === null ||
     typeof authenticator !== 'object' ||
@@ -124,19 +112,14 @@ function parseAuthenticatorResponse(
     result.name = authenticator.name
   }
 
-  if (
-    'lastUsed' in authenticator &&
-    typeof authenticator.lastUsed === 'string'
-  ) {
+  if ('lastUsed' in authenticator && typeof authenticator.lastUsed === 'string') {
     result.lastUsed = new Date(Date.parse(authenticator.lastUsed))
   }
 
   return result
 }
 
-async function parseProfileResponse(
-  response: Response,
-): Promise<ProfileResponse> {
+async function parseProfileResponse(response: Response): Promise<ProfileResponse> {
   const body = (await response.json()) as unknown
 
   if (
@@ -152,9 +135,7 @@ async function parseProfileResponse(
     throw new InvalidResponse(response)
   }
 
-  const authenticators = body.authenticators.map((authenticator) =>
-    parseAuthenticatorResponse(authenticator, response),
-  )
+  const authenticators = body.authenticators.map((authenticator) => parseAuthenticatorResponse(authenticator, response))
 
   authenticators.sort(cmpAuthenticator)
 
@@ -165,10 +146,7 @@ async function parseProfileResponse(
   }
 }
 
-function cmpAuthenticator(
-  a: AuthenticatorResponse,
-  b: AuthenticatorResponse,
-): number {
+function cmpAuthenticator(a: AuthenticatorResponse, b: AuthenticatorResponse): number {
   // most recently used should be sorted to the top
   if (a.lastUsed || b.lastUsed) {
     if (!b.lastUsed) {

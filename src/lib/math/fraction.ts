@@ -72,10 +72,7 @@ export class Fraction {
    * Check if two fractions are equal.
    */
   equals(other: Fraction): boolean {
-    return (
-      this.#numerator === other.#numerator &&
-      this.#denominator === other.#denominator
-    )
+    return this.#numerator === other.#numerator && this.#denominator === other.#denominator
   }
 
   /**
@@ -84,10 +81,7 @@ export class Fraction {
    * (> 0) the other fraction.
    */
   compareTo(other: Fraction): number {
-    return (
-      this.#numerator * other.#denominator -
-      other.#numerator * this.#denominator
-    )
+    return this.#numerator * other.#denominator - other.#numerator * this.#denominator
   }
 
   /**
@@ -107,14 +101,10 @@ export class Fraction {
   add(other: number): Fraction
   add(other: Fraction | number): Fraction {
     if (typeof other === 'number') {
-      return new Fraction(
-        this.#numerator + this.#denominator * other,
-        this.#denominator,
-      )
+      return new Fraction(this.#numerator + this.#denominator * other, this.#denominator)
     }
     return new Fraction(
-      this.#numerator * other.#denominator +
-        other.#numerator * this.#denominator,
+      this.#numerator * other.#denominator + other.#numerator * this.#denominator,
       this.#denominator * other.#denominator,
     )
   }
@@ -126,14 +116,10 @@ export class Fraction {
   subtract(other: number): Fraction
   subtract(other: Fraction | number): Fraction {
     if (typeof other === 'number') {
-      return new Fraction(
-        this.#numerator - this.#denominator * other,
-        this.#denominator,
-      )
+      return new Fraction(this.#numerator - this.#denominator * other, this.#denominator)
     }
     return new Fraction(
-      this.#numerator * other.#denominator -
-        other.#numerator * this.#denominator,
+      this.#numerator * other.#denominator - other.#numerator * this.#denominator,
       this.#denominator * other.#denominator,
     )
   }
@@ -147,10 +133,7 @@ export class Fraction {
     if (typeof other === 'number') {
       return new Fraction(this.#numerator * other, this.#denominator)
     }
-    return new Fraction(
-      this.#numerator * other.#numerator,
-      this.#denominator * other.#denominator,
-    )
+    return new Fraction(this.#numerator * other.#numerator, this.#denominator * other.#denominator)
   }
 
   /**
@@ -162,10 +145,7 @@ export class Fraction {
     if (typeof other === 'number') {
       return new Fraction(this.#numerator, this.#denominator * other)
     }
-    return new Fraction(
-      this.#numerator * other.#denominator,
-      this.#denominator * other.#numerator,
-    )
+    return new Fraction(this.#numerator * other.#denominator, this.#denominator * other.#numerator)
   }
 }
 

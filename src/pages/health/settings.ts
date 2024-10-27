@@ -4,12 +4,7 @@ import { parseDecimal } from '$lib/number-util'
 import { UnauthorizedError } from '$lib/errors/UnauthorizedError'
 import { JwtCookie } from '$lib/auth/cookies'
 
-export const POST: APIRoute = async ({
-  locals,
-  request,
-  redirect,
-  cookies,
-}) => {
+export const POST: APIRoute = async ({ locals, request, redirect, cookies }) => {
   const { jwt } = locals
   if (!jwt) {
     return redirect('/login')

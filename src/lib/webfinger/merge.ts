@@ -37,10 +37,7 @@ export function mergeJrd(one: JRD, other: JRD): JRD {
  * @param l1
  * @param l2
  */
-function mergeLists<T>(
-  l1: T[] | undefined,
-  l2: T[] | undefined,
-): T[] | undefined {
+function mergeLists<T>(l1: T[] | undefined, l2: T[] | undefined): T[] | undefined {
   return l2 ? (l1 ?? []).concat(l2) : l1
 }
 

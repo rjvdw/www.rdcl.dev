@@ -3,12 +3,7 @@ import type { CredentialRequestOptionsJSON } from '@github/webauthn-json'
 import FormGrid from '$components/FormGrid'
 import Layout from '$layouts/Login.astro'
 import { login, verifyCredential } from '$lib/auth/loginApi'
-import {
-  JwtCookie,
-  SessionTokenCookie,
-  RedirectToCookie,
-  RememberMeCookie,
-} from '$lib/auth/cookies'
+import { JwtCookie, SessionTokenCookie, RedirectToCookie, RememberMeCookie } from '$lib/auth/cookies'
 
 const jwtCookie = new JwtCookie(Astro.cookies)
 const sessionTokenCookie = new SessionTokenCookie(Astro.cookies)
@@ -81,26 +76,15 @@ if (Astro.request.method === 'POST') {
   {
     options && (
       <>
-        <script
-          id="credential-request-options"
-          type="application/json"
-          is:inline
-          set:html={JSON.stringify(options)}
-        />
+        <script id="credential-request-options" type="application/json" is:inline set:html={JSON.stringify(options)} />
 
         <p id="login-pending">Log in pending...</p>
       </>
     )
   }
 
-  <form
-    id="login-form"
-    method="post"
-    class:list={[{ hidden: Boolean(options) }]}
-  >
-    {
-      /* set the mode to EMAIL, and remove this input if javascript is supported */
-    }
+  <form id="login-form" method="post" class:list={[{ hidden: Boolean(options) }]}>
+    {/* set the mode to EMAIL, and remove this input if javascript is supported */}
     <input type="hidden" name="mode" value="EMAIL" />
     {logInId && <input type="hidden" name="logInId" value={logInId} />}
 
@@ -133,21 +117,11 @@ if (Astro.request.method === 'POST') {
       </FormGrid.Actions>
 
       <label data-start="2">
-        <input
-          type="checkbox"
-          name="remember-me"
-          value="1"
-          checked={rememberMe !== undefined}
-        />
+        <input type="checkbox" name="remember-me" value="1" checked={rememberMe !== undefined} />
         Remember me
       </label>
 
-      <p
-        id="error-message"
-        class="error"
-        data-start="2"
-        class:list={[{ hidden: !error }]}
-      >
+      <p id="error-message" class="error" data-start="2" class:list={[{ hidden: !error }]}>
         {error}
       </p>
     </FormGrid>

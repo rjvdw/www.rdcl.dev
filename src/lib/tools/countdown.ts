@@ -24,17 +24,9 @@ const OPERATIONS: AllOperations = {
 type OperationType = keyof typeof OPERATIONS
 export type Answer = [OperationType, number, number, number]
 
-const ALL_OPERATIONS: OperationType[] = [
-  'add',
-  'multiply',
-  'subtract',
-  'divide',
-]
+const ALL_OPERATIONS: OperationType[] = ['add', 'multiply', 'subtract', 'divide']
 
-export function solve(
-  target: number,
-  numbers: number[],
-): Promise<Answer[] | null> {
+export function solve(target: number, numbers: number[]): Promise<Answer[] | null> {
   return new Promise((resolve) => {
     setTimeout(() => {
       // timeout to allow UI to update
@@ -70,9 +62,7 @@ function _solve(target: number, numbers: number[]): Answer[] | null {
         }
 
         const answer: Answer =
-          (key === 'subtract' || key === 'divide') && n2 > n1
-            ? [key, n2, n1, result]
-            : [key, n1, n2, result]
+          (key === 'subtract' || key === 'divide') && n2 > n1 ? [key, n2, n1, result] : [key, n1, n2, result]
 
         if (result === target) {
           return [answer]
