@@ -26,6 +26,11 @@
   --focus-outline: thin dashed #333;
   --focus-offset: -0.25rem;
 
+  /* Card */
+  --card-background-color: #fff;
+  --card-foreground-color: #333;
+  --card-border-color: #333;
+
   /* Form */
   --input-background-color: #fff;
   --input-foreground-color: #333;
@@ -57,6 +62,11 @@
 
     /* Focus */
     --focus-outline: thin dashed #aaa;
+
+    /* Card */
+    --card-background-color: #333;
+    --card-foreground-color: #aaa;
+    --card-border-color: #aaa;
 
     /* Form */
     --input-background-color: #333;

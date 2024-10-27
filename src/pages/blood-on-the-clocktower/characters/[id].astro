@@ -1,0 +1,107 @@
+---
+import { marked } from 'marked'
+import Layout from '$layouts/Base.astro'
+import { getCollection } from 'astro:content'
+
+const id = Astro.params.id ?? ''
+const matches = await getCollection('botc-characters', (c) => c.id.endsWith(id))
+const character = matches.length === 1 ? matches[0] : undefined
+---
+
+{
+  character === undefined ? (
+    <Layout title="character not found | blood on the clocktower">
+      <header>
+        <a class="go-back" href="/blood-on-the-clocktower/characters">
+          Back
+        </a>
+        <h1>Character not found</h1>
+      </header>
+    </Layout>
+  ) : (
+    <Layout title={`${character.data.name} | blood on the clocktower`}>
+      <header>
+        <a class="go-back" href="/blood-on-the-clocktower/characters">
+          Back
+        </a>
+        <h1>{character.data.name}</h1>
+        <p class="tag-line">{character.data.tagLine}</p>
+      </header>
+
+      <Fragment set:html={marked.parse(character.data.description)} />
+
+      <h4>How to run</h4>
+
+      <Fragment set:html={marked.parse(character.data.howToRun)} />
+
+      {character.data.nightOrder?.first ? (
+        <p>
+          <strong>First night:</strong>
+          {character.data.nightOrder.first.description}
+        </p>
+      ) : (
+        ''
+      )}
+
+      {character.data.nightOrder?.other ? (
+        <p>
+          <strong>Other nights:</strong>
+          {character.data.nightOrder.other.description}
+        </p>
+      ) : (
+        ''
+      )}
+
+      <footer>
+        <p>
+          <a href={character.data.source} target="_blank">
+            Source
+          </a>
+        </p>
+      </footer>
+    </Layout>
+  )
+}
+
+<style>
+  header {
+    display: grid;
+    grid-template:
+      'name     go-back ' auto
+      'tag-line tag-line' auto
+      / auto auto;
+    gap: 0.5rem;
+    margin-block-end: 1rem;
+
+    & > .go-back {
+      grid-area: go-back;
+      align-self: center;
+      margin: 0;
+      text-align: end;
+    }
+
+    & > h1 {
+      grid-area: name;
+      margin: 0;
+    }
+
+    & > .tag-line {
+      grid-area: tag-line;
+      margin: 0;
+      font-size: 90%;
+      font-style: italic;
+
+      &::before {
+        content: open-quote;
+      }
+
+      &::after {
+        content: close-quote;
+      }
+    }
+  }
+
+  footer {
+    margin-block-start: 1rem;
+  }
+</style>

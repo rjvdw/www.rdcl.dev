@@ -1,0 +1,193 @@
+---
+import Layout from '$layouts/Base.astro'
+import { getCollection } from 'astro:content'
+
+const characters = await getCollection('botc-characters')
+
+function getHref(id: string): string {
+  return '/blood-on-the-clocktower/characters/' + id.replace(/^.*\d+-([^\d]+)$/, '$1')
+}
+---
+
+<Layout title="blood on the clocktower">
+  <h1>Blood on the Clocktower</h1>
+
+  <h2>Characters</h2>
+
+  <div class="filters" hidden></div>
+
+  <div class="character-grid">
+    <header class="character-grid-header-row">
+      <div class="character-name">Character</div>
+      <div class="character-type">Type</div>
+      <div class="character-game">Game</div>
+    </header>
+
+    {
+      characters.map((character, i) => (
+        <div class:list={['character-grid-row-group', { even: i % 2 === 0, odd: i % 2 === 1 }]}>
+          <div class="character-grid-row">
+            <div class="character-name">
+              <a href={getHref(character.id)}>{character.data.name}</a>
+            </div>
+            <div class="character-type">{character.data.type}</div>
+            <div class="character-game">{character.data.game}</div>
+          </div>
+          <div class="character-tag-line">{character.data.tagLine}</div>
+        </div>
+      ))
+    }
+  </div>
+</Layout>
+
+<script>
+  import { html, render } from 'lit-html'
+
+  const filters: HTMLElement = document.querySelector('.filters')!
+  const games = readEls('.character-grid-row .character-game')
+  const types = readEls('.character-grid-row .character-type')
+
+  render(
+    html`
+      <label>
+        Game:
+        <select id="character-game-filter" multiple @change=${changeHandler}>
+          ${games.map((game) => html`<option selected>${game}</option>`)}
+        </select>
+      </label>
+
+      <label>
+        Type:
+        <select id="character-type-filter" multiple @change=${changeHandler}>
+          ${types.map((type) => html`<option selected>${type}</option>`)}
+        </select>
+      </label>
+    `,
+    filters,
+  )
+  filters.hidden = false
+
+  function readEls(query: string): string[] {
+    const seen: Set<string> = new Set()
+    const vals: string[] = []
+    for (const el of document.querySelectorAll(query)) {
+      if (el instanceof HTMLElement) {
+        const txt = el.innerText.trim()
+        if (txt && !seen.has(txt)) {
+          seen.add(txt)
+          vals.push(txt)
+        }
+      }
+    }
+    return vals
+  }
+
+  function changeHandler() {
+    const typeFilter = document.getElementById('character-type-filter')
+    const gameFilter = document.getElementById('character-game-filter')
+
+    if (typeFilter instanceof HTMLSelectElement && gameFilter instanceof HTMLSelectElement) {
+      const selectedTypes = getSelected(typeFilter)
+      const selectedGames = getSelected(gameFilter)
+
+      let i = 0
+      for (const row of document.querySelectorAll('.character-grid-row-group')) {
+        if (row instanceof HTMLElement) {
+          const typeEl = row.querySelector('.character-type')
+          const gameEl = row.querySelector('.character-game')
+
+          if (typeEl instanceof HTMLElement && gameEl instanceof HTMLElement) {
+            const type = typeEl.innerText.trim()
+            const game = gameEl.innerText.trim()
+
+            if (selectedTypes.has(type) && selectedGames.has(game)) {
+              row.classList.remove('hidden', 'even', 'odd')
+              row.classList.add(i % 2 === 0 ? 'even' : 'odd')
+              i += 1
+            } else {
+              row.classList.add('hidden')
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function getSelected(select: HTMLSelectElement): Set<string> {
+    const selected = new Set<string>()
+    for (const option of select.options) {
+      if (option.selected) {
+        selected.add(option.value)
+      }
+    }
+    return selected
+  }
+</script>
+
+<style>
+  :global(.filters) {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+
+    & > :global(label) {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      align-items: center;
+    }
+  }
+
+  .character-grid {
+    --character-grid-cell-padding-inline: 0.5rem;
+    --character-grid-cell-padding-block: 1rem;
+
+    display: grid;
+    grid-template-columns: auto min-content min-content;
+    column-gap: 1rem;
+  }
+
+  .character-grid-row-group {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: span 3;
+    row-gap: var(--character-grid-cell-padding-block);
+    border-block-end: thin solid var(--base-foreground-color);
+
+    &:global(.hidden) {
+      display: none;
+    }
+
+    &:global(.even) {
+      background: var(--table-even-row-background-color);
+    }
+
+    &:global(.odd) {
+      background: var(--table-odd-row-background-color);
+    }
+  }
+
+  .character-grid-header-row,
+  .character-grid-row-group {
+    padding-block: var(--character-grid-cell-padding-block);
+    padding-inline: var(--character-grid-cell-padding-inline);
+  }
+
+  .character-grid-header-row,
+  .character-grid-row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: span 3;
+    white-space: nowrap;
+  }
+
+  .character-grid-header-row {
+    font-weight: bold;
+    border-block-end: medium solid var(--base-foreground-color);
+  }
+
+  .character-tag-line {
+    grid-column: span 3;
+    font-style: italic;
+  }
+</style>

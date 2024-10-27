@@ -1,0 +1,45 @@
+name: Po
+source: https://wiki.bloodontheclocktower.com/Po
+type: Demon
+game: Bad Moon Rising
+tagLine: >-
+  Each night*, you may choose a player: they die. If your last choice
+  was no-one, choose 3 players tonight.
+description: |
+  The Po can choose to attack nobody at night, but goes on a rampage the
+  following night.
+
+  - The Po attacks one player per night, like many other Demons.
+    However, if the Po chooses to attack nobody, then they may attack
+    three players the following night.
+  - If the Po was drunk or poisoned when they chose nobody last night,
+    they still choose three players tonight.
+  - A Po must choose three players when prompted to do so. They cannot
+    choose no one again.
+  - The Po only gets three attacks if they chose nobody. The Po does not
+    get three attacks if they chose to attack someone the previous
+    night, but that player did not die.
+  - The Po doesn’t act on the first night, but this night does not count
+    as a night where the Po “chose no one.”
+  - If the Exorcist selects the Po, the Po does not act, but this night
+    does not count as a night where the Po “chose no one.” However, if
+    the Po chose no one the night before the Exorcist chose the Po, the
+    Po chooses three players the night after the Exorcist chose the Po,
+    because their last choice was no one.
+howToRun: |
+  Each night except the first, wake the Po. They either shake their head
+  no or point at any player. Put the Po to sleep. If they shook their
+  head no, mark the Po with the **3 ATTACKS** reminder. If they chose a
+  player, that player **dies**—mark them with a **DEAD** reminder.
+
+  If the Po wakes to act while marked **3 ATTACKS**, they point at any
+  three players, one at a time. In the order chosen, each chosen player
+  **dies**—mark them with **DEAD** reminders. Remove the **3 ATTACKS**
+  reminder.
+nightOrder:
+  other:
+    order: 6
+    description: >-
+      If the Po chose no-one the previous night: The Po points to three
+      players. Otherwise: The Po either shows the 'no' head signal , or
+      points to a player. Chosen players die
