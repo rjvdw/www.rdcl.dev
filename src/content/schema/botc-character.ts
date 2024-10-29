@@ -11,8 +11,6 @@ export default z.object({
   type: z.enum(['Townsfolk', 'Outsider', 'Minion', 'Demon', 'Fabled', 'Traveller']),
   game: z.string(),
   tagLine: z.string(),
-  description: z.string(),
-  howToRun: z.string(),
   nightOrder: z
     .object({
       first: nightSchema.optional(),

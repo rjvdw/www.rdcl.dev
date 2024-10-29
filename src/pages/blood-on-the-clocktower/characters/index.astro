@@ -3,10 +3,6 @@ import Layout from '$layouts/Base.astro'
 import { getCollection } from 'astro:content'
 
 const characters = await getCollection('botc-characters')
-
-function getHref(id: string): string {
-  return '/blood-on-the-clocktower/characters/' + id.replace(/^.*\d+-([^\d]+)$/, '$1')
-}
 ---
 
 <Layout title="blood on the clocktower">
@@ -28,7 +24,7 @@ function getHref(id: string): string {
         <div class:list={['character-grid-row-group', { even: i % 2 === 0, odd: i % 2 === 1 }]}>
           <div class="character-grid-row">
             <div class="character-name">
-              <a href={getHref(character.id)}>{character.data.name}</a>
+              <a href={`/blood-on-the-clocktower/characters/${character.slug}`}>{character.data.name}</a>
             </div>
             <div class="character-type">{character.data.type}</div>
             <div class="character-game">{character.data.game}</div>

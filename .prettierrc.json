@@ -4,6 +4,12 @@
     {
       "files": "*.astro",
       "options": { "parser": "astro" }
+    },
+    {
+      "files": "src/content/botc-characters/**/*.md",
+      "options": {
+        "proseWrap": "always"
+      }
     }
   ],
   "semi": false,

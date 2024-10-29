@@ -1,15 +1,13 @@
 ---
-import { marked } from 'marked'
 import Layout from '$layouts/Base.astro'
-import { getCollection } from 'astro:content'
+import { getEntry } from 'astro:content'
 
-const id = Astro.params.id ?? ''
-const matches = await getCollection('botc-characters', (c) => c.id.endsWith(id))
-const character = matches.length === 1 ? matches[0] : undefined
+const character = await getEntry('botc-characters', Astro.params.id ?? '')
+const Content = character ? (await character.render()).Content : undefined
 ---
 
 {
-  character === undefined ? (
+  character === undefined || Content === undefined ? (
     <Layout title="character not found | blood on the clocktower">
       <header>
         <a class="go-back" href="/blood-on-the-clocktower/characters">
@@ -28,16 +26,11 @@ const character = matches.length === 1 ? matches[0] : undefined
         <p class="tag-line">{character.data.tagLine}</p>
       </header>
 
-      <Fragment set:html={marked.parse(character.data.description)} />
-
-      <h4>How to run</h4>
-
-      <Fragment set:html={marked.parse(character.data.howToRun)} />
+      <Content />
 
       {character.data.nightOrder?.first ? (
         <p>
-          <strong>First night:</strong>
-          {character.data.nightOrder.first.description}
+          <strong>First night:</strong> {character.data.nightOrder.first.description}
         </p>
       ) : (
         ''
@@ -45,8 +38,7 @@ const character = matches.length === 1 ? matches[0] : undefined
 
       {character.data.nightOrder?.other ? (
         <p>
-          <strong>Other nights:</strong>
-          {character.data.nightOrder.other.description}
+          <strong>Other nights:</strong> {character.data.nightOrder.other.description}
         </p>
       ) : (
         ''
