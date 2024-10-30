@@ -39,6 +39,13 @@ li + li {
   margin-block-start: 1rem;
 }
 
+abbr {
+  border-block-end: none;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  cursor: help;
+}
+
 .error {
   color: var(--error-foreground-color);
 }

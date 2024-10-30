@@ -1,4 +1,5 @@
 ---
+import TagLine from '$components/botc/TagLine.astro'
 import Layout from '$layouts/Base.astro'
 import { getCollection } from 'astro:content'
 
@@ -29,7 +30,9 @@ const characters = await getCollection('botc-characters')
             <div class="character-type">{character.data.type}</div>
             <div class="character-game">{character.data.game}</div>
           </div>
-          <div class="character-tag-line">{character.data.tagLine}</div>
+          <div class="character-tag-line">
+            <TagLine tagLine={character.data.tagLine} />
+          </div>
         </div>
       ))
     }

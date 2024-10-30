@@ -1,4 +1,5 @@
 ---
+import TagLine from '$components/botc/TagLine.astro'
 import Layout from '$layouts/Base.astro'
 import { getEntry } from 'astro:content'
 
@@ -23,7 +24,9 @@ const Content = character ? (await character.render()).Content : undefined
           Back
         </a>
         <h1>{character.data.name}</h1>
-        <p class="tag-line">{character.data.tagLine}</p>
+        <p class="tag-line">
+          <TagLine tagLine={character.data.tagLine} />
+        </p>
       </header>
 
       <Content />

@@ -1,0 +1,20 @@
+---
+export type Props = {
+  tagLine: string
+}
+
+const EACH_NIGHT_NOTE = 'Each night*'
+
+const { tagLine } = Astro.props
+const [hasNote, rest] = split(tagLine)
+
+function split(tagLine: string): [boolean, string] {
+  if (tagLine.startsWith(EACH_NIGHT_NOTE)) {
+    return [true, tagLine.substring(EACH_NIGHT_NOTE.length)]
+  }
+  return [false, tagLine]
+}
+---
+
+{hasNote && <abbr title="except for the first night">Each night*</abbr>}
+{rest}
