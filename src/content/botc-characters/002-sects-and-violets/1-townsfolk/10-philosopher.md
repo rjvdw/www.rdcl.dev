@@ -9,7 +9,7 @@ tagLine: >-
   If this character is in play, they are drunk.
 nightOrder:
   first:
-    order: 1
+    order: 2
     description: >-
       The Philosopher either shows a 'no' head signal, or points to a
       good character on their sheet. If they chose a character: Swap the
@@ -17,7 +17,7 @@ nightOrder:
       'Is the Philosopher' reminder. If the character is in play, place
       the drunk marker by that player.
   other:
-    order: 1
+    order: 2
     description: >-
       If the Philosopher has not used their ability: the Philosopher
       either shows a 'no' head signal, or points to a good character on

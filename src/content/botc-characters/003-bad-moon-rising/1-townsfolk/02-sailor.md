@@ -9,12 +9,12 @@ tagLine: >-
   dusk. You can't die.
 nightOrder:
   first:
-    order: 1
+    order: 11
     description: >-
       The Sailor points to a living player. Either the Sailor, or the
       chosen player, is drunk.
   other:
-    order: 1
+    order: 4
     description: >-
       The previously drunk player is no longer drunk. The Sailor points
       to a living player. Either the Sailor, or the chosen player, is

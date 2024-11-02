@@ -8,7 +8,7 @@ tagLine: >-
   Each night*, you learn which character died by execution today.
 nightOrder:
   other:
-    order: 5
+    order: 55
     description: >-
       If a player was executed today: Show that player’s character
       token.

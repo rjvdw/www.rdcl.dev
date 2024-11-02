@@ -9,7 +9,7 @@ tagLine: >-
   if it was a good player, they die.
 nightOrder:
   other:
-    order: 6
+    order: 50
     description: >-
       If the Moonchild used their ability to target a player today: If
       that player is good, they die.

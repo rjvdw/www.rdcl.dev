@@ -9,7 +9,7 @@ tagLine: >-
   another Demon) to swap characters.
 nightOrder:
   other:
-    order: 4
+    order: 40
     description: >-
       If the Barber died today: Wake the Demon. Show the 'This character
       selected you' card, then Barber token. The Demon either shows a

@@ -8,7 +8,7 @@ tagLine: >-
   Each night*, you learn if a Minion nominated today.
 nightOrder:
   other:
-    order: 6
+    order: 58
     description: >-
       Nod 'yes' or shake head 'no' for whether a Minion nominated today.
       Place the 'Minion not nominated' marker (remove 'Minion

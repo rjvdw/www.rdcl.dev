@@ -9,7 +9,7 @@ tagLine: >-
   Townsfolk, they are resurrected.
 nightOrder:
   other:
-    order: 7
+    order: 43
     description: >-
       If the Professor has not used their ability: The Professor either
       shakes their head no, or points to a player. If that player is a

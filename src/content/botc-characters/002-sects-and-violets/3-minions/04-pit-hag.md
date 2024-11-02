@@ -9,7 +9,7 @@ tagLine: >-
   play). If a Demon is made, deaths tonight are arbitrary.
 nightOrder:
   other:
-    order: 3
+    order: 16
     description: >-
       The Pit-Hag points to a player and a character on the sheet. If
       this character is not in play, wake that player and show them the

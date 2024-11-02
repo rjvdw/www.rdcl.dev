@@ -9,7 +9,7 @@ tagLine: >-
   night, you learn how many you got correct.
 nightOrder:
   other:
-    order: 7
+    order: 61
     description: >-
       If today was the Juggler’s first day: Show the hand signal for the
       number (0, 1, 2, etc.) of 'Correct' markers. Remove markers.

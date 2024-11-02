@@ -9,7 +9,7 @@ tagLine: >-
   Demon. (Travellers don't count)
 nightOrder:
   other:
-    order: 3
+    order: 19
     description: >-
       If the Scarlet Woman became the Demon today: Show the 'You are'
       card, then the demon token.

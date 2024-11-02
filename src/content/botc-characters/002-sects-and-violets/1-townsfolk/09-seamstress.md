@@ -9,13 +9,13 @@ tagLine: >-
   they are the same alignment.
 nightOrder:
   first:
-    order: 4
+    order: 43
     description: >-
       The Seamstress either shows a 'no' head signal, or points to two
       other players. If the Seamstress chose players , nod 'yes' or
       shake 'no' for whether they are of same alignment.
   other:
-    order: 8
+    order: 60
     description: >-
       If the Seamstress has not yet used their ability: the Seamstress
       either shows a 'no' head signal, or points to two other players.

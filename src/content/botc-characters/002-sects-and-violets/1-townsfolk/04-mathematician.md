@@ -9,12 +9,12 @@ tagLine: >-
   (since dawn) due to another character's ability.
 nightOrder:
   first:
-    order: 6
+    order: 52
     description: >-
       Show the hand signal for the number (0, 1, 2, etc.) of players
       whose ability malfunctioned due to other abilities.
   other:
-    order: 8
+    order: 71
     description: >-
       Show the hand signal for the number (0, 1, 2, etc.) of players
       whose ability malfunctioned due to other abilities.

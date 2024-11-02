@@ -9,7 +9,7 @@ tagLine: >-
   time you die, you live but register as dead.
 nightOrder:
   other:
-    order: 3
+    order: 25
     description: >-
       If no-one died during the day: The Zombuul points to a player.
       That player dies.

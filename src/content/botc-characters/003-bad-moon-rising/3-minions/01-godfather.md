@@ -9,11 +9,11 @@ tagLine: >-
   a player tonight: they die. [-1 or +1 Outsider]
 nightOrder:
   first:
-    order: 2
+    order: 21
     description: >-
       Show each of the Outsider tokens in play.
   other:
-    order: 4
+    order: 37
     description: >-
       If an Outsider died today: The Godfather points to a player. That
       player dies.

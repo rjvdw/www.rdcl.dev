@@ -9,11 +9,11 @@ tagLine: >-
   vote if they are voting too.
 nightOrder:
   first:
-    order: 6
+    order: 39
     description: >-
       The Butler points to a player. Mark that player as 'Master'.
   other:
-    order: 8
+    order: 67
     description: >-
       The Butler points to a player. Mark that player as 'Master'.
 ---

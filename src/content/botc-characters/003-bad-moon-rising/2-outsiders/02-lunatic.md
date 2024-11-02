@@ -9,7 +9,7 @@ tagLine: >-
   are & who you choose at night.
 nightOrder:
   first:
-    order: 1
+    order: 8
     description: >-
       If 7 or more players: Show the Lunatic a number of arbitrary
       'Minions', players equal to the number of Minions in play. Show 3
@@ -20,7 +20,7 @@ nightOrder:
       the Lunatic player. If the Lunatic attacked players: Show the real
       demon each marked player. Remove any Lunatic 'attack' markers.
   other:
-    order: 2
+    order: 20
     description: >-
       Allow the Lunatic to do the actions of the Demon. Place their
       'attack' markers. If the Lunatic selected players: Wake the Demon.

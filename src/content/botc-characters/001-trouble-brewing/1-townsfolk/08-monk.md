@@ -9,7 +9,7 @@ tagLine: >-
   Demon tonight.
 nightOrder:
   other:
-    order: 1
+    order: 12
     description: >-
       The previously protected player is no longer protected. The Monk
       points to a player not themself. Mark that player 'Protected'.

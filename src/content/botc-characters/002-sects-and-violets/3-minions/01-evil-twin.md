@@ -9,7 +9,7 @@ tagLine: >-
   executed, evil wins. Good can't win if you both live.
 nightOrder:
   first:
-    order: 2
+    order: 23
     description: >-
       Wake the Evil Twin and their twin. Confirm that they have
       acknowledged each other. Point to the Evil Twin. Show their Evil

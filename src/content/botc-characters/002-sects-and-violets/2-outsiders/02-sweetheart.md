@@ -8,7 +8,7 @@ tagLine: >-
   When you die, 1 player is drunk from now on.
 nightOrder:
   other:
-    order: 5
+    order: 41
     description: >-
       Choose a player that is drunk.
 ---

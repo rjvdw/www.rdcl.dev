@@ -8,7 +8,7 @@ tagLine: >-
   You start knowing that 1 of 2 players is a particular Minion.
 nightOrder:
   first:
-    order: 2
+    order: 35
     description: >-
       Show the character token of a Minion in play. Point to two
       players, one of which is that character.

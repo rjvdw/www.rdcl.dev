@@ -9,7 +9,7 @@ tagLine: >-
   that zero are in play.)
 nightOrder:
   first:
-    order: 1
+    order: 34
     description: >-
       Show the character token of an Outsider in play. Point to two
       players, one of which is that character.

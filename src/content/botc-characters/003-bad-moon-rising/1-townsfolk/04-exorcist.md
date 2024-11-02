@@ -9,7 +9,7 @@ tagLine: >-
   chosen, learns who you are then doesn't wake tonight.
 nightOrder:
   other:
-    order: 5
+    order: 21
     description: >-
       The Exorcist points to a player, different from the previous
       night. If that player is the Demon: Wake the Demon. Show the

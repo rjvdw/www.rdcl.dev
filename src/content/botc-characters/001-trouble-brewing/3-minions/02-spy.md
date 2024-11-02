@@ -9,11 +9,11 @@ tagLine: >-
   Townsfolk or Outsider, even if dead.
 nightOrder:
   first:
-    order: 3
+    order: 49
     description: >-
       Show the Grimoire to the Spy for as long as they need.
   other:
-    order: 3
+    order: 68
     description: >-
       Show the Grimoire to the Spy for as long as they need.
 ---

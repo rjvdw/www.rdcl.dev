@@ -9,7 +9,7 @@ tagLine: >-
   night might be regurgitated.
 nightOrder:
   other:
-    order: 5
+    order: 27
     description: >-
       One player that the Shabaloth chose the previous night might be
       resurrected. The Shabaloth points to two players. Those players

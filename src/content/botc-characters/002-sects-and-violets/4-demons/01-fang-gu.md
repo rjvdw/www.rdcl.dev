@@ -9,7 +9,7 @@ tagLine: >-
   becomes an evil Fang Gu & you die instead. [+1 Outsider]
 nightOrder:
   other:
-    order: 3
+    order: 29
     description: >-
       The Fang Gu points to a player. That player dies. Or, if that
       player was an Outsider and there are no other Fang Gu in play: The

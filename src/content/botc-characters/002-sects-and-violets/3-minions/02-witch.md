@@ -9,12 +9,12 @@ tagLine: >-
   just 3 players live, you lose this ability.
 nightOrder:
   first:
-    order: 2
+    order: 24
     description: >-
       The Witch points to a player. If that player nominates tomorrow
       they die immediately.
   other:
-    order: 1
+    order: 14
     description: >-
       If there are 4 or more players alive: The Witch points to a
       player. If that player nominates tomorrow they die immediately.

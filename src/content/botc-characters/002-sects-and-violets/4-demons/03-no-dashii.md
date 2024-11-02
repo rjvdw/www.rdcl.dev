@@ -9,7 +9,7 @@ tagLine: >-
   poisoned.
 nightOrder:
   other:
-    order: 2
+    order: 30
     description: >-
       The No Dashii points to a player. That player dies.
 ---

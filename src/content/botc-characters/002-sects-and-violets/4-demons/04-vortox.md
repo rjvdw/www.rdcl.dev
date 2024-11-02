@@ -9,7 +9,7 @@ tagLine: >-
   false info. Each day, if no-one is executed, evil wins.
 nightOrder:
   other:
-    order: 3
+    order: 31
     description: >-
       The Vortox points to a player. That player dies.
 ---

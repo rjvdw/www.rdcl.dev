@@ -9,7 +9,7 @@ tagLine: >-
   a Minion becomes the Imp.
 nightOrder:
   other:
-    order: 1
+    order: 24
     description: >-
       The Imp points to a player. That player dies. If the Imp chose
       themselves: Replace the character of 1 alive minion with a spare

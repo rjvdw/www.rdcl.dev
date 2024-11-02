@@ -6,6 +6,10 @@ type: Outsider
 game: Bad Moon Rising
 tagLine: >-
   You might die at any time.
+nightOrder:
+  otherNights:
+    order: 49
+    description: The Tinker might die.
 ---
 
 The Tinker can die at any time, for no reason.

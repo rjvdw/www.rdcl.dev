@@ -8,7 +8,7 @@ tagLine:
   You start knowing that 1 of 2 players is a particular Townsfolk.
 nightOrder:
   first:
-    order: 1
+    order: 33
     description:
       Show the character token of a Townsfolk in play. Point to two
       players, one of which is that character.

@@ -9,13 +9,13 @@ tagLine: >-
   woke tonight due to their ability.
 nightOrder:
   first:
-    order: 4
+    order: 51
     description: >-
       The Chambermaid points to two players. Show the number signal (0,
       1, 2, …) for how many of those players wake tonight for their
       ability.
   other:
-    order: 9
+    order: 70
     description: >-
       The Chambermaid points to two players. Show the number signal (0,
       1, 2, …) for how many of those players wake tonight for their

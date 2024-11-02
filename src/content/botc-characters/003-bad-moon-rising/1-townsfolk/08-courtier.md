@@ -9,13 +9,13 @@ tagLine: >-
   nights & 3 days.
 nightOrder:
   first:
-    order: 2
+    order: 19
     description: >-
       The Courtier either shows a 'no' head signal, or points to a
       character on the sheet. If the Courtier used their ability: If
       that character is in play, that player is drunk.
   other:
-    order: 2
+    order: 8
     description: >-
       Reduce the remaining number of days the marked player is poisoned.
       If the Courtier has not yet used their ability: The Courtier

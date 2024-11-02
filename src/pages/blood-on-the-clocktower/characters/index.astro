@@ -28,7 +28,7 @@ const characters = await getCollection('botc-characters')
               <a href={`/blood-on-the-clocktower/characters/${character.slug}`}>{character.data.name}</a>
             </div>
             <div class="character-type">{character.data.type}</div>
-            <div class="character-game">{character.data.game}</div>
+            <div class="character-game">{character.data.game ?? 'Experimental'}</div>
           </div>
           <div class="character-tag-line">
             <TagLine tagLine={character.data.tagLine} />

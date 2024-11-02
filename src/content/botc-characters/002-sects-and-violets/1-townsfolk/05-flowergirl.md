@@ -8,7 +8,7 @@ tagLine: >-
   Each night*, you learn if a Demon voted today.
 nightOrder:
   other:
-    order: 6
+    order: 57
     description: >-
       Nod 'yes' or shake head 'no' for whether the Demon voted today.
       Place the 'Demon not voted' marker (remove 'Demon voted', if any).

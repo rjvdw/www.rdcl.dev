@@ -9,7 +9,7 @@ tagLine: >-
   ability & poison 1 Townsfolk neighbor. [-1 Outsider]
 nightOrder:
   other:
-    order: 3
+    order: 32
     description: >-
       The Vigormortis points to a player. That player dies. If a Minion,
       they keep their ability and one of their Townsfolk neighbours is

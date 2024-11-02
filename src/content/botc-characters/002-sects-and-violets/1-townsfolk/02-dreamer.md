@@ -9,12 +9,12 @@ tagLine: >-
   good & 1 evil character, 1 of which is correct.
 nightOrder:
   first:
-    order: 4
+    order: 42
     description: >-
       The Dreamer points to a player. Show 1 good and 1 evil character
       token; one of these is correct.
   other:
-    order: 7
+    order: 56
     description: >-
       The Dreamer points to a player. Show 1 good and 1 evil character
       token; one of these is correct.

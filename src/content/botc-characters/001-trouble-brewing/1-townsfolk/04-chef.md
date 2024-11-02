@@ -8,7 +8,7 @@ tagLine: >-
   You start knowing how many pairs of evil players there are.
 nightOrder:
   first:
-    order: 3
+    order: 36
     description: >-
       Show the finger signal (0, 1, 2, …) for the number of pairs of
       neighbouring evil players.

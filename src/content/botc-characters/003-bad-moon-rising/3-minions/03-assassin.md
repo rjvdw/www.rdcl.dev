@@ -9,7 +9,7 @@ tagLine: >-
   reason they could not.
 nightOrder:
   other:
-    order: 3
+    order: 36
     description: >-
       If the Assassin has not yet used their ability: The Assassin
       either shows the 'no' head signal, or points to a player. That

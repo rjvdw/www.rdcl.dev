@@ -33,7 +33,7 @@ const Content = character ? (await character.render()).Content : undefined
 
       {character.data.nightOrder?.first ? (
         <p>
-          <strong>First night:</strong> {character.data.nightOrder.first.description}
+          <strong>First night:</strong> {' ' + character.data.nightOrder.first.description}
         </p>
       ) : (
         ''
@@ -41,7 +41,7 @@ const Content = character ? (await character.render()).Content : undefined
 
       {character.data.nightOrder?.other ? (
         <p>
-          <strong>Other nights:</strong> {character.data.nightOrder.other.description}
+          <strong>Other nights:</strong> {' ' + character.data.nightOrder.other.description}
         </p>
       ) : (
         ''

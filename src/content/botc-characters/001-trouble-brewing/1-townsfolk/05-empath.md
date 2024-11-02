@@ -8,12 +8,12 @@ tagLine: >-
   Each night, you learn how many of your 2 alive neighbors are evil.
 nightOrder:
   first:
-    order: 3
+    order: 37
     description: >-
       Show the finger signal (0, 1, 2) for the number of evil alive
       neighbours of the Empath.
   other:
-    order: 4
+    order: 53
     description: >-
       Show the finger signal (0, 1, 2) for the number of evil
       neighbours.

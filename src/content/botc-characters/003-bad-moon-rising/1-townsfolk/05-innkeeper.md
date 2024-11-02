@@ -9,7 +9,7 @@ tagLine: >-
   until dusk.
 nightOrder:
   other:
-    order: 3
+    order: 9
     description: >-
       The previously protected and drunk players lose those markers. The
       Innkeeper points to two players. Those players are protected. One

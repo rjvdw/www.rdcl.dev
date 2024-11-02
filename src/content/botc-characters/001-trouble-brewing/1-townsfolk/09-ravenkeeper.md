@@ -9,7 +9,7 @@ tagLine: >-
   character.
 nightOrder:
   other:
-    order: 4
+    order: 52
     description: >-
       If the Ravenkeeper died tonight: The Ravenkeeper points to a
       player. Show that player’s character token.

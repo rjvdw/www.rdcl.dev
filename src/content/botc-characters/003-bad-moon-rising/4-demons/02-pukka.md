@@ -9,11 +9,11 @@ tagLine: >-
   poisoned player dies then becomes healthy.
 nightOrder:
   first:
-    order: 4
+    order: 20
     description: >-
       The Pukka points to a player. That player is poisoned.
   other:
-    order: 4
+    order: 26
     description: >-
       The Pukka points to a player. That player is poisoned. The
       previously poisoned player dies.

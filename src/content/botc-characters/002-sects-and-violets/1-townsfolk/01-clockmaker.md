@@ -8,7 +8,7 @@ tagLine: >-
   You start knowing how many steps from the Demon to its nearest Minion.
 nightOrder:
   first:
-    order: 3
+    order: 41
     description: >-
       Show the hand signal for the number (1, 2, 3, etc.) of places from
       Demon to closest Minion.

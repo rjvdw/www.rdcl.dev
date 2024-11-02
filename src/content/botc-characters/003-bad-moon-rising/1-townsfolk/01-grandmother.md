@@ -9,11 +9,11 @@ tagLine: >-
   them, you die too.
 nightOrder:
   first:
-    order: 3
+    order: 40
     description: >-
       Show the marked character token. Point to the marked player.
   other:
-    order: 8
+    order: 51
     description: >-
       If the Grandmother’s grandchild was killed by the Demon tonight:
       The Grandmother dies.

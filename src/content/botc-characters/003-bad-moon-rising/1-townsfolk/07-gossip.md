@@ -9,7 +9,7 @@ tagLine: >-
   player dies.
 nightOrder:
   other:
-    order: 6
+    order: 38
     description: >-
       If the Gossip’s public statement was true: Choose a player not
       protected from dying tonight. That player dies.

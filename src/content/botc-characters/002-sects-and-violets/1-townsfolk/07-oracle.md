@@ -8,7 +8,7 @@ tagLine: >-
   Each night*, you learn how many dead players are evil.
 nightOrder:
   other:
-    order: 7
+    order: 59
     description: >-
       Show the hand signal for the number (0, 1, 2, etc.) of dead evil
       players.

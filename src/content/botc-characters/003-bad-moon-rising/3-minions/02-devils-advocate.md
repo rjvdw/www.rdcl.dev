@@ -9,12 +9,12 @@ tagLine: >-
   executed tomorrow, they don't die.
 nightOrder:
   first:
-    order: 3
+    order: 22
     description: >-
       The Devil’s Advocate points to a living player. That player
       survives execution tomorrow.
   other:
-    order: 1
+    order: 13
     description: >-
       The Devil’s Advocate points to a living player, different from the
       previous night. That player survives execution tomorrow.

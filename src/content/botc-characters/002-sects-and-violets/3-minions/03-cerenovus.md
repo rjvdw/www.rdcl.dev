@@ -9,7 +9,7 @@ tagLine: >-
   are this character tomorrow, or might be executed.
 nightOrder:
   first:
-    order: 4
+    order: 25
     description: >-
       The Cerenovus points to a player, then to a character on their
       sheet. Wake that player. Show the 'This character selected you'
@@ -17,7 +17,7 @@ nightOrder:
       If the player is not mad about being that character tomorrow, they
       can be executed.
   other:
-    order: 3
+    order: 15
     description: >-
       The Cerenovus points to a player, then to a character on their
       sheet. Wake that player. Show the 'This character selected you'

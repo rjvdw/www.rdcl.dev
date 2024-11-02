@@ -9,14 +9,14 @@ tagLine: >-
   alignments with you & is then poisoned.
 nightOrder:
   first:
-    order: 1
+    order: 20
     description: >-
       The Snake Charmer points to a player. If that player is the Demon:
       swap the Demon and Snake Charmer character and alignments. Wake
       each player to inform them of their new role and alignment. The
       new Snake Charmer is poisoned.
   other:
-    order: 1
+    order: 11
     description: >-
       The Snake Charmer points to a player. If that player is the Demon:
       swap the Demon and Snake Charmer character and alignments. Wake

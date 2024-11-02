@@ -9,11 +9,11 @@ tagLine: >-
   day.
 nightOrder:
   first:
-    order: 1
+    order: 17
     description: >-
       The Poisoner points to a player. That player is poisoned.
   other:
-    order: 1
+    order: 7
     description: >-
       The previously poisoned player is no longer poisoned. The Poisoner
       points to a player. That player is poisoned.

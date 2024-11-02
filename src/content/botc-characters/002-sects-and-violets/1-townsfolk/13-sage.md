@@ -8,7 +8,7 @@ tagLine: >-
   If the Demon kills you, you learn that it is 1 of 2 players.
 nightOrder:
   other:
-    order: 4
+    order: 42
     description: >-
       If the Sage was killed by a Demon: Point to two players, one of
       which is that Demon.

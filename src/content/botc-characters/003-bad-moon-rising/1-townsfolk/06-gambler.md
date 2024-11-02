@@ -9,7 +9,7 @@ tagLine: >-
   wrong, you die.
 nightOrder:
   other:
-    order: 4
+    order: 10
     description: >-
       The Gambler points to a player, and a character on their sheet. If
       incorrect, the Gambler dies.

@@ -9,12 +9,12 @@ tagLine: >-
   a good player that registers as a Demon to you.
 nightOrder:
   first:
-    order: 5
+    order: 38
     description: >-
       The Fortune Teller points to two players. Give the head signal
       (nod yes, shake no) for whether one of those players is the Demon.
   other:
-    order: 4
+    order: 54
     description: >-
       The Fortune Teller points to two players. Show the head signal
       (nod 'yes', shake 'no') for whether one of those players is the
