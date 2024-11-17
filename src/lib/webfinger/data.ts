@@ -20,7 +20,7 @@ const data: Record<string, AccountRecord> = {
       aliases: [
         'https://www.ruud.online',
         'https://github.com/rjvdw',
-        'https://pleroma.rdcl.dev/users/rj',
+        //'https://pleroma.rdcl.dev/users/rj',
         'acct:rdcl@mastodon.nl',
         'mailto:rj@rdcl.dev',
         'mailto:ruud@ruud.online',
@@ -33,25 +33,25 @@ const data: Record<string, AccountRecord> = {
           href: 'https://www.ruud.online',
           type: 'text/html',
         },
-        {
-          href: 'https://pleroma.rdcl.dev/users/rj',
-          rel: 'http://webfinger.net/rel/profile-page',
-          type: 'text/html',
-        },
-        {
-          href: 'https://pleroma.rdcl.dev/users/rj',
-          rel: 'self',
-          type: 'application/activity+json',
-        },
-        {
-          href: 'https://pleroma.rdcl.dev/users/rj',
-          rel: 'self',
-          type: 'application/ld+json; profile="https://www.w3.org/ns/activitystreams"',
-        },
-        {
-          rel: 'http://ostatus.org/schema/1.0/subscribe',
-          template: 'https://pleroma.rdcl.dev/ostatus_subscribe?acct={uri}',
-        },
+        //{
+        //  href: 'https://pleroma.rdcl.dev/users/rj',
+        //  rel: 'http://webfinger.net/rel/profile-page',
+        //  type: 'text/html',
+        //},
+        //{
+        //  href: 'https://pleroma.rdcl.dev/users/rj',
+        //  rel: 'self',
+        //  type: 'application/activity+json',
+        //},
+        //{
+        //  href: 'https://pleroma.rdcl.dev/users/rj',
+        //  rel: 'self',
+        //  type: 'application/ld+json; profile="https://www.w3.org/ns/activitystreams"',
+        //},
+        //{
+        //  rel: 'http://ostatus.org/schema/1.0/subscribe',
+        //  template: 'https://pleroma.rdcl.dev/ostatus_subscribe?acct={uri}',
+        //},
       ],
     },
   },
