@@ -49,9 +49,9 @@ const matrix = getMatrix(Astro.url.searchParams)
                     <label>
                       {i !== 0 && '+'}{' '}
                       <input name={`x[${row}][${i}]`} type="text" pattern="-?\\d+\\s*(/-?\\s*\\d+)?$" required />
-                      <>
+                      <span>
                         x<sub>{i}</sub>
-                      </>
+                      </span>
                     </label>
                   </span>
                 ))}
